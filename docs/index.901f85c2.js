@@ -516,36 +516,43 @@ function hmrAcceptRun(bundle, id) {
 },{}],"edeGs":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _pixiJs = require("pixi.js");
-var _fishPng = require("./images/fish.png");
-var _fishPngDefault = parcelHelpers.interopDefault(_fishPng);
+var _sharkPng = require("./images/shark.png");
+var _sharkPngDefault = parcelHelpers.interopDefault(_sharkPng);
 var _bubblePng = require("./images/bubble.png");
 var _bubblePngDefault = parcelHelpers.interopDefault(_bubblePng);
 var _waterJpg = require("./images/water.jpg");
 var _waterJpgDefault = parcelHelpers.interopDefault(_waterJpg);
-//
-// STAP 1 - maak een pixi canvas
-//
-const pixi = new _pixiJs.Application({
-    width: 800,
-    height: 450
-});
-document.body.appendChild(pixi.view);
-//
-// STAP 2 - preload alle afbeeldingen
-//
-const loader = new _pixiJs.Loader();
-loader.add('fishTexture', _fishPngDefault.default).add('bubbleTexture', _bubblePngDefault.default).add('waterTexture', _waterJpgDefault.default);
-loader.load(()=>loadCompleted()
-);
-//
-// STAP 3 - maak een sprite als de afbeeldingen zijn geladen
-//
-function loadCompleted() {
-    let fish = new _pixiJs.Sprite(loader.resources["fishTexture"].texture);
-    pixi.stage.addChild(fish);
+var _smogPng = require("./images/smog.png");
+var _smogPngDefault = parcelHelpers.interopDefault(_smogPng);
+var _smog = require("./smog");
+class Game {
+    constructor(){
+        this.pixi = new _pixiJs.Application({
+            width: 800,
+            height: 450,
+            backgroundColor: 0
+        });
+        document.body.appendChild(this.pixi.view);
+        this.loader = new _pixiJs.Loader();
+        this.loader.add('fishTexture', _sharkPngDefault.default).add('bubbleTexture', _bubblePngDefault.default).add('waterTexture', _waterJpgDefault.default).add('smogTexture', _smogPngDefault.default);
+        this.loader.load(()=>this.loadCompleted()
+        );
+    }
+    loadCompleted() {
+        this.s = new _smog.Smog(this.pixi.screen.width / 2, this.pixi.screen.height / 2, 100);
+        let graphics = new _pixiJs.Graphics().beginFill(16777215).drawCircle(this.s.x, this.s.y, this.s.radius).endFill();
+        this.pixi.stage.addChild(graphics);
+        this.pixi.ticker.add((delta)=>this.update(delta)
+        );
+    }
+    update(delta) {
+        //console.log("Updating...")
+        this.s.update();
+    }
 }
+let g = new Game;
 
-},{"pixi.js":"dsYej","./images/fish.png":"3tLwD","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./images/shark.png":"7HgQx","./images/smog.png":"hvPGN","./smog":"fKPBr"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -555,8 +562,8 @@ parcelHelpers.export(exports, "VERSION", ()=>VERSION
 parcelHelpers.export(exports, "filters", ()=>filters
 );
 /*!
- * pixi.js - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * pixi.js - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * pixi.js is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -644,7 +651,7 @@ _app.Application.registerPlugin(_loaders.AppLoaderPlugin);
  * @memberof PIXI
  * @name VERSION
  * @type {string}
- */ var VERSION = '6.3.2';
+ */ var VERSION = '6.3.0';
 /**
  * @namespace PIXI
  */ /**
@@ -686,8 +693,8 @@ _app.Application.registerPlugin(_loaders.AppLoaderPlugin);
 },{"@pixi/polyfill":"gU7rq","@pixi/utils":"2DWCn","@pixi/accessibility":"8zzic","@pixi/interaction":"keS9A","@pixi/app":"7E4Vp","@pixi/core":"7PEF8","@pixi/extract":"ciAJR","@pixi/loaders":"1zEsZ","@pixi/compressed-textures":"bhu0Y","@pixi/particle-container":"77Uaw","@pixi/prepare":"96jlA","@pixi/spritesheet":"646nX","@pixi/sprite-tiling":"1ZWzM","@pixi/text-bitmap":"7zGmD","@pixi/ticker":"8ekG7","@pixi/filter-alpha":"55hl8","@pixi/filter-blur":"6FaSJ","@pixi/filter-color-matrix":"7FXp5","@pixi/filter-displacement":"cwIus","@pixi/filter-fxaa":"1E7AH","@pixi/filter-noise":"iIZn9","@pixi/mixin-cache-as-bitmap":"ggpR7","@pixi/mixin-get-child-by-name":"gorRP","@pixi/mixin-get-global-position":"1c09v","@pixi/constants":"jYAj1","@pixi/display":"b9G7r","@pixi/graphics":"1TAuU","@pixi/math":"dbvNN","@pixi/mesh":"1C15z","@pixi/mesh-extras":"apqYR","@pixi/runner":"byQZp","@pixi/sprite":"9mbxh","@pixi/sprite-animated":"bS7dO","@pixi/text":"NtIz8","@pixi/settings":"01wFC","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gU7rq":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 /*!
- * @pixi/polyfill - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/polyfill - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/polyfill is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -1185,8 +1192,8 @@ parcelHelpers.export(exports, "uid", ()=>uid
 parcelHelpers.export(exports, "url", ()=>url
 );
 /*!
- * @pixi/utils - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/utils - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/utils is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -1244,7 +1251,7 @@ var _earcutDefault = parcelHelpers.interopDefault(_earcut);
  * @default false
  */ _settings.settings.FAIL_IF_MAJOR_PERFORMANCE_CAVEAT = false;
 var saidHello = false;
-var VERSION = '6.3.2';
+var VERSION = '6.3.0';
 /**
  * Skips the hello message of renderers that are created after this is run.
  *
@@ -2235,8 +2242,8 @@ parcelHelpers.export(exports, "isMobile", ()=>isMobile
 parcelHelpers.export(exports, "settings", ()=>settings
 );
 /*!
- * @pixi/settings - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/settings - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/settings is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -2289,8 +2296,8 @@ var isMobile = _ismobilejsDefault.default(globalThis.navigator);
     return !isMobile.apple.device;
 }
 /*!
- * @pixi/constants - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/constants - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/constants is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -4167,8 +4174,8 @@ parcelHelpers.export(exports, "TYPES", ()=>TYPES
 parcelHelpers.export(exports, "WRAP_MODES", ()=>WRAP_MODES
 );
 /*!
- * @pixi/constants - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/constants - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/constants is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -5401,8 +5408,8 @@ parcelHelpers.export(exports, "AccessibilityManager", ()=>AccessibilityManager
 parcelHelpers.export(exports, "accessibleTarget", ()=>accessibleTarget
 );
 /*!
- * @pixi/accessibility - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/accessibility - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/accessibility is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -5857,8 +5864,8 @@ parcelHelpers.export(exports, "DisplayObject", ()=>DisplayObject
 parcelHelpers.export(exports, "TemporaryDisplayObject", ()=>TemporaryDisplayObject
 );
 /*!
- * @pixi/display - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/display - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/display is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -6985,8 +6992,8 @@ function __extends(d, b) {
  * @method displayObjectUpdateTransform
  */ DisplayObject.prototype.displayObjectUpdateTransform = DisplayObject.prototype.updateTransform;
 /*!
- * @pixi/constants - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/constants - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/constants is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -7979,8 +7986,8 @@ parcelHelpers.export(exports, "Transform", ()=>Transform
 parcelHelpers.export(exports, "groupD8", ()=>groupD8
 );
 /*!
- * @pixi/math - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/math - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/math is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -9541,8 +9548,8 @@ parcelHelpers.export(exports, "InteractionTrackingData", ()=>InteractionTracking
 parcelHelpers.export(exports, "interactiveTarget", ()=>interactiveTarget
 );
 /*!
- * @pixi/interaction - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/interaction - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/interaction is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -11172,8 +11179,8 @@ parcelHelpers.export(exports, "TickerPlugin", ()=>TickerPlugin
 parcelHelpers.export(exports, "UPDATE_PRIORITY", ()=>UPDATE_PRIORITY
 );
 /*!
- * @pixi/ticker - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/ticker - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/ticker is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -11810,8 +11817,8 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Application", ()=>Application
 );
 /*!
- * @pixi/app - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/app - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/app is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -12189,7 +12196,7 @@ parcelHelpers.export(exports, "createUBOElements", ()=>createUBOElements
 );
 parcelHelpers.export(exports, "defaultFilterVertex", ()=>defaultFilterVertex
 );
-parcelHelpers.export(exports, "defaultVertex", ()=>defaultVertex$1
+parcelHelpers.export(exports, "defaultVertex", ()=>defaultVertex$2
 );
 parcelHelpers.export(exports, "generateProgram", ()=>generateProgram
 );
@@ -12206,8 +12213,8 @@ parcelHelpers.export(exports, "systems", ()=>systems
 parcelHelpers.export(exports, "uniformParsers", ()=>uniformParsers
 );
 /*!
- * @pixi/core - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/core - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/core is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -13277,6 +13284,7 @@ var defaultBufferOptions = {
         baseTexture.target = _constants.TARGETS.TEXTURE_CUBE_MAP;
     };
     CubeResource1.prototype.addBaseTextureAt = function(baseTexture, index, linkBaseTexture) {
+        if (linkBaseTexture === undefined) linkBaseTexture = this.linkBaseTexture;
         if (!this.items[index]) throw new Error("Index " + index + " is out of bounds");
         if (!this.linkBaseTexture || baseTexture.parentTextureArray || Object.keys(baseTexture._glTextures).length > 0) {
             // copy mode
@@ -14223,15 +14231,6 @@ var _resources = {
 }();
 var DEFAULT_UVS = new TextureUvs();
 /**
- * Used to remove listeners from WHITE and EMPTY Textures
- * @ignore
- */ function removeAllHandlers(tex) {
-    tex.destroy = function _emptyDestroy() {};
-    tex.on = function _emptyOn() {};
-    tex.once = function _emptyOnce() {};
-    tex.emit = function _emptyEmit() {};
-}
-/**
  * A texture stores the information that represents an image or part of an image.
  *
  * It cannot be added to the display list directly; instead use it as the texture for a Sprite.
@@ -14373,7 +14372,7 @@ var DEFAULT_UVS = new TextureUvs();
      * The source can be - frame id, image url, video url, canvas element, video element, base texture
      *
      * @param {string|HTMLImageElement|HTMLCanvasElement|HTMLVideoElement|PIXI.BaseTexture} source -
-     *        Source or array of sources to create texture from
+     *        Source to create texture from
      * @param options - See {@link PIXI.BaseTexture}'s constructor for options.
      * @param {string} [options.pixiIdPrefix=pixiid] - If a source has no id, this is the prefix of the generated id
      * @param {boolean} [strict] - Enforce strict-mode, see {@link PIXI.settings.STRICT_TEXTURE_CACHE}.
@@ -14419,7 +14418,7 @@ var DEFAULT_UVS = new TextureUvs();
      * it does a better job of handling failed URLs more effectively. This also ignores
      * `PIXI.settings.STRICT_TEXTURE_CACHE`. Works for Videos, SVGs, Images.
      *
-     * @param url - The remote URL or array of URLs to load.
+     * @param url - The remote URL to load.
      * @param options - Optional options to include
      * @return - A Promise that resolves to a Texture.
      */ Texture1.fromURL = function(url, options) {
@@ -14591,44 +14590,43 @@ var DEFAULT_UVS = new TextureUvs();
     /** Utility function for BaseTexture|Texture cast. */ Texture1.prototype.castToBaseTexture = function() {
         return this.baseTexture;
     };
-    Object.defineProperty(Texture1, "EMPTY", {
-        /**
-         * An empty texture, used often to not have to create multiple empty textures.
-         * Can not be destroyed.
-         */ get: function() {
-            if (!Texture1._EMPTY) {
-                Texture1._EMPTY = new Texture1(new BaseTexture());
-                removeAllHandlers(Texture1._EMPTY);
-                removeAllHandlers(Texture1._EMPTY.baseTexture);
-            }
-            return Texture1._EMPTY;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(Texture1, "WHITE", {
-        /**
-         * A white texture of 16x16 size, used for graphics and other things
-         * Can not be destroyed.
-         */ get: function() {
-            if (!Texture1._WHITE) {
-                var canvas = document.createElement('canvas');
-                var context1 = canvas.getContext('2d');
-                canvas.width = 16;
-                canvas.height = 16;
-                context1.fillStyle = 'white';
-                context1.fillRect(0, 0, 16, 16);
-                Texture1._WHITE = new Texture1(new BaseTexture(new CanvasResource(canvas)));
-                removeAllHandlers(Texture1._WHITE);
-                removeAllHandlers(Texture1._WHITE.baseTexture);
-            }
-            return Texture1._WHITE;
-        },
-        enumerable: false,
-        configurable: true
-    });
     return Texture1;
 }(_utils.EventEmitter);
+function createWhiteTexture() {
+    var canvas = document.createElement('canvas');
+    canvas.width = 16;
+    canvas.height = 16;
+    var context1 = canvas.getContext('2d');
+    context1.fillStyle = 'white';
+    context1.fillRect(0, 0, 16, 16);
+    return new Texture(new BaseTexture(new CanvasResource(canvas)));
+}
+function removeAllHandlers(tex) {
+    tex.destroy = function _emptyDestroy() {};
+    tex.on = function _emptyOn() {};
+    tex.once = function _emptyOnce() {};
+    tex.emit = function _emptyEmit() {};
+}
+/**
+ * An empty texture, used often to not have to create multiple empty textures.
+ * Can not be destroyed.
+ *
+ * @static
+ * @constant
+ * @member {PIXI.Texture}
+ */ Texture.EMPTY = new Texture(new BaseTexture());
+removeAllHandlers(Texture.EMPTY);
+removeAllHandlers(Texture.EMPTY.baseTexture);
+/**
+ * A white texture of 16x16 size, used for graphics and other things
+ * Can not be destroyed.
+ *
+ * @static
+ * @constant
+ * @member {PIXI.Texture}
+ */ Texture.WHITE = createWhiteTexture();
+removeAllHandlers(Texture.WHITE);
+removeAllHandlers(Texture.WHITE.baseTexture);
 /**
  * A RenderTexture is a special texture that allows any PixiJS display object to be rendered to it.
  *
@@ -14928,7 +14926,7 @@ var DEFAULT_UVS = new TextureUvs();
     };
     return Attribute1;
 }();
-var UID$4 = 0;
+var UID = 0;
 /**
  * A wrapper for data so that it can be used and uploaded by WebGL
  *
@@ -14946,7 +14944,7 @@ var UID$4 = 0;
         this._updateID = 0;
         this.index = index;
         this.static = _static;
-        this.id = UID$4++;
+        this.id = UID++;
         this.disposeRunner = new _runner.Runner('disposeBuffer');
     }
     // TODO could explore flagging only a partial upload?
@@ -14993,7 +14991,7 @@ var UID$4 = 0;
     };
     return Buffer1;
 }();
-/* eslint-disable object-shorthand */ var map$1 = {
+/* eslint-disable object-shorthand */ var map = {
     Float32Array: Float32Array,
     Uint32Array: Uint32Array,
     Int32Array: Int32Array,
@@ -15014,7 +15012,7 @@ function interleaveTypedArrays(arrays, sizes) {
         var size = sizes[i];
         var array = arrays[i];
         var type = _utils.getBufferType(array);
-        if (!views[type]) views[type] = new map$1[type](buffer);
+        if (!views[type]) views[type] = new map[type](buffer);
         out = views[type];
         for(var j = 0; j < array.length; j++){
             var indexStart = (j / size | 0) * stride + littleOffset;
@@ -15025,13 +15023,13 @@ function interleaveTypedArrays(arrays, sizes) {
     }
     return new Float32Array(buffer);
 }
-var byteSizeMap$1 = {
+var byteSizeMap = {
     5126: 4,
     5123: 2,
     5121: 1
 };
-var UID$3 = 0;
-/* eslint-disable object-shorthand */ var map = {
+var UID$1 = 0;
+/* eslint-disable object-shorthand */ var map$1 = {
     Float32Array: Float32Array,
     Uint32Array: Uint32Array,
     Int32Array: Int32Array,
@@ -15066,7 +15064,7 @@ var UID$3 = 0;
         this.indexBuffer = null;
         this.attributes = attributes;
         this.glVertexArrayObjects = {};
-        this.id = UID$3++;
+        this.id = UID$1++;
         this.instanced = false;
         this.instanceCount = 1;
         this.disposeRunner = new _runner.Runner('disposeGeometry');
@@ -15170,7 +15168,7 @@ var UID$3 = 0;
             var attribute = this.attributes[i];
             var buffer = this.buffers[attribute.buffer];
             arrays.push(buffer.data);
-            sizes.push(attribute.size * byteSizeMap$1[attribute.type] / 4);
+            sizes.push(attribute.size * byteSizeMap[attribute.type] / 4);
             attribute.buffer = 0;
         }
         interleavedBuffer.data = interleaveTypedArrays(arrays, sizes);
@@ -15242,7 +15240,7 @@ var UID$3 = 0;
         // build the correct size arrays..
         for(var i = 0; i < geometry.buffers.length; i++){
             // TODO types!
-            arrays[i] = new map[_utils.getBufferType(geometry.buffers[i].data)](sizes[i]);
+            arrays[i] = new map$1[_utils.getBufferType(geometry.buffers[i].data)](sizes[i]);
             geometryOut.buffers[i] = new Buffer(arrays[i]);
         }
         // pass to set data..
@@ -15269,7 +15267,7 @@ var UID$3 = 0;
             // figure out the stride of one buffer..
             for(var i in geometry.attributes){
                 var attribute = geometry.attributes[i];
-                if ((attribute.buffer | 0) === bufferIndexToCount) stride += attribute.size * byteSizeMap$1[attribute.type] / 4;
+                if ((attribute.buffer | 0) === bufferIndexToCount) stride += attribute.size * byteSizeMap[attribute.type] / 4;
             }
             // time to off set all indexes..
             for(var i = 0; i < geometries.length; i++){
@@ -15516,7 +15514,7 @@ var tempPoints = [
     new _math.Point(),
     new _math.Point()
 ];
-var tempMatrix$2 = new _math.Matrix();
+var tempMatrix = new _math.Matrix();
 /**
  * System plugin to the renderer to manage filters.
  *
@@ -15609,18 +15607,11 @@ var tempMatrix$2 = new _math.Matrix();
         state.target = target;
         state.sourceFrame.copyFrom(target.filterArea || target.getBounds(true));
         state.sourceFrame.pad(padding);
-        var sourceFrameProjected = this.tempRect.copyFrom(renderTextureSystem.sourceFrame);
-        // Project source frame into world space (if projection is applied)
-        if (renderer.projection.transform) this.transformAABB(tempMatrix$2.copyFrom(renderer.projection.transform).invert(), sourceFrameProjected);
         if (autoFit) {
+            var sourceFrameProjected = this.tempRect.copyFrom(renderTextureSystem.sourceFrame);
+            // Project source frame into world space (if projection is applied)
+            if (renderer.projection.transform) this.transformAABB(tempMatrix.copyFrom(renderer.projection.transform).invert(), sourceFrameProjected);
             state.sourceFrame.fit(sourceFrameProjected);
-            if (state.sourceFrame.width <= 0 || state.sourceFrame.height <= 0) {
-                state.sourceFrame.width = 0;
-                state.sourceFrame.height = 0;
-            }
-        } else if (!state.sourceFrame.intersects(sourceFrameProjected)) {
-            state.sourceFrame.width = 0;
-            state.sourceFrame.height = 0;
         }
         // Round sourceFrame in screen space based on render-texture.
         this.roundFrame(state.sourceFrame, renderTextureSystem.current ? renderTextureSystem.current.resolution : renderer.resolution, renderTextureSystem.sourceFrame, renderTextureSystem.destinationFrame, renderer.projection.transform);
@@ -15866,7 +15857,7 @@ var tempMatrix$2 = new _math.Matrix();
             // is a multiple of 90°, then either pair of (b,c) or (a,d) will be (0,0).
             if ((Math.abs(b) > 0.0001 || Math.abs(c) > 0.0001) && (Math.abs(a) > 0.0001 || Math.abs(d) > 0.0001)) return;
         }
-        transform = transform ? tempMatrix$2.copyFrom(transform) : tempMatrix$2.identity();
+        transform = transform ? tempMatrix.copyFrom(transform) : tempMatrix.identity();
         // Get forward transform from world space to screen space
         transform.translate(-bindingSourceFrame.x, -bindingSourceFrame.y).scale(bindingDestinationFrame.width / bindingSourceFrame.width, bindingDestinationFrame.height / bindingSourceFrame.height).translate(bindingDestinationFrame.x, bindingDestinationFrame.y);
         // Convert frame to screen space
@@ -16572,7 +16563,7 @@ var tempRectangle = new _math.Rectangle();
     };
     return FramebufferSystem1;
 }();
-var byteSizeMap = {
+var byteSizeMap$1 = {
     5126: 4,
     5123: 2,
     5121: 1
@@ -16747,18 +16738,18 @@ var byteSizeMap = {
         for(var j in attributes){
             if (!attributes[j].size && program.attributeData[j]) attributes[j].size = program.attributeData[j].size;
             else if (!attributes[j].size) console.warn("PIXI Geometry attribute '" + j + "' size cannot be determined (likely the bound shader does not have the attribute)"); // eslint-disable-line
-            tempStride[attributes[j].buffer] += attributes[j].size * byteSizeMap[attributes[j].type];
+            tempStride[attributes[j].buffer] += attributes[j].size * byteSizeMap$1[attributes[j].type];
         }
         for(var j in attributes){
             var attribute = attributes[j];
             var attribSize = attribute.size;
             if (attribute.stride === undefined) {
-                if (tempStride[attribute.buffer] === attribSize * byteSizeMap[attribute.type]) attribute.stride = 0;
+                if (tempStride[attribute.buffer] === attribSize * byteSizeMap$1[attribute.type]) attribute.stride = 0;
                 else attribute.stride = tempStride[attribute.buffer];
             }
             if (attribute.start === undefined) {
                 attribute.start = tempStart[attribute.buffer];
-                tempStart[attribute.buffer] += attribSize * byteSizeMap[attribute.type];
+                tempStart[attribute.buffer] += attribSize * byteSizeMap$1[attribute.type];
             }
         }
         vao = gl.createVertexArray();
@@ -17481,9 +17472,9 @@ var unsafeEval;
     }
     return unsafeEval;
 }
-var defaultFragment$2 = "varying vec2 vTextureCoord;\n\nuniform sampler2D uSampler;\n\nvoid main(void){\n   gl_FragColor *= texture2D(uSampler, vTextureCoord);\n}";
-var defaultVertex$3 = "attribute vec2 aVertexPosition;\nattribute vec2 aTextureCoord;\n\nuniform mat3 projectionMatrix;\n\nvarying vec2 vTextureCoord;\n\nvoid main(void){\n   gl_Position = vec4((projectionMatrix * vec3(aVertexPosition, 1.0)).xy, 0.0, 1.0);\n   vTextureCoord = aTextureCoord;\n}\n";
-var UID$1 = 0;
+var defaultFragment = "varying vec2 vTextureCoord;\n\nuniform sampler2D uSampler;\n\nvoid main(void){\n   gl_FragColor *= texture2D(uSampler, vTextureCoord);\n}";
+var defaultVertex = "attribute vec2 aVertexPosition;\nattribute vec2 aTextureCoord;\n\nuniform mat3 projectionMatrix;\n\nvarying vec2 vTextureCoord;\n\nvoid main(void){\n   gl_Position = vec4((projectionMatrix * vec3(aVertexPosition, 1.0)).xy, 0.0, 1.0);\n   vTextureCoord = aTextureCoord;\n}\n";
+var UID$3 = 0;
 var nameCache = {};
 /**
  * Helper class to create a shader program.
@@ -17496,7 +17487,7 @@ var nameCache = {};
      * @param name - Name for shader
      */ function Program1(vertexSrc, fragmentSrc, name13) {
         if (name13 === void 0) name13 = 'pixi-shader';
-        this.id = UID$1++;
+        this.id = UID$3++;
         this.vertexSrc = vertexSrc || Program1.defaultVertexSrc;
         this.fragmentSrc = fragmentSrc || Program1.defaultFragmentSrc;
         this.vertexSrc = this.vertexSrc.trim();
@@ -17523,7 +17514,7 @@ var nameCache = {};
          *
          * @constant
          */ get: function() {
-            return defaultVertex$3;
+            return defaultVertex;
         },
         enumerable: false,
         configurable: true
@@ -17534,7 +17525,7 @@ var nameCache = {};
          *
          * @constant
          */ get: function() {
-            return defaultFragment$2;
+            return defaultFragment;
         },
         enumerable: false,
         configurable: true
@@ -17617,12 +17608,12 @@ var nameCache = {};
     };
     return Shader1;
 }();
-/* eslint-disable max-len */ var BLEND$1 = 0;
-var OFFSET$1 = 1;
-var CULLING$1 = 2;
-var DEPTH_TEST$1 = 3;
-var WINDING$1 = 4;
-var DEPTH_MASK$1 = 5;
+/* eslint-disable max-len */ var BLEND = 0;
+var OFFSET = 1;
+var CULLING = 2;
+var DEPTH_TEST = 3;
+var WINDING = 4;
+var DEPTH_MASK = 5;
 /**
  * This is a WebGL state, and is is passed to {@link PIXI.StateSystem}.
  *
@@ -17645,10 +17636,10 @@ var DEPTH_MASK$1 = 5;
          *
          * @default true
          */ get: function() {
-            return !!(this.data & 1 << BLEND$1);
+            return !!(this.data & 1 << BLEND);
         },
         set: function(value) {
-            if (!!(this.data & 1 << BLEND$1) !== value) this.data ^= 1 << BLEND$1;
+            if (!!(this.data & 1 << BLEND) !== value) this.data ^= 1 << BLEND;
         },
         enumerable: false,
         configurable: true
@@ -17659,10 +17650,10 @@ var DEPTH_MASK$1 = 5;
          *
          * @default false
          */ get: function() {
-            return !!(this.data & 1 << OFFSET$1);
+            return !!(this.data & 1 << OFFSET);
         },
         set: function(value) {
-            if (!!(this.data & 1 << OFFSET$1) !== value) this.data ^= 1 << OFFSET$1;
+            if (!!(this.data & 1 << OFFSET) !== value) this.data ^= 1 << OFFSET;
         },
         enumerable: false,
         configurable: true
@@ -17673,10 +17664,10 @@ var DEPTH_MASK$1 = 5;
          *
          * @default false
          */ get: function() {
-            return !!(this.data & 1 << CULLING$1);
+            return !!(this.data & 1 << CULLING);
         },
         set: function(value) {
-            if (!!(this.data & 1 << CULLING$1) !== value) this.data ^= 1 << CULLING$1;
+            if (!!(this.data & 1 << CULLING) !== value) this.data ^= 1 << CULLING;
         },
         enumerable: false,
         configurable: true
@@ -17687,10 +17678,10 @@ var DEPTH_MASK$1 = 5;
          *
          * @default false
          */ get: function() {
-            return !!(this.data & 1 << DEPTH_TEST$1);
+            return !!(this.data & 1 << DEPTH_TEST);
         },
         set: function(value) {
-            if (!!(this.data & 1 << DEPTH_TEST$1) !== value) this.data ^= 1 << DEPTH_TEST$1;
+            if (!!(this.data & 1 << DEPTH_TEST) !== value) this.data ^= 1 << DEPTH_TEST;
         },
         enumerable: false,
         configurable: true
@@ -17701,10 +17692,10 @@ var DEPTH_MASK$1 = 5;
          *
          * @default true
          */ get: function() {
-            return !!(this.data & 1 << DEPTH_MASK$1);
+            return !!(this.data & 1 << DEPTH_MASK);
         },
         set: function(value) {
-            if (!!(this.data & 1 << DEPTH_MASK$1) !== value) this.data ^= 1 << DEPTH_MASK$1;
+            if (!!(this.data & 1 << DEPTH_MASK) !== value) this.data ^= 1 << DEPTH_MASK;
         },
         enumerable: false,
         configurable: true
@@ -17715,10 +17706,10 @@ var DEPTH_MASK$1 = 5;
          *
          * @default false
          */ get: function() {
-            return !!(this.data & 1 << WINDING$1);
+            return !!(this.data & 1 << WINDING);
         },
         set: function(value) {
-            if (!!(this.data & 1 << WINDING$1) !== value) this.data ^= 1 << WINDING$1;
+            if (!!(this.data & 1 << WINDING) !== value) this.data ^= 1 << WINDING;
         },
         enumerable: false,
         configurable: true
@@ -17765,7 +17756,7 @@ var DEPTH_MASK$1 = 5;
     };
     return State1;
 }();
-var defaultVertex$2 = "attribute vec2 aVertexPosition;\n\nuniform mat3 projectionMatrix;\n\nvarying vec2 vTextureCoord;\n\nuniform vec4 inputSize;\nuniform vec4 outputFrame;\n\nvec4 filterVertexPosition( void )\n{\n    vec2 position = aVertexPosition * max(outputFrame.zw, vec2(0.)) + outputFrame.xy;\n\n    return vec4((projectionMatrix * vec3(position, 1.0)).xy, 0.0, 1.0);\n}\n\nvec2 filterTextureCoord( void )\n{\n    return aVertexPosition * (outputFrame.zw * inputSize.zw);\n}\n\nvoid main(void)\n{\n    gl_Position = filterVertexPosition();\n    vTextureCoord = filterTextureCoord();\n}\n";
+var defaultVertex$1 = "attribute vec2 aVertexPosition;\n\nuniform mat3 projectionMatrix;\n\nvarying vec2 vTextureCoord;\n\nuniform vec4 inputSize;\nuniform vec4 outputFrame;\n\nvec4 filterVertexPosition( void )\n{\n    vec2 position = aVertexPosition * max(outputFrame.zw, vec2(0.)) + outputFrame.xy;\n\n    return vec4((projectionMatrix * vec3(position, 1.0)).xy, 0.0, 1.0);\n}\n\nvec2 filterTextureCoord( void )\n{\n    return aVertexPosition * (outputFrame.zw * inputSize.zw);\n}\n\nvoid main(void)\n{\n    gl_Position = filterVertexPosition();\n    vTextureCoord = filterTextureCoord();\n}\n";
 var defaultFragment$1 = "varying vec2 vTextureCoord;\n\nuniform sampler2D uSampler;\n\nvoid main(void){\n   gl_FragColor = texture2D(uSampler, vTextureCoord);\n}\n";
 /**
  * A filter is a special shader that applies post-processing effects to an input texture and writes into an output
@@ -18002,7 +17993,7 @@ var defaultFragment$1 = "varying vec2 vTextureCoord;\n\nuniform sampler2D uSampl
          *
          * @constant
          */ get: function() {
-            return defaultVertex$2;
+            return defaultVertex$1;
         },
         enumerable: false,
         configurable: true
@@ -19036,7 +19027,7 @@ function generateUniformBufferSync(group, uniformData) {
     var glProgram = new GLProgram(webGLProgram, uniformData);
     return glProgram;
 }
-var UID = 0;
+var UID$4 = 0;
 // default sync data so we don't create a new one each time!
 var defaultSyncData = {
     textureCount: 0,
@@ -19057,7 +19048,7 @@ var defaultSyncData = {
         this.program = null;
         this.cache = {};
         this._uboCache = {};
-        this.id = UID++;
+        this.id = UID$4++;
     }
     /**
      * Overrideable function by `@pixi/unsafe-eval` to silence
@@ -19371,12 +19362,12 @@ var defaultSyncData = {
     ];
     return array;
 }
-var BLEND = 0;
-var OFFSET = 1;
-var CULLING = 2;
-var DEPTH_TEST = 3;
-var WINDING = 4;
-var DEPTH_MASK = 5;
+var BLEND$1 = 0;
+var OFFSET$1 = 1;
+var CULLING$1 = 2;
+var DEPTH_TEST$1 = 3;
+var WINDING$1 = 4;
+var DEPTH_MASK$1 = 5;
 /**
  * System plugin to the renderer to manage WebGL state machines.
  *
@@ -19390,12 +19381,12 @@ var DEPTH_MASK = 5;
         this._blendEq = false;
         // map functions for when we set state..
         this.map = [];
-        this.map[BLEND] = this.setBlend;
-        this.map[OFFSET] = this.setOffset;
-        this.map[CULLING] = this.setCullFace;
-        this.map[DEPTH_TEST] = this.setDepthTest;
-        this.map[WINDING] = this.setFrontFace;
-        this.map[DEPTH_MASK] = this.setDepthMask;
+        this.map[BLEND$1] = this.setBlend;
+        this.map[OFFSET$1] = this.setOffset;
+        this.map[CULLING$1] = this.setCullFace;
+        this.map[DEPTH_TEST$1] = this.setDepthTest;
+        this.map[WINDING$1] = this.setFrontFace;
+        this.map[DEPTH_MASK$1] = this.setDepthMask;
         this.checks = [];
         this.defaultState = new State();
         this.defaultState.blend = true;
@@ -19909,7 +19900,7 @@ var _systems = {
     TextureGCSystem: TextureGCSystem,
     TextureSystem: TextureSystem
 };
-var tempMatrix = new _math.Matrix();
+var tempMatrix$2 = new _math.Matrix();
 /**
  * The AbstractRenderer is the base for a PixiJS Renderer. It is extended by the {@link PIXI.CanvasRenderer}
  * and {@link PIXI.Renderer} which can be used for rendering a PixiJS scene.
@@ -20131,12 +20122,12 @@ var tempMatrix = new _math.Matrix();
             width: region.width,
             height: region.height
         }, textureOptions));
-        tempMatrix.tx = -region.x;
-        tempMatrix.ty = -region.y;
+        tempMatrix$2.tx = -region.x;
+        tempMatrix$2.ty = -region.y;
         this.render(displayObject, {
             renderTexture: renderTexture,
             clear: false,
-            transform: tempMatrix,
+            transform: tempMatrix$2,
             skipUpdateTransform: !!displayObject.parent
         });
         return renderTexture;
@@ -20647,7 +20638,7 @@ var $defaultFilterVertex = "attribute vec2 aVertexPosition;\n\nuniform mat3 proj
  * @member {string} defaultFilterVertex
  */ // NOTE: This black magic is so that @microsoft/api-extractor does not complain! This explicitly specifies the types
 // of defaultVertex, defaultFilterVertex.
-var defaultVertex$1 = $defaultVertex;
+var defaultVertex$2 = $defaultVertex;
 var defaultFilterVertex = $defaultFilterVertex;
 /**
  * Use the ISystem interface instead.
@@ -21194,8 +21185,8 @@ var defaultFilterVertex = $defaultFilterVertex;
     }
     return BatchGeometry1;
 }(Geometry);
-var defaultVertex = "precision highp float;\nattribute vec2 aVertexPosition;\nattribute vec2 aTextureCoord;\nattribute vec4 aColor;\nattribute float aTextureId;\n\nuniform mat3 projectionMatrix;\nuniform mat3 translationMatrix;\nuniform vec4 tint;\n\nvarying vec2 vTextureCoord;\nvarying vec4 vColor;\nvarying float vTextureId;\n\nvoid main(void){\n    gl_Position = vec4((projectionMatrix * translationMatrix * vec3(aVertexPosition, 1.0)).xy, 0.0, 1.0);\n\n    vTextureCoord = aTextureCoord;\n    vTextureId = aTextureId;\n    vColor = aColor * tint;\n}\n";
-var defaultFragment = "varying vec2 vTextureCoord;\nvarying vec4 vColor;\nvarying float vTextureId;\nuniform sampler2D uSamplers[%count%];\n\nvoid main(void){\n    vec4 color;\n    %forloop%\n    gl_FragColor = color * vColor;\n}\n";
+var defaultVertex$3 = "precision highp float;\nattribute vec2 aVertexPosition;\nattribute vec2 aTextureCoord;\nattribute vec4 aColor;\nattribute float aTextureId;\n\nuniform mat3 projectionMatrix;\nuniform mat3 translationMatrix;\nuniform vec4 tint;\n\nvarying vec2 vTextureCoord;\nvarying vec4 vColor;\nvarying float vTextureId;\n\nvoid main(void){\n    gl_Position = vec4((projectionMatrix * translationMatrix * vec3(aVertexPosition, 1.0)).xy, 0.0, 1.0);\n\n    vTextureCoord = aTextureCoord;\n    vTextureId = aTextureId;\n    vColor = aColor * tint;\n}\n";
+var defaultFragment$2 = "varying vec2 vTextureCoord;\nvarying vec4 vColor;\nvarying float vTextureId;\nuniform sampler2D uSamplers[%count%];\n\nvoid main(void){\n    vec4 color;\n    %forloop%\n    gl_FragColor = color * vColor;\n}\n";
 /** @memberof PIXI */ var BatchPluginFactory = /** @class */ function() {
     function BatchPluginFactory1() {}
     /**
@@ -21227,8 +21218,8 @@ var defaultFragment = "varying vec2 vTextureCoord;\nvarying vec4 vColor;\nvaryin
      * @return {*} New batch renderer plugin
      */ BatchPluginFactory1.create = function(options) {
         var _a = Object.assign({
-            vertex: defaultVertex,
-            fragment: defaultFragment,
+            vertex: defaultVertex$3,
+            fragment: defaultFragment$2,
             geometryClass: BatchGeometry,
             vertexSize: 6
         }, options), vertex1 = _a.vertex, fragment1 = _a.fragment, vertexSize = _a.vertexSize, geometryClass = _a.geometryClass;
@@ -21250,7 +21241,7 @@ var defaultFragment = "varying vec2 vTextureCoord;\nvarying vec4 vColor;\nvaryin
          *
          * @readonly
          */ get: function() {
-            return defaultVertex;
+            return defaultVertex$3;
         },
         enumerable: false,
         configurable: true
@@ -21261,7 +21252,7 @@ var defaultFragment = "varying vec2 vTextureCoord;\nvarying vec4 vColor;\nvaryin
          *
          * @readonly
          */ get: function() {
-            return defaultFragment;
+            return defaultFragment$2;
         },
         enumerable: false,
         configurable: true
@@ -21308,8 +21299,8 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Runner", ()=>Runner
 );
 /*!
- * @pixi/runner - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/runner - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/runner is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -21487,8 +21478,8 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Extract", ()=>Extract
 );
 /*!
- * @pixi/extract - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/extract - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/extract is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -21686,8 +21677,8 @@ parcelHelpers.export(exports, "LoaderResource", ()=>LoaderResource
 parcelHelpers.export(exports, "TextureLoader", ()=>TextureLoader
 );
 /*!
- * @pixi/loaders - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/loaders - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/loaders is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -21893,7 +21884,7 @@ parcelHelpers.export(exports, "TextureLoader", ()=>TextureLoader
     return uri;
 }
 // tests if CORS is supported in XHR, if not we need to use XDR
-var useXdr;
+var useXdr = !!(globalThis.XDomainRequest && !('withCredentials' in new XMLHttpRequest()));
 var tempAnchor = null;
 // some status constants
 var STATUS_NONE = 0;
@@ -21902,7 +21893,7 @@ var STATUS_EMPTY = 204;
 var STATUS_IE_BUG_EMPTY = 1223;
 var STATUS_TYPE_OK = 2;
 // noop
-function _noop$1() {}
+function _noop() {}
 /**
  * Quick helper to set a value on one of the extension maps. Ensures there is no
  * dot at the start of the extension.
@@ -21955,7 +21946,7 @@ function _noop$1() {}
          *
          * @private
          * @member {function}
-         */ this._dequeue = _noop$1;
+         */ this._dequeue = _noop;
         /**
          * Used a storage place for the on load binding used privately by the loader.
          *
@@ -22026,7 +22017,7 @@ function _noop$1() {}
         this.progressChunk = 0;
         // The `dequeue` method that will be used a storage place for the async queue dequeue method
         // used privately by the loader.
-        this._dequeue = _noop$1;
+        this._dequeue = _noop;
         // Used a storage place for the on load binding used privately by the loader.
         this._onLoadBinding = null;
         // The timer for element loads to check if they timeout.
@@ -22200,7 +22191,6 @@ function _noop$1() {}
                 break;
             case LoaderResource1.LOAD_TYPE.XHR:
             /* falls through */ default:
-                if (typeof useXdr === 'undefined') useXdr = !!(globalThis.XDomainRequest && !('withCredentials' in new XMLHttpRequest()));
                 if (useXdr && this.crossOrigin) this._loadXdr();
                 else this._loadXhr();
                 break;
@@ -22539,12 +22529,28 @@ function _noop$1() {}
 }();
 // eslint-disable-next-line @typescript-eslint/no-namespace
 (function(LoaderResource2) {
+    /**
+     * The types of resources a resource could represent.
+     *
+     * @static
+     * @readonly
+     * @enum {number}
+     * @memberof PIXI.LoaderResource
+     */ var STATUS_FLAGS1;
     (function(STATUS_FLAGS) {
         /** None */ STATUS_FLAGS[STATUS_FLAGS["NONE"] = 0] = "NONE";
         /** Data URL */ STATUS_FLAGS[STATUS_FLAGS["DATA_URL"] = 1] = "DATA_URL";
         /** Complete */ STATUS_FLAGS[STATUS_FLAGS["COMPLETE"] = 2] = "COMPLETE";
         /** Loading */ STATUS_FLAGS[STATUS_FLAGS["LOADING"] = 4] = "LOADING";
-    })(LoaderResource2.STATUS_FLAGS || (LoaderResource2.STATUS_FLAGS = {}));
+    })(STATUS_FLAGS1 = LoaderResource2.STATUS_FLAGS || (LoaderResource2.STATUS_FLAGS = {}));
+    /**
+     * The types of resources a resource could represent.
+     *
+     * @static
+     * @readonly
+     * @enum {number}
+     * @memberof PIXI.LoaderResource
+     */ var TYPE1;
     (function(TYPE) {
         /** Unknown */ TYPE[TYPE["UNKNOWN"] = 0] = "UNKNOWN";
         /** JSON */ TYPE[TYPE["JSON"] = 1] = "JSON";
@@ -22553,13 +22559,29 @@ function _noop$1() {}
         /** Audio */ TYPE[TYPE["AUDIO"] = 4] = "AUDIO";
         /** Video */ TYPE[TYPE["VIDEO"] = 5] = "VIDEO";
         /** Plain text */ TYPE[TYPE["TEXT"] = 6] = "TEXT";
-    })(LoaderResource2.TYPE || (LoaderResource2.TYPE = {}));
+    })(TYPE1 = LoaderResource2.TYPE || (LoaderResource2.TYPE = {}));
+    /**
+     * The types of loading a resource can use.
+     *
+     * @static
+     * @readonly
+     * @enum {number}
+     * @memberof PIXI.LoaderResource
+     */ var LOAD_TYPE1;
     (function(LOAD_TYPE) {
         /** Uses XMLHttpRequest to load the resource. */ LOAD_TYPE[LOAD_TYPE["XHR"] = 1] = "XHR";
         /** Uses an `Image` object to load the resource. */ LOAD_TYPE[LOAD_TYPE["IMAGE"] = 2] = "IMAGE";
         /** Uses an `Audio` object to load the resource. */ LOAD_TYPE[LOAD_TYPE["AUDIO"] = 3] = "AUDIO";
         /** Uses a `Video` object to load the resource. */ LOAD_TYPE[LOAD_TYPE["VIDEO"] = 4] = "VIDEO";
-    })(LoaderResource2.LOAD_TYPE || (LoaderResource2.LOAD_TYPE = {}));
+    })(LOAD_TYPE1 = LoaderResource2.LOAD_TYPE || (LoaderResource2.LOAD_TYPE = {}));
+    /**
+     * The XHR ready states, used internally.
+     *
+     * @static
+     * @readonly
+     * @enum {string}
+     * @memberof PIXI.LoaderResource
+     */ var XHR_RESPONSE_TYPE1;
     (function(XHR_RESPONSE_TYPE) {
         /** string */ XHR_RESPONSE_TYPE["DEFAULT"] = "text";
         /** ArrayBuffer */ XHR_RESPONSE_TYPE["BUFFER"] = "arraybuffer";
@@ -22567,7 +22589,7 @@ function _noop$1() {}
         /** Document */ XHR_RESPONSE_TYPE["DOCUMENT"] = "document";
         /** Object */ XHR_RESPONSE_TYPE["JSON"] = "json";
         /** String */ XHR_RESPONSE_TYPE["TEXT"] = "text";
-    })(LoaderResource2.XHR_RESPONSE_TYPE || (LoaderResource2.XHR_RESPONSE_TYPE = {}));
+    })(XHR_RESPONSE_TYPE1 = LoaderResource2.XHR_RESPONSE_TYPE || (LoaderResource2.XHR_RESPONSE_TYPE = {}));
     LoaderResource2._loadTypeMap = {
         // images
         gif: LoaderResource2.LOAD_TYPE.IMAGE,
@@ -22626,7 +22648,7 @@ function _noop$1() {}
 /**
  * Smaller version of the async library constructs.
  * @ignore
- */ function _noop() {}
+ */ function _noop$1() {}
 /**
  * Ensures a function is only called once.
  * @ignore
@@ -22665,11 +22687,11 @@ function _noop$1() {}
         var _this = this;
         if (concurrency === void 0) concurrency = 1;
         this.workers = 0;
-        this.saturated = _noop;
-        this.unsaturated = _noop;
-        this.empty = _noop;
-        this.drain = _noop;
-        this.error = _noop;
+        this.saturated = _noop$1;
+        this.unsaturated = _noop$1;
+        this.empty = _noop$1;
+        this.drain = _noop$1;
+        this.error = _noop$1;
         this.started = false;
         this.paused = false;
         this._tasks = [];
@@ -22684,7 +22706,7 @@ function _noop$1() {}
                 }, 1);
                 return;
             }
-            var item = new AsyncQueueItem(data, typeof callback === 'function' ? callback : _noop);
+            var item = new AsyncQueueItem(data, typeof callback === 'function' ? callback : _noop$1);
             if (insertAtFront) _this._tasks.unshift(item);
             else _this._tasks.push(item);
             setTimeout(_this.process, 1);
@@ -22727,7 +22749,7 @@ function _noop$1() {}
     };
     AsyncQueue1.prototype.kill = function() {
         this.workers = 0;
-        this.drain = _noop;
+        this.drain = _noop$1;
         this.started = false;
         this._tasks = [];
     };
@@ -23287,6 +23309,7 @@ var _keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=
     }
     return output;
 }
+var Url = self.URL || self.webkitURL;
 /**
  * A middleware for transforming XHR loaded Blobs into more useful objects
  *
@@ -23322,8 +23345,7 @@ var _keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=
                 return;
             }
         } else if (resource.data.type.indexOf('image') === 0) {
-            var Url_1 = globalThis.URL || globalThis.webkitURL;
-            var src_1 = Url_1.createObjectURL(resource.data);
+            var src_1 = Url.createObjectURL(resource.data);
             resource.blob = resource.data;
             resource.data = new Image();
             resource.data.src = src_1;
@@ -23331,7 +23353,7 @@ var _keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=
             // cleanup the no longer used blob after the image loads
             // TODO: Is this correct? Will the image be invalid after revoking?
             resource.data.onload = function() {
-                Url_1.revokeObjectURL(src_1);
+                Url.revokeObjectURL(src_1);
                 resource.data.onload = null;
                 next();
             };
@@ -23372,8 +23394,8 @@ parcelHelpers.export(exports, "TYPES_TO_BYTES_PER_COMPONENT", ()=>TYPES_TO_BYTES
 parcelHelpers.export(exports, "TYPES_TO_BYTES_PER_PIXEL", ()=>TYPES_TO_BYTES_PER_PIXEL
 );
 /*!
- * @pixi/compressed-textures - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/compressed-textures - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/compressed-textures is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -23381,7 +23403,7 @@ parcelHelpers.export(exports, "TYPES_TO_BYTES_PER_PIXEL", ()=>TYPES_TO_BYTES_PER
 var _loaders = require("@pixi/loaders");
 var _utils = require("@pixi/utils");
 var _constants = require("@pixi/constants");
-var _a$2;
+var _a;
 /**
  * WebGL internal formats, including compressed texture formats provided by extensions
  *
@@ -23457,14 +23479,14 @@ var _a$2;
  * @memberof PIXI
  * @static
  * @ignore
- */ var INTERNAL_FORMAT_TO_BYTES_PER_PIXEL = (_a$2 = {}, // WEBGL_compressed_texture_s3tc
-_a$2[INTERNAL_FORMATS.COMPRESSED_RGB_S3TC_DXT1_EXT] = 0.5, _a$2[INTERNAL_FORMATS.COMPRESSED_RGBA_S3TC_DXT1_EXT] = 0.5, _a$2[INTERNAL_FORMATS.COMPRESSED_RGBA_S3TC_DXT3_EXT] = 1, _a$2[INTERNAL_FORMATS.COMPRESSED_RGBA_S3TC_DXT5_EXT] = 1, // WEBGL_compressed_texture_s3tc
-_a$2[INTERNAL_FORMATS.COMPRESSED_SRGB_S3TC_DXT1_EXT] = 0.5, _a$2[INTERNAL_FORMATS.COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT] = 0.5, _a$2[INTERNAL_FORMATS.COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT] = 1, _a$2[INTERNAL_FORMATS.COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT] = 1, // WEBGL_compressed_texture_etc
-_a$2[INTERNAL_FORMATS.COMPRESSED_R11_EAC] = 0.5, _a$2[INTERNAL_FORMATS.COMPRESSED_SIGNED_R11_EAC] = 0.5, _a$2[INTERNAL_FORMATS.COMPRESSED_RG11_EAC] = 1, _a$2[INTERNAL_FORMATS.COMPRESSED_SIGNED_RG11_EAC] = 1, _a$2[INTERNAL_FORMATS.COMPRESSED_RGB8_ETC2] = 0.5, _a$2[INTERNAL_FORMATS.COMPRESSED_RGBA8_ETC2_EAC] = 1, _a$2[INTERNAL_FORMATS.COMPRESSED_SRGB8_ETC2] = 0.5, _a$2[INTERNAL_FORMATS.COMPRESSED_SRGB8_ALPHA8_ETC2_EAC] = 1, _a$2[INTERNAL_FORMATS.COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2] = 0.5, _a$2[INTERNAL_FORMATS.COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2] = 0.5, // WEBGL_compressed_texture_pvrtc
-_a$2[INTERNAL_FORMATS.COMPRESSED_RGB_PVRTC_4BPPV1_IMG] = 0.5, _a$2[INTERNAL_FORMATS.COMPRESSED_RGBA_PVRTC_4BPPV1_IMG] = 0.5, _a$2[INTERNAL_FORMATS.COMPRESSED_RGB_PVRTC_2BPPV1_IMG] = 0.25, _a$2[INTERNAL_FORMATS.COMPRESSED_RGBA_PVRTC_2BPPV1_IMG] = 0.25, // WEBGL_compressed_texture_etc1
-_a$2[INTERNAL_FORMATS.COMPRESSED_RGB_ETC1_WEBGL] = 0.5, // @see https://www.khronos.org/registry/OpenGL/extensions/AMD/AMD_compressed_ATC_texture.txt
+ */ var INTERNAL_FORMAT_TO_BYTES_PER_PIXEL = (_a = {}, // WEBGL_compressed_texture_s3tc
+_a[INTERNAL_FORMATS.COMPRESSED_RGB_S3TC_DXT1_EXT] = 0.5, _a[INTERNAL_FORMATS.COMPRESSED_RGBA_S3TC_DXT1_EXT] = 0.5, _a[INTERNAL_FORMATS.COMPRESSED_RGBA_S3TC_DXT3_EXT] = 1, _a[INTERNAL_FORMATS.COMPRESSED_RGBA_S3TC_DXT5_EXT] = 1, // WEBGL_compressed_texture_s3tc
+_a[INTERNAL_FORMATS.COMPRESSED_SRGB_S3TC_DXT1_EXT] = 0.5, _a[INTERNAL_FORMATS.COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT] = 0.5, _a[INTERNAL_FORMATS.COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT] = 1, _a[INTERNAL_FORMATS.COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT] = 1, // WEBGL_compressed_texture_etc
+_a[INTERNAL_FORMATS.COMPRESSED_R11_EAC] = 0.5, _a[INTERNAL_FORMATS.COMPRESSED_SIGNED_R11_EAC] = 0.5, _a[INTERNAL_FORMATS.COMPRESSED_RG11_EAC] = 1, _a[INTERNAL_FORMATS.COMPRESSED_SIGNED_RG11_EAC] = 1, _a[INTERNAL_FORMATS.COMPRESSED_RGB8_ETC2] = 0.5, _a[INTERNAL_FORMATS.COMPRESSED_RGBA8_ETC2_EAC] = 1, _a[INTERNAL_FORMATS.COMPRESSED_SRGB8_ETC2] = 0.5, _a[INTERNAL_FORMATS.COMPRESSED_SRGB8_ALPHA8_ETC2_EAC] = 1, _a[INTERNAL_FORMATS.COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2] = 0.5, _a[INTERNAL_FORMATS.COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2] = 0.5, // WEBGL_compressed_texture_pvrtc
+_a[INTERNAL_FORMATS.COMPRESSED_RGB_PVRTC_4BPPV1_IMG] = 0.5, _a[INTERNAL_FORMATS.COMPRESSED_RGBA_PVRTC_4BPPV1_IMG] = 0.5, _a[INTERNAL_FORMATS.COMPRESSED_RGB_PVRTC_2BPPV1_IMG] = 0.25, _a[INTERNAL_FORMATS.COMPRESSED_RGBA_PVRTC_2BPPV1_IMG] = 0.25, // WEBGL_compressed_texture_etc1
+_a[INTERNAL_FORMATS.COMPRESSED_RGB_ETC1_WEBGL] = 0.5, // @see https://www.khronos.org/registry/OpenGL/extensions/AMD/AMD_compressed_ATC_texture.txt
 // WEBGL_compressed_texture_atc
-_a$2[INTERNAL_FORMATS.COMPRESSED_RGB_ATC_WEBGL] = 0.5, _a$2[INTERNAL_FORMATS.COMPRESSED_RGBA_ATC_EXPLICIT_ALPHA_WEBGL] = 1, _a$2[INTERNAL_FORMATS.COMPRESSED_RGBA_ATC_INTERPOLATED_ALPHA_WEBGL] = 1, _a$2);
+_a[INTERNAL_FORMATS.COMPRESSED_RGB_ATC_WEBGL] = 0.5, _a[INTERNAL_FORMATS.COMPRESSED_RGBA_ATC_EXPLICIT_ALPHA_WEBGL] = 1, _a[INTERNAL_FORMATS.COMPRESSED_RGBA_ATC_INTERPOLATED_ALPHA_WEBGL] = 1, _a);
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use
@@ -23947,49 +23969,35 @@ function __generator(thisArg, body) {
             });
         } else next();
     };
-    Object.defineProperty(CompressedTextureLoader1, "textureExtensions", {
-        /**  Map of available texture extensions. */ get: function() {
-            if (!CompressedTextureLoader1._textureExtensions) {
-                // Auto-detect WebGL compressed-texture extensions
-                var canvas = document.createElement('canvas');
-                var gl = canvas.getContext('webgl');
-                if (!gl) {
-                    console.warn('WebGL not available for compressed textures. Silently failing.');
-                    return {};
-                }
-                var extensions = {
-                    s3tc: gl.getExtension('WEBGL_compressed_texture_s3tc'),
-                    s3tc_sRGB: gl.getExtension('WEBGL_compressed_texture_s3tc_srgb'),
-                    etc: gl.getExtension('WEBGL_compressed_texture_etc'),
-                    etc1: gl.getExtension('WEBGL_compressed_texture_etc1'),
-                    pvrtc: gl.getExtension('WEBGL_compressed_texture_pvrtc') || gl.getExtension('WEBKIT_WEBGL_compressed_texture_pvrtc'),
-                    atc: gl.getExtension('WEBGL_compressed_texture_atc'),
-                    astc: gl.getExtension('WEBGL_compressed_texture_astc')
-                };
-                CompressedTextureLoader1._textureExtensions = extensions;
-            }
-            return CompressedTextureLoader1._textureExtensions;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(CompressedTextureLoader1, "textureFormats", {
-        /** Map of available texture formats. */ get: function() {
-            if (!CompressedTextureLoader1._textureFormats) {
-                var extensions = CompressedTextureLoader1.textureExtensions;
-                CompressedTextureLoader1._textureFormats = {};
-                // Assign all available compressed-texture formats
-                for(var extensionName in extensions){
-                    var extension = extensions[extensionName];
-                    if (!extension) continue;
-                    Object.assign(CompressedTextureLoader1._textureFormats, Object.getPrototypeOf(extension));
-                }
-            }
-            return CompressedTextureLoader1._textureFormats;
-        },
-        enumerable: false,
-        configurable: true
-    });
+    /**
+     * Detects the available compressed texture extensions on the device.
+     * @ignore
+     */ CompressedTextureLoader1.add = function() {
+        // Auto-detect WebGL compressed-texture extensions
+        var canvas = document.createElement('canvas');
+        var gl = canvas.getContext('webgl');
+        if (!gl) {
+            console.warn('WebGL not available for compressed textures. Silently failing.');
+            return;
+        }
+        var extensions = {
+            s3tc: gl.getExtension('WEBGL_compressed_texture_s3tc'),
+            s3tc_sRGB: gl.getExtension('WEBGL_compressed_texture_s3tc_srgb'),
+            etc: gl.getExtension('WEBGL_compressed_texture_etc'),
+            etc1: gl.getExtension('WEBGL_compressed_texture_etc1'),
+            pvrtc: gl.getExtension('WEBGL_compressed_texture_pvrtc') || gl.getExtension('WEBKIT_WEBGL_compressed_texture_pvrtc'),
+            atc: gl.getExtension('WEBGL_compressed_texture_atc'),
+            astc: gl.getExtension('WEBGL_compressed_texture_astc')
+        };
+        CompressedTextureLoader1.textureExtensions = extensions;
+        CompressedTextureLoader1.textureFormats = {};
+        // Assign all available compressed-texture formats
+        for(var extensionName in extensions){
+            var extension = extensions[extensionName];
+            if (!extension) continue;
+            Object.assign(CompressedTextureLoader1.textureFormats, Object.getPrototypeOf(extension));
+        }
+    };
     return CompressedTextureLoader1;
 }();
 /**
@@ -24026,7 +24034,7 @@ function __generator(thisArg, body) {
     });
     return result;
 }
-var _a$1, _b$1;
+var _a$1, _b;
 // Set DDS files to be loaded as an ArrayBuffer
 _loaders.LoaderResource.setExtensionXhrType('dds', _loaders.LoaderResource.XHR_RESPONSE_TYPE.BUFFER);
 var DDS_MAGIC_SIZE = 4;
@@ -24235,9 +24243,9 @@ var DDS_RESOURCE_MISC_TEXTURECUBE = 4;
  * Maps {@link DXGI_FORMAT} to types/internal-formats (see {@link PIXI.TYPES}, {@link PIXI.INTERNAL_FORMATS})
  *
  * @ignore
- */ var DXGI_TO_FORMAT = (_b$1 = {}, // WEBGL_compressed_texture_s3tc
-_b$1[DXGI_FORMAT.DXGI_FORMAT_BC1_TYPELESS] = INTERNAL_FORMATS.COMPRESSED_RGBA_S3TC_DXT1_EXT, _b$1[DXGI_FORMAT.DXGI_FORMAT_BC1_UNORM] = INTERNAL_FORMATS.COMPRESSED_RGBA_S3TC_DXT1_EXT, _b$1[DXGI_FORMAT.DXGI_FORMAT_BC2_TYPELESS] = INTERNAL_FORMATS.COMPRESSED_RGBA_S3TC_DXT3_EXT, _b$1[DXGI_FORMAT.DXGI_FORMAT_BC2_UNORM] = INTERNAL_FORMATS.COMPRESSED_RGBA_S3TC_DXT3_EXT, _b$1[DXGI_FORMAT.DXGI_FORMAT_BC3_TYPELESS] = INTERNAL_FORMATS.COMPRESSED_RGBA_S3TC_DXT5_EXT, _b$1[DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM] = INTERNAL_FORMATS.COMPRESSED_RGBA_S3TC_DXT5_EXT, // WEBGL_compressed_texture_s3tc_srgb
-_b$1[DXGI_FORMAT.DXGI_FORMAT_BC1_UNORM_SRGB] = INTERNAL_FORMATS.COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT, _b$1[DXGI_FORMAT.DXGI_FORMAT_BC2_UNORM_SRGB] = INTERNAL_FORMATS.COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT, _b$1[DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM_SRGB] = INTERNAL_FORMATS.COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT, _b$1);
+ */ var DXGI_TO_FORMAT = (_b = {}, // WEBGL_compressed_texture_s3tc
+_b[DXGI_FORMAT.DXGI_FORMAT_BC1_TYPELESS] = INTERNAL_FORMATS.COMPRESSED_RGBA_S3TC_DXT1_EXT, _b[DXGI_FORMAT.DXGI_FORMAT_BC1_UNORM] = INTERNAL_FORMATS.COMPRESSED_RGBA_S3TC_DXT1_EXT, _b[DXGI_FORMAT.DXGI_FORMAT_BC2_TYPELESS] = INTERNAL_FORMATS.COMPRESSED_RGBA_S3TC_DXT3_EXT, _b[DXGI_FORMAT.DXGI_FORMAT_BC2_UNORM] = INTERNAL_FORMATS.COMPRESSED_RGBA_S3TC_DXT3_EXT, _b[DXGI_FORMAT.DXGI_FORMAT_BC3_TYPELESS] = INTERNAL_FORMATS.COMPRESSED_RGBA_S3TC_DXT5_EXT, _b[DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM] = INTERNAL_FORMATS.COMPRESSED_RGBA_S3TC_DXT5_EXT, // WEBGL_compressed_texture_s3tc_srgb
+_b[DXGI_FORMAT.DXGI_FORMAT_BC1_UNORM_SRGB] = INTERNAL_FORMATS.COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT, _b[DXGI_FORMAT.DXGI_FORMAT_BC2_UNORM_SRGB] = INTERNAL_FORMATS.COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT, _b[DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM_SRGB] = INTERNAL_FORMATS.COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT, _b);
 /**
  * @class
  * @memberof PIXI
@@ -24351,7 +24359,7 @@ _b$1[DXGI_FORMAT.DXGI_FORMAT_BC1_UNORM_SRGB] = INTERNAL_FORMATS.COMPRESSED_SRGB_
     };
     return DDSLoader1;
 }();
-var _a, _b, _c;
+var _a$2, _b$1, _c;
 // Set KTX files to be loaded as an ArrayBuffer
 _loaders.LoaderResource.setExtensionXhrType('ktx', _loaders.LoaderResource.XHR_RESPONSE_TYPE.BUFFER);
 /**
@@ -24408,12 +24416,12 @@ _loaders.LoaderResource.setExtensionXhrType('ktx', _loaders.LoaderResource.XHR_R
  * Maps {@link PIXI.TYPES} to the bytes taken per component, excluding those ones that are bit-fields.
  *
  * @ignore
- */ var TYPES_TO_BYTES_PER_COMPONENT = (_a = {}, _a[_constants.TYPES.UNSIGNED_BYTE] = 1, _a[_constants.TYPES.UNSIGNED_SHORT] = 2, _a[_constants.TYPES.INT] = 4, _a[_constants.TYPES.UNSIGNED_INT] = 4, _a[_constants.TYPES.FLOAT] = 4, _a[_constants.TYPES.HALF_FLOAT] = 8, _a);
+ */ var TYPES_TO_BYTES_PER_COMPONENT = (_a$2 = {}, _a$2[_constants.TYPES.UNSIGNED_BYTE] = 1, _a$2[_constants.TYPES.UNSIGNED_SHORT] = 2, _a$2[_constants.TYPES.INT] = 4, _a$2[_constants.TYPES.UNSIGNED_INT] = 4, _a$2[_constants.TYPES.FLOAT] = 4, _a$2[_constants.TYPES.HALF_FLOAT] = 8, _a$2);
 /**
  * Number of components in each {@link PIXI.FORMATS}
  *
  * @ignore
- */ var FORMATS_TO_COMPONENTS = (_b = {}, _b[_constants.FORMATS.RGBA] = 4, _b[_constants.FORMATS.RGB] = 3, _b[_constants.FORMATS.RG] = 2, _b[_constants.FORMATS.RED] = 1, _b[_constants.FORMATS.LUMINANCE] = 1, _b[_constants.FORMATS.LUMINANCE_ALPHA] = 2, _b[_constants.FORMATS.ALPHA] = 1, _b);
+ */ var FORMATS_TO_COMPONENTS = (_b$1 = {}, _b$1[_constants.FORMATS.RGBA] = 4, _b$1[_constants.FORMATS.RGB] = 3, _b$1[_constants.FORMATS.RG] = 2, _b$1[_constants.FORMATS.RED] = 1, _b$1[_constants.FORMATS.LUMINANCE] = 1, _b$1[_constants.FORMATS.LUMINANCE_ALPHA] = 2, _b$1[_constants.FORMATS.ALPHA] = 1, _b$1);
 /**
  * Number of bytes per pixel in bit-field types in {@link PIXI.TYPES}
  *
@@ -24624,8 +24632,8 @@ parcelHelpers.export(exports, "ParticleContainer", ()=>ParticleContainer
 parcelHelpers.export(exports, "ParticleRenderer", ()=>ParticleRenderer
 );
 /*!
- * @pixi/particle-container - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/particle-container - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/particle-container is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -25261,8 +25269,8 @@ parcelHelpers.export(exports, "Prepare", ()=>Prepare
 parcelHelpers.export(exports, "TimeLimiter", ()=>TimeLimiter
 );
 /*!
- * @pixi/prepare - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/prepare - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/prepare is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -25751,8 +25759,8 @@ parcelHelpers.export(exports, "LineStyle", ()=>LineStyle
 parcelHelpers.export(exports, "graphicsUtils", ()=>graphicsUtils
 );
 /*!
- * @pixi/graphics - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/graphics - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/graphics is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -27385,11 +27393,7 @@ var tmpBounds = new _display.Bounds();
             var lineStyle = data.lineStyle;
             var nextMatrix = data.matrix || _math.Matrix.IDENTITY;
             var lineWidth = 0;
-            if (lineStyle && lineStyle.visible) {
-                lineWidth = lineStyle.width;
-                if (type !== _math.SHAPES.POLY || data.fillStyle.visible) lineWidth *= Math.max(0, lineStyle.alignment);
-                else lineWidth *= Math.max(lineStyle.alignment, 1 - lineStyle.alignment);
-            }
+            if (lineStyle && lineStyle.visible) lineWidth = lineStyle.width * Math.max(0, lineStyle.alignment);
             if (curMatrix !== nextMatrix) {
                 if (!sequenceBounds.isEmpty()) {
                     bounds.addBoundsMatrix(sequenceBounds, curMatrix);
@@ -28198,7 +28202,7 @@ var DEFAULT_SHADERS = {};
             // and that only gets created if we actually need it..
             // but may be more than one plugins for graphics
             if (!DEFAULT_SHADERS[pluginName]) {
-                var MAX_TEXTURES = renderer.plugins[pluginName].MAX_TEXTURES;
+                var MAX_TEXTURES = renderer.plugins.batch.MAX_TEXTURES;
                 var sampleValues = new Int32Array(MAX_TEXTURES);
                 for(var i = 0; i < MAX_TEXTURES; i++)sampleValues[i] = i;
                 var uniforms = {
@@ -28388,8 +28392,8 @@ parcelHelpers.export(exports, "TextMetrics", ()=>TextMetrics
 parcelHelpers.export(exports, "TextStyle", ()=>TextStyle
 );
 /*!
- * @pixi/text - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/text - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/text is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -29120,8 +29124,8 @@ function getColor(color) {
      * @param wordWrap - Override for if word-wrap should be applied to the text.
      * @param canvas - optional specification of the canvas to use for measuring.
      * @return Measured width and height of the text.
-     */ TextMetrics1.measureText = function(text, style, wordWrap, canvas) {
-        if (canvas === void 0) canvas = TextMetrics1._canvas;
+     */ TextMetrics1.measureText = function(text, style, wordWrap, canvas1) {
+        if (canvas1 === void 0) canvas1 = TextMetrics1._canvas;
         wordWrap = wordWrap === undefined || wordWrap === null ? style.wordWrap : wordWrap;
         var font = style.toFontString();
         var fontProperties = TextMetrics1.measureFont(font);
@@ -29131,9 +29135,9 @@ function getColor(color) {
             fontProperties.fontSize = style.fontSize;
             fontProperties.ascent = style.fontSize;
         }
-        var context = canvas.getContext('2d');
+        var context = canvas1.getContext('2d');
         context.font = font;
-        var outputText = wordWrap ? TextMetrics1.wordWrap(text, style, canvas) : text;
+        var outputText = wordWrap ? TextMetrics1.wordWrap(text, style, canvas1) : text;
         var lines = outputText.split(/(?:\r\n|\r|\n)/);
         var lineWidths = new Array(lines.length);
         var maxLineWidth = 0;
@@ -29157,9 +29161,9 @@ function getColor(color) {
      * @param style - the style to use when wrapping
      * @param canvas - optional specification of the canvas to use for measuring.
      * @return New string with new lines applied where required
-     */ TextMetrics1.wordWrap = function(text, style, canvas) {
-        if (canvas === void 0) canvas = TextMetrics1._canvas;
-        var context = canvas.getContext('2d');
+     */ TextMetrics1.wordWrap = function(text, style, canvas2) {
+        if (canvas2 === void 0) canvas2 = TextMetrics1._canvas;
+        var context = canvas2.getContext('2d');
         var width = 0;
         var line = '';
         var lines = '';
@@ -29448,7 +29452,7 @@ function getColor(color) {
             descent: 0,
             fontSize: 0
         };
-        var canvas = TextMetrics1._canvas;
+        var canvas3 = TextMetrics1._canvas;
         var context = TextMetrics1._context;
         context.font = font;
         var metricsString = TextMetrics1.METRICS_STRING + TextMetrics1.BASELINE_SYMBOL;
@@ -29456,8 +29460,8 @@ function getColor(color) {
         var baseline = Math.ceil(context.measureText(TextMetrics1.BASELINE_SYMBOL).width);
         var height = Math.ceil(TextMetrics1.HEIGHT_MULTIPLIER * baseline);
         baseline = baseline * TextMetrics1.BASELINE_MULTIPLIER | 0;
-        canvas.width = width;
-        canvas.height = height;
+        canvas3.width = width;
+        canvas3.height = height;
         context.fillStyle = '#f00';
         context.fillRect(0, 0, width, height);
         context.font = font;
@@ -29505,47 +29509,6 @@ function getColor(color) {
         if (font) delete TextMetrics1._fonts[font];
         else TextMetrics1._fonts = {};
     };
-    Object.defineProperty(TextMetrics1, "_canvas", {
-        /**
-         * Cached canvas element for measuring text
-         * TODO: this should be private, but isn't because of backward compat, will fix later.
-         *
-         * @ignore
-         */ get: function() {
-            if (!TextMetrics1.__canvas) {
-                var canvas = void 0;
-                try {
-                    // OffscreenCanvas2D measureText can be up to 40% faster.
-                    var c = new OffscreenCanvas(0, 0);
-                    var context = c.getContext('2d');
-                    if (context && context.measureText) {
-                        TextMetrics1.__canvas = c;
-                        return c;
-                    }
-                    canvas = document.createElement('canvas');
-                } catch (ex) {
-                    canvas = document.createElement('canvas');
-                }
-                canvas.width = canvas.height = 10;
-                TextMetrics1.__canvas = canvas;
-            }
-            return TextMetrics1.__canvas;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(TextMetrics1, "_context", {
-        /**
-         * TODO: this should be private, but isn't because of backward compat, will fix later.
-         *
-         * @ignore
-         */ get: function() {
-            if (!TextMetrics1.__context) TextMetrics1.__context = TextMetrics1._canvas.getContext('2d');
-            return TextMetrics1.__context;
-        },
-        enumerable: false,
-        configurable: true
-    });
     return TextMetrics1;
 }();
 /**
@@ -29557,7 +29520,33 @@ function getColor(color) {
  * @property {number} fontSize - Font size from ascent to descent
  * @memberof PIXI.TextMetrics
  * @private
- */ /**
+ */ var canvas = function() {
+    try {
+        // OffscreenCanvas2D measureText can be up to 40% faster.
+        var c = new OffscreenCanvas(0, 0);
+        var context = c.getContext('2d');
+        if (context && context.measureText) return c;
+        return document.createElement('canvas');
+    } catch (ex) {
+        return document.createElement('canvas');
+    }
+}();
+canvas.width = canvas.height = 10;
+/**
+ * Cached canvas element for measuring text
+ *
+ * @memberof PIXI.TextMetrics
+ * @type {HTMLCanvasElement}
+ * @private
+ */ TextMetrics._canvas = canvas;
+/**
+ * Cache for context to use.
+ *
+ * @memberof PIXI.TextMetrics
+ * @type {CanvasRenderingContext2D}
+ * @private
+ */ TextMetrics._context = canvas.getContext('2d');
+/**
  * Cache of {@see PIXI.TextMetrics.FontMetrics} objects.
  *
  * @memberof PIXI.TextMetrics
@@ -29674,21 +29663,21 @@ function getColor(color) {
      * @param text - The string that you would like the text to display
      * @param {object|PIXI.TextStyle} [style] - The style parameters
      * @param canvas - The canvas element for drawing text
-     */ function Text1(text, style, canvas) {
+     */ function Text1(text, style, canvas4) {
         var _this = this;
         var ownCanvas = false;
-        if (!canvas) {
-            canvas = document.createElement('canvas');
+        if (!canvas4) {
+            canvas4 = document.createElement('canvas');
             ownCanvas = true;
         }
-        canvas.width = 3;
-        canvas.height = 3;
-        var texture = _core.Texture.from(canvas);
+        canvas4.width = 3;
+        canvas4.height = 3;
+        var texture = _core.Texture.from(canvas4);
         texture.orig = new _math.Rectangle();
         texture.trim = new _math.Rectangle();
         _this = _super.call(this, texture) || this;
         _this._ownCanvas = ownCanvas;
-        _this.canvas = canvas;
+        _this.canvas = canvas4;
         _this.context = _this.canvas.getContext('2d');
         _this._resolution = _settings.settings.RESOLUTION;
         _this._autoResolution = true;
@@ -29845,12 +29834,12 @@ function getColor(color) {
         }
     };
     /** Updates texture size based on canvas size. */ Text1.prototype.updateTexture = function() {
-        var canvas = this.canvas;
+        var canvas5 = this.canvas;
         if (this._style.trim) {
-            var trimmed = _utils.trimCanvas(canvas);
+            var trimmed = _utils.trimCanvas(canvas5);
             if (trimmed.data) {
-                canvas.width = trimmed.width;
-                canvas.height = trimmed.height;
+                canvas5.width = trimmed.width;
+                canvas5.height = trimmed.height;
                 this.context.putImageData(trimmed.data, 0, 0);
             }
         }
@@ -29858,15 +29847,15 @@ function getColor(color) {
         var style = this._style;
         var padding = style.trim ? 0 : style.padding;
         var baseTexture = texture.baseTexture;
-        texture.trim.width = texture._frame.width = canvas.width / this._resolution;
-        texture.trim.height = texture._frame.height = canvas.height / this._resolution;
+        texture.trim.width = texture._frame.width = canvas5.width / this._resolution;
+        texture.trim.height = texture._frame.height = canvas5.height / this._resolution;
         texture.trim.x = -padding;
         texture.trim.y = -padding;
         texture.orig.width = texture._frame.width - padding * 2;
         texture.orig.height = texture._frame.height - padding * 2;
         // call sprite onTextureUpdate to update scale if _width or _height were set
         this._onTextureUpdate();
-        baseTexture.setRealSize(canvas.width, canvas.height, this._resolution);
+        baseTexture.setRealSize(canvas5.width, canvas5.height, this._resolution);
         texture.updateUvs();
         // Recursively updates transform of all objects from the root to this one
         this._recursivePostUpdateTransform();
@@ -30111,8 +30100,8 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Sprite", ()=>Sprite
 );
 /*!
- * @pixi/sprite - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/sprite - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/sprite is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -30532,8 +30521,8 @@ parcelHelpers.export(exports, "Spritesheet", ()=>Spritesheet
 parcelHelpers.export(exports, "SpritesheetLoader", ()=>SpritesheetLoader
 );
 /*!
- * @pixi/spritesheet - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/spritesheet - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/spritesheet is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -30812,8 +30801,8 @@ parcelHelpers.export(exports, "TilingSprite", ()=>TilingSprite
 parcelHelpers.export(exports, "TilingSpriteRenderer", ()=>TilingSpriteRenderer
 );
 /*!
- * @pixi/sprite-tiling - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/sprite-tiling - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/sprite-tiling is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -31144,8 +31133,8 @@ parcelHelpers.export(exports, "BitmapFontLoader", ()=>BitmapFontLoader
 parcelHelpers.export(exports, "BitmapText", ()=>BitmapText
 );
 /*!
- * @pixi/text-bitmap - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/text-bitmap - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/text-bitmap is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -32002,7 +31991,7 @@ var charRenderDataPool = [];
         _this._tint = tint;
         _this._fontName = fontName;
         _this._fontSize = fontSize || BitmapFont.available[fontName].size;
-        _this.text = text;
+        _this._text = text;
         _this._maxWidth = maxWidth;
         _this._maxLineHeight = 0;
         _this._letterSpacing = letterSpacing;
@@ -32611,8 +32600,8 @@ parcelHelpers.export(exports, "MeshGeometry", ()=>MeshGeometry
 parcelHelpers.export(exports, "MeshMaterial", ()=>MeshMaterial
 );
 /*!
- * @pixi/mesh - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/mesh - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/mesh is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -33141,8 +33130,8 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "AlphaFilter", ()=>AlphaFilter
 );
 /*!
- * @pixi/filter-alpha - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/filter-alpha - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/filter-alpha is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -33229,8 +33218,8 @@ parcelHelpers.export(exports, "BlurFilter", ()=>BlurFilter
 parcelHelpers.export(exports, "BlurFilterPass", ()=>BlurFilterPass
 );
 /*!
- * @pixi/filter-blur - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/filter-blur - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/filter-blur is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -33360,8 +33349,8 @@ function generateBlurFragSource(kernelSize) {
     return fragSource;
 }
 /*!
- * @pixi/constants - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/constants - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/constants is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -34100,8 +34089,8 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "ColorMatrixFilter", ()=>ColorMatrixFilter
 );
 /*!
- * @pixi/filter-color-matrix - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/filter-color-matrix - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/filter-color-matrix is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -34963,8 +34952,8 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "DisplacementFilter", ()=>DisplacementFilter
 );
 /*!
- * @pixi/filter-displacement - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/filter-displacement - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/filter-displacement is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -35093,8 +35082,8 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "FXAAFilter", ()=>FXAAFilter
 );
 /*!
- * @pixi/filter-fxaa - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/filter-fxaa - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/filter-fxaa is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -35153,8 +35142,8 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "NoiseFilter", ()=>NoiseFilter
 );
 /*!
- * @pixi/filter-noise - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/filter-noise - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/filter-noise is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -35246,8 +35235,8 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "CacheData", ()=>CacheData
 );
 /*!
- * @pixi/mixin-cache-as-bitmap - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/mixin-cache-as-bitmap - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/mixin-cache-as-bitmap is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -35258,8 +35247,8 @@ var _math = require("@pixi/math");
 var _utils = require("@pixi/utils");
 var _settings = require("@pixi/settings");
 /*!
- * @pixi/constants - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/constants - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/constants is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -36105,8 +36094,8 @@ Object.defineProperties(_display.DisplayObject.prototype, {
 
 },{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/display":"b9G7r","@pixi/math":"dbvNN","@pixi/utils":"2DWCn","@pixi/settings":"01wFC","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gorRP":[function(require,module,exports) {
 /*!
- * @pixi/mixin-get-child-by-name - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/mixin-get-child-by-name - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/mixin-get-child-by-name is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -36142,8 +36131,8 @@ Object.defineProperties(_display.DisplayObject.prototype, {
 
 },{"@pixi/display":"b9G7r"}],"1c09v":[function(require,module,exports) {
 /*!
- * @pixi/mixin-get-global-position - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/mixin-get-global-position - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/mixin-get-global-position is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -36186,8 +36175,8 @@ parcelHelpers.export(exports, "SimplePlane", ()=>SimplePlane
 parcelHelpers.export(exports, "SimpleRope", ()=>SimpleRope
 );
 /*!
- * @pixi/mesh-extras - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/mesh-extras - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/mesh-extras is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -36764,8 +36753,8 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "AnimatedSprite", ()=>AnimatedSprite
 );
 /*!
- * @pixi/sprite-animated - v6.3.2
- * Compiled Wed, 04 May 2022 17:49:13 UTC
+ * @pixi/sprite-animated - v6.3.0
+ * Compiled Wed, 23 Mar 2022 18:58:56 UTC
  *
  * @pixi/sprite-animated is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -37060,8 +37049,8 @@ function __extends(d, b) {
     return AnimatedSprite1;
 }(_sprite.Sprite);
 
-},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3tLwD":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "fish.510b053c.png" + "?" + Date.now();
+},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iMP3P":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble.56ab0ad6.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
 "use strict";
@@ -37097,12 +37086,31 @@ exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
 
-},{}],"iMP3P":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble.56ab0ad6.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"jj9Eg":[function(require,module,exports) {
+},{}],"jj9Eg":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "water.59ff4e4f.jpg" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
+},{"./helpers/bundle-url":"lgJ39"}],"7HgQx":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "shark.29daeb95.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"hvPGN":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "smog.9c9d6c35.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"fKPBr":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Smog", ()=>Smog
+);
+class Smog {
+    constructor(x, y, radius){
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+    }
+    update() {
+        this.radius--;
+    }
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
 
 //# sourceMappingURL=index.901f85c2.js.map
