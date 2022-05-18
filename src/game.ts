@@ -47,7 +47,7 @@ export class Game {
         this.textStyle = new PIXI.TextStyle({
             fontSize: 31,
             fontWeight: "bold",
-            trim: true
+            trim: false
         });
 
         this.basicText = new PIXI.Text(`Score ${this.score}`, this.textStyle);
@@ -61,13 +61,9 @@ export class Game {
         this.player.x -= this.speed
         this.object.x += this.speed
 
-
-
         if (this.collision(this.player, this.object)) {
-
-            if (!this.stoplogging) {
-                this.stoplogging = true;
-                this.score++;
+            this.score++;
+            console.log(this.score)
 
                 console.log("player touches object")
 
@@ -76,11 +72,11 @@ export class Game {
                 this.basicText.x = 10
                 this.basicText.y = 10
                 this.pixi.stage.addChild(this.basicText)
-            }
+            
             this.speed = 0;
 
-            this.pixi.stage.removeChild(this.object)
-
+            this.pixi.stage.removeChild(this.object)  
+            this.object = new PIXI.Sprite()                                     
 
         }
     }

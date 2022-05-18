@@ -555,7 +555,7 @@ class Game {
         this.textStyle = new _pixiJs.TextStyle({
             fontSize: 31,
             fontWeight: "bold",
-            trim: true
+            trim: false
         });
         this.basicText = new _pixiJs.Text(`Score ${this.score}`, this.textStyle);
         this.basicText.x = 10;
@@ -566,18 +566,17 @@ class Game {
         this.player.x -= this.speed;
         this.object.x += this.speed;
         if (this.collision(this.player, this.object)) {
-            if (!this.stoplogging) {
-                this.stoplogging = true;
-                this.score++;
-                console.log("player touches object");
-                this.pixi.stage.removeChild(this.basicText);
-                this.basicText = new _pixiJs.Text(`Score ${this.score}`, this.textStyle);
-                this.basicText.x = 10;
-                this.basicText.y = 10;
-                this.pixi.stage.addChild(this.basicText);
-            }
+            this.score++;
+            console.log(this.score);
+            console.log("player touches object");
+            this.pixi.stage.removeChild(this.basicText);
+            this.basicText = new _pixiJs.Text(`Score ${this.score}`, this.textStyle);
+            this.basicText.x = 10;
+            this.basicText.y = 10;
+            this.pixi.stage.addChild(this.basicText);
             this.speed = 0;
             this.pixi.stage.removeChild(this.object);
+            this.object = new _pixiJs.Sprite();
         }
     }
     collision(sprite1, sprite2) {
