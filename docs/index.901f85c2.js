@@ -515,37 +515,80 @@ function hmrAcceptRun(bundle, id) {
 
 },{}],"edeGs":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-var _pixiJs = require("pixi.js");
-var _fishPng = require("./images/fish.png");
-var _fishPngDefault = parcelHelpers.interopDefault(_fishPng);
-var _bubblePng = require("./images/bubble.png");
-var _bubblePngDefault = parcelHelpers.interopDefault(_bubblePng);
-var _waterJpg = require("./images/water.jpg");
-var _waterJpgDefault = parcelHelpers.interopDefault(_waterJpg);
-//
-// STAP 1 - maak een pixi canvas
-//
-const pixi = new _pixiJs.Application({
-    width: 800,
-    height: 450
-});
-document.body.appendChild(pixi.view);
-//
-// STAP 2 - preload alle afbeeldingen
-//
-const loader = new _pixiJs.Loader();
-loader.add('fishTexture', _fishPngDefault.default).add('bubbleTexture', _bubblePngDefault.default).add('waterTexture', _waterJpgDefault.default);
-loader.load(()=>loadCompleted()
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Game", ()=>Game
 );
-//
-// STAP 3 - maak een sprite als de afbeeldingen zijn geladen
-//
-function loadCompleted() {
-    let fish = new _pixiJs.Sprite(loader.resources["fishTexture"].texture);
-    pixi.stage.addChild(fish);
+var _pixiJs = require("pixi.js");
+var _screenshot12Png = require("./images/Screenshot_12.png");
+var _screenshot12PngDefault = parcelHelpers.interopDefault(_screenshot12Png);
+var _screenshot13Png = require("./images/Screenshot_13.png");
+var _screenshot13PngDefault = parcelHelpers.interopDefault(_screenshot13Png);
+class Game {
+    speed = 4;
+    stoplogging = false;
+    score = 0;
+    constructor(){
+        this.pixi = new _pixiJs.Application({
+            width: 800,
+            height: 500,
+            backgroundColor: 2782184
+        });
+        document.body.appendChild(this.pixi.view);
+        this.loader = new _pixiJs.Loader();
+        this.loader.add("playerTexture", _screenshot12PngDefault.default).add("objectTexture", _screenshot13PngDefault.default);
+        this.loader.load(()=>this.doneLoading()
+        );
+    }
+    doneLoading() {
+        this.player = new _pixiJs.Sprite(this.loader.resources["playerTexture"].texture);
+        this.object = new _pixiJs.Sprite(this.loader.resources["playerTexture"].texture);
+        this.player.x = 790;
+        this.player.y = this.pixi.view.height / 2;
+        this.player.anchor.set(0.5);
+        this.object.x = 10;
+        this.object.y = this.pixi.view.height / 2;
+        this.object.anchor.set(0.5);
+        this.pixi.stage.addChild(this.player);
+        this.pixi.stage.addChild(this.object);
+        this.pixi.ticker.add((delta)=>this.update(delta)
+        );
+        this.textStyle = new _pixiJs.TextStyle({
+            fontSize: 31,
+            fontWeight: "bold",
+            trim: true
+        });
+        this.basicText = new _pixiJs.Text(`Score ${this.score}`, this.textStyle);
+        this.basicText.x = 10;
+        this.basicText.y = 10;
+        this.pixi.stage.addChild(this.basicText);
+    }
+    update(delta) {
+        this.player.x -= this.speed;
+        this.object.x += this.speed;
+        if (this.collision(this.player, this.object)) {
+            if (!this.stoplogging) {
+                this.stoplogging = true;
+                this.score++;
+                console.log("player touches object");
+                this.pixi.stage.removeChild(this.basicText);
+                this.basicText = new _pixiJs.Text(`Score ${this.score}`, this.textStyle);
+                this.basicText.x = 10;
+                this.basicText.y = 10;
+                this.pixi.stage.addChild(this.basicText);
+            }
+            this.speed = 0;
+            this.pixi.stage.removeChild(this.object);
+        }
+    }
+    collision(sprite1, sprite2) {
+        const bounds1 = sprite1.getBounds();
+        const bounds2 = sprite2.getBounds();
+        return bounds1.x < bounds2.x + bounds2.width && bounds1.x + bounds1.width > bounds2.x && bounds1.y < bounds2.y + bounds2.height && bounds1.y + bounds1.height > bounds2.y;
+    }
 }
+new Game();
 
-},{"pixi.js":"dsYej","./images/fish.png":"3tLwD","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./images/Screenshot_12.png":"bw4XA","./images/Screenshot_13.png":"idBkq"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37060,8 +37103,8 @@ function __extends(d, b) {
     return AnimatedSprite1;
 }(_sprite.Sprite);
 
-},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3tLwD":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "fish.510b053c.png" + "?" + Date.now();
+},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bw4XA":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "Screenshot_12.d972b953.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
 "use strict";
@@ -37097,11 +37140,8 @@ exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
 
-},{}],"iMP3P":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble.56ab0ad6.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"jj9Eg":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "water.59ff4e4f.jpg" + "?" + Date.now();
+},{}],"idBkq":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "Screenshot_13.8e992c8a.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
 
