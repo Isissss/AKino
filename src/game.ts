@@ -1,27 +1,27 @@
 import * as PIXI from 'pixi.js'
+import { Shark } from "./Shark"
 import fishImage from "./images/shark.png"
 import bubbleImage from "./images/bubble.png"
 import waterImage from "./images/water.jpg"
 
-//
-// STAP 1 - maak een pixi canvas
-//
-const pixi = new PIXI.Application({ width: 800, height: 450 })
-document.body.appendChild(pixi.view)
+class Game {
+    pixi: PIXI.Application
+    loader: PIXI.Loader
 
-//
-// STAP 2 - preload alle afbeeldingen
-//
-const loader = new PIXI.Loader()
-loader.add('fishTexture', fishImage)
-      .add('bubbleTexture', bubbleImage)
-      .add('waterTexture', waterImage)
-loader.load(()=>loadCompleted())
+    constructor() {
+        this.pixi = new PIXI.Application({ width: 800, height: 450, backgroundColor: 0xAAAAA })
+        document.body.appendChild(this.pixi.view)
 
-//
-// STAP 3 - maak een sprite als de afbeeldingen zijn geladen
-//
-function loadCompleted() {
-    let fish = new PIXI.Sprite(loader.resources["fishTexture"].texture!)
-    pixi.stage.addChild(fish)
+        this.loader = new PIXI.Loader()
+        this.loader.add('fishTexture', fishImage)
+            .add('bubbleTexture', bubbleImage)
+            .add('waterTexture', waterImage)
+        this.loader.load(() => this.loadCompleted())
+    }
+
+    loadCompleted() {
+        let fish = new Shark(this.loader.resources["fishTexture"].texture!)
+        this.pixi.stage.addChild(fish)
+    }
 }
+new Game
