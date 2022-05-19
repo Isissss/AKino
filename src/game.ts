@@ -1,5 +1,4 @@
 import * as PIXI from "pixi.js"
-import { Application } from "pixi.js"
 import player from "./images/Screenshot_12.png"
 import object from "./images/Screenshot_13.png"
 
@@ -10,7 +9,6 @@ export class Game {
     player: PIXI.Sprite
     object: PIXI.Sprite
     speed: number = 4
-    stoplogging: boolean = false
     score: number = 0
     basicText: PIXI.Text;
     textStyle: PIXI.TextStyle;
@@ -65,18 +63,15 @@ export class Game {
             this.score++;
             console.log(this.score)
 
-                console.log("player touches object")
+            console.log("player touches object")
 
-                this.pixi.stage.removeChild(this.basicText)
-                this.basicText = new PIXI.Text(`Score ${this.score}`, this.textStyle);
-                this.basicText.x = 10
-                this.basicText.y = 10
-                this.pixi.stage.addChild(this.basicText)
-            
+            this.basicText.text = `Score ${this.score}`
+
             this.speed = 0;
+            this.object.x = 10;
 
-            this.pixi.stage.removeChild(this.object)  
-            this.object = new PIXI.Sprite()                                     
+            this.pixi.stage.removeChild(this.object)
+            this.object = new PIXI.Sprite()
 
         }
     }

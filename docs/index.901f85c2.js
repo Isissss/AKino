@@ -525,7 +525,6 @@ var _screenshot13Png = require("./images/Screenshot_13.png");
 var _screenshot13PngDefault = parcelHelpers.interopDefault(_screenshot13Png);
 class Game {
     speed = 4;
-    stoplogging = false;
     score = 0;
     constructor(){
         this.pixi = new _pixiJs.Application({
@@ -569,12 +568,9 @@ class Game {
             this.score++;
             console.log(this.score);
             console.log("player touches object");
-            this.pixi.stage.removeChild(this.basicText);
-            this.basicText = new _pixiJs.Text(`Score ${this.score}`, this.textStyle);
-            this.basicText.x = 10;
-            this.basicText.y = 10;
-            this.pixi.stage.addChild(this.basicText);
+            this.basicText.text = `Score ${this.score}`;
             this.speed = 0;
+            this.object.x = 10;
             this.pixi.stage.removeChild(this.object);
             this.object = new _pixiJs.Sprite();
         }
@@ -587,7 +583,7 @@ class Game {
 }
 new Game();
 
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./images/Screenshot_12.png":"bw4XA","./images/Screenshot_13.png":"idBkq"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./images/Screenshot_12.png":"bw4XA","./images/Screenshot_13.png":"idBkq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
