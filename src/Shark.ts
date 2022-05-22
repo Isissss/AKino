@@ -6,6 +6,8 @@ export class Shark extends PIXI.Sprite {
 
   constructor(texture: PIXI.Texture) {
     super(texture)
+    this.x = 100
+    this.y = 100
 
 
     window.addEventListener("keydown", (e: KeyboardEvent) => this.onKeyDown(e))
@@ -15,6 +17,7 @@ export class Shark extends PIXI.Sprite {
   update() {
     this.x += this.xspeed
     this.y += this.yspeed
+    console.log(this.x)
   }
 
   jump() {
@@ -29,23 +32,28 @@ export class Shark extends PIXI.Sprite {
       case "A":
       case "ARROWLEFT":
         this.xspeed = -7
+        console.log("a")
+
         break
       case "D":
       case "ARROWRIGHT":
         this.xspeed = 7
+        console.log("d")
         break
       case "W":
       case "ARROWUP":
         this.yspeed = -7
+        console.log("w")
         break
       case "S":
       case "ARROWDOWN":
         this.yspeed = 7
+        console.log("s")
         break
     }
   }
 
-  private onKeyUp(e: KeyboardEvent): void {
+  onKeyUp(e: KeyboardEvent): void {
     switch (e.key.toUpperCase()) {
       case " ":
         break;
