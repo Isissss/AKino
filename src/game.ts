@@ -27,9 +27,9 @@ class Game {
 
     loadCompleted() {
         this.shark = new Shark(this.loader.resources["sharkTexture"].texture!)
-        this.pixi.stage.addChild(this.shark)
         this.smog = new Smog(this.pixi.screen.width / 2, this.pixi.screen.height / 2, 100)
         this.pixi.stage.addChild(this.smog)
+        this.pixi.stage.addChild(this.shark)
         this.pixi.ticker.add((delta) => this.update())
 
     }
