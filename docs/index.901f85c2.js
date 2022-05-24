@@ -516,36 +516,43 @@ function hmrAcceptRun(bundle, id) {
 },{}],"edeGs":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _pixiJs = require("pixi.js");
-var _shark = require("./Shark");
 var _sharkPng = require("./images/shark.png");
 var _sharkPngDefault = parcelHelpers.interopDefault(_sharkPng);
 var _bubblePng = require("./images/bubble.png");
 var _bubblePngDefault = parcelHelpers.interopDefault(_bubblePng);
 var _waterJpg = require("./images/water.jpg");
 var _waterJpgDefault = parcelHelpers.interopDefault(_waterJpg);
+var _smogPng = require("./images/smog.png");
+var _smogPngDefault = parcelHelpers.interopDefault(_smogPng);
+var _smog = require("./smog");
 class Game {
     constructor(){
         this.pixi = new _pixiJs.Application({
             width: 800,
             height: 450,
-            backgroundColor: 699050
+            backgroundColor: 0
         });
         document.body.appendChild(this.pixi.view);
+        this.pixi.stage.interactive = true;
         this.loader = new _pixiJs.Loader();
-        this.loader.add('sharkTexture', _sharkPngDefault.default).add('bubbleTexture', _bubblePngDefault.default).add('waterTexture', _waterJpgDefault.default);
+        this.loader.add('fishTexture', _sharkPngDefault.default).add('bubbleTexture', _bubblePngDefault.default).add('waterTexture', _waterJpgDefault.default).add('smogTexture', _smogPngDefault.default);
         this.loader.load(()=>this.loadCompleted()
         );
     }
     loadCompleted() {
-        let shark = new _shark.Shark(this.loader.resources["sharkTexture"].texture);
-        this.pixi.stage.addChild(shark);
-        this.pixi.ticker.add((delta)=>shark.update()
+        this.s = new _smog.Smog(this.pixi.screen.width / 2, this.pixi.screen.height / 2, 100);
+        this.pixi.stage.addChild(this.s);
+        this.pixi.ticker.add((delta)=>this.update(delta)
         );
     }
+    update(delta) {
+        //console.log("Updating...")
+        this.s.update();
+    }
 }
-new Game;
+let g = new Game;
 
-},{"pixi.js":"dsYej","./Shark":"8upe1","./images/shark.png":"7HgQx","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./images/shark.png":"7HgQx","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","./images/smog.png":"hvPGN","./smog":"fKPBr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37060,80 +37067,7 @@ function __extends(d, b) {
     return AnimatedSprite1;
 }(_sprite.Sprite);
 
-},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8upe1":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Shark", ()=>Shark
-);
-var _pixiJs = require("pixi.js");
-class Shark extends _pixiJs.Sprite {
-    xspeed = 0;
-    yspeed = 0;
-    constructor(texture){
-        super(texture);
-        this.x = 100;
-        this.y = 100;
-        window.addEventListener("keydown", (e)=>this.onKeyDown(e)
-        );
-        window.addEventListener("keyup", (e)=>this.onKeyUp(e)
-        );
-    }
-    update() {
-        this.x += this.xspeed;
-        this.y += this.yspeed;
-        console.log(this.x);
-    }
-    jump() {
-        console.log("jump!");
-    }
-    onKeyDown(e) {
-        switch(e.key.toUpperCase()){
-            case " ":
-                this.jump();
-                break;
-            case "A":
-            case "ARROWLEFT":
-                this.xspeed = -7;
-                console.log("a");
-                break;
-            case "D":
-            case "ARROWRIGHT":
-                this.xspeed = 7;
-                console.log("d");
-                break;
-            case "W":
-            case "ARROWUP":
-                this.yspeed = -7;
-                console.log("w");
-                break;
-            case "S":
-            case "ARROWDOWN":
-                this.yspeed = 7;
-                console.log("s");
-                break;
-        }
-    }
-    onKeyUp(e) {
-        switch(e.key.toUpperCase()){
-            case " ":
-                break;
-            case "A":
-            case "D":
-            case "ARROWLEFT":
-            case "ARROWRIGHT":
-                this.xspeed = 0;
-                break;
-            case "W":
-            case "S":
-            case "ARROWUP":
-            case "ARROWDOWN":
-                this.yspeed = 0;
-                break;
-        }
-    }
-}
-
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7HgQx":[function(require,module,exports) {
+},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7HgQx":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "shark.29daeb95.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
@@ -37176,6 +37110,46 @@ module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble
 },{"./helpers/bundle-url":"lgJ39"}],"jj9Eg":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "water.59ff4e4f.jpg" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
+},{"./helpers/bundle-url":"lgJ39"}],"hvPGN":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "smog.9c9d6c35.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"fKPBr":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Smog", ()=>Smog
+);
+var _pixiJs = require("pixi.js");
+class Smog extends _pixiJs.Graphics {
+    constructor(x, y, radius){
+        super();
+        this.xPos = x;
+        this.yPos = y;
+        this.radius = radius;
+        this.interactive = true;
+        this.draw();
+    }
+    draw() {
+        this.beginFill(16777215);
+        this.drawCircle(this.xPos, this.yPos, this.radius);
+        this.endFill;
+    }
+    updatePos() {}
+    update() {
+        if (this.radius >= 1) {
+            this.radius -= 0.1;
+            this.clear();
+            this.draw();
+            console.log(`radius: ${this.radius}`);
+        } else {
+            console.log(`radius is already 0`);
+            console.log('resetting circle to 200 radius');
+            this.radius = 200;
+            this.clear();
+            this.draw();
+        }
+    }
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","pixi.js":"dsYej"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
 
 //# sourceMappingURL=index.901f85c2.js.map

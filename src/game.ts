@@ -3,10 +3,16 @@ import { Shark } from "./Shark"
 import sharkImage from "./images/shark.png"
 import bubbleImage from "./images/bubble.png"
 import waterImage from "./images/water.jpg"
+import smokeImage from "./images/smog.png"
+import { Smog } from './smog'
+import { Graphics } from 'pixi.js'
 
 class Game {
     pixi: PIXI.Application
     loader: PIXI.Loader
+    shark: Shark
+    smog: Smog
+    graphics: Graphics
 
     constructor() {
         this.pixi = new PIXI.Application({ width: 800, height: 450, backgroundColor: 0xAAAAA })
@@ -20,9 +26,18 @@ class Game {
     }
 
     loadCompleted() {
-        let shark = new Shark(this.loader.resources["sharkTexture"].texture!)
-        this.pixi.stage.addChild(shark)
-        this.pixi.ticker.add((delta) => shark.update())
+        this.shark = new Shark(this.loader.resources["sharkTexture"].texture!)
+        this.pixi.stage.addChild(this.shark)
+        this.smog = new Smog(this.pixi.screen.width / 2, this.pixi.screen.height / 2, 100)
+        this.pixi.stage.addChild(this.smog)
+        this.pixi.ticker.add((delta) => this.update())
+
+    }
+    update() {
+        this.shark.update()
+        this.smog.update()
+
     }
 }
-new Game
+
+let g = new Game
