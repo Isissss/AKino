@@ -8,6 +8,7 @@ import fishImage from "./images/fish.png"
 import { Smog } from './smog'
 import { Graphics } from 'pixi.js'
 import { Spawn } from './Spawn'
+import { Object } from './Object'
 
 export class Game {
     pixi: PIXI.Application
@@ -16,6 +17,7 @@ export class Game {
     smog: Smog
     graphics: Graphics
     spawner: Spawn
+    objects : Object[] = []
 
     constructor() {
         this.pixi = new PIXI.Application({ width: 800, height: 450, backgroundColor: 0xAAAAA })
@@ -43,6 +45,18 @@ export class Game {
         this.spawner.update()
         this.shark.update()
         this.smog.update()
+        for (let i = 0; i < this.objects.length; i++) {
+            if (this.collision(this.shark, this.objects[i])) {
+
+
+                console.log("player touches object")
+    
+    
+                this.objects[i].destroy();
+                this.objects.splice(i, 1)
+    
+            }  
+        }
         if (this.collision(this.shark, this.spawner)) {
 
 
@@ -54,8 +68,9 @@ export class Game {
         }
     }
 
-    public spawnObject(sprite: PIXI.Sprite) {
-        this.pixi.stage.addChild(sprite)
+    public spawnObject(object: Object) {
+        this.pixi.stage.addChild(object)
+        this.objects.push(object)
     }
 
     collision(sprite1: PIXI.Sprite, sprite2: PIXI.Sprite) {

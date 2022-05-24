@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js'
 //import { Sprite, Texture } from 'pixi.js'
 import { Game } from './game'
+import { Object } from './Object'
 
 export class Spawn extends PIXI.Sprite{
     private timer = 0
@@ -21,9 +22,7 @@ export class Spawn extends PIXI.Sprite{
         this.timer += 1
         console.log(this.timer)
         if (this.timer > this.delay) {
-            let sprite = new PIXI.Sprite(this.objectTexture)
-            sprite.x = this.x
-            sprite.y = this.y
+            let sprite = new Object(this.objectTexture)
             this.timer = 0
             this.game.spawnObject(sprite)
             console.log("hello")

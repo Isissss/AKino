@@ -531,6 +531,7 @@ var _fishPngDefault = parcelHelpers.interopDefault(_fishPng);
 var _smog = require("./smog");
 var _spawn = require("./Spawn");
 class Game {
+    objects = [];
     constructor(){
         this.pixi = new _pixiJs.Application({
             width: 800,
@@ -557,13 +558,19 @@ class Game {
         this.spawner.update();
         this.shark.update();
         this.smog.update();
+        for(let i = 0; i < this.objects.length; i++)if (this.collision(this.shark, this.objects[i])) {
+            console.log("player touches object");
+            this.objects[i].destroy();
+            this.objects.splice(i, 1);
+        }
         if (this.collision(this.shark, this.spawner)) {
             console.log("player touches object");
             this.spawner.destroy();
         }
     }
-    spawnObject(sprite) {
-        this.pixi.stage.addChild(sprite);
+    spawnObject(object) {
+        this.pixi.stage.addChild(object);
+        this.objects.push(object);
     }
     collision(sprite1, sprite2) {
         const bounds1 = sprite1.getBounds();
@@ -573,7 +580,7 @@ class Game {
 }
 let g = new Game;
 
-},{"pixi.js":"dsYej","./images/shark.png":"7HgQx","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./Shark":"8upe1","./smog":"fKPBr","./Spawn":"6JGD8","./images/fish.png":"3tLwD"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./Shark":"8upe1","./images/shark.png":"7HgQx","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","./images/fish.png":"3tLwD","./smog":"fKPBr","./Spawn":"6JGD8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37088,50 +37095,7 @@ function __extends(d, b) {
     return AnimatedSprite1;
 }(_sprite.Sprite);
 
-},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7HgQx":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "shark.29daeb95.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
-"use strict";
-var bundleURL = {};
-function getBundleURLCached(id) {
-    var value = bundleURL[id];
-    if (!value) {
-        value = getBundleURL();
-        bundleURL[id] = value;
-    }
-    return value;
-}
-function getBundleURL() {
-    try {
-        throw new Error();
-    } catch (err) {
-        var matches = ('' + err.stack).match(/(https?|file|ftp):\/\/[^)\n]+/g);
-        if (matches) // The first two stack frames will be this function and getBundleURLCached.
-        // Use the 3rd one, which will be a runtime in the original bundle.
-        return getBaseURL(matches[2]);
-    }
-    return '/';
-}
-function getBaseURL(url) {
-    return ('' + url).replace(/^((?:https?|file|ftp):\/\/.+)\/[^/]+$/, '$1') + '/';
-} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
-function getOrigin(url) {
-    var matches = ('' + url).match(/(https?|file|ftp):\/\/[^/]+/);
-    if (!matches) throw new Error('Origin not found');
-    return matches[0];
-}
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-exports.getOrigin = getOrigin;
-
-},{}],"iMP3P":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble.56ab0ad6.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"jj9Eg":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "water.59ff4e4f.jpg" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"8upe1":[function(require,module,exports) {
+},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8upe1":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Shark", ()=>Shark
@@ -37204,7 +37168,53 @@ class Shark extends _pixiJs.Sprite {
     }
 }
 
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fKPBr":[function(require,module,exports) {
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7HgQx":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "shark.29daeb95.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
+"use strict";
+var bundleURL = {};
+function getBundleURLCached(id) {
+    var value = bundleURL[id];
+    if (!value) {
+        value = getBundleURL();
+        bundleURL[id] = value;
+    }
+    return value;
+}
+function getBundleURL() {
+    try {
+        throw new Error();
+    } catch (err) {
+        var matches = ('' + err.stack).match(/(https?|file|ftp):\/\/[^)\n]+/g);
+        if (matches) // The first two stack frames will be this function and getBundleURLCached.
+        // Use the 3rd one, which will be a runtime in the original bundle.
+        return getBaseURL(matches[2]);
+    }
+    return '/';
+}
+function getBaseURL(url) {
+    return ('' + url).replace(/^((?:https?|file|ftp):\/\/.+)\/[^/]+$/, '$1') + '/';
+} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
+function getOrigin(url) {
+    var matches = ('' + url).match(/(https?|file|ftp):\/\/[^/]+/);
+    if (!matches) throw new Error('Origin not found');
+    return matches[0];
+}
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+exports.getOrigin = getOrigin;
+
+},{}],"iMP3P":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble.56ab0ad6.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"jj9Eg":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "water.59ff4e4f.jpg" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"3tLwD":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "fish.510b053c.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"fKPBr":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Smog", ()=>Smog
@@ -37247,6 +37257,7 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Spawn", ()=>Spawn
 );
 var _pixiJs = require("pixi.js");
+var _object = require("./Object");
 class Spawn extends _pixiJs.Sprite {
     timer = 0;
     constructor(x, y, delay, texture, game){
@@ -37261,9 +37272,7 @@ class Spawn extends _pixiJs.Sprite {
         this.timer += 1;
         console.log(this.timer);
         if (this.timer > this.delay) {
-            let sprite = new _pixiJs.Sprite(this.objectTexture);
-            sprite.x = this.x;
-            sprite.y = this.y;
+            let sprite = new _object.Object(this.objectTexture);
             this.timer = 0;
             this.game.spawnObject(sprite);
             console.log("hello");
@@ -37271,9 +37280,25 @@ class Spawn extends _pixiJs.Sprite {
     }
 }
 
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3tLwD":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "fish.510b053c.png" + "?" + Date.now();
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./Object":"fjBpM"}],"fjBpM":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Object", ()=>Object
+);
+var _pixiJs = require("pixi.js");
+class Object extends _pixiJs.Sprite {
+    constructor(texture){
+        super(texture);
+        this.x = 10;
+        this.y = 400;
+        this.speed = 4;
+        this.anchor.set(0.5);
+    }
+    update() {
+        this.x += this.speed;
+    }
+}
 
-},{"./helpers/bundle-url":"lgJ39"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
 
 //# sourceMappingURL=index.901f85c2.js.map
