@@ -515,6 +515,9 @@ function hmrAcceptRun(bundle, id) {
 
 },{}],"edeGs":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Game", ()=>Game
+);
 var _pixiJs = require("pixi.js");
 var _shark = require("./Shark");
 var _sharkPng = require("./images/shark.png");
@@ -523,6 +526,7 @@ var _bubblePng = require("./images/bubble.png");
 var _bubblePngDefault = parcelHelpers.interopDefault(_bubblePng);
 var _waterJpg = require("./images/water.jpg");
 var _waterJpgDefault = parcelHelpers.interopDefault(_waterJpg);
+<<<<<<< HEAD
 var _smog = require("./smog");
 class Game {
     constructor(){
@@ -542,10 +546,44 @@ class Game {
         this.smog = new _smog.Smog(this.pixi.screen.width / 2, this.pixi.screen.height / 2, 100);
         this.pixi.stage.addChild(this.smog);
         this.pixi.stage.addChild(this.shark);
+=======
+var _spawn = require("./Spawn");
+class Game {
+    //
+    // STAP 1 - maak een pixi canvas
+    //
+    constructor(){
+        this.pixi = new _pixiJs.Application({
+            width: 800,
+            height: 450
+        });
+        document.body.appendChild(this.pixi.view);
+        //
+        // STAP 2 - preload alle afbeeldingen
+        //
+        this.loader = new _pixiJs.Loader();
+        this.loader.add('fishTexture', _fishPngDefault.default).add('bubbleTexture', _bubblePngDefault.default).add('waterTexture', _waterJpgDefault.default);
+        this.loader.load(()=>this.loadCompleted()
+        );
+    }
+    //
+    // STAP 2 - preload alle afbeeldingen
+    //
+    //
+    // STAP 3 - maak een sprite als de afbeeldingen zijn geladen
+    //
+    loadCompleted() {
+        let water = new _pixiJs.Sprite(this.loader.resources["waterTexture"].texture);
+        water.scale.set(0.625);
+        this.spawner = new _spawn.Spawn(100, 100, 1000, this.loader.resources["fishTexture"].texture, this);
+        this.pixi.stage.addChild(water);
+        this.pixi.stage.addChild(this.spawner);
+>>>>>>> origin/Spawner
         this.pixi.ticker.add((delta)=>this.update()
         );
     }
     update() {
+<<<<<<< HEAD
         this.shark.update();
         this.smog.update();
     }
@@ -553,6 +591,17 @@ class Game {
 let g = new Game;
 
 },{"pixi.js":"dsYej","./images/shark.png":"7HgQx","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./Shark":"8upe1","./smog":"fKPBr"}],"dsYej":[function(require,module,exports) {
+=======
+        this.spawner.update();
+    }
+    spawnObject(sprite) {
+        this.pixi.stage.addChild(sprite);
+    }
+}
+new Game;
+
+},{"pixi.js":"dsYej","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./images/fish.png":"3tLwD","./Spawn":"6JGD8"}],"dsYej":[function(require,module,exports) {
+>>>>>>> origin/Spawner
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37067,8 +37116,13 @@ function __extends(d, b) {
     return AnimatedSprite1;
 }(_sprite.Sprite);
 
+<<<<<<< HEAD
 },{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7HgQx":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "shark.29daeb95.png" + "?" + Date.now();
+=======
+},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iMP3P":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble.56ab0ad6.png" + "?" + Date.now();
+>>>>>>> origin/Spawner
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
 "use strict";
@@ -37104,12 +37158,10 @@ exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
 
-},{}],"iMP3P":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble.56ab0ad6.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"jj9Eg":[function(require,module,exports) {
+},{}],"jj9Eg":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "water.59ff4e4f.jpg" + "?" + Date.now();
 
+<<<<<<< HEAD
 },{"./helpers/bundle-url":"lgJ39"}],"8upe1":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
@@ -37216,6 +37268,37 @@ class Smog extends _pixiJs.Graphics {
             this.radius = 200;
             this.clear();
             this.draw();
+=======
+},{"./helpers/bundle-url":"lgJ39"}],"3tLwD":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "fish.510b053c.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"6JGD8":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Spawn", ()=>Spawn
+);
+var _pixiJs = require("pixi.js");
+class Spawn extends _pixiJs.Sprite {
+    timer = 0;
+    constructor(x, y, delay, texture, game){
+        super();
+        this.game = game;
+        this.x = x;
+        this.y = y;
+        this.delay = delay;
+        this.objectTexture = texture;
+    }
+    update() {
+        this.timer += 1;
+        console.log(this.timer);
+        if (this.timer > this.delay) {
+            let sprite = new _pixiJs.Sprite(this.objectTexture);
+            sprite.x = this.x;
+            sprite.y = this.y;
+            this.timer = 0;
+            this.game.spawnObject(sprite);
+            console.log("hello");
+>>>>>>> origin/Spawner
         }
     }
 }
