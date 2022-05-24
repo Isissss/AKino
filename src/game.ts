@@ -1,17 +1,19 @@
 import * as PIXI from "pixi.js"
 import player from "./images/Screenshot_12.png"
 import object from "./images/Screenshot_13.png"
+import { Player } from "./Player"
+import { Object } from "./Object"
 
-export class Game {
-
+class Game {
     pixi: PIXI.Application
     loader: PIXI.Loader
-    player: PIXI.Sprite
-    object: PIXI.Sprite
+    player: Player
+    object: Object
     speed: number = 4
     score: number = 0
     basicText: PIXI.Text;
     textStyle: PIXI.TextStyle;
+
 
     constructor() {
         this.pixi = new PIXI.Application({ width: 800, height: 500, backgroundColor: 0x2a73e8 })
@@ -25,16 +27,9 @@ export class Game {
     }
 
     doneLoading() {
-        this.player = new PIXI.Sprite(this.loader.resources["playerTexture"].texture!)
-        this.object = new PIXI.Sprite(this.loader.resources["playerTexture"].texture!)
+        this.player = new Player(this.loader.resources["playerTexture"].texture!)
+        this.object = new Object(this.loader.resources["playerTexture"].texture!)
 
-        this.player.x = 790;
-        this.player.y = this.pixi.view.height / 2;
-        this.player.anchor.set(0.5);
-
-        this.object.x = 10;
-        this.object.y = this.pixi.view.height / 2;
-        this.object.anchor.set(0.5);
 
         this.pixi.stage.addChild(this.player);
         this.pixi.stage.addChild(this.object);
@@ -56,8 +51,8 @@ export class Game {
     }
 
     update(delta: number) {
-        this.player.x -= this.speed
-        this.object.x += this.speed
+        this.player.update()
+        this.object.update()
 
         if (this.collision(this.player, this.object)) {
             this.score++;
@@ -70,8 +65,7 @@ export class Game {
             this.speed = 0;
             this.object.x = 10;
 
-            this.pixi.stage.removeChild(this.object)
-            this.object = new PIXI.Sprite()
+            this.object.destroy();
 
         }
     }
