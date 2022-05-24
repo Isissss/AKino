@@ -557,9 +557,18 @@ class Game {
         this.spawner.update();
         this.shark.update();
         this.smog.update();
+        if (this.collision(this.shark, this.spawner)) {
+            console.log("player touches object");
+            this.spawner.destroy();
+        }
     }
     spawnObject(sprite) {
         this.pixi.stage.addChild(sprite);
+    }
+    collision(sprite1, sprite2) {
+        const bounds1 = sprite1.getBounds();
+        const bounds2 = sprite2.getBounds();
+        return bounds1.x < bounds2.x + bounds2.width && bounds1.x + bounds1.width > bounds2.x && bounds1.y < bounds2.y + bounds2.height && bounds1.y + bounds1.height > bounds2.y;
     }
 }
 let g = new Game;
