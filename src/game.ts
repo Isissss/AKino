@@ -4,17 +4,18 @@ import sharkImage from "./images/shark.png"
 import bubbleImage from "./images/bubble.png"
 import waterImage from "./images/water.jpg"
 import smokeImage from "./images/smog.png"
+import fishImage from "./images/fish.png"
 import { Smog } from './smog'
 import { Graphics } from 'pixi.js'
 import { Spawn } from './Spawn'
 
-class Game {
+export class Game {
     pixi: PIXI.Application
     loader: PIXI.Loader
     shark: Shark
     smog: Smog
     graphics: Graphics
-    spawner : Spawn
+    spawner: Spawn
 
     constructor() {
         this.pixi = new PIXI.Application({ width: 800, height: 450, backgroundColor: 0xAAAAA })
@@ -22,6 +23,7 @@ class Game {
 
         this.loader = new PIXI.Loader()
         this.loader.add('sharkTexture', sharkImage)
+            .add('fishTexture', fishImage)
             .add('bubbleTexture', bubbleImage)
             .add('waterTexture', waterImage)
         this.loader.load(() => this.loadCompleted())
@@ -43,7 +45,7 @@ class Game {
         this.smog.update()
 
     }
-    public spawnObject(sprite : PIXI.Sprite) {
+    public spawnObject(sprite: PIXI.Sprite) {
         this.pixi.stage.addChild(sprite)
     }
 }
