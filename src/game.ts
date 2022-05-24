@@ -5,7 +5,7 @@ import bubbleImage from "./images/bubble.png"
 import waterImage from "./images/water.jpg"
 import smokeImage from "./images/smog.png"
 import fishImage from "./images/fish.png"
-import { Smog } from './smog'
+import { Smog } from './Smog'
 import { Graphics } from 'pixi.js'
 import { Spawn } from './Spawn'
 import { Object } from './Object'
@@ -20,7 +20,7 @@ export class Game {
     objects : Object[] = []
 
     constructor() {
-        this.pixi = new PIXI.Application({ width: 800, height: 450, backgroundColor: 0xAAAAA })
+        this.pixi = new PIXI.Application({ width: window.innerWidth - 5, height: window.innerHeight - 5, backgroundColor: 0xAAAAA })
         document.body.appendChild(this.pixi.view)
 
         this.loader = new PIXI.Loader()
@@ -33,7 +33,7 @@ export class Game {
 
     loadCompleted() {
         this.shark = new Shark(this.loader.resources["sharkTexture"].texture!)
-        this.smog = new Smog(this.pixi.screen.width / 2, this.pixi.screen.height / 2, 100)
+        this.smog = new Smog(this.shark, 100)
         this.spawner = new Spawn(100, 100, 1000, this.loader.resources["fishTexture"].texture!, this)
         this.pixi.stage.addChild(this.smog)
         this.pixi.stage.addChild(this.spawner)
@@ -56,15 +56,6 @@ export class Game {
                 this.objects.splice(i, 1)
     
             }  
-        }
-        if (this.collision(this.shark, this.spawner)) {
-
-
-            console.log("player touches object")
-
-
-            this.spawner.destroy();
-
         }
     }
 

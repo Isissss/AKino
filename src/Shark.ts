@@ -8,6 +8,7 @@ export class Shark extends PIXI.Sprite {
     super(texture)
     this.x = 100
     this.y = 100
+    this.anchor.set(0.5,0.5)
 
 
     window.addEventListener("keydown", (e: KeyboardEvent) => this.onKeyDown(e))

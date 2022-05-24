@@ -528,14 +528,14 @@ var _waterJpg = require("./images/water.jpg");
 var _waterJpgDefault = parcelHelpers.interopDefault(_waterJpg);
 var _fishPng = require("./images/fish.png");
 var _fishPngDefault = parcelHelpers.interopDefault(_fishPng);
-var _smog = require("./smog");
+var _smog = require("./Smog");
 var _spawn = require("./Spawn");
 class Game {
     objects = [];
     constructor(){
         this.pixi = new _pixiJs.Application({
-            width: 800,
-            height: 450,
+            width: window.innerWidth - 5,
+            height: window.innerHeight - 5,
             backgroundColor: 699050
         });
         document.body.appendChild(this.pixi.view);
@@ -546,7 +546,7 @@ class Game {
     }
     loadCompleted() {
         this.shark = new _shark.Shark(this.loader.resources["sharkTexture"].texture);
-        this.smog = new _smog.Smog(this.pixi.screen.width / 2, this.pixi.screen.height / 2, 100);
+        this.smog = new _smog.Smog(this.shark, 100);
         this.spawner = new _spawn.Spawn(100, 100, 1000, this.loader.resources["fishTexture"].texture, this);
         this.pixi.stage.addChild(this.smog);
         this.pixi.stage.addChild(this.spawner);
@@ -563,10 +563,6 @@ class Game {
             this.objects[i].destroy();
             this.objects.splice(i, 1);
         }
-        if (this.collision(this.shark, this.spawner)) {
-            console.log("player touches object");
-            this.spawner.destroy();
-        }
     }
     spawnObject(object) {
         this.pixi.stage.addChild(object);
@@ -580,7 +576,7 @@ class Game {
 }
 let g = new Game;
 
-},{"pixi.js":"dsYej","./Shark":"8upe1","./images/shark.png":"7HgQx","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","./images/fish.png":"3tLwD","./smog":"fKPBr","./Spawn":"6JGD8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./images/shark.png":"7HgQx","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./Shark":"8upe1","./Spawn":"6JGD8","./images/fish.png":"3tLwD","./Smog":"608Py"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37095,7 +37091,50 @@ function __extends(d, b) {
     return AnimatedSprite1;
 }(_sprite.Sprite);
 
-},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8upe1":[function(require,module,exports) {
+},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7HgQx":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "shark.29daeb95.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
+"use strict";
+var bundleURL = {};
+function getBundleURLCached(id) {
+    var value = bundleURL[id];
+    if (!value) {
+        value = getBundleURL();
+        bundleURL[id] = value;
+    }
+    return value;
+}
+function getBundleURL() {
+    try {
+        throw new Error();
+    } catch (err) {
+        var matches = ('' + err.stack).match(/(https?|file|ftp):\/\/[^)\n]+/g);
+        if (matches) // The first two stack frames will be this function and getBundleURLCached.
+        // Use the 3rd one, which will be a runtime in the original bundle.
+        return getBaseURL(matches[2]);
+    }
+    return '/';
+}
+function getBaseURL(url) {
+    return ('' + url).replace(/^((?:https?|file|ftp):\/\/.+)\/[^/]+$/, '$1') + '/';
+} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
+function getOrigin(url) {
+    var matches = ('' + url).match(/(https?|file|ftp):\/\/[^/]+/);
+    if (!matches) throw new Error('Origin not found');
+    return matches[0];
+}
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+exports.getOrigin = getOrigin;
+
+},{}],"iMP3P":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble.56ab0ad6.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"jj9Eg":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "water.59ff4e4f.jpg" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"8upe1":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Shark", ()=>Shark
@@ -37108,6 +37147,7 @@ class Shark extends _pixiJs.Sprite {
         super(texture);
         this.x = 100;
         this.y = 100;
+        this.anchor.set(0.5, 0.5);
         window.addEventListener("keydown", (e)=>this.onKeyDown(e)
         );
         window.addEventListener("keyup", (e)=>this.onKeyUp(e)
@@ -37168,89 +37208,6 @@ class Shark extends _pixiJs.Sprite {
     }
 }
 
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7HgQx":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "shark.29daeb95.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
-"use strict";
-var bundleURL = {};
-function getBundleURLCached(id) {
-    var value = bundleURL[id];
-    if (!value) {
-        value = getBundleURL();
-        bundleURL[id] = value;
-    }
-    return value;
-}
-function getBundleURL() {
-    try {
-        throw new Error();
-    } catch (err) {
-        var matches = ('' + err.stack).match(/(https?|file|ftp):\/\/[^)\n]+/g);
-        if (matches) // The first two stack frames will be this function and getBundleURLCached.
-        // Use the 3rd one, which will be a runtime in the original bundle.
-        return getBaseURL(matches[2]);
-    }
-    return '/';
-}
-function getBaseURL(url) {
-    return ('' + url).replace(/^((?:https?|file|ftp):\/\/.+)\/[^/]+$/, '$1') + '/';
-} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
-function getOrigin(url) {
-    var matches = ('' + url).match(/(https?|file|ftp):\/\/[^/]+/);
-    if (!matches) throw new Error('Origin not found');
-    return matches[0];
-}
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-exports.getOrigin = getOrigin;
-
-},{}],"iMP3P":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble.56ab0ad6.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"jj9Eg":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "water.59ff4e4f.jpg" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"3tLwD":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "fish.510b053c.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"fKPBr":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Smog", ()=>Smog
-);
-var _pixiJs = require("pixi.js");
-class Smog extends _pixiJs.Graphics {
-    constructor(x, y, radius){
-        super();
-        this.xPos = x;
-        this.yPos = y;
-        this.radius = radius;
-        this.interactive = true;
-        this.draw();
-    }
-    draw() {
-        this.beginFill(16777215);
-        this.drawCircle(this.xPos, this.yPos, this.radius);
-        this.endFill;
-    }
-    updatePos() {}
-    update() {
-        if (this.radius >= 1) {
-            this.radius -= 0.1;
-            this.clear();
-            this.draw();
-            console.log(`radius: ${this.radius}`);
-        } else {
-            console.log(`radius is already 0`);
-            console.log('resetting circle to 200 radius');
-            this.radius = 200;
-            this.clear();
-            this.draw();
-        }
-    }
-}
-
 },{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6JGD8":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
@@ -37296,6 +37253,45 @@ class Object extends _pixiJs.Sprite {
     }
     update() {
         this.x += this.speed;
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3tLwD":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "fish.510b053c.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"608Py":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Smog", ()=>Smog
+);
+var _pixiJs = require("pixi.js");
+class Smog extends _pixiJs.Graphics {
+    constructor(player, radius){
+        super();
+        this.player = player;
+        this.radius = radius;
+        this.interactive = true;
+        this.draw();
+    }
+    draw() {
+        this.beginFill(16777215);
+        this.drawCircle(this.player.x, this.player.y, this.radius);
+        this.endFill;
+    }
+    updatePos() {}
+    update() {
+        if (this.radius >= 1) {
+            this.radius -= 0.1;
+            this.clear();
+            this.draw();
+            console.log(`radius: ${this.radius}`);
+        } else {
+            console.log(`radius is already 0`);
+            console.log('resetting circle to 200 radius');
+            this.radius = 200;
+            this.clear();
+            this.draw();
+        }
     }
 }
 

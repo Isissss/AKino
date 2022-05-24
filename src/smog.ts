@@ -1,19 +1,17 @@
 import * as PIXI from 'pixi.js'
-import { InteractionData } from 'pixi.js'
+import { Shark } from './Shark'
 
 
 export class Smog extends PIXI.Graphics{
 
-    xPos:number
-    yPos:number
+    player : Shark
     radius:number
     
 
 
-    constructor(x:number, y:number, radius:number){
+    constructor(player: Shark, radius:number){
         super()
-        this.xPos = x
-        this.yPos = y
+        this.player = player
         this.radius = radius
         this.interactive = true
         this.draw()
@@ -23,7 +21,7 @@ export class Smog extends PIXI.Graphics{
 
     draw() {
         this.beginFill(0xffffff)
-        this.drawCircle(this.xPos,this.yPos,this.radius)
+        this.drawCircle(this.player.x, this.player.y,this.radius)
         this.endFill
 
     }
