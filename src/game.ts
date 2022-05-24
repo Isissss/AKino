@@ -33,8 +33,8 @@ export class Game {
 
     loadCompleted() {
         this.shark = new Shark(this.loader.resources["sharkTexture"].texture!)
-        this.smog = new Smog(this.shark, 100)
-        this.spawner = new Spawn(100, 100, 1000, this.loader.resources["fishTexture"].texture!, this)
+        this.smog = new Smog(this.shark, window.innerWidth)
+        this.spawner = new Spawn(100, 100, (3 * 60), this.loader.resources["fishTexture"].texture!, this)
         this.pixi.stage.addChild(this.smog)
         this.pixi.stage.addChild(this.spawner)
         this.pixi.stage.addChild(this.shark)
