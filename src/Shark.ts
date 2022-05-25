@@ -8,7 +8,7 @@ export class Shark extends PIXI.Sprite {
     super(texture)
     this.x = 100
     this.y = 100
-    this.scale.set(0.3)
+    this.scale.set(0.3);
     this.anchor.set(0.5,0.5)
 
 
