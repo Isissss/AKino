@@ -37116,6 +37116,7 @@ class Shark extends _pixiJs.Sprite {
         super(texture);
         this.x = 100;
         this.y = 100;
+        this.scale.set(0.3);
         this.anchor.set(0.5, 0.5);
         window.addEventListener("keydown", (e)=>this.onKeyDown(e)
         );
