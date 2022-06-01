@@ -515,6 +515,9 @@ function hmrAcceptRun(bundle, id) {
 
 },{}],"edeGs":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Game", ()=>Game
+);
 var _pixiJs = require("pixi.js");
 var _shark = require("./Shark");
 var _sharkPng = require("./images/shark.png");
@@ -523,29 +526,60 @@ var _bubblePng = require("./images/bubble.png");
 var _bubblePngDefault = parcelHelpers.interopDefault(_bubblePng);
 var _waterJpg = require("./images/water.jpg");
 var _waterJpgDefault = parcelHelpers.interopDefault(_waterJpg);
+var _leafPng = require("./images/leaf.png");
+var _leafPngDefault = parcelHelpers.interopDefault(_leafPng);
+var _dinoPng = require("./images/dino.png");
+var _dinoPngDefault = parcelHelpers.interopDefault(_dinoPng);
+var _cityJpg = require("./images/city.jpg");
+var _cityJpgDefault = parcelHelpers.interopDefault(_cityJpg);
+var _weather = require("./Weather");
+var _leaf = require("./Leaf");
 class Game {
+    leafs = [];
     constructor(){
         this.pixi = new _pixiJs.Application({
-            width: 800,
-            height: 450,
+            width: window.innerWidth - 5,
+            height: window.innerHeight - 5,
             backgroundColor: 699050
         });
         document.body.appendChild(this.pixi.view);
         this.loader = new _pixiJs.Loader();
-        this.loader.add('sharkTexture', _sharkPngDefault.default).add('bubbleTexture', _bubblePngDefault.default).add('waterTexture', _waterJpgDefault.default);
+        this.loader.add('sharkTexture', _sharkPngDefault.default).add('bubbleTexture', _bubblePngDefault.default).add('waterTexture', _waterJpgDefault.default).add('leafTexture', _leafPngDefault.default).add('dinoTexture', _dinoPngDefault.default).add('cityTexture', _cityJpgDefault.default);
         this.loader.load(()=>this.loadCompleted()
         );
     }
     loadCompleted() {
-        let shark = new _shark.Shark(this.loader.resources["sharkTexture"].texture);
-        this.pixi.stage.addChild(shark);
-        this.pixi.ticker.add((delta)=>shark.update()
+        let city = new _pixiJs.Sprite(this.loader.resources["cityTexture"].texture);
+        city.anchor.set(0, 0);
+        city.scale.set(3, 2.69);
+        this.pixi.stage.addChild(city);
+        this.shark = new _shark.Shark(this.loader.resources["dinoTexture"].texture);
+        this.shark.scale.set(0.2, 0.2);
+        this.shark.anchor.set(0.5, 0.5);
+        this.weather = new _weather.Weather(this.shark, 1000, this);
+        for(let i = 0; i < 4; i++){
+            let leaf = new _leaf.Leaf(this.loader.resources["leafTexture"].texture);
+            leaf.scale.set(0.3, 0.3);
+            leaf.anchor.set(0.5, 0.5);
+            this.leafs.push(leaf);
+            this.pixi.stage.addChild(leaf);
+        }
+        this.pixi.stage.addChild(this.shark);
+        this.pixi.ticker.add((delta)=>this.update()
         );
+    }
+    updateWeather(x, y) {
+        for(let i = 0; i < this.leafs.length; i++)this.leafs[i].changeWeather(x, y);
+    }
+    update() {
+        this.shark.update();
+        this.weather.update();
+        for(let i = 0; i < this.leafs.length; i++)this.leafs[i].update();
     }
 }
 new Game;
 
-},{"pixi.js":"dsYej","./Shark":"8upe1","./images/shark.png":"7HgQx","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./Shark":"8upe1","./images/shark.png":"7HgQx","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","./images/leaf.png":"5tsPY","./images/dino.png":"c8KfO","./images/city.jpg":"ivwY1","./Weather":"aPu1W","./Leaf":"cwtVd","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37069,6 +37103,8 @@ var _pixiJs = require("pixi.js");
 class Shark extends _pixiJs.Sprite {
     xspeed = 0;
     yspeed = 0;
+    xweather = 0;
+    yweather = 0;
     constructor(texture){
         super(texture);
         this.x = 100;
@@ -37079,9 +37115,12 @@ class Shark extends _pixiJs.Sprite {
         );
     }
     update() {
-        this.x += this.xspeed;
-        this.y += this.yspeed;
-        console.log(this.x);
+        this.x += this.xspeed + this.xweather;
+        this.y += this.yspeed + this.yweather;
+        if (this.x > window.innerWidth) this.x = window.innerWidth;
+        if (this.x < 0) this.x = 0;
+        if (this.y > window.innerHeight) this.y = window.innerHeight;
+        if (this.y < 0) this.y = 0;
     }
     jump() {
         console.log("jump!");
@@ -37176,6 +37215,104 @@ module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble
 },{"./helpers/bundle-url":"lgJ39"}],"jj9Eg":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "water.59ff4e4f.jpg" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
+},{"./helpers/bundle-url":"lgJ39"}],"5tsPY":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "leaf.e574830e.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"c8KfO":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "dino.174d8237.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"ivwY1":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "city.3dfee61f.jpg" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"aPu1W":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Weather", ()=>Weather
+);
+class Weather {
+    timer = 0;
+    constructor(player, delay, game){
+        this.player = player;
+        this.delay = delay;
+        this.game = game;
+        this.timer = delay;
+    }
+    update() {
+        this.timer += 1;
+        if (this.timer > this.delay) {
+            this.timer = 0;
+            let direction = Math.floor(Math.random() * 8);
+            switch(direction){
+                case 0:
+                    this.player.xweather = 2;
+                    this.player.yweather = 0;
+                    break;
+                case 1:
+                    this.player.xweather = 0;
+                    this.player.yweather = 2;
+                    break;
+                case 2:
+                    this.player.xweather = -2;
+                    this.player.yweather = 0;
+                    break;
+                case 3:
+                    this.player.xweather = 0;
+                    this.player.yweather = -2;
+                    break;
+                case 4:
+                    this.player.xweather = 1;
+                    this.player.yweather = 1;
+                    break;
+                case 5:
+                    this.player.xweather = -1;
+                    this.player.yweather = 1;
+                    break;
+                case 6:
+                    this.player.xweather = 1;
+                    this.player.yweather = -1;
+                    break;
+                case 7:
+                    this.player.xweather = -1;
+                    this.player.yweather = -1;
+                    break;
+            }
+            this.game.updateWeather(this.player.xweather, this.player.yweather);
+        }
+    }
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cwtVd":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Leaf", ()=>Leaf
+);
+var _pixiJs = require("pixi.js");
+class Leaf extends _pixiJs.Sprite {
+    xweather = 0;
+    yweather = 0;
+    constructor(texture){
+        super(texture);
+        this.x = Math.random() * window.innerWidth;
+        this.y = Math.random() * window.innerHeight;
+        this.speed = Math.random() * 4;
+        this.rotationSpeed = Math.random() * 0.1;
+        if (this.speed <= 0.3) this.speed = 1;
+    }
+    update() {
+        this.x += this.xweather * this.speed;
+        this.y += this.yweather * this.speed;
+        this.rotation += this.rotationSpeed;
+        if (this.x > window.innerWidth) this.x = 0;
+        if (this.x < 0) this.x = window.innerWidth;
+        if (this.y > window.innerHeight) this.y = 0;
+        if (this.y < 0) this.y = window.innerHeight;
+    }
+    changeWeather(x, y) {
+        this.xweather = x;
+        this.yweather = y;
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
 
 //# sourceMappingURL=index.901f85c2.js.map

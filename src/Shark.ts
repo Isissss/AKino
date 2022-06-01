@@ -3,6 +3,8 @@ import * as PIXI from "pixi.js"
 export class Shark extends PIXI.Sprite {
   xspeed = 0
   yspeed = 0
+  public xweather = 0
+  public yweather = 0
 
   constructor(texture: PIXI.Texture) {
     super(texture)
@@ -15,9 +17,20 @@ export class Shark extends PIXI.Sprite {
   }
 
   update() {
-    this.x += this.xspeed
-    this.y += this.yspeed
-    console.log(this.x)
+    this.x += this.xspeed + this.xweather
+    this.y += this.yspeed + this.yweather
+    if (this.x > window.innerWidth) {
+      this.x = window.innerWidth
+    }
+    if (this.x < 0) {
+      this.x = 0
+    }
+    if (this.y > window.innerHeight) {
+      this.y = window.innerHeight
+    }
+    if (this.y < 0) {
+      this.y = 0
+    }
   }
 
   jump() {
