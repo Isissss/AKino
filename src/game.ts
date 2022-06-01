@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js'
 import { Shark } from "./Shark"
-import sharkImage from "./images/shark.png"
+import sharkImage from "./images/dino.png"
 import bubbleImage from "./images/bubble.png"
 import waterImage from "./images/water.jpg"
 import smokeImage from "./images/smog.png"
@@ -18,6 +18,9 @@ export class Game {
     graphics: Graphics
     spawner: Spawn
     objects : Object[] = []
+    score: number = 0
+    basicText: PIXI.Text;
+    textStyle: PIXI.TextStyle;
 
     constructor() {
         this.pixi = new PIXI.Application({ width: window.innerWidth - 5, height: window.innerHeight - 5, backgroundColor: 0xAAAAA })
@@ -40,6 +43,18 @@ export class Game {
         this.pixi.stage.addChild(this.shark)
         this.pixi.ticker.add((delta) => this.update())
 
+        this.textStyle = new PIXI.TextStyle({
+            fontSize: 31,
+            fontWeight: "bold",
+            trim: false
+        });
+
+        this.basicText = new PIXI.Text(`Score ${this.score}`, this.textStyle);
+        this.basicText.x = 100
+        this.basicText.y = 100
+
+        this.pixi.stage.addChild(this.basicText)
+
     }
     update() {
         this.spawner.update()
@@ -48,7 +63,10 @@ export class Game {
         for (let i = 0; i < this.objects.length; i++) {
             if (this.collision(this.shark, this.objects[i])) {
 
-
+                this.score++;
+    
+                this.basicText.text = `Score ${this.score}`
+    
                 console.log("player touches object")
     
     
