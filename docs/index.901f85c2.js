@@ -519,40 +519,45 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Game", ()=>Game
 );
 var _pixiJs = require("pixi.js");
-var _shark = require("./Shark");
 var _dinoPng = require("./images/dino.png");
 var _dinoPngDefault = parcelHelpers.interopDefault(_dinoPng);
 var _bubblePng = require("./images/bubble.png");
 var _bubblePngDefault = parcelHelpers.interopDefault(_bubblePng);
-var _waterJpg = require("./images/water.jpg");
-var _waterJpgDefault = parcelHelpers.interopDefault(_waterJpg);
+var _cityJpg = require("./images/city.jpg");
+var _cityJpgDefault = parcelHelpers.interopDefault(_cityJpg);
 var _fishPng = require("./images/fish.png");
 var _fishPngDefault = parcelHelpers.interopDefault(_fishPng);
-var _smog = require("./Smog");
-var _spawn = require("./Spawn");
+var _carPng = require("./images/car.png");
+var _carPngDefault = parcelHelpers.interopDefault(_carPng);
+var _car = require("./Car");
+var _shark = require("./Shark");
 class Game {
-    objects = [];
+    cars = [];
     score = 0;
     constructor(){
         this.pixi = new _pixiJs.Application({
-            width: window.innerWidth - 5,
-            height: window.innerHeight - 5,
-            backgroundColor: 699050
+            width: 1200,
+            height: 700
         });
         document.body.appendChild(this.pixi.view);
         this.loader = new _pixiJs.Loader();
-        this.loader.add('sharkTexture', _dinoPngDefault.default).add('fishTexture', _fishPngDefault.default).add('bubbleTexture', _bubblePngDefault.default).add('waterTexture', _waterJpgDefault.default);
+        this.loader.add('sharkTexture', _dinoPngDefault.default).add('fishTexture', _fishPngDefault.default).add('bubbleTexture', _bubblePngDefault.default).add('cityTexture', _cityJpgDefault.default).add('carTexture', _carPngDefault.default);
         this.loader.load(()=>this.loadCompleted()
         );
     }
     loadCompleted() {
-        this.shark = new _shark.Shark(this.loader.resources["sharkTexture"].texture);
-        this.smog = new _smog.Smog(this.shark, window.innerWidth);
-        this.spawner = new _spawn.Spawn(100, 100, 180, this.loader.resources["fishTexture"].texture, this);
-        this.pixi.stage.addChild(this.smog);
-        this.pixi.stage.addChild(this.spawner);
+        this.shark = new _shark.Shark(this.loader.resources["sharkTexture"].texture, this);
+        this.car = new _car.Car(this.loader.resources["carTexture"].texture);
+        // this.car2 = new Rightcar(this.loader.resources["carTexture"].texture!)
+        this.cars.push(this.car);
+        // this.cars.push(this.car2)
+        let background = new _pixiJs.Sprite(this.loader.resources["cityTexture"].texture);
+        background.scale.set(2);
+        this.pixi.stage.addChild(background);
         this.pixi.stage.addChild(this.shark);
-        this.pixi.ticker.add((delta)=>this.update()
+        this.pixi.stage.addChild(this.car);
+        //this.pixi.stage.addChild(this.car2)
+        this.pixi.ticker.add((delta)=>this.update(delta)
         );
         this.textStyle = new _pixiJs.TextStyle({
             fontSize: 31,
@@ -560,25 +565,17 @@ class Game {
             trim: false
         });
         this.basicText = new _pixiJs.Text(`Score ${this.score}`, this.textStyle);
-        this.basicText.x = 100;
-        this.basicText.y = 100;
+        // this.basicText.x = 100
+        // this.basicText.y = 100
         this.pixi.stage.addChild(this.basicText);
     }
-    update() {
-        this.spawner.update();
-        this.shark.update();
-        this.smog.update();
-        for(let i = 0; i < this.objects.length; i++)if (this.collision(this.shark, this.objects[i])) {
-            this.score++;
-            this.basicText.text = `Score ${this.score}`;
+    update(delta) {
+        for(let i = 0; i < this.cars.length; i++)if (this.collision(this.shark, this.cars[i]) && this.shark.hit == false) {
             console.log("player touches object");
-            this.objects[i].destroy();
-            this.objects.splice(i, 1);
+            this.shark.hitcar();
         }
-    }
-    spawnObject(object) {
-        this.pixi.stage.addChild(object);
-        this.objects.push(object);
+        this.shark.update(delta);
+        for (let car of this.cars)car.update(delta);
     }
     collision(sprite1, sprite2) {
         const bounds1 = sprite1.getBounds();
@@ -588,7 +585,7 @@ class Game {
 }
 let g = new Game;
 
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./Shark":"8upe1","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","./Smog":"608Py","./Spawn":"6JGD8","./images/fish.png":"3tLwD","./images/dino.png":"c8KfO"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./images/dino.png":"c8KfO","./images/bubble.png":"iMP3P","./images/city.jpg":"ivwY1","./images/fish.png":"3tLwD","./images/car.png":"dnXSN","./Car":"d9weU","./Shark":"8upe1","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37103,83 +37100,8 @@ function __extends(d, b) {
     return AnimatedSprite1;
 }(_sprite.Sprite);
 
-},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8upe1":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Shark", ()=>Shark
-);
-var _pixiJs = require("pixi.js");
-class Shark extends _pixiJs.Sprite {
-    xspeed = 0;
-    yspeed = 0;
-    constructor(texture){
-        super(texture);
-        this.x = 100;
-        this.y = 100;
-        this.scale.set(0.3);
-        this.anchor.set(0.5, 0.5);
-        window.addEventListener("keydown", (e)=>this.onKeyDown(e)
-        );
-        window.addEventListener("keyup", (e)=>this.onKeyUp(e)
-        );
-    }
-    update() {
-        this.x += this.xspeed;
-        this.y += this.yspeed;
-        console.log(this.x);
-    }
-    jump() {
-        console.log("jump!");
-    }
-    onKeyDown(e) {
-        switch(e.key.toUpperCase()){
-            case " ":
-                this.jump();
-                break;
-            case "A":
-            case "ARROWLEFT":
-                this.xspeed = -7;
-                console.log("a");
-                break;
-            case "D":
-            case "ARROWRIGHT":
-                this.xspeed = 7;
-                console.log("d");
-                break;
-            case "W":
-            case "ARROWUP":
-                this.yspeed = -7;
-                console.log("w");
-                break;
-            case "S":
-            case "ARROWDOWN":
-                this.yspeed = 7;
-                console.log("s");
-                break;
-        }
-    }
-    onKeyUp(e) {
-        switch(e.key.toUpperCase()){
-            case " ":
-                break;
-            case "A":
-            case "D":
-            case "ARROWLEFT":
-            case "ARROWRIGHT":
-                this.xspeed = 0;
-                break;
-            case "W":
-            case "S":
-            case "ARROWUP":
-            case "ARROWDOWN":
-                this.yspeed = 0;
-                break;
-        }
-    }
-}
-
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iMP3P":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble.56ab0ad6.png" + "?" + Date.now();
+},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"c8KfO":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "dino.174d8237.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
 "use strict";
@@ -37215,100 +37137,143 @@ exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
 
-},{}],"jj9Eg":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "water.59ff4e4f.jpg" + "?" + Date.now();
+},{}],"iMP3P":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble.56ab0ad6.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"608Py":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Smog", ()=>Smog
-);
-var _pixiJs = require("pixi.js");
-class Smog extends _pixiJs.Graphics {
-    constructor(player, radius){
-        super();
-        this.player = player;
-        this.originalRadius = radius;
-        this.radius = this.originalRadius;
-        this.interactive = true;
-        this.draw();
-    }
-    draw() {
-        this.beginFill(16777215);
-        this.drawCircle(this.player.x, this.player.y, this.radius);
-        this.endFill;
-    }
-    updatePos() {}
-    update() {
-        if (this.radius >= 1) {
-            this.radius -= 1;
-            this.clear();
-            this.draw();
-            console.log(`radius: ${this.radius}`);
-        } else {
-            console.log(`radius is already 0`);
-            console.log('resetting circle to 200 radius');
-            this.radius = this.originalRadius;
-            this.clear();
-            this.draw();
-        }
-    }
-}
+},{"./helpers/bundle-url":"lgJ39"}],"ivwY1":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "city.3dfee61f.jpg" + "?" + Date.now();
 
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6JGD8":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Spawn", ()=>Spawn
-);
-var _pixiJs = require("pixi.js");
-var _object = require("./Object");
-class Spawn extends _pixiJs.Sprite {
-    timer = 0;
-    constructor(x, y, delay, texture, game){
-        super();
-        this.game = game;
-        this.x = x;
-        this.y = y;
-        this.delay = delay;
-        this.objectTexture = texture;
-    }
-    update() {
-        this.timer += 1;
-        console.log(this.timer);
-        if (this.timer > this.delay) {
-            let sprite = new _object.Object(this.objectTexture);
-            this.timer = 0;
-            this.game.spawnObject(sprite);
-            console.log("hello");
-        }
-    }
-}
-
-},{"pixi.js":"dsYej","./Object":"fjBpM","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fjBpM":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Object", ()=>Object
-);
-var _pixiJs = require("pixi.js");
-class Object extends _pixiJs.Sprite {
-    constructor(texture){
-        super(texture);
-        this.x = Math.random() * window.innerWidth - 5;
-        this.y = Math.random() * window.innerHeight - 5;
-        this.speed = 4;
-        this.anchor.set(0.5);
-    }
-    update() {
-        this.x += this.speed;
-    }
-}
-
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3tLwD":[function(require,module,exports) {
+},{"./helpers/bundle-url":"lgJ39"}],"3tLwD":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "fish.510b053c.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"c8KfO":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "dino.174d8237.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"dnXSN":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "car.80a2d4f3.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
+},{"./helpers/bundle-url":"lgJ39"}],"d9weU":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Car", ()=>Car
+);
+var _pixiJs = require("pixi.js");
+class Car extends _pixiJs.Sprite {
+    constructor(texture){
+        super(texture);
+        this.x = 640;
+        this.y = 40;
+        this.anchor.set(0.5);
+        this.angle = 360;
+        this.scale.set(0.2);
+        this.speed = 2;
+        const filter = new _pixiJs.filters.ColorMatrixFilter();
+        this.filters = [
+            filter
+        ];
+        filter.hue(Math.random() * 360, false) // HUE filter
+        ;
+    }
+    update(delta) {
+        if (this.y == 620) {
+            this.angle = 90;
+            this.x -= this.speed;
+        } else this.y += this.speed;
+        if (this.x < -50) {
+            this.x = 640;
+            this.y = 20;
+            this.angle = 360;
+        }
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8upe1":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Shark", ()=>Shark
+);
+var _pixiJs = require("pixi.js");
+class Shark extends _pixiJs.Sprite {
+    xspeed = 0;
+    yspeed = 0;
+    counter = 0;
+    cooldown = 3;
+    constructor(texture, mygame){
+        super(texture);
+        this.x = 150;
+        this.y = 150;
+        this.game = mygame;
+        this.cooldown = 5;
+        this.hit = false;
+        this.health = 3;
+        this.scale.set(0.15);
+        this.anchor.set(0.5);
+        window.addEventListener("keydown", (e)=>this.onKeyDown(e)
+        );
+        window.addEventListener("keyup", (e)=>this.onKeyUp(e)
+        );
+    }
+    update(delta) {
+        this.x += this.xspeed;
+        this.y += this.yspeed;
+        console.log(this.counter);
+        this.counter += delta;
+        if (this.counter > 125 && this.hit == true) {
+            this.hit = false;
+            console.log("testt");
+        }
+    }
+    hitcar() {
+        this.counter = 0;
+        this.hit = true;
+        this.game.score++;
+        this.game.basicText.text = `Score ${this.game.score}`;
+    }
+    jump() {
+        console.log("jump!");
+    }
+    onKeyDown(e) {
+        switch(e.key.toUpperCase()){
+            case " ":
+                this.jump();
+                break;
+            case "A":
+            case "ARROWLEFT":
+                this.xspeed = -7;
+                this.scale.set(0.15);
+                break;
+            case "D":
+            case "ARROWRIGHT":
+                this.xspeed = 7;
+                this.scale.set(-0.15, 0.15);
+                break;
+            case "W":
+            case "ARROWUP":
+                this.yspeed = -7;
+                break;
+            case "S":
+            case "ARROWDOWN":
+                this.yspeed = 7;
+                break;
+        }
+    }
+    onKeyUp(e) {
+        switch(e.key.toUpperCase()){
+            case " ":
+                break;
+            case "A":
+            case "D":
+            case "ARROWLEFT":
+            case "ARROWRIGHT":
+                this.xspeed = 0;
+                break;
+            case "W":
+            case "S":
+            case "ARROWUP":
+            case "ARROWDOWN":
+                this.yspeed = 0;
+                break;
+        }
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
 
 //# sourceMappingURL=index.901f85c2.js.map
