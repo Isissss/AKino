@@ -523,14 +523,14 @@ var _dinoPng = require("./images/dino.png");
 var _dinoPngDefault = parcelHelpers.interopDefault(_dinoPng);
 var _bubblePng = require("./images/bubble.png");
 var _bubblePngDefault = parcelHelpers.interopDefault(_bubblePng);
-var _cityJpg = require("./images/city.jpg");
-var _cityJpgDefault = parcelHelpers.interopDefault(_cityJpg);
+var _cityPng = require("./images/city.png");
+var _cityPngDefault = parcelHelpers.interopDefault(_cityPng);
 var _fishPng = require("./images/fish.png");
 var _fishPngDefault = parcelHelpers.interopDefault(_fishPng);
 var _carPng = require("./images/car.png");
 var _carPngDefault = parcelHelpers.interopDefault(_carPng);
 var _car = require("./Car");
-var _shark = require("./Shark");
+var _player = require("./Player");
 class Game {
     cars = [];
     score = 0;
@@ -541,22 +541,25 @@ class Game {
         });
         document.body.appendChild(this.pixi.view);
         this.loader = new _pixiJs.Loader();
-        this.loader.add('sharkTexture', _dinoPngDefault.default).add('fishTexture', _fishPngDefault.default).add('bubbleTexture', _bubblePngDefault.default).add('cityTexture', _cityJpgDefault.default).add('carTexture', _carPngDefault.default);
+        this.loader.add('sharkTexture', _dinoPngDefault.default).add('fishTexture', _fishPngDefault.default).add('bubbleTexture', _bubblePngDefault.default).add('cityTexture', _cityPngDefault.default).add('carTexture', _carPngDefault.default);
         this.loader.load(()=>this.loadCompleted()
         );
     }
     loadCompleted() {
-        this.shark = new _shark.Shark(this.loader.resources["sharkTexture"].texture, this);
-        this.car = new _car.Car(this.loader.resources["carTexture"].texture, true, 640, 40);
-        // this.car2 = new Rightcar(this.loader.resources["carTexture"].texture!)
+        this.player = new _player.Player(this.loader.resources["sharkTexture"].texture, this);
+        this.car = new _car.Car(this.loader.resources["carTexture"].texture, false, 1200, 625);
+        this.car3 = new _car.Car(this.loader.resources["carTexture"].texture, false, 1600, 625);
+        this.car2 = new _car.Car(this.loader.resources["carTexture"].texture, true, 640, -300);
         this.cars.push(this.car);
-        // this.cars.push(this.car2)
+        this.cars.push(this.car3);
+        this.cars.push(this.car2);
         let background = new _pixiJs.Sprite(this.loader.resources["cityTexture"].texture);
         background.scale.set(2);
         this.pixi.stage.addChild(background);
-        this.pixi.stage.addChild(this.shark);
+        this.pixi.stage.addChild(this.player);
         this.pixi.stage.addChild(this.car);
-        //this.pixi.stage.addChild(this.car2)
+        this.pixi.stage.addChild(this.car2);
+        this.pixi.stage.addChild(this.car3);
         this.pixi.ticker.add((delta)=>this.update(delta)
         );
         this.textStyle = new _pixiJs.TextStyle({
@@ -570,11 +573,11 @@ class Game {
         this.pixi.stage.addChild(this.basicText);
     }
     update(delta) {
-        for(let i = 0; i < this.cars.length; i++)if (this.collision(this.shark, this.cars[i]) && !this.shark.hit) {
+        for(let i = 0; i < this.cars.length; i++)if (this.collision(this.player, this.cars[i]) && !this.player.hit) {
             console.log("player touches object");
-            this.shark.hitcar();
+            this.player.hitcar();
         }
-        this.shark.update(delta);
+        this.player.update(delta);
         for (let car of this.cars)car.update(delta);
     }
     collision(sprite1, sprite2) {
@@ -585,7 +588,7 @@ class Game {
 }
 let g = new Game;
 
-},{"pixi.js":"dsYej","./images/dino.png":"c8KfO","./images/bubble.png":"iMP3P","./images/city.jpg":"ivwY1","./images/fish.png":"3tLwD","./images/car.png":"dnXSN","./Car":"d9weU","./Shark":"8upe1","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./images/dino.png":"c8KfO","./images/bubble.png":"iMP3P","./images/fish.png":"3tLwD","./images/car.png":"dnXSN","./Car":"d9weU","./Player":"8YLWx","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./images/city.png":"a2rT6"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37140,9 +37143,6 @@ exports.getOrigin = getOrigin;
 },{}],"iMP3P":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble.56ab0ad6.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"ivwY1":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "city.3dfee61f.jpg" + "?" + Date.now();
-
 },{"./helpers/bundle-url":"lgJ39"}],"3tLwD":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "fish.510b053c.png" + "?" + Date.now();
 
@@ -37161,10 +37161,12 @@ class Car extends _pixiJs.Sprite {
         this.x = startx;
         this.left = left;
         this.y = starty;
+        this.startx = startx;
+        this.starty = starty - 30;
         this.anchor.set(0.5);
-        this.angle = 360;
         this.scale.set(0.2);
-        this.speed = 2;
+        this.speed = 1.5;
+        this.angle = this.left ? 360 : 90;
         const filter = new _pixiJs.filters.ColorMatrixFilter();
         this.filters = [
             filter
@@ -37173,38 +37175,49 @@ class Car extends _pixiJs.Sprite {
         ;
     }
     update(delta) {
-        if (this.y == 620) {
-            this.angle = 90;
-            this.x -= this.speed;
-        } else this.y += this.speed;
-        if (this.x < -50) {
-            this.x = 640;
-            this.y = 20;
-            this.angle = 360;
+        if (this.left) {
+            if (this.y > 620) {
+                this.angle = 90;
+                this.x -= this.speed;
+            } else this.y += this.speed;
+            if (this.x < -50) {
+                this.x = this.startx;
+                this.y = this.starty;
+                this.angle = 360;
+            }
+        } else {
+            console.log(this.x);
+            if (this.x < 800) {
+                this.angle = 180;
+                this.y -= this.speed;
+            } else this.x -= this.speed;
+            if (this.y < -50) {
+                this.x = 1200;
+                this.y = 625;
+                this.angle = 90;
+            }
         }
     }
 }
 
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8upe1":[function(require,module,exports) {
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8YLWx":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Shark", ()=>Shark
+parcelHelpers.export(exports, "Player", ()=>Player
 );
 var _pixiJs = require("pixi.js");
-class Shark extends _pixiJs.Sprite {
+class Player extends _pixiJs.Sprite {
     xspeed = 0;
     yspeed = 0;
     counter = 0;
-    cooldown = 3;
     constructor(texture, mygame){
         super(texture);
         this.x = 150;
         this.y = 150;
         this.game = mygame;
-        this.cooldown = 5;
         this.hit = false;
         this.health = 3;
-        this.scale.set(0.15);
+        this.scale.set(0.1);
         this.anchor.set(0.5);
         window.addEventListener("keydown", (e)=>this.onKeyDown(e)
         );
@@ -37233,21 +37246,21 @@ class Shark extends _pixiJs.Sprite {
                 break;
             case "A":
             case "ARROWLEFT":
-                this.xspeed = -7;
-                this.scale.set(0.15);
+                this.xspeed = -4;
+                this.scale.set(0.1);
                 break;
             case "D":
             case "ARROWRIGHT":
-                this.xspeed = 7;
-                this.scale.set(-0.15, 0.15);
+                this.xspeed = 4;
+                this.scale.set(-0.1, 0.1);
                 break;
             case "W":
             case "ARROWUP":
-                this.yspeed = -7;
+                this.yspeed = -4;
                 break;
             case "S":
             case "ARROWDOWN":
-                this.yspeed = 7;
+                this.yspeed = 4;
                 break;
         }
     }
@@ -37271,6 +37284,9 @@ class Shark extends _pixiJs.Sprite {
     }
 }
 
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"a2rT6":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "city.b93e9858.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
 
 //# sourceMappingURL=index.901f85c2.js.map
