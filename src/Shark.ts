@@ -17,7 +17,6 @@ export class Shark extends PIXI.Sprite {
   update() {
     this.x += this.xspeed
     this.y += this.yspeed
-    console.log(this.x)
   }
 
   jump() {

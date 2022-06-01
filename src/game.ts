@@ -3,13 +3,17 @@ import { Shark } from "./Shark"
 import sharkImage from "./images/shark.png"
 import bubbleImage from "./images/bubble.png"
 import waterImage from "./images/water.jpg"
+import { Map } from "./Map"
+import { Sprite, TilingSprite } from 'pixi.js'
 
-class Game {
+export class Game {
     pixi: PIXI.Application
     loader: PIXI.Loader
+    shark : Shark
+    map : Map
 
     constructor() {
-        this.pixi = new PIXI.Application({ width: 800, height: 450, backgroundColor: 0xAAAAA })
+        this.pixi = new PIXI.Application({ width: window.innerWidth - 5, height: window.innerHeight - 5, backgroundColor: 0xAAAAA })
         document.body.appendChild(this.pixi.view)
 
         this.loader = new PIXI.Loader()
@@ -20,9 +24,22 @@ class Game {
     }
 
     loadCompleted() {
-        let shark = new Shark(this.loader.resources["sharkTexture"].texture!)
-        this.pixi.stage.addChild(shark)
-        this.pixi.ticker.add((delta) => shark.update())
+        let sprite = new TilingSprite(this.loader.resources["waterTexture"].texture!, this.pixi.screen.width, this.pixi.screen.height)
+        this.shark = new Shark(this.loader.resources["sharkTexture"].texture!)
+        this.map = new Map(this, this.shark)
+
+        this.pixi.stage.addChild(sprite)
+        this.pixi.stage.addChild(this.shark)
+
+        this.pixi.stage.x = this.pixi.screen.width / 2;
+        this.pixi.stage.y = this.pixi.screen.height / 2;
+
+        this.pixi.ticker.add((delta) => this.update())
+    }
+
+    update() {
+        this.shark.update()
+        this.map.update()
     }
 }
 new Game

@@ -515,6 +515,9 @@ function hmrAcceptRun(bundle, id) {
 
 },{}],"edeGs":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Game", ()=>Game
+);
 var _pixiJs = require("pixi.js");
 var _shark = require("./Shark");
 var _sharkPng = require("./images/shark.png");
@@ -523,11 +526,12 @@ var _bubblePng = require("./images/bubble.png");
 var _bubblePngDefault = parcelHelpers.interopDefault(_bubblePng);
 var _waterJpg = require("./images/water.jpg");
 var _waterJpgDefault = parcelHelpers.interopDefault(_waterJpg);
+var _map = require("./Map");
 class Game {
     constructor(){
         this.pixi = new _pixiJs.Application({
-            width: 800,
-            height: 450,
+            width: window.innerWidth - 5,
+            height: window.innerHeight - 5,
             backgroundColor: 699050
         });
         document.body.appendChild(this.pixi.view);
@@ -537,15 +541,24 @@ class Game {
         );
     }
     loadCompleted() {
-        let shark = new _shark.Shark(this.loader.resources["sharkTexture"].texture);
-        this.pixi.stage.addChild(shark);
-        this.pixi.ticker.add((delta)=>shark.update()
+        let sprite = new _pixiJs.TilingSprite(this.loader.resources["waterTexture"].texture, this.pixi.screen.width, this.pixi.screen.height);
+        this.shark = new _shark.Shark(this.loader.resources["sharkTexture"].texture);
+        this.map = new _map.Map(this, this.shark);
+        this.pixi.stage.addChild(sprite);
+        this.pixi.stage.addChild(this.shark);
+        this.pixi.stage.x = this.pixi.screen.width / 2;
+        this.pixi.stage.y = this.pixi.screen.height / 2;
+        this.pixi.ticker.add((delta)=>this.update()
         );
+    }
+    update() {
+        this.shark.update();
+        this.map.update();
     }
 }
 new Game;
 
-},{"pixi.js":"dsYej","./Shark":"8upe1","./images/shark.png":"7HgQx","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./Shark":"8upe1","./images/shark.png":"7HgQx","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./Map":"5vXJ1"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37081,7 +37094,6 @@ class Shark extends _pixiJs.Sprite {
     update() {
         this.x += this.xspeed;
         this.y += this.yspeed;
-        console.log(this.x);
     }
     jump() {
         console.log("jump!");
@@ -37176,6 +37188,50 @@ module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble
 },{"./helpers/bundle-url":"lgJ39"}],"jj9Eg":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "water.59ff4e4f.jpg" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
+},{"./helpers/bundle-url":"lgJ39"}],"5vXJ1":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Map", ()=>Map
+);
+class Map {
+    constructor(game, player){
+        this.game = game;
+        this.player = player;
+        this.borderHorizontal = 0;
+        this.borderVertical = 0;
+    }
+    update() {
+        // check if the player has crossed the right border
+        if (this.player.x >= this.game.pixi.screen.width / 2 + this.borderHorizontal) {
+            // set the camera a screen away from its original position
+            this.game.pixi.stage.pivot.set(this.game.pixi.screen.width + this.borderHorizontal, this.game.pixi.stage.pivot.y);
+            // set the new border a full screen away
+            this.borderHorizontal += this.game.pixi.screen.width;
+        }
+        // check if the player has crossed the left border
+        if (this.player.x <= -(this.game.pixi.screen.width / 2) + this.borderHorizontal) {
+            // set the camera a screen away from its original position
+            this.game.pixi.stage.pivot.set(-this.game.pixi.screen.width + this.borderHorizontal, this.game.pixi.stage.pivot.y);
+            // set the new border a full screen away
+            this.borderHorizontal -= this.game.pixi.screen.width;
+        }
+        // check if the player has crossed the top border
+        if (this.player.y >= this.game.pixi.screen.height / 2 + this.borderVertical) {
+            // set the camera a screen away from its original position
+            this.game.pixi.stage.pivot.set(this.game.pixi.stage.pivot.x, this.game.pixi.screen.height + this.borderVertical);
+            // set the new border a full screen away
+            this.borderVertical += this.game.pixi.screen.height;
+        }
+        // check if the player has crossed the bottom border
+        if (this.player.y <= -(this.game.pixi.screen.height / 2) + this.borderVertical) {
+            // set the camera a screen away from its original position
+            this.game.pixi.stage.pivot.set(this.game.pixi.stage.pivot.x, -this.game.pixi.screen.height + this.borderVertical);
+            // set the new border a full screen away
+            this.borderVertical -= this.game.pixi.screen.height;
+        }
+    }
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
 
 //# sourceMappingURL=index.901f85c2.js.map
