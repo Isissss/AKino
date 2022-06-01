@@ -547,7 +547,7 @@ class Game {
     }
     loadCompleted() {
         this.shark = new _shark.Shark(this.loader.resources["sharkTexture"].texture, this);
-        this.car = new _car.Car(this.loader.resources["carTexture"].texture);
+        this.car = new _car.Car(this.loader.resources["carTexture"].texture, true, 640, 40);
         // this.car2 = new Rightcar(this.loader.resources["carTexture"].texture!)
         this.cars.push(this.car);
         // this.cars.push(this.car2)
@@ -570,7 +570,7 @@ class Game {
         this.pixi.stage.addChild(this.basicText);
     }
     update(delta) {
-        for(let i = 0; i < this.cars.length; i++)if (this.collision(this.shark, this.cars[i]) && this.shark.hit == false) {
+        for(let i = 0; i < this.cars.length; i++)if (this.collision(this.shark, this.cars[i]) && !this.shark.hit) {
             console.log("player touches object");
             this.shark.hitcar();
         }
@@ -37156,10 +37156,11 @@ parcelHelpers.export(exports, "Car", ()=>Car
 );
 var _pixiJs = require("pixi.js");
 class Car extends _pixiJs.Sprite {
-    constructor(texture){
+    constructor(texture, left, startx, starty){
         super(texture);
-        this.x = 640;
-        this.y = 40;
+        this.x = startx;
+        this.left = left;
+        this.y = starty;
         this.anchor.set(0.5);
         this.angle = 360;
         this.scale.set(0.2);
@@ -37213,12 +37214,8 @@ class Shark extends _pixiJs.Sprite {
     update(delta) {
         this.x += this.xspeed;
         this.y += this.yspeed;
-        console.log(this.counter);
         this.counter += delta;
-        if (this.counter > 125 && this.hit == true) {
-            this.hit = false;
-            console.log("testt");
-        }
+        if (this.counter > 125 && this.hit == true) this.hit = false;
     }
     hitcar() {
         this.counter = 0;

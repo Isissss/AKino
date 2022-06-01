@@ -40,7 +40,7 @@ import { Shark } from './Shark'
 
     loadCompleted() {
         this.shark = new Shark(this.loader.resources["sharkTexture"].texture!, this)
-        this.car = new Car(this.loader.resources["carTexture"].texture!)
+        this.car = new Car(this.loader.resources["carTexture"].texture!, true, 640, 40)
        // this.car2 = new Rightcar(this.loader.resources["carTexture"].texture!)
 
         this.cars.push(this.car)
@@ -72,7 +72,7 @@ import { Shark } from './Shark'
     update(delta : number) {
        
         for (let i = 0; i < this.cars.length; i++) {
-            if (this.collision(this.shark, this.cars[i]) && this.shark.hit == false) {
+            if (this.collision(this.shark, this.cars[i]) && !this.shark.hit) {
                 console.log("player touches object")
                 this.shark.hitcar()
                 

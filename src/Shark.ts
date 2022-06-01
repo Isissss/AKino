@@ -29,12 +29,10 @@ export class Shark extends PIXI.Sprite {
   update(delta : number) {
     this.x += this.xspeed
     this.y += this.yspeed
-    console.log(this.counter)
     this.counter += delta;
 
     if (this.counter > 125 && this.hit == true) {
       this.hit = false
-      console.log("testt")
 }
 
   }
