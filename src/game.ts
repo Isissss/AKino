@@ -1,5 +1,4 @@
 import * as PIXI from 'pixi.js'
-import { Shark } from "./Shark"
 import sharkImage from "./images/dino.png"
 import bubbleImage from "./images/bubble.png"
 import waterImage from "./images/water.jpg"
@@ -14,11 +13,10 @@ export class Game {
     pixi: PIXI.Application
     loader: PIXI.Loader
     shark: Shark
-    smog: Smog
     graphics: Graphics
-    spawner: Spawn
     objects : Object[] = []
     score: number = 0
+    car: Car
     basicText: PIXI.Text;
     textStyle: PIXI.TextStyle;
 
@@ -31,16 +29,15 @@ export class Game {
             .add('fishTexture', fishImage)
             .add('bubbleTexture', bubbleImage)
             .add('waterTexture', waterImage)
+            .add('cartexture', carImage)
         this.loader.load(() => this.loadCompleted())
     }
 
     loadCompleted() {
         this.shark = new Shark(this.loader.resources["sharkTexture"].texture!)
-        this.smog = new Smog(this.shark, window.innerWidth)
-        this.spawner = new Spawn(100, 100, (3 * 60), this.loader.resources["fishTexture"].texture!, this)
-        this.pixi.stage.addChild(this.smog)
-        this.pixi.stage.addChild(this.spawner)
+        this.car = new Car(this.loader.resources["carTexture"].texture!)
         this.pixi.stage.addChild(this.shark)
+        this.pixi.stage.addChild(this.car)
         this.pixi.ticker.add((delta) => this.update())
 
         this.textStyle = new PIXI.TextStyle({
@@ -57,40 +54,11 @@ export class Game {
 
     }
     update() {
-        this.spawner.update()
         this.shark.update()
-        this.smog.update()
-        for (let i = 0; i < this.objects.length; i++) {
-            if (this.collision(this.shark, this.objects[i])) {
-
-                this.score++;
-    
-                this.basicText.text = `Score ${this.score}`
-    
-                console.log("player touches object")
-    
-    
-                this.objects[i].destroy();
-                this.objects.splice(i, 1)
-    
-            }  
+ 
         }
-    }
-
-    public spawnObject(object: Object) {
-        this.pixi.stage.addChild(object)
-        this.objects.push(object)
-    }
-
-    collision(sprite1: PIXI.Sprite, sprite2: PIXI.Sprite) {
-        const bounds1 = sprite1.getBounds()
-        const bounds2 = sprite2.getBounds()
-
-        return bounds1.x < bounds2.x + bounds2.width
-            && bounds1.x + bounds1.width > bounds2.x
-            && bounds1.y < bounds2.y + bounds2.height
-            && bounds1.y + bounds1.height > bounds2.y;
-    }
+ 
+ 
 }
 
 let g = new Game
