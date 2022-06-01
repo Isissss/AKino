@@ -1,45 +1,45 @@
 import * as PIXI from 'pixi.js'
-import { Shark } from './Shark'
+import { Player } from './Player'
 
 
-export class Smog extends PIXI.Graphics{
+export class Smog extends PIXI.Graphics {
 
-    player : Shark
-    radius:number
-    originalRadius:number
-    
+    player: Player
+    radius: number
+    originalRadius: number
 
 
-    constructor(player: Shark, radius:number){
+
+    constructor(player: Player, radius: number) {
         super()
         this.player = player
         this.originalRadius = radius
         this.radius = this.originalRadius
         this.interactive = true
         this.draw()
-        
-        
+
+
     }
 
     draw() {
         this.beginFill(0xffffff)
-        this.drawCircle(this.player.x, this.player.y,this.radius)
+        this.drawCircle(this.player.x, this.player.y, this.radius)
         this.endFill
 
     }
 
     updatePos() {
-       
+
     }
 
-    update(){
-        if(this.radius >= 1) {
-        this.radius -= 1
-        this.clear()
-        this.draw()
-        console.log(`radius: ${this.radius}`)
+    update() {
+        if (this.radius >= 1) {
+            this.radius -= 1
+            this.clear()
+            this.draw()
+            console.log(`radius: ${this.radius}`)
         }
-        else{
+        else {
             console.log(`radius is already 0`)
             console.log('resetting circle to 200 radius')
             this.radius = this.originalRadius

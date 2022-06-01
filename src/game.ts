@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js'
-import { Shark } from "./Shark"
+import { Player } from "./Player"
 import sharkImage from "./images/dino.png"
 import bubbleImage from "./images/bubble.png"
 import waterImage from "./images/water.jpg"
@@ -13,11 +13,11 @@ import { Object } from './Object'
 export class Game {
     pixi: PIXI.Application
     loader: PIXI.Loader
-    shark: Shark
+    player: Player
     smog: Smog
     graphics: Graphics
     spawner: Spawn
-    objects : Object[] = []
+    objects: Object[] = []
     score: number = 0
     basicText: PIXI.Text;
     textStyle: PIXI.TextStyle;
@@ -35,12 +35,12 @@ export class Game {
     }
 
     loadCompleted() {
-        this.shark = new Shark(this.loader.resources["sharkTexture"].texture!)
-        this.smog = new Smog(this.shark, window.innerWidth)
+        this.player = new Player(this.loader.resources["sharkTexture"].texture!)
+        this.smog = new Smog(this.player, window.innerWidth)
         this.spawner = new Spawn(100, 100, (3 * 60), this.loader.resources["fishTexture"].texture!, this)
         this.pixi.stage.addChild(this.smog)
         this.pixi.stage.addChild(this.spawner)
-        this.pixi.stage.addChild(this.shark)
+        this.pixi.stage.addChild(this.player)
         this.pixi.ticker.add((delta) => this.update())
 
         this.textStyle = new PIXI.TextStyle({
@@ -58,22 +58,22 @@ export class Game {
     }
     update() {
         this.spawner.update()
-        this.shark.update()
+        this.player.update()
         this.smog.update()
         for (let i = 0; i < this.objects.length; i++) {
-            if (this.collision(this.shark, this.objects[i])) {
+            if (this.collision(this.player, this.objects[i])) {
 
                 this.score++;
-    
+
                 this.basicText.text = `Score ${this.score}`
-    
+
                 console.log("player touches object")
-    
-    
+
+
                 this.objects[i].destroy();
                 this.objects.splice(i, 1)
-    
-            }  
+
+            }
         }
     }
 

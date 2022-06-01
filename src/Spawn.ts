@@ -3,12 +3,12 @@ import * as PIXI from 'pixi.js'
 import { Game } from './game'
 import { Object } from './Object'
 
-export class Spawn extends PIXI.Sprite{
+export class Spawn extends PIXI.Sprite {
     private timer = 0
-    private delay : number
-    private objectTexture : PIXI.Texture
-    private game : Game 
-    constructor(x : number, y : number, delay : number, texture : PIXI.Texture, game : Game) {
+    private delay: number
+    private objectTexture: PIXI.Texture
+    private game: Game
+    constructor(x: number, y: number, delay: number, texture: PIXI.Texture, game: Game) {
         super()
         this.game = game
         this.x = x
