@@ -37162,16 +37162,19 @@ class Car extends _pixiJs.Sprite {
         this.left = left;
         this.y = starty;
         this.startx = startx;
-        this.starty = starty - 30;
+        this.starty = starty;
         this.anchor.set(0.5);
         this.scale.set(0.2);
         this.speed = 1.5;
         this.angle = this.left ? 360 : 90;
-        const filter = new _pixiJs.filters.ColorMatrixFilter();
+        this.filter = new _pixiJs.filters.ColorMatrixFilter();
+        this.getfilter();
+    }
+    getfilter() {
         this.filters = [
-            filter
+            this.filter
         ];
-        filter.hue(Math.random() * 360, false) // HUE filter
+        this.filter.hue(Math.random() * 360, false) // HUE filter
         ;
     }
     update(delta) {
@@ -37184,6 +37187,7 @@ class Car extends _pixiJs.Sprite {
                 this.x = this.startx;
                 this.y = this.starty;
                 this.angle = 360;
+                this.getfilter();
             }
         } else {
             console.log(this.x);
@@ -37192,8 +37196,9 @@ class Car extends _pixiJs.Sprite {
                 this.y -= this.speed;
             } else this.x -= this.speed;
             if (this.y < -50) {
-                this.x = 1200;
-                this.y = 625;
+                this.x = 1400;
+                this.y = this.starty;
+                this.getfilter();
                 this.angle = 90;
             }
         }
@@ -37217,8 +37222,8 @@ class Player extends _pixiJs.Sprite {
         this.game = mygame;
         this.hit = false;
         this.health = 3;
-        this.scale.set(0.1);
-        this.anchor.set(0.5);
+        this.scale.set(0.25);
+        this.anchor.set(0.15);
         window.addEventListener("keydown", (e)=>this.onKeyDown(e)
         );
         window.addEventListener("keyup", (e)=>this.onKeyUp(e)
@@ -37247,12 +37252,12 @@ class Player extends _pixiJs.Sprite {
             case "A":
             case "ARROWLEFT":
                 this.xspeed = -4;
-                this.scale.set(0.1);
+                this.scale.set(0.25);
                 break;
             case "D":
             case "ARROWRIGHT":
                 this.xspeed = 4;
-                this.scale.set(-0.1, 0.1);
+                this.scale.set(-0.25, 0.25);
                 break;
             case "W":
             case "ARROWUP":

@@ -16,8 +16,8 @@ export class Player extends PIXI.Sprite {
     this.game = mygame
     this.hit = false
     this.health = 3
-    this.scale.set(0.10)
-    this.anchor.set(0.5)
+    this.scale.set(0.25)
+    this.anchor.set(0.15)
 
 
     window.addEventListener("keydown", (e: KeyboardEvent) => this.onKeyDown(e))
@@ -53,14 +53,14 @@ export class Player extends PIXI.Sprite {
       case "A":
       case "ARROWLEFT":
         this.xspeed = -4
-        this.scale.set(0.10)
+        this.scale.set(0.25)
 
 
         break
       case "D":
       case "ARROWRIGHT":
         this.xspeed = 4
-        this.scale.set(-0.10, 0.10)
+        this.scale.set(-0.25, 0.25)
 
         break
       case "W":
