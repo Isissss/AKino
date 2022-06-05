@@ -9,6 +9,7 @@ import { Smog } from './Smog'
 import { Graphics } from 'pixi.js'
 import { Spawn } from './Spawn'
 import { Object } from './Object'
+import { UI } from './UI'
 
 export class Game {
     pixi: PIXI.Application
@@ -17,7 +18,9 @@ export class Game {
     smog: Smog
     graphics: Graphics
     spawner: Spawn
-    objects : Object[] = []
+    objects: Object[] = []
+    ui: UI // UI container class
+    menuActive: boolean = false // variable to check if updates need to be run
     score: number = 0
     basicText: PIXI.Text;
     textStyle: PIXI.TextStyle;
@@ -38,9 +41,8 @@ export class Game {
         this.shark = new Shark(this.loader.resources["sharkTexture"].texture!)
         this.smog = new Smog(this.shark, window.innerWidth)
         this.spawner = new Spawn(100, 100, (3 * 60), this.loader.resources["fishTexture"].texture!, this)
-        this.pixi.stage.addChild(this.smog)
-        this.pixi.stage.addChild(this.spawner)
-        this.pixi.stage.addChild(this.shark)
+        this.ui = new UI(this, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["bubbleTexture"].texture!) // (game, pausebutton texture, heart texture)
+        this.pixi.stage.addChild(this.smog, this.spawner, this.shark, this.ui) // made the adding to stage a single line
         this.pixi.ticker.add((delta) => this.update())
 
         this.textStyle = new PIXI.TextStyle({
@@ -57,23 +59,25 @@ export class Game {
 
     }
     update() {
-        this.spawner.update()
-        this.shark.update()
-        this.smog.update()
-        for (let i = 0; i < this.objects.length; i++) {
-            if (this.collision(this.shark, this.objects[i])) {
+        if (!this.menuActive) {
+            this.spawner.update()
+            this.shark.update()
+            this.smog.update()
+            for (let i = 0; i < this.objects.length; i++) {
+                if (this.collision(this.shark, this.objects[i])) {
 
-                this.score++;
-    
-                this.basicText.text = `Score ${this.score}`
-    
-                console.log("player touches object")
-    
-    
-                this.objects[i].destroy();
-                this.objects.splice(i, 1)
-    
-            }  
+                    this.score++;
+
+                    this.basicText.text = `Score ${this.score}`
+
+                    //console.log("player touches object")
+
+
+                    this.objects[i].destroy();
+                    this.objects.splice(i, 1)
+
+                }
+            }
         }
     }
 

@@ -3,6 +3,8 @@ import * as PIXI from "pixi.js"
 export class Shark extends PIXI.Sprite {
   xspeed = 0
   yspeed = 0
+  health = 3 // added for UI testing
+
 
   constructor(texture: PIXI.Texture) {
     super(texture)
@@ -19,7 +21,7 @@ export class Shark extends PIXI.Sprite {
   update() {
     this.x += this.xspeed
     this.y += this.yspeed
-    console.log(this.x)
+    //console.log(this.x)
   }
 
   jump() {
