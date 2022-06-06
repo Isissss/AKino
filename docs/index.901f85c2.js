@@ -515,15 +515,15 @@ function hmrAcceptRun(bundle, id) {
 
 },{}],"edeGs":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Game", ()=>Game
-);
 var _pixiJs = require("pixi.js");
 var _screenshot12Png = require("./images/Screenshot_12.png");
 var _screenshot12PngDefault = parcelHelpers.interopDefault(_screenshot12Png);
 var _screenshot13Png = require("./images/Screenshot_13.png");
 var _screenshot13PngDefault = parcelHelpers.interopDefault(_screenshot13Png);
+var _player = require("./Player");
+var _object = require("./Object");
 class Game {
+    objects = [];
     speed = 4;
     score = 0;
     constructor(){
@@ -539,14 +539,9 @@ class Game {
         );
     }
     doneLoading() {
-        this.player = new _pixiJs.Sprite(this.loader.resources["playerTexture"].texture);
-        this.object = new _pixiJs.Sprite(this.loader.resources["playerTexture"].texture);
-        this.player.x = 790;
-        this.player.y = this.pixi.view.height / 2;
-        this.player.anchor.set(0.5);
-        this.object.x = 10;
-        this.object.y = this.pixi.view.height / 2;
-        this.object.anchor.set(0.5);
+        this.player = new _player.Player(this.loader.resources["playerTexture"].texture);
+        this.object = new _object.Object(this.loader.resources["playerTexture"].texture);
+        this.objects.push(this.object);
         this.pixi.stage.addChild(this.player);
         this.pixi.stage.addChild(this.object);
         this.pixi.ticker.add((delta)=>this.update(delta)
@@ -562,17 +557,17 @@ class Game {
         this.pixi.stage.addChild(this.basicText);
     }
     update(delta) {
-        this.player.x -= this.speed;
-        this.object.x += this.speed;
-        if (this.collision(this.player, this.object)) {
+        this.player.update();
+        this.object.update();
+        for(let i = 0; i < this.objects.length; i++)if (this.collision(this.player, this.objects[i])) {
             this.score++;
             console.log(this.score);
             console.log("player touches object");
             this.basicText.text = `Score ${this.score}`;
             this.speed = 0;
             this.object.x = 10;
-            this.pixi.stage.removeChild(this.object);
-            this.object = new _pixiJs.Sprite();
+            this.objects[i].destroy();
+            this.objects.splice(i, 1);
         }
     }
     collision(sprite1, sprite2) {
@@ -583,7 +578,7 @@ class Game {
 }
 new Game();
 
-},{"pixi.js":"dsYej","./images/Screenshot_12.png":"bw4XA","./images/Screenshot_13.png":"idBkq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./Player":"8YLWx","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./images/Screenshot_12.png":"bw4XA","./images/Screenshot_13.png":"idBkq","./Object":"fjBpM"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37098,7 +37093,26 @@ function __extends(d, b) {
     return AnimatedSprite1;
 }(_sprite.Sprite);
 
-},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bw4XA":[function(require,module,exports) {
+},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8YLWx":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Player", ()=>Player
+);
+var _pixiJs = require("pixi.js");
+class Player extends _pixiJs.Sprite {
+    constructor(texture){
+        super(texture);
+        this.x = 790;
+        this.y = 400;
+        this.speed = 4;
+        this.anchor.set(0.5);
+    }
+    update() {
+        this.x -= this.speed;
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bw4XA":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "Screenshot_12.d972b953.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
@@ -37138,6 +37152,25 @@ exports.getOrigin = getOrigin;
 },{}],"idBkq":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "Screenshot_13.8e992c8a.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
+},{"./helpers/bundle-url":"lgJ39"}],"fjBpM":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Object", ()=>Object
+);
+var _pixiJs = require("pixi.js");
+class Object extends _pixiJs.Sprite {
+    constructor(texture){
+        super(texture);
+        this.x = 10;
+        this.y = 400;
+        this.speed = 4;
+        this.anchor.set(0.5);
+    }
+    update() {
+        this.x += this.speed;
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
 
 //# sourceMappingURL=index.901f85c2.js.map

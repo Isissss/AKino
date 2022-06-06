@@ -9,6 +9,7 @@ class Game {
     loader: PIXI.Loader
     player: Player
     object: Object
+    objects: Object[] = []
     speed: number = 4
     score: number = 0
     basicText: PIXI.Text;
@@ -29,7 +30,7 @@ class Game {
     doneLoading() {
         this.player = new Player(this.loader.resources["playerTexture"].texture!)
         this.object = new Object(this.loader.resources["playerTexture"].texture!)
-
+        this.objects.push(this.object)
 
         this.pixi.stage.addChild(this.player);
         this.pixi.stage.addChild(this.object);
@@ -54,19 +55,22 @@ class Game {
         this.player.update()
         this.object.update()
 
-        if (this.collision(this.player, this.object)) {
-            this.score++;
-            console.log(this.score)
 
-            console.log("player touches object")
+        for (let i = 0; i < this.objects.length; i++) {
+            if (this.collision(this.player, this.objects[i])) {
+                this.score++;
+                console.log(this.score)
 
-            this.basicText.text = `Score ${this.score}`
+                console.log("player touches object")
 
-            this.speed = 0;
-            this.object.x = 10;
+                this.basicText.text = `Score ${this.score}`
 
-            this.object.destroy();
+                this.speed = 0;
+                this.object.x = 10;
 
+                this.objects[i].destroy();
+                this.objects.splice(i, 1)
+            }
         }
     }
 
