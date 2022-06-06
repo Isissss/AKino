@@ -535,6 +535,7 @@ class Game {
     cars = [];
     score = 0;
     constructor(){
+        this.gameover = false;
         this.pixi = new _pixiJs.Application({
             width: 1200,
             height: 700
@@ -546,7 +547,7 @@ class Game {
         );
     }
     loadCompleted() {
-        this.player = new _player.Player(this.loader.resources["sharkTexture"].texture, this);
+        this.player = new _player.Player(this.loader.resources["sharkTexture"].texture, this, 1);
         this.car = new _car.Car(this.loader.resources["carTexture"].texture, false, 1200, 625);
         this.car3 = new _car.Car(this.loader.resources["carTexture"].texture, false, 1600, 625);
         this.car2 = new _car.Car(this.loader.resources["carTexture"].texture, true, 640, -300);
@@ -567,18 +568,24 @@ class Game {
             fontWeight: "bold",
             trim: false
         });
-        this.basicText = new _pixiJs.Text(`Score ${this.score}`, this.textStyle);
+        this.basicText = new _pixiJs.Text(`Levens ${this.player.health}`, this.textStyle);
         // this.basicText.x = 100
         // this.basicText.y = 100
         this.pixi.stage.addChild(this.basicText);
     }
     update(delta) {
-        for(let i = 0; i < this.cars.length; i++)if (this.collision(this.player, this.cars[i]) && !this.player.hit) {
-            console.log("player touches object");
-            this.player.hitcar();
+        if (this.gameover == false) {
+            for(let i = 0; i < this.cars.length; i++)if (this.collision(this.player, this.cars[i]) && !this.player.hit) {
+                console.log("player touches object");
+                this.player.hitcar();
+            }
+            this.player.update(delta);
+            for (let car of this.cars)car.update(delta);
         }
-        this.player.update(delta);
-        for (let car of this.cars)car.update(delta);
+    }
+    endGame() {
+        console.log("game over!");
+        this.gameover = true;
     }
     collision(sprite1, sprite2) {
         const bounds1 = sprite1.getBounds();
@@ -588,7 +595,7 @@ class Game {
 }
 let g = new Game;
 
-},{"pixi.js":"dsYej","./images/dino.png":"c8KfO","./images/bubble.png":"iMP3P","./images/fish.png":"3tLwD","./images/car.png":"dnXSN","./Car":"d9weU","./Player":"8YLWx","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./images/city.png":"a2rT6"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./images/dino.png":"c8KfO","./images/bubble.png":"iMP3P","./images/city.png":"a2rT6","./images/fish.png":"3tLwD","./images/car.png":"dnXSN","./Car":"d9weU","./Player":"8YLWx","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37143,6 +37150,9 @@ exports.getOrigin = getOrigin;
 },{}],"iMP3P":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble.56ab0ad6.png" + "?" + Date.now();
 
+},{"./helpers/bundle-url":"lgJ39"}],"a2rT6":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "city.b93e9858.png" + "?" + Date.now();
+
 },{"./helpers/bundle-url":"lgJ39"}],"3tLwD":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "fish.510b053c.png" + "?" + Date.now();
 
@@ -37178,11 +37188,13 @@ class Car extends _pixiJs.Sprite {
         ;
     }
     update(delta) {
+        // If car turns left, turning points
         if (this.left) {
             if (this.y > 620) {
                 this.angle = 90;
                 this.x -= this.speed;
             } else this.y += this.speed;
+            //If car reaches end of screen, set back to start loc
             if (this.x < -50) {
                 this.x = this.startx;
                 this.y = this.starty;
@@ -37195,6 +37207,7 @@ class Car extends _pixiJs.Sprite {
                 this.angle = 180;
                 this.y -= this.speed;
             } else this.x -= this.speed;
+            //If car reaches top of screen, set back to start loc
             if (this.y < -50) {
                 this.x = 1400;
                 this.y = this.starty;
@@ -37215,13 +37228,13 @@ class Player extends _pixiJs.Sprite {
     xspeed = 0;
     yspeed = 0;
     counter = 0;
-    constructor(texture, mygame){
+    constructor(texture, mygame, health){
         super(texture);
         this.x = 150;
         this.y = 150;
         this.game = mygame;
         this.hit = false;
-        this.health = 3;
+        this.health = health;
         this.scale.set(0.25);
         this.anchor.set(0.15);
         window.addEventListener("keydown", (e)=>this.onKeyDown(e)
@@ -37233,13 +37246,16 @@ class Player extends _pixiJs.Sprite {
         this.x += this.xspeed;
         this.y += this.yspeed;
         this.counter += delta;
+        // If player hits car (1.25s cooldown), set to false again so hit can occur again
         if (this.counter > 125 && this.hit == true) this.hit = false;
+        if (this.health < 0) this.game.endGame();
     }
+    // Set counter to 0 for cooldown, 
     hitcar() {
         this.counter = 0;
         this.hit = true;
-        this.game.score++;
-        this.game.basicText.text = `Score ${this.game.score}`;
+        this.health--;
+        this.game.basicText.text = `Levens ${this.health}`;
     }
     jump() {
         console.log("jump!");
@@ -37289,9 +37305,6 @@ class Player extends _pixiJs.Sprite {
     }
 }
 
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"a2rT6":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "city.b93e9858.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
 
 //# sourceMappingURL=index.901f85c2.js.map

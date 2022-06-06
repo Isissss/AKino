@@ -29,6 +29,7 @@ export class Car extends PIXI.Sprite {
   }
 
   public update(delta: number) {
+    // If car turns left, turning points
     if (this.left) {
       if (this.y > 620) {
         this.angle = 90
@@ -37,7 +38,7 @@ export class Car extends PIXI.Sprite {
       } else {
         this.y += this.speed
       }
-
+      //If car reaches end of screen, set back to start loc
       if (this.x < -50) {
         this.x = this.startx
         this.y = this.starty
@@ -53,7 +54,7 @@ export class Car extends PIXI.Sprite {
       } else {
         this.x -= this.speed
       }
-
+      //If car reaches top of screen, set back to start loc
       if (this.y < -50) {
         this.x = 1400
         this.y = this.starty

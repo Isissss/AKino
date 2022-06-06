@@ -9,13 +9,13 @@ export class Player extends PIXI.Sprite {
   public hit: boolean
   private counter: number = 0;
 
-  constructor(texture: PIXI.Texture, mygame: Game) {
+  constructor(texture: PIXI.Texture, mygame: Game, health: number) {
     super(texture)
     this.x = 150
     this.y = 150
     this.game = mygame
     this.hit = false
-    this.health = 3
+    this.health = health
     this.scale.set(0.25)
     this.anchor.set(0.15)
 
@@ -29,16 +29,21 @@ export class Player extends PIXI.Sprite {
     this.y += this.yspeed
     this.counter += delta;
 
+    // If player hits car (1.25s cooldown), set to false again so hit can occur again
     if (this.counter > 125 && this.hit == true) {
       this.hit = false
     }
 
+    if (this.health < 0) {
+      this.game.endGame()
+    }
   }
+  // Set counter to 0 for cooldown, 
   public hitcar() {
     this.counter = 0
     this.hit = true
-    this.game.score++;
-    this.game.basicText.text = `Score ${this.game.score}`
+    this.health--;
+    this.game.basicText.text = `Levens ${this.health}`
   }
 
   jump() {

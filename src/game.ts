@@ -19,11 +19,14 @@ export class Game {
     score: number = 0
     car: Car
     car3: Car
+    gameover: boolean
     car2: Car
     basicText: PIXI.Text;
     textStyle: PIXI.TextStyle;
 
     constructor() {
+        this.gameover = false
+
         this.pixi = new PIXI.Application({ width: 1200, height: 700 })
         document.body.appendChild(this.pixi.view)
 
@@ -38,7 +41,7 @@ export class Game {
     }
 
     loadCompleted() {
-        this.player = new Player(this.loader.resources["sharkTexture"].texture!, this)
+        this.player = new Player(this.loader.resources["sharkTexture"].texture!, this, 1)
         this.car = new Car(this.loader.resources["carTexture"].texture!, false, 1200, 625)
         this.car3 = new Car(this.loader.resources["carTexture"].texture!, false, 1600, 625)
         this.car2 = new Car(this.loader.resources["carTexture"].texture!, true, 640, -300)
@@ -64,7 +67,7 @@ export class Game {
             trim: false
         });
 
-        this.basicText = new PIXI.Text(`Score ${this.score}`, this.textStyle);
+        this.basicText = new PIXI.Text(`Levens ${this.player.health}`, this.textStyle);
         // this.basicText.x = 100
         // this.basicText.y = 100
 
@@ -72,22 +75,25 @@ export class Game {
 
     }
     update(delta: number) {
+        if (this.gameover == false) {
+            for (let i = 0; i < this.cars.length; i++) {
+                if (this.collision(this.player, this.cars[i]) && !this.player.hit) {
+                    console.log("player touches object")
+                    this.player.hitcar()
 
-        for (let i = 0; i < this.cars.length; i++) {
-            if (this.collision(this.player, this.cars[i]) && !this.player.hit) {
-                console.log("player touches object")
-                this.player.hitcar()
+                }
 
             }
-
+            this.player.update(delta)
+            for (let car of this.cars) {
+                car.update(delta)
+            }
         }
-        this.player.update(delta)
-        for (let car of this.cars) {
-            car.update(delta)
-        }
-
     }
-
+    public endGame() {
+        console.log("game over!")
+        this.gameover = true
+    }
     collision(sprite1: PIXI.Sprite, sprite2: PIXI.Sprite) {
         const bounds1 = sprite1.getBounds()
         const bounds2 = sprite2.getBounds()
