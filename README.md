@@ -1,6 +1,3 @@
-[# Prototype 1!](https://isissss.github.io/CLE4/)
- 
- ![First prototype preview](https://cdn.discordapp.com/attachments/918139462372954152/978769137226620968/unknown.png)
 
 | Branch     | Author | Sprint | Summary |
 | ----------- | ----------- |  ----------- |  ----------- |
@@ -14,4 +11,12 @@
 | <a href="https://github.com/Isissss/CLE4/tree/carmechanic">carmechanic</a>   | Isis | 2 | First combined prototype |
 | <a href="https://github.com/Isissss/CLE4/tree/Wind">Wind</a>   | Jeffrey | 2 | First combined prototype |
 | <a href="https://github.com/Isissss/CLE4/tree/collision">UIMenu</a>   | Pim | 2 | First combined prototype |
+ <br>     
+        
+
+
+
+[# Prototype 1!](https://isissss.github.io/CLE4/)
+ 
+ ![First prototype preview](https://cdn.discordapp.com/attachments/918139462372954152/978769137226620968/unknown.png)
 
