@@ -534,6 +534,12 @@ var _buildingTexture2Png = require("./images/buildingTexture2.png");
 var _buildingTexture2PngDefault = parcelHelpers.interopDefault(_buildingTexture2Png);
 var _buildingTexture3Png = require("./images/buildingTexture3.png");
 var _buildingTexture3PngDefault = parcelHelpers.interopDefault(_buildingTexture3Png);
+var _buildingB1Png = require("./images/buildingB1.png");
+var _buildingB1PngDefault = parcelHelpers.interopDefault(_buildingB1Png);
+var _buildingB2Png = require("./images/buildingB2.png");
+var _buildingB2PngDefault = parcelHelpers.interopDefault(_buildingB2Png);
+var _buildingB3Png = require("./images/buildingB3.png");
+var _buildingB3PngDefault = parcelHelpers.interopDefault(_buildingB3Png);
 var _smog = require("./Smog");
 var _spawn = require("./Spawn");
 var _building = require("./Building");
@@ -549,7 +555,7 @@ class Game {
         });
         document.body.appendChild(this.pixi.view);
         this.loader = new _pixiJs.Loader();
-        this.loader.add('sharkTexture', _dinoPngDefault.default).add('fishTexture', _fishPngDefault.default).add('bubbleTexture', _bubblePngDefault.default).add('waterTexture', _waterJpgDefault.default).add('buildingTexture1', _buildingTexture1PngDefault.default).add('buildingTexture2', _buildingTexture2PngDefault.default).add('buildingTexture3', _buildingTexture3PngDefault.default);
+        this.loader.add('sharkTexture', _dinoPngDefault.default).add('fishTexture', _fishPngDefault.default).add('bubbleTexture', _bubblePngDefault.default).add('waterTexture', _waterJpgDefault.default).add('buildingTexture1', _buildingTexture1PngDefault.default).add('buildingTexture2', _buildingTexture2PngDefault.default).add('buildingTexture3', _buildingTexture3PngDefault.default).add('buildingB1', _buildingB1PngDefault.default).add('buildingB2', _buildingB2PngDefault.default).add('buildingB3', _buildingB3PngDefault.default);
         this.loader.load(()=>this.loadCompleted()
         );
     }
@@ -564,6 +570,9 @@ class Game {
             let building = new _building.Building(100 + i * 100, 200, this.loader.resources["buildingTexture1"].texture, this.loader.resources["buildingTexture2"].texture, this.loader.resources["buildingTexture3"].texture);
             this.pixi.stage.addChild(building);
             this.buildings.push(building);
+            let buildingB = new _building.Building(100 + i * 100, 100, this.loader.resources["buildingB1"].texture, this.loader.resources["buildingB2"].texture, this.loader.resources["buildingB3"].texture);
+            this.pixi.stage.addChild(buildingB);
+            this.buildings.push(buildingB);
         }
         this.pixi.ticker.add((delta)=>this.update()
         );
@@ -602,7 +611,7 @@ class Game {
 }
 let g = new Game;
 
-},{"pixi.js":"dsYej","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./Player":"8YLWx","./images/fish.png":"3tLwD","./Smog":"608Py","./Spawn":"6JGD8","./images/dino.png":"c8KfO","./images/buildingTexture1.png":"2g5jb","./images/buildingTexture2.png":"liaFA","./images/buildingTexture3.png":"gm23O","./Building":"9ckPp"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./Player":"8YLWx","./images/fish.png":"3tLwD","./Smog":"608Py","./Spawn":"6JGD8","./images/dino.png":"c8KfO","./images/buildingTexture1.png":"2g5jb","./images/buildingTexture2.png":"liaFA","./images/buildingTexture3.png":"gm23O","./Building":"9ckPp","./images/buildingB1.png":"fkYnt","./images/buildingB2.png":"1yWjs","./images/buildingB3.png":"kzHCU"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37354,6 +37363,15 @@ class Building extends _pixiJs.Sprite {
     }
 }
 
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fkYnt":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "buildingB1.1350a833.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"1yWjs":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "buildingB2.a3b45b19.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"kzHCU":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "buildingB3.afabfd0a.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
 
 //# sourceMappingURL=index.901f85c2.js.map

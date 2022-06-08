@@ -8,6 +8,9 @@ import fishImage from "./images/fish.png"
 import buildingTexture1 from "./images/buildingTexture1.png"
 import buildingTexture2 from "./images/buildingTexture2.png"
 import buildingTexture3 from "./images/buildingTexture3.png"
+import buildingB1 from "./images/buildingB1.png"
+import buildingB2 from "./images/buildingB2.png"
+import buildingB3 from "./images/buildingB3.png"
 import { Smog } from './Smog'
 import { Graphics } from 'pixi.js'
 import { Spawn } from './Spawn'
@@ -39,6 +42,9 @@ export class Game {
             .add('buildingTexture1', buildingTexture1)
             .add('buildingTexture2', buildingTexture2)
             .add('buildingTexture3', buildingTexture3)
+            .add('buildingB1', buildingB1)
+            .add('buildingB2', buildingB2)
+            .add('buildingB3', buildingB3)
         this.loader.load(() => this.loadCompleted())
     }
 
@@ -53,6 +59,10 @@ export class Game {
             let building = new Building(100 + (i * 100), 200, this.loader.resources["buildingTexture1"].texture!, this.loader.resources["buildingTexture2"].texture!, this.loader.resources["buildingTexture3"].texture!)
             this.pixi.stage.addChild(building)
             this.buildings.push(building)
+
+            let buildingB = new Building(100 + (i * 100), 100, this.loader.resources["buildingB1"].texture!, this.loader.resources["buildingB2"].texture!, this.loader.resources["buildingB3"].texture!)
+            this.pixi.stage.addChild(buildingB)
+            this.buildings.push(buildingB)
         }
         this.pixi.ticker.add((delta) => this.update())
 
