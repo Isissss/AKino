@@ -60,7 +60,7 @@ export class Game {
             this.pixi.stage.addChild(building)
             this.buildings.push(building)
 
-            let buildingB = new Building(100 + (i * 100), 100, this.loader.resources["buildingB1"].texture!, this.loader.resources["buildingB2"].texture!, this.loader.resources["buildingB3"].texture!)
+            let buildingB = new Building(100 + (i * 100), 250, this.loader.resources["buildingB1"].texture!, this.loader.resources["buildingB2"].texture!, this.loader.resources["buildingB3"].texture!)
             this.pixi.stage.addChild(buildingB)
             this.buildings.push(buildingB)
         }

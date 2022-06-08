@@ -570,7 +570,7 @@ class Game {
             let building = new _building.Building(100 + i * 100, 200, this.loader.resources["buildingTexture1"].texture, this.loader.resources["buildingTexture2"].texture, this.loader.resources["buildingTexture3"].texture);
             this.pixi.stage.addChild(building);
             this.buildings.push(building);
-            let buildingB = new _building.Building(100 + i * 100, 100, this.loader.resources["buildingB1"].texture, this.loader.resources["buildingB2"].texture, this.loader.resources["buildingB3"].texture);
+            let buildingB = new _building.Building(100 + i * 100, 250, this.loader.resources["buildingB1"].texture, this.loader.resources["buildingB2"].texture, this.loader.resources["buildingB3"].texture);
             this.pixi.stage.addChild(buildingB);
             this.buildings.push(buildingB);
         }
@@ -611,7 +611,7 @@ class Game {
 }
 let g = new Game;
 
-},{"pixi.js":"dsYej","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./Player":"8YLWx","./images/fish.png":"3tLwD","./Smog":"608Py","./Spawn":"6JGD8","./images/dino.png":"c8KfO","./images/buildingTexture1.png":"2g5jb","./images/buildingTexture2.png":"liaFA","./images/buildingTexture3.png":"gm23O","./Building":"9ckPp","./images/buildingB1.png":"fkYnt","./images/buildingB2.png":"1yWjs","./images/buildingB3.png":"kzHCU"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./images/fish.png":"3tLwD","./Smog":"608Py","./Spawn":"6JGD8","./images/dino.png":"c8KfO","./Player":"8YLWx","./images/buildingTexture1.png":"2g5jb","./images/buildingTexture2.png":"liaFA","./images/buildingTexture3.png":"gm23O","./images/buildingB1.png":"fkYnt","./images/buildingB2.png":"1yWjs","./images/buildingB3.png":"kzHCU","./Building":"9ckPp"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37166,82 +37166,7 @@ exports.getOrigin = getOrigin;
 },{}],"jj9Eg":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "water.59ff4e4f.jpg" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"8YLWx":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Player", ()=>Player
-);
-var _pixiJs = require("pixi.js");
-class Player extends _pixiJs.Sprite {
-    xspeed = 0;
-    yspeed = 0;
-    constructor(texture){
-        super(texture);
-        this.x = 100;
-        this.y = 100;
-        this.scale.set(0.3);
-        this.anchor.set(0.5, 0.5);
-        window.addEventListener("keydown", (e)=>this.onKeyDown(e)
-        );
-        window.addEventListener("keyup", (e)=>this.onKeyUp(e)
-        );
-    }
-    update() {
-        this.x += this.xspeed;
-        this.y += this.yspeed;
-        console.log(this.x);
-    }
-    jump() {
-        console.log("jump!");
-    }
-    onKeyDown(e) {
-        switch(e.key.toUpperCase()){
-            case " ":
-                this.jump();
-                break;
-            case "A":
-            case "ARROWLEFT":
-                this.xspeed = -7;
-                console.log("a");
-                break;
-            case "D":
-            case "ARROWRIGHT":
-                this.xspeed = 7;
-                console.log("d");
-                break;
-            case "W":
-            case "ARROWUP":
-                this.yspeed = -7;
-                console.log("w");
-                break;
-            case "S":
-            case "ARROWDOWN":
-                this.yspeed = 7;
-                console.log("s");
-                break;
-        }
-    }
-    onKeyUp(e) {
-        switch(e.key.toUpperCase()){
-            case " ":
-                break;
-            case "A":
-            case "D":
-            case "ARROWLEFT":
-            case "ARROWRIGHT":
-                this.xspeed = 0;
-                break;
-            case "W":
-            case "S":
-            case "ARROWUP":
-            case "ARROWDOWN":
-                this.yspeed = 0;
-                break;
-        }
-    }
-}
-
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3tLwD":[function(require,module,exports) {
+},{"./helpers/bundle-url":"lgJ39"}],"3tLwD":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "fish.510b053c.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"608Py":[function(require,module,exports) {
@@ -37332,7 +37257,82 @@ class Object extends _pixiJs.Sprite {
 },{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"c8KfO":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "dino.174d8237.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"2g5jb":[function(require,module,exports) {
+},{"./helpers/bundle-url":"lgJ39"}],"8YLWx":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Player", ()=>Player
+);
+var _pixiJs = require("pixi.js");
+class Player extends _pixiJs.Sprite {
+    xspeed = 0;
+    yspeed = 0;
+    constructor(texture){
+        super(texture);
+        this.x = 100;
+        this.y = 100;
+        this.scale.set(0.3);
+        this.anchor.set(0.5, 0.5);
+        window.addEventListener("keydown", (e)=>this.onKeyDown(e)
+        );
+        window.addEventListener("keyup", (e)=>this.onKeyUp(e)
+        );
+    }
+    update() {
+        this.x += this.xspeed;
+        this.y += this.yspeed;
+        console.log(this.x);
+    }
+    jump() {
+        console.log("jump!");
+    }
+    onKeyDown(e) {
+        switch(e.key.toUpperCase()){
+            case " ":
+                this.jump();
+                break;
+            case "A":
+            case "ARROWLEFT":
+                this.xspeed = -7;
+                console.log("a");
+                break;
+            case "D":
+            case "ARROWRIGHT":
+                this.xspeed = 7;
+                console.log("d");
+                break;
+            case "W":
+            case "ARROWUP":
+                this.yspeed = -7;
+                console.log("w");
+                break;
+            case "S":
+            case "ARROWDOWN":
+                this.yspeed = 7;
+                console.log("s");
+                break;
+        }
+    }
+    onKeyUp(e) {
+        switch(e.key.toUpperCase()){
+            case " ":
+                break;
+            case "A":
+            case "D":
+            case "ARROWLEFT":
+            case "ARROWRIGHT":
+                this.xspeed = 0;
+                break;
+            case "W":
+            case "S":
+            case "ARROWUP":
+            case "ARROWDOWN":
+                this.yspeed = 0;
+                break;
+        }
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2g5jb":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "buildingTexture1.554e77b5.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"liaFA":[function(require,module,exports) {
@@ -37340,6 +37340,15 @@ module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "buildi
 
 },{"./helpers/bundle-url":"lgJ39"}],"gm23O":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "buildingTexture3.07918d74.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"fkYnt":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "buildingB1.1350a833.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"1yWjs":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "buildingB2.a3b45b19.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"kzHCU":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "buildingB3.afabfd0a.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"9ckPp":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -37363,15 +37372,6 @@ class Building extends _pixiJs.Sprite {
     }
 }
 
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fkYnt":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "buildingB1.1350a833.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"1yWjs":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "buildingB2.a3b45b19.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"kzHCU":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "buildingB3.afabfd0a.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
 
 //# sourceMappingURL=index.901f85c2.js.map
