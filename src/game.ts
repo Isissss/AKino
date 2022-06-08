@@ -5,10 +5,14 @@ import bubbleImage from "./images/bubble.png"
 import waterImage from "./images/water.jpg"
 import smokeImage from "./images/smog.png"
 import fishImage from "./images/fish.png"
+import buildingTexture1 from "./images/buildingTexture1.png"
+import buildingTexture2 from "./images/buildingTexture2.png"
+import buildingTexture3 from "./images/buildingTexture3.png"
 import { Smog } from './Smog'
 import { Graphics } from 'pixi.js'
 import { Spawn } from './Spawn'
 import { Object } from './Object'
+import { Building } from './Building'
 
 export class Game {
     pixi: PIXI.Application
@@ -21,6 +25,7 @@ export class Game {
     score: number = 0
     basicText: PIXI.Text;
     textStyle: PIXI.TextStyle;
+    building: Building
 
     constructor() {
         this.pixi = new PIXI.Application({ width: window.innerWidth - 5, height: window.innerHeight - 5, backgroundColor: 0xAAAAA })
@@ -31,6 +36,9 @@ export class Game {
             .add('fishTexture', fishImage)
             .add('bubbleTexture', bubbleImage)
             .add('waterTexture', waterImage)
+            .add('buildingTexture1', buildingTexture1)
+            .add('buildingTexture2', buildingTexture2)
+            .add('buildingTexture3', buildingTexture3)
         this.loader.load(() => this.loadCompleted())
     }
 
@@ -41,6 +49,8 @@ export class Game {
         this.pixi.stage.addChild(this.smog)
         this.pixi.stage.addChild(this.spawner)
         this.pixi.stage.addChild(this.player)
+        this.building = new Building(200, 200, this.loader.resources["buildingTexture1"].texture!, this.loader.resources["buildingTexture2"].texture!, this.loader.resources["buildingTexture3"].texture!)
+        this.pixi.stage.addChild(this.building)
         this.pixi.ticker.add((delta) => this.update())
 
         this.textStyle = new PIXI.TextStyle({
@@ -60,6 +70,7 @@ export class Game {
         this.spawner.update()
         this.player.update()
         this.smog.update()
+        this.building.update(this.score)
         for (let i = 0; i < this.objects.length; i++) {
             if (this.collision(this.player, this.objects[i])) {
 

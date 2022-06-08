@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js'
 
-export class Evolution {
+export class Evolution extends PIXI.Sprite {
 
 }
