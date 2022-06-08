@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js'
-import { Shark } from "./Shark"
+import { Player } from "./Player"
 import sharkImage from "./images/shark.png"
 import bubbleImage from "./images/bubble.png"
 import waterImage from "./images/water.jpg"
@@ -20,9 +20,9 @@ class Game {
     }
 
     loadCompleted() {
-        let shark = new Shark(this.loader.resources["sharkTexture"].texture!)
-        this.pixi.stage.addChild(shark)
-        this.pixi.ticker.add((delta) => shark.update())
+        let player = new Player(this.loader.resources["sharkTexture"].texture!)
+        this.pixi.stage.addChild(player)
+        this.pixi.ticker.add((delta) => player.update())
     }
 }
 new Game

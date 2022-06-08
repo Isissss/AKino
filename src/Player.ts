@@ -1,8 +1,8 @@
 import * as PIXI from "pixi.js"
 
-export class Shark extends PIXI.Sprite {
-  xspeed = 0
-  yspeed = 0
+export class Player extends PIXI.Sprite {
+  private xspeed = 0
+  private yspeed = 0
 
   constructor(texture: PIXI.Texture) {
     super(texture)
@@ -14,17 +14,17 @@ export class Shark extends PIXI.Sprite {
     window.addEventListener("keyup", (e: KeyboardEvent) => this.onKeyUp(e))
   }
 
-  update() {
+  public update() {
     this.x += this.xspeed
     this.y += this.yspeed
     console.log(this.x)
   }
 
-  jump() {
+  private jump() {
     console.log("jump!")
   }
 
-  onKeyDown(e: KeyboardEvent): void {
+  private onKeyDown(e: KeyboardEvent): void {
     switch (e.key.toUpperCase()) {
       case " ":
         this.jump()
@@ -53,7 +53,7 @@ export class Shark extends PIXI.Sprite {
     }
   }
 
-  onKeyUp(e: KeyboardEvent): void {
+  private onKeyUp(e: KeyboardEvent): void {
     switch (e.key.toUpperCase()) {
       case " ":
         break;
