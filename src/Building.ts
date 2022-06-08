@@ -14,7 +14,7 @@ export class Building extends PIXI.Sprite {
 
   }
 
-  update(score: number) {
+  public update(score: number) {
     if (score <= 2) {
       this.texture = this.texture1
     }
