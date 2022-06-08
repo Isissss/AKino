@@ -515,37 +515,80 @@ function hmrAcceptRun(bundle, id) {
 
 },{}],"edeGs":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Game", ()=>Game
+);
 var _pixiJs = require("pixi.js");
-var _fishPng = require("./images/fish.png");
-var _fishPngDefault = parcelHelpers.interopDefault(_fishPng);
+var _shark = require("./Shark");
+var _dinoPng = require("./images/dino.png");
+var _dinoPngDefault = parcelHelpers.interopDefault(_dinoPng);
 var _bubblePng = require("./images/bubble.png");
 var _bubblePngDefault = parcelHelpers.interopDefault(_bubblePng);
 var _waterJpg = require("./images/water.jpg");
 var _waterJpgDefault = parcelHelpers.interopDefault(_waterJpg);
-//
-// STAP 1 - maak een pixi canvas
-//
-const pixi = new _pixiJs.Application({
-    width: 800,
-    height: 450
-});
-document.body.appendChild(pixi.view);
-//
-// STAP 2 - preload alle afbeeldingen
-//
-const loader = new _pixiJs.Loader();
-loader.add('fishTexture', _fishPngDefault.default).add('bubbleTexture', _bubblePngDefault.default).add('waterTexture', _waterJpgDefault.default);
-loader.load(()=>loadCompleted()
-);
-//
-// STAP 3 - maak een sprite als de afbeeldingen zijn geladen
-//
-function loadCompleted() {
-    let fish = new _pixiJs.Sprite(loader.resources["fishTexture"].texture);
-    pixi.stage.addChild(fish);
+var _fishPng = require("./images/fish.png");
+var _fishPngDefault = parcelHelpers.interopDefault(_fishPng);
+var _smog = require("./Smog");
+var _spawn = require("./Spawn");
+class Game {
+    objects = [];
+    score = 0;
+    constructor(){
+        this.pixi = new _pixiJs.Application({
+            width: window.innerWidth - 5,
+            height: window.innerHeight - 5,
+            backgroundColor: 699050
+        });
+        document.body.appendChild(this.pixi.view);
+        this.loader = new _pixiJs.Loader();
+        this.loader.add('sharkTexture', _dinoPngDefault.default).add('fishTexture', _fishPngDefault.default).add('bubbleTexture', _bubblePngDefault.default).add('waterTexture', _waterJpgDefault.default);
+        this.loader.load(()=>this.loadCompleted()
+        );
+    }
+    loadCompleted() {
+        this.shark = new _shark.Shark(this.loader.resources["sharkTexture"].texture);
+        this.smog = new _smog.Smog(this.shark, window.innerWidth);
+        this.spawner = new _spawn.Spawn(100, 100, 180, this.loader.resources["fishTexture"].texture, this);
+        this.pixi.stage.addChild(this.smog);
+        this.pixi.stage.addChild(this.spawner);
+        this.pixi.stage.addChild(this.shark);
+        this.pixi.ticker.add((delta)=>this.update()
+        );
+        this.textStyle = new _pixiJs.TextStyle({
+            fontSize: 31,
+            fontWeight: "bold",
+            trim: false
+        });
+        this.basicText = new _pixiJs.Text(`Score ${this.score}`, this.textStyle);
+        this.basicText.x = 100;
+        this.basicText.y = 100;
+        this.pixi.stage.addChild(this.basicText);
+    }
+    update() {
+        this.spawner.update();
+        this.shark.update();
+        this.smog.update();
+        for(let i = 0; i < this.objects.length; i++)if (this.collision(this.shark, this.objects[i])) {
+            this.score++;
+            this.basicText.text = `Score ${this.score}`;
+            console.log("player touches object");
+            this.objects[i].destroy();
+            this.objects.splice(i, 1);
+        }
+    }
+    spawnObject(object) {
+        this.pixi.stage.addChild(object);
+        this.objects.push(object);
+    }
+    collision(sprite1, sprite2) {
+        const bounds1 = sprite1.getBounds();
+        const bounds2 = sprite2.getBounds();
+        return bounds1.x < bounds2.x + bounds2.width && bounds1.x + bounds1.width > bounds2.x && bounds1.y < bounds2.y + bounds2.height && bounds1.y + bounds1.height > bounds2.y;
+    }
 }
+let g = new Game;
 
-},{"pixi.js":"dsYej","./images/fish.png":"3tLwD","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./Shark":"8upe1","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","./Smog":"608Py","./Spawn":"6JGD8","./images/fish.png":"3tLwD","./images/dino.png":"c8KfO"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37060,8 +37103,83 @@ function __extends(d, b) {
     return AnimatedSprite1;
 }(_sprite.Sprite);
 
-},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3tLwD":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "fish.510b053c.png" + "?" + Date.now();
+},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8upe1":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Shark", ()=>Shark
+);
+var _pixiJs = require("pixi.js");
+class Shark extends _pixiJs.Sprite {
+    xspeed = 0;
+    yspeed = 0;
+    constructor(texture){
+        super(texture);
+        this.x = 100;
+        this.y = 100;
+        this.scale.set(0.3);
+        this.anchor.set(0.5, 0.5);
+        window.addEventListener("keydown", (e)=>this.onKeyDown(e)
+        );
+        window.addEventListener("keyup", (e)=>this.onKeyUp(e)
+        );
+    }
+    update() {
+        this.x += this.xspeed;
+        this.y += this.yspeed;
+        console.log(this.x);
+    }
+    jump() {
+        console.log("jump!");
+    }
+    onKeyDown(e) {
+        switch(e.key.toUpperCase()){
+            case " ":
+                this.jump();
+                break;
+            case "A":
+            case "ARROWLEFT":
+                this.xspeed = -7;
+                console.log("a");
+                break;
+            case "D":
+            case "ARROWRIGHT":
+                this.xspeed = 7;
+                console.log("d");
+                break;
+            case "W":
+            case "ARROWUP":
+                this.yspeed = -7;
+                console.log("w");
+                break;
+            case "S":
+            case "ARROWDOWN":
+                this.yspeed = 7;
+                console.log("s");
+                break;
+        }
+    }
+    onKeyUp(e) {
+        switch(e.key.toUpperCase()){
+            case " ":
+                break;
+            case "A":
+            case "D":
+            case "ARROWLEFT":
+            case "ARROWRIGHT":
+                this.xspeed = 0;
+                break;
+            case "W":
+            case "S":
+            case "ARROWUP":
+            case "ARROWDOWN":
+                this.yspeed = 0;
+                break;
+        }
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iMP3P":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble.56ab0ad6.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
 "use strict";
@@ -37097,11 +37215,99 @@ exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
 
-},{}],"iMP3P":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble.56ab0ad6.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"jj9Eg":[function(require,module,exports) {
+},{}],"jj9Eg":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "water.59ff4e4f.jpg" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"608Py":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Smog", ()=>Smog
+);
+var _pixiJs = require("pixi.js");
+class Smog extends _pixiJs.Graphics {
+    constructor(player, radius){
+        super();
+        this.player = player;
+        this.originalRadius = radius;
+        this.radius = this.originalRadius;
+        this.interactive = true;
+        this.draw();
+    }
+    draw() {
+        this.beginFill(16777215);
+        this.drawCircle(this.player.x, this.player.y, this.radius);
+        this.endFill;
+    }
+    updatePos() {}
+    update() {
+        if (this.radius >= 1) {
+            this.radius -= 1;
+            this.clear();
+            this.draw();
+            console.log(`radius: ${this.radius}`);
+        } else {
+            console.log(`radius is already 0`);
+            console.log('resetting circle to 200 radius');
+            this.radius = this.originalRadius;
+            this.clear();
+            this.draw();
+        }
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6JGD8":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Spawn", ()=>Spawn
+);
+var _pixiJs = require("pixi.js");
+var _object = require("./Object");
+class Spawn extends _pixiJs.Sprite {
+    timer = 0;
+    constructor(x, y, delay, texture, game){
+        super();
+        this.game = game;
+        this.x = x;
+        this.y = y;
+        this.delay = delay;
+        this.objectTexture = texture;
+    }
+    update() {
+        this.timer += 1;
+        console.log(this.timer);
+        if (this.timer > this.delay) {
+            let sprite = new _object.Object(this.objectTexture);
+            this.timer = 0;
+            this.game.spawnObject(sprite);
+            console.log("hello");
+        }
+    }
+}
+
+},{"pixi.js":"dsYej","./Object":"fjBpM","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fjBpM":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Object", ()=>Object
+);
+var _pixiJs = require("pixi.js");
+class Object extends _pixiJs.Sprite {
+    constructor(texture){
+        super(texture);
+        this.x = Math.random() * window.innerWidth - 5;
+        this.y = Math.random() * window.innerHeight - 5;
+        this.speed = 4;
+        this.anchor.set(0.5);
+    }
+    update() {
+        this.x += this.speed;
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3tLwD":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "fish.510b053c.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"c8KfO":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "dino.174d8237.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
 
