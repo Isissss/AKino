@@ -3,7 +3,7 @@
 | ----------- | ----------- |  ----------- |  ----------- |
 | main      | - | 0 | Game's main branch |
 | <a href="https://github.com/Isissss/CLE4/tree/proto01">proto01</a>   | - | 1 | First combined prototype |
-| <a href="https://github.com/Isissss/CLE4/tree/Player">Player</a>   | Wessel | 1 | First combined prototype |
+| <a href="https://github.com/Isissss/CLE4/tree/Player">Player</a>   | Wessel | 1 | Prototype for keyboard movement |
 | <a href="https://github.com/Isissss/CLE4/tree/collision">collision</a>   | Isis | 1 | First combined prototype |
 | <a href="https://github.com/Isissss/CLE4/tree/Spawner">Spawner</a>   | Jeffrey | 1 | First combined prototype |
 | <a href="https://github.com/Isissss/CLE4/tree/smog">smog</a>   | Pim | 1 | Prototype for changing visibility due to progressing smog |
