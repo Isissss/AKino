@@ -540,6 +540,7 @@ var _building = require("./Building");
 class Game {
     objects = [];
     score = 0;
+    buildings = [];
     constructor(){
         this.pixi = new _pixiJs.Application({
             width: window.innerWidth - 5,
@@ -559,8 +560,11 @@ class Game {
         this.pixi.stage.addChild(this.smog);
         this.pixi.stage.addChild(this.spawner);
         this.pixi.stage.addChild(this.player);
-        this.building = new _building.Building(200, 200, this.loader.resources["buildingTexture1"].texture, this.loader.resources["buildingTexture2"].texture, this.loader.resources["buildingTexture3"].texture);
-        this.pixi.stage.addChild(this.building);
+        for(let i = 0; i < 5; i++){
+            let building = new _building.Building(100 + i * 100, 200, this.loader.resources["buildingTexture1"].texture, this.loader.resources["buildingTexture2"].texture, this.loader.resources["buildingTexture3"].texture);
+            this.pixi.stage.addChild(building);
+            this.buildings.push(building);
+        }
         this.pixi.ticker.add((delta)=>this.update()
         );
         this.textStyle = new _pixiJs.TextStyle({
@@ -577,7 +581,7 @@ class Game {
         this.spawner.update();
         this.player.update();
         this.smog.update();
-        this.building.update(this.score);
+        for (let building of this.buildings)building.update(this.score);
         for(let i = 0; i < this.objects.length; i++)if (this.collision(this.player, this.objects[i])) {
             this.score++;
             this.basicText.text = `Score ${this.score}`;
@@ -37344,8 +37348,8 @@ class Building extends _pixiJs.Sprite {
         this.texture3 = texture3;
     }
     update(score) {
-        if (score <= 10) this.texture = this.texture1;
-        else if (score <= 20) this.texture = this.texture2;
+        if (score <= 2) this.texture = this.texture1;
+        else if (score <= 5) this.texture = this.texture2;
         else this.texture = this.texture3;
     }
 }

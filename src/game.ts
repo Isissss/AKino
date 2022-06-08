@@ -25,7 +25,7 @@ export class Game {
     score: number = 0
     basicText: PIXI.Text;
     textStyle: PIXI.TextStyle;
-    building: Building
+    buildings: Building[] = []
 
     constructor() {
         this.pixi = new PIXI.Application({ width: window.innerWidth - 5, height: window.innerHeight - 5, backgroundColor: 0xAAAAA })
@@ -49,8 +49,11 @@ export class Game {
         this.pixi.stage.addChild(this.smog)
         this.pixi.stage.addChild(this.spawner)
         this.pixi.stage.addChild(this.player)
-        this.building = new Building(200, 200, this.loader.resources["buildingTexture1"].texture!, this.loader.resources["buildingTexture2"].texture!, this.loader.resources["buildingTexture3"].texture!)
-        this.pixi.stage.addChild(this.building)
+        for (let i = 0; i < 5; i++) {
+            let building = new Building(100 + (i * 100), 200, this.loader.resources["buildingTexture1"].texture!, this.loader.resources["buildingTexture2"].texture!, this.loader.resources["buildingTexture3"].texture!)
+            this.pixi.stage.addChild(building)
+            this.buildings.push(building)
+        }
         this.pixi.ticker.add((delta) => this.update())
 
         this.textStyle = new PIXI.TextStyle({
@@ -70,7 +73,9 @@ export class Game {
         this.spawner.update()
         this.player.update()
         this.smog.update()
-        this.building.update(this.score)
+        for (let building of this.buildings) {
+            building.update(this.score)
+        }
         for (let i = 0; i < this.objects.length; i++) {
             if (this.collision(this.player, this.objects[i])) {
 
