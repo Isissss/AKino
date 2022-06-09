@@ -34,7 +34,7 @@ export class Player extends PIXI.Sprite {
       this.hit = false
     }
 
-    if (this.health < 0) {
+    if (this.health < 1) {
       this.game.endGame()
     }
   }
