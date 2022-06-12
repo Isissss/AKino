@@ -40,8 +40,8 @@ export class Smog extends PIXI.Graphics{
         //console.log(`radius: ${this.radius}`)
         }
         else{
-            console.log(`radius is already 0`)
-            console.log('resetting circle to 200 radius')
+            //console.log(`radius is already 0`)
+            //console.log('resetting circle to 200 radius')
             this.radius = this.originalRadius
             this.clear()
             this.draw()

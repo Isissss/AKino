@@ -5,24 +5,27 @@ import bubbleImage from "./images/bubble.png"
 import waterImage from "./images/water.jpg"
 import smokeImage from "./images/smog.png"
 import fishImage from "./images/fish.png"
-import backgroundImage from "./images/tile_.png"
+import HPDbackgroundImage from "./images/tile.png"
+import menuBackgroundImage from "./images/menuBackground.png"
 import { Smog } from './Smog'
 import { Graphics } from 'pixi.js'
 import { Spawn } from './Spawn'
 import { Object } from './Object'
 import { UI } from './UI'
+import { Menu } from './Menu'
 
 export class Game {
-    pixi: PIXI.Application
-    loader: PIXI.Loader
-    shark: Shark
-    smog: Smog
-    graphics: Graphics
-    spawner: Spawn
-    objects: Object[] = []
+    pixi: PIXI.Application;
+    loader: PIXI.Loader;
+    shark: Shark;
+    smog: Smog;
+    graphics: Graphics;
+    spawner: Spawn;
+    objects: Object[] = [];
     ui: UI // UI container class
-    menuActive: boolean = false // variable to check if updates need to be run
-    score: number = 0
+    pauseMenu: Menu; // container class for the menu
+    menuActive: boolean = false; // variable to check if updates need to be run
+    score: number = 0;
     basicText: PIXI.Text;
     textStyle: PIXI.TextStyle;
 
@@ -35,7 +38,8 @@ export class Game {
             .add('fishTexture', fishImage)
             .add('bubbleTexture', bubbleImage)
             .add('waterTexture', waterImage)
-            .add('backgroundTexture', backgroundImage)
+            .add('HPDbackgroundTexture', HPDbackgroundImage)
+            .add('menuBackgroundTexture', menuBackgroundImage)
         this.loader.load(() => this.loadCompleted())
     }
 
@@ -43,8 +47,10 @@ export class Game {
         this.shark = new Shark(this.loader.resources["sharkTexture"].texture!)
         this.smog = new Smog(this.shark, window.innerWidth)
         this.spawner = new Spawn(100, 100, (3 * 60), this.loader.resources["fishTexture"].texture!, this)
-        this.ui = new UI(this, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["backgroundTexture"].texture!) // (game, pausebutton texture, heart texture, background texture)
-        this.pixi.stage.addChild(this.smog, this.spawner, this.shark, this.ui) // made the adding to stage a single line
+        this.ui = new UI(this, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["HPDbackgroundTexture"].texture!) // (game, pausebutton texture, heart texture, background texture)
+        this.pauseMenu = new Menu(this, this.loader.resources["menuBackgroundTexture"].texture!) 
+        this.pauseMenu.visible = false;
+        this.pixi.stage.addChild(this.smog, this.spawner, this.shark, this.ui, this.pauseMenu) // made the adding to stage a single line
         this.pixi.ticker.add((delta) => this.update())
 
         this.textStyle = new PIXI.TextStyle({
@@ -61,7 +67,7 @@ export class Game {
 
     }
     update() {
-        if (!this.menuActive) {
+        if (!this.menuActive) { // pixi.stop() might be a better idea
             this.spawner.update()
             this.shark.update()
             this.smog.update()
@@ -81,6 +87,9 @@ export class Game {
                 }
             }
         }
+        // else {
+        //     this.pixi.stop() // needs a way to start pixi again though
+        // }
     }
 
     public spawnObject(object: Object) {
@@ -96,6 +105,24 @@ export class Game {
             && bounds1.x + bounds1.width > bounds2.x
             && bounds1.y < bounds2.y + bounds2.height
             && bounds1.y + bounds1.height > bounds2.y;
+    }
+
+    public togglePauseMenu(){
+        switch (this.menuActive){
+            case false:
+                this.menuActive = true;
+                this.pauseMenu.visible = true;
+                console.log(this.pauseMenu)
+                break;
+            case true:
+                this.menuActive = false;
+                this.pauseMenu.visible = false;
+                break;
+            default:
+                console.log('error toggling pausemenu')
+                break;
+        }
+
     }
 }
 

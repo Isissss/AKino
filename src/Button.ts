@@ -23,11 +23,6 @@ export class Button extends PIXI.Sprite {
 
     private buttonClicked(){
         console.log("Button Clicked")
-        if(this.game.menuActive === false){
-        this.game.menuActive = true
-        } else {
-            this.game.menuActive = false
-        }
-
+        this.game.togglePauseMenu()
     }
 }
