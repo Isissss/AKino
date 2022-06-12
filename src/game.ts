@@ -5,10 +5,14 @@ import bubbleImage from "./images/bubble.png"
 import waterImage from "./images/water.jpg"
 import smokeImage from "./images/smog.png"
 import fishImage from "./images/fish.png"
-import HPDbackgroundImage from "./images/tile.png"
-import menuBackgroundImage from "./images/menuBackground.png"
+import HPDbackgroundImage from "./images/tile.png" // needs replacement / better way of creating the background
+import menuBackgroundImage from "./images/menuBackground.png" // Menu book
+import uiElement0Image from "./images/YellowUI0.png" // cant get spritesheets to work
+import uiElement1Image from "./images/YellowUI1.png" // cant get spritesheets to work
+import uiElement2Image from "./images/YellowUI2.png" // cant get spritesheets to work
+import uiElement3Image from "./images/YellowUI3.png" // cant get spritesheets to work
 import { Smog } from './Smog'
-import { Graphics } from 'pixi.js'
+import { Graphics, Spritesheet } from 'pixi.js'
 import { Spawn } from './Spawn'
 import { Object } from './Object'
 import { UI } from './UI'
@@ -22,42 +26,61 @@ export class Game {
     graphics: Graphics;
     spawner: Spawn;
     objects: Object[] = [];
+    uiTextures: PIXI.Texture[] = []
     ui: UI // UI container class
     pauseMenu: Menu; // container class for the menu
     menuActive: boolean = false; // variable to check if updates need to be run
     score: number = 0;
     basicText: PIXI.Text;
     textStyle: PIXI.TextStyle;
+    soundFX: number = 50 // temp placeholder for volume Sound Effects => number
+    bgMusic: number = 50 // temp placeholder for volume Background Music => number
+    fontSize: number = 20 // placeholder for fontsize => number
+
 
     constructor() {
         this.pixi = new PIXI.Application({ width: window.innerWidth - 5, height: window.innerHeight - 5, backgroundColor: 0xAAAAA })
         document.body.appendChild(this.pixi.view)
 
         this.loader = new PIXI.Loader()
-        this.loader.add('sharkTexture', sharkImage)
+        this.loader            
+            .add('sharkTexture', sharkImage)
             .add('fishTexture', fishImage)
             .add('bubbleTexture', bubbleImage)
             .add('waterTexture', waterImage)
             .add('HPDbackgroundTexture', HPDbackgroundImage)
             .add('menuBackgroundTexture', menuBackgroundImage)
+            .add('uiElement0', uiElement0Image) // cant get spritesheets to work
+            .add('uiElement1', uiElement1Image) // cant get spritesheets to work
+            .add('uiElement2', uiElement2Image) // cant get spritesheets to work
+            .add('uiElement3', uiElement3Image) // cant get spritesheets to work         
         this.loader.load(() => this.loadCompleted())
     }
 
     loadCompleted() {
+        this.uiTextures = [
+            this.loader.resources["uiElement0"].texture!,
+            this.loader.resources["uiElement1"].texture!,
+            this.loader.resources["uiElement2"].texture!,
+            this.loader.resources["uiElement3"].texture!        
+        ]
+
+        this.textStyle = new PIXI.TextStyle({
+            fontSize: this.fontSize,
+            fontWeight: "bold",
+            trim: false
+        });
+
         this.shark = new Shark(this.loader.resources["sharkTexture"].texture!)
         this.smog = new Smog(this.shark, window.innerWidth)
         this.spawner = new Spawn(100, 100, (3 * 60), this.loader.resources["fishTexture"].texture!, this)
         this.ui = new UI(this, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["HPDbackgroundTexture"].texture!) // (game, pausebutton texture, heart texture, background texture)
-        this.pauseMenu = new Menu(this, this.loader.resources["menuBackgroundTexture"].texture!) 
+        this.pauseMenu = new Menu(this, this.loader.resources["menuBackgroundTexture"].texture!, this.uiTextures) 
         this.pauseMenu.visible = false;
-        this.pixi.stage.addChild(this.smog, this.spawner, this.shark, this.ui, this.pauseMenu) // made the adding to stage a single line
+        this.pixi.stage.addChild(this.smog, this.shark, this.ui, this.pauseMenu) // made the adding to stage a single line, doesnt need this.spawner
         this.pixi.ticker.add((delta) => this.update())
 
-        this.textStyle = new PIXI.TextStyle({
-            fontSize: 31,
-            fontWeight: "bold",
-            trim: false
-        });
+        
 
         this.basicText = new PIXI.Text(`Score ${this.score}`, this.textStyle);
         this.basicText.x = 100
@@ -112,11 +135,17 @@ export class Game {
             case false:
                 this.menuActive = true;
                 this.pauseMenu.visible = true;
-                console.log(this.pauseMenu)
+                for(let object of this.objects){
+                    object.visible = false;
+                }
                 break;
             case true:
                 this.menuActive = false;
                 this.pauseMenu.visible = false;
+                for(let object of this.objects){
+                    object.visible = true
+                }
+                
                 break;
             default:
                 console.log('error toggling pausemenu')
