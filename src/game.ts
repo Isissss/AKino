@@ -5,6 +5,7 @@ import bubbleImage from "./images/bubble.png"
 import waterImage from "./images/water.jpg"
 import smokeImage from "./images/smog.png"
 import fishImage from "./images/fish.png"
+import backgroundImage from "./images/tile_.png"
 import { Smog } from './Smog'
 import { Graphics } from 'pixi.js'
 import { Spawn } from './Spawn'
@@ -34,6 +35,7 @@ export class Game {
             .add('fishTexture', fishImage)
             .add('bubbleTexture', bubbleImage)
             .add('waterTexture', waterImage)
+            .add('backgroundTexture', backgroundImage)
         this.loader.load(() => this.loadCompleted())
     }
 
@@ -41,7 +43,7 @@ export class Game {
         this.shark = new Shark(this.loader.resources["sharkTexture"].texture!)
         this.smog = new Smog(this.shark, window.innerWidth)
         this.spawner = new Spawn(100, 100, (3 * 60), this.loader.resources["fishTexture"].texture!, this)
-        this.ui = new UI(this, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["bubbleTexture"].texture!) // (game, pausebutton texture, heart texture)
+        this.ui = new UI(this, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["backgroundTexture"].texture!) // (game, pausebutton texture, heart texture, background texture)
         this.pixi.stage.addChild(this.smog, this.spawner, this.shark, this.ui) // made the adding to stage a single line
         this.pixi.ticker.add((delta) => this.update())
 
