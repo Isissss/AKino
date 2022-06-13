@@ -15,6 +15,7 @@ export class Player extends PIXI.Sprite {
     super(texture)
     this.x = 100
     this.y = 100
+    this.game = game
 
 
     window.addEventListener("keydown", (e: KeyboardEvent) => this.onKeyDown(e))

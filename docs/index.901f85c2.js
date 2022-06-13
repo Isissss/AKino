@@ -37354,6 +37354,7 @@ class Player extends _pixiJs.Sprite {
         super(texture);
         this.x = 100;
         this.y = 100;
+        this.game = game;
         window.addEventListener("keydown", (e)=>this.onKeyDown(e)
         );
         window.addEventListener("keyup", (e)=>this.onKeyUp(e)
@@ -37786,8 +37787,6 @@ class Menu extends _pixiJs.Container {
     constructor(game, backgroundTexture, uiElements){
         super();
         this.game = game;
-        this.x = window.innerWidth / 2;
-        this.y = window.innerHeight / 2;
         this.background = new _pixiJs.Sprite(backgroundTexture);
         this.background.scale.set(6);
         // set container's height and width to background's height and width.
@@ -37799,8 +37798,8 @@ class Menu extends _pixiJs.Container {
         this.background.y = this.height / 2;
         this.addChild(this.background);
         // container does not have anchor? so set the x and y to middle of screen minus half of it's own width or height.
-        this.x = window.innerWidth / 2 - this.scale.x / 2;
-        this.y = window.innerHeight / 2 - this.scale.y / 2;
+        this.x = 0;
+        this.y = 0;
         this.rightPage = new _settingsPage.SettingsPage('Instellingen', this.game, this.game.textStyle, uiElements);
         this.rightPage.x = 50;
         this.rightPage.y = 5;
@@ -37953,6 +37952,8 @@ class Map {
             this.borderHorizontal += this.game.pixi.screen.width;
             // Make the UI follow the camera
             this.game.ui.x = -(this.game.pixi.screen.width / 2) + this.borderHorizontal;
+            // Make the Menu follow the camera
+            this.game.pauseMenu.x = this.borderHorizontal;
         }
         // check if the player has crossed the left border
         if (this.player.x <= -(this.game.pixi.screen.width / 2) + this.borderHorizontal) {
@@ -37962,6 +37963,8 @@ class Map {
             this.borderHorizontal -= this.game.pixi.screen.width;
             // Make the UI follow the camera
             this.game.ui.x = -(this.game.pixi.screen.width / 2) + this.borderHorizontal;
+            // Make the Menu follow the camera
+            this.game.pauseMenu.x = this.borderHorizontal;
         }
         // check if the player has crossed the top border
         if (this.player.y >= this.game.pixi.screen.height / 2 + this.borderVertical) {
@@ -37971,6 +37974,8 @@ class Map {
             this.borderVertical += this.game.pixi.screen.height;
             // Make the UI follow the camera
             this.game.ui.y = -(this.game.pixi.screen.height / 2) + this.borderVertical;
+            // Make the Menu follow the camera
+            this.game.pauseMenu.y = this.borderVertical;
         }
         // check if the player has crossed the bottom border
         if (this.player.y <= -(this.game.pixi.screen.height / 2) + this.borderVertical) {
@@ -37980,6 +37985,8 @@ class Map {
             this.borderVertical -= this.game.pixi.screen.height;
             // Make the UI follow the camera
             this.game.ui.y = -(this.game.pixi.screen.height / 2) + this.borderVertical;
+            // Make the Menu follow the camera
+            this.game.pauseMenu.y = this.borderVertical;
         }
     }
 }
