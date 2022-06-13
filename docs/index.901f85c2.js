@@ -683,6 +683,7 @@ class Game {
             for (let car of this.cars)car.update(delta);
             for(let i3 = 0; i3 < this.objects.length; i3++)if (this.collision(this.player, this.objects[i3])) {
                 this.score++;
+                this.smog.reset();
                 this.basicText.text = `Score ${this.score}`;
                 //console.log("player touches object")
                 this.objects[i3].destroy();
@@ -37319,19 +37320,20 @@ class Smog extends _pixiJs.Graphics {
         this.endFill;
     }
     updatePos() {}
+    reset() {
+        this.radius = this.originalRadius;
+        this.clear();
+        this.draw();
+    }
     update() {
         if (this.radius >= 1) {
             this.radius -= 1;
             this.clear();
             this.draw();
         //console.log(`radius: ${this.radius}`)
-        } else {
-            //console.log(`radius is already 0`)
-            //console.log('resetting circle to 200 radius')
-            this.radius = this.originalRadius;
-            this.clear();
-            this.draw();
-        }
+        } else //console.log(`radius is already 0`)
+        //console.log('resetting circle to 200 radius')
+        this.reset();
     }
 }
 
@@ -37493,8 +37495,6 @@ class Menu extends _pixiJs.Container {
     constructor(game, backgroundTexture, uiElements){
         super();
         this.game = game;
-        this.x = window.innerWidth / 2;
-        this.y = window.innerHeight / 2;
         this.background = new _pixiJs.Sprite(backgroundTexture);
         this.background.scale.set(6);
         // set container's height and width to background's height and width.
@@ -37506,8 +37506,8 @@ class Menu extends _pixiJs.Container {
         this.background.y = this.height / 2;
         this.addChild(this.background);
         // container does not have anchor? so set the x and y to middle of screen minus half of it's own width or height.
-        this.x = window.innerWidth / 2 - this.scale.x / 2;
-        this.y = window.innerHeight / 2 - this.scale.y / 2;
+        this.x = 0 - this.scale.x / 2;
+        this.y = 0 - this.scale.y / 2;
         this.rightPage = new _settingsPage.SettingsPage('Instellingen', this.game, this.game.textStyle, uiElements);
         this.rightPage.x = 50;
         this.rightPage.y = 5;

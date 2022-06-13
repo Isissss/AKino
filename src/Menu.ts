@@ -11,8 +11,6 @@ export class Menu extends PIXI.Container {
     constructor(game: Game, backgroundTexture: PIXI.Texture, uiElements:PIXI.Texture[]){
         super()
         this.game = game
-        this.x = window.innerWidth/2
-        this.y = window.innerHeight/2
         this.background = new PIXI.Sprite(backgroundTexture)
         this.background.scale.set(6)
         // set container's height and width to background's height and width.
@@ -24,8 +22,8 @@ export class Menu extends PIXI.Container {
         this.background.y = this.height/2
         this.addChild(this.background)
         // container does not have anchor? so set the x and y to middle of screen minus half of it's own width or height.
-        this.x = window.innerWidth/2 - (this.scale.x/2)
-        this.y = window.innerHeight/2 - (this.scale.y/2)
+        this.x = 0- (this.scale.x/2)
+        this.y = 0 - (this.scale.y/2)
 
         this.rightPage = new SettingsPage('Instellingen',this.game, this.game.textStyle, uiElements)
         this.rightPage.x = 50

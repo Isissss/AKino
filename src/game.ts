@@ -223,6 +223,7 @@ export class Game {
                 if (this.collision(this.player, this.objects[i])) {
 
                     this.score++;
+                    this.smog.reset()
 
                     this.basicText.text = `Score ${this.score}`
 
