@@ -56,9 +56,9 @@ export class Game {
     basicText: PIXI.Text;
     textStyle: PIXI.TextStyle;
     buildings: Building[] = []
-    leafs : Leaf[] = []
-    weather : Weather
-    city : PIXI.TilingSprite
+    leafs: Leaf[] = []
+    weather: Weather
+    city: PIXI.TilingSprite
     soundFX: number = 50 // temp placeholder for volume Sound Effects => number
     bgMusic: number = 50 // temp placeholder for volume Background Music => number
     fontSize: number = 20 // placeholder for fontsize => number
@@ -136,10 +136,10 @@ export class Game {
             this.pixi.stage.addChild(buildingB)
             this.buildings.push(buildingB)
         }
-        this.weather = new Weather(this.shark, 1000, this)
+        this.weather = new Weather(this.player, 1000, this)
         for (let i = 0; i < 4; i++) {
             let leaf = new Leaf(this.loader.resources["leafTexture"].texture!)
-            leaf.scale.set(0.3,0.3)
+            leaf.scale.set(0.3, 0.3)
             leaf.anchor.set(0.5, 0.5)
             this.leafs.push(leaf)
             this.pixi.stage.addChild(leaf)
@@ -211,17 +211,17 @@ export class Game {
 
                 }
             }
-                }
-            }
-        // else {
-        //     this.pixi.stop() // needs a way to start pixi again though
-        // }
         }
+    }
+    // else {
+    //     this.pixi.stop() // needs a way to start pixi again though
+    // }
+}
 
-    updateWeather(x : number, y : number) {
-        for (let i = 0; i < this.leafs.length; i++) {
-            this.leafs[i].changeWeather(x, y)
-        }
+updateWeather(x : number, y : number) {
+    for (let i = 0; i < this.leafs.length; i++) {
+        this.leafs[i].changeWeather(x, y)
+    }
 
     public endGame() {
         console.log("game over!")
@@ -244,18 +244,18 @@ export class Game {
     }
 
     public togglePauseMenu(){
-        switch (this.menuActive){
+        switch (this.menuActive) {
             case false:
                 this.menuActive = true;
                 this.pauseMenu.visible = true;
-                for(let object of this.objects){
+                for (let object of this.objects) {
                     object.visible = false;
                 }
                 break;
             case true:
                 this.menuActive = false;
                 this.pauseMenu.visible = false;
-                for(let object of this.objects){
+                for (let object of this.objects) {
                     object.visible = true
                 }
 
