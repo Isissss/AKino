@@ -8,7 +8,6 @@ import cityImage from "./images/city.png"
 import fishImage from "./images/fish.png"
 import leafImage from "./images/leaf.png"
 import dinoImage from "./images/dino.png"
-import cityImage from "./images/city.jpg"
 import buildingTexture1 from "./images/buildingTexture1.png"
 import buildingTexture2 from "./images/buildingTexture2.png"
 import buildingTexture3 from "./images/buildingTexture3.png"
@@ -25,7 +24,7 @@ import uiElement3Image from "./images/YellowUI3.png" // cant get spritesheets to
 
 import { Player } from "./Player"
 import { Smog } from './Smog'
-import { Graphics, Spritesheet } from 'pixi.js'
+import { Graphics, Spritesheet, TilingSprite } from 'pixi.js'
 import { Spawn } from './Spawn'
 import { Object } from './Object'
 import { Building } from './Building'
@@ -34,11 +33,13 @@ import { Weather } from "./Weather"
 import { Leaf } from './Leaf'
 import { UI } from './UI'
 import { Menu } from './Menu'
+import { Map } from "./Map"
 
 export class Game {
     pixi: PIXI.Application
     loader: PIXI.Loader
     player: Player
+    map : Map
     smog: Smog
     graphics: Graphics
     spawner: Spawn
@@ -101,6 +102,15 @@ export class Game {
             this.loader.resources["uiElement2"].texture!,
             this.loader.resources["uiElement3"].texture!
         ]
+
+        //map
+        let sprite = new TilingSprite(this.loader.resources["waterTexture"].texture!, this.pixi.screen.width, this.pixi.screen.height)
+        this.map = new Map(this, this.player)
+
+        this.pixi.stage.addChild(sprite)
+
+        this.pixi.stage.x = this.pixi.screen.width / 2;
+        this.pixi.stage.y = this.pixi.screen.height / 2;
 
         //background
         let background = new PIXI.Sprite(this.loader.resources["cityTexture"].texture!)
@@ -174,6 +184,7 @@ export class Game {
             this.player.update()
             this.smog.update()
             this.weather.update()
+            this.map.update()
             for (let i = 0; i < this.leafs.length; i++) {
                 this.leafs[i].update()
 
