@@ -16,7 +16,8 @@ export class Player extends PIXI.Sprite {
     this.x = 100
     this.y = 100
     this.game = game
-
+    // buggy thing
+    this.game = game
 
     window.addEventListener("keydown", (e: KeyboardEvent) => this.onKeyDown(e))
     window.addEventListener("keyup", (e: KeyboardEvent) => this.onKeyUp(e))
