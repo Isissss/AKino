@@ -1,25 +1,49 @@
 import * as PIXI from "pixi.js"
+import { Game } from "./game"
 
-export class Shark extends PIXI.Sprite {
+export class Player extends PIXI.Sprite {
   xspeed = 0
   yspeed = 0
+  private game: Game
+  public health: number
+  public hit: boolean
+  private counter: number = 0;
 
-  constructor(texture: PIXI.Texture) {
+  constructor(texture: PIXI.Texture, mygame: Game, health: number) {
     super(texture)
-    this.x = 100
-    this.y = 100
-    this.scale.set(0.3);
-    this.anchor.set(0.5,0.5)
+    this.x = 150
+    this.y = 150
+    this.game = mygame
+    this.hit = false
+    this.health = health
+    this.scale.set(0.25)
+    this.anchor.set(0.15)
 
 
     window.addEventListener("keydown", (e: KeyboardEvent) => this.onKeyDown(e))
     window.addEventListener("keyup", (e: KeyboardEvent) => this.onKeyUp(e))
   }
 
-  update() {
+  update(delta: number) {
     this.x += this.xspeed
     this.y += this.yspeed
-    console.log(this.x)
+    this.counter += delta;
+
+    // If player hits car (1.25s cooldown), set to false again so hit can occur again
+    if (this.counter > 125 && this.hit == true) {
+      this.hit = false
+    }
+
+    if (this.health < 1) {
+      this.game.endGame()
+    }
+  }
+  // Set counter to 0 for cooldown, 
+  public hitcar() {
+    this.counter = 0
+    this.hit = true
+    this.health--;
+    this.game.basicText.text = `Levens ${this.health}`
   }
 
   jump() {
@@ -33,24 +57,26 @@ export class Shark extends PIXI.Sprite {
         break;
       case "A":
       case "ARROWLEFT":
-        this.xspeed = -7
-        console.log("a")
+        this.xspeed = -4
+        this.scale.set(0.25)
+
 
         break
       case "D":
       case "ARROWRIGHT":
-        this.xspeed = 7
-        console.log("d")
+        this.xspeed = 4
+        this.scale.set(-0.25, 0.25)
+
         break
       case "W":
       case "ARROWUP":
-        this.yspeed = -7
-        console.log("w")
+        this.yspeed = -4
+
         break
       case "S":
       case "ARROWDOWN":
-        this.yspeed = 7
-        console.log("s")
+        this.yspeed = 4
+
         break
     }
   }
@@ -64,6 +90,7 @@ export class Shark extends PIXI.Sprite {
       case "ARROWLEFT":
       case "ARROWRIGHT":
         this.xspeed = 0
+
         break
       case "W":
       case "S":

@@ -1,47 +1,63 @@
 import * as PIXI from 'pixi.js'
-import { Shark } from "./Shark"
 import sharkImage from "./images/dino.png"
 import bubbleImage from "./images/bubble.png"
 import waterImage from "./images/water.jpg"
-import smokeImage from "./images/smog.png"
+import cityImage from "./images/city.png"
 import fishImage from "./images/fish.png"
-import { Smog } from './Smog'
+import carImage from "./images/car.png"
+import { Car } from './Car'
 import { Graphics } from 'pixi.js'
-import { Spawn } from './Spawn'
-import { Object } from './Object'
+import { Player } from './Player'
+
 
 export class Game {
     pixi: PIXI.Application
     loader: PIXI.Loader
-    shark: Shark
-    smog: Smog
+    player: Player
     graphics: Graphics
-    spawner: Spawn
-    objects : Object[] = []
+    cars: Car[] = []
     score: number = 0
+    car: Car
+    car3: Car
+    gameover: boolean
+    car2: Car
     basicText: PIXI.Text;
     textStyle: PIXI.TextStyle;
 
     constructor() {
-        this.pixi = new PIXI.Application({ width: window.innerWidth - 5, height: window.innerHeight - 5, backgroundColor: 0xAAAAA })
+        this.pixi = new PIXI.Application({ width: 1200, height: 700 })
         document.body.appendChild(this.pixi.view)
 
         this.loader = new PIXI.Loader()
         this.loader.add('sharkTexture', sharkImage)
             .add('fishTexture', fishImage)
             .add('bubbleTexture', bubbleImage)
-            .add('waterTexture', waterImage)
+            .add('cityTexture', cityImage)
+            .add('carTexture', carImage)
         this.loader.load(() => this.loadCompleted())
+
     }
 
     loadCompleted() {
-        this.shark = new Shark(this.loader.resources["sharkTexture"].texture!)
-        this.smog = new Smog(this.shark, window.innerWidth)
-        this.spawner = new Spawn(100, 100, (3 * 60), this.loader.resources["fishTexture"].texture!, this)
-        this.pixi.stage.addChild(this.smog)
-        this.pixi.stage.addChild(this.spawner)
-        this.pixi.stage.addChild(this.shark)
-        this.pixi.ticker.add((delta) => this.update())
+        this.player = new Player(this.loader.resources["sharkTexture"].texture!, this, 2)
+        this.car = new Car(this.loader.resources["carTexture"].texture!, false, 1200, 625)
+        this.car3 = new Car(this.loader.resources["carTexture"].texture!, false, 1600, 625)
+        this.car2 = new Car(this.loader.resources["carTexture"].texture!, true, 640, -300)
+
+        this.cars.push(this.car)
+        this.cars.push(this.car3)
+        this.cars.push(this.car2)
+
+        let background = new PIXI.Sprite(this.loader.resources["cityTexture"].texture!)
+        background.scale.set(2)
+        this.pixi.stage.addChild(background)
+
+        this.pixi.stage.addChild(this.player)
+        this.pixi.stage.addChild(this.car)
+        this.pixi.stage.addChild(this.car2)
+        this.pixi.stage.addChild(this.car3)
+
+        this.pixi.ticker.add((delta) => this.update(delta))
 
         this.textStyle = new PIXI.TextStyle({
             fontSize: 31,
@@ -49,39 +65,31 @@ export class Game {
             trim: false
         });
 
-        this.basicText = new PIXI.Text(`Score ${this.score}`, this.textStyle);
-        this.basicText.x = 100
-        this.basicText.y = 100
+        this.basicText = new PIXI.Text(`Levens ${this.player.health}`, this.textStyle);
+        // this.basicText.x = 100
+        // this.basicText.y = 100
 
         this.pixi.stage.addChild(this.basicText)
 
     }
-    update() {
-        this.spawner.update()
-        this.shark.update()
-        this.smog.update()
-        for (let i = 0; i < this.objects.length; i++) {
-            if (this.collision(this.shark, this.objects[i])) {
-
-                this.score++;
-    
-                this.basicText.text = `Score ${this.score}`
-    
+    update(delta: number) {
+        for (let i = 0; i < this.cars.length; i++) {
+            if (this.collision(this.player, this.cars[i]) && !this.player.hit) {
                 console.log("player touches object")
-    
-    
-                this.objects[i].destroy();
-                this.objects.splice(i, 1)
-    
-            }  
+                this.player.hitcar()
+
+            }
+
+        }
+        this.player.update(delta)
+        for (let car of this.cars) {
+            car.update(delta)
         }
     }
-
-    public spawnObject(object: Object) {
-        this.pixi.stage.addChild(object)
-        this.objects.push(object)
+    public endGame() {
+        console.log("game over!")
+        this.pixi.stop();
     }
-
     collision(sprite1: PIXI.Sprite, sprite2: PIXI.Sprite) {
         const bounds1 = sprite1.getBounds()
         const bounds2 = sprite2.getBounds()
@@ -94,4 +102,3 @@ export class Game {
 }
 
 let g = new Game
-
