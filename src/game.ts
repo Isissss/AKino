@@ -16,16 +16,24 @@ import buildingB1 from "./images/buildingB1.png"
 import buildingB2 from "./images/buildingB2.png"
 import buildingB3 from "./images/buildingB3.png"
 import carImage from "./images/car.png"
+import HPDbackgroundImage from "./images/tile.png" // needs replacement / better way of creating the background
+import menuBackgroundImage from "./images/menuBackground.png" // Menu book
+import uiElement0Image from "./images/YellowUI0.png" // cant get spritesheets to work
+import uiElement1Image from "./images/YellowUI1.png" // cant get spritesheets to work
+import uiElement2Image from "./images/YellowUI2.png" // cant get spritesheets to work
+import uiElement3Image from "./images/YellowUI3.png" // cant get spritesheets to work
 
 import { Player } from "./Player"
 import { Smog } from './Smog'
-import { Graphics } from 'pixi.js'
+import { Graphics, Spritesheet } from 'pixi.js'
 import { Spawn } from './Spawn'
 import { Object } from './Object'
 import { Building } from './Building'
 import { Car } from './Car'
 import { Weather } from "./Weather"
 import { Leaf } from './Leaf'
+import { UI } from './UI'
+import { Menu } from './Menu'
 
 export class Game {
     pixi: PIXI.Application
@@ -36,6 +44,10 @@ export class Game {
     spawner: Spawn
     objects: Object[] = []
     cars: Car[] = []
+    uiTextures: PIXI.Texture[] = []
+    ui: UI // UI container class
+    pauseMenu: Menu; // container class for the menu
+    menuActive: boolean = false; // variable to check if updates need to be run
     score: number = 0
     car: Car
     car3: Car
@@ -47,13 +59,17 @@ export class Game {
     leafs : Leaf[] = []
     weather : Weather
     city : PIXI.TilingSprite
+    soundFX: number = 50 // temp placeholder for volume Sound Effects => number
+    bgMusic: number = 50 // temp placeholder for volume Background Music => number
+    fontSize: number = 20 // placeholder for fontsize => number
 
     constructor() {
         this.pixi = new PIXI.Application({ width: window.innerWidth - 5, height: window.innerHeight - 5, backgroundColor: 0xAAAAA })
         document.body.appendChild(this.pixi.view)
 
         this.loader = new PIXI.Loader()
-        this.loader.add('sharkTexture', sharkImage)
+        this.loader
+            .add('sharkTexture', sharkImage)
             .add('fishTexture', fishImage)
             .add('bubbleTexture', bubbleImage)
             .add('waterTexture', waterImage)
@@ -68,10 +84,24 @@ export class Game {
             .add('leafTexture', leafImage)
             .add('dinoTexture', dinoImage)
             .add('cityTexture', cityImage)
+            .add('HPDbackgroundTexture', HPDbackgroundImage)
+            .add('menuBackgroundTexture', menuBackgroundImage)
+            .add('uiElement0', uiElement0Image) // cant get spritesheets to work
+            .add('uiElement1', uiElement1Image) // cant get spritesheets to work
+            .add('uiElement2', uiElement2Image) // cant get spritesheets to work
+            .add('uiElement3', uiElement3Image) // cant get spritesheets to work
         this.loader.load(() => this.loadCompleted())
     }
 
     loadCompleted() {
+        //packing UI textures into array
+        this.uiTextures = [
+            this.loader.resources["uiElement0"].texture!,
+            this.loader.resources["uiElement1"].texture!,
+            this.loader.resources["uiElement2"].texture!,
+            this.loader.resources["uiElement3"].texture!
+        ]
+
         //background
         let background = new PIXI.Sprite(this.loader.resources["cityTexture"].texture!)
         background.scale.set(2)
@@ -115,13 +145,21 @@ export class Game {
             this.pixi.stage.addChild(leaf)
         }
 
-        this.pixi.ticker.add((delta) => this.update())
-
         this.textStyle = new PIXI.TextStyle({
             fontSize: 31,
             fontWeight: "bold",
             trim: false
         });
+
+        // ui and menu
+        this.ui = new UI(this, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["HPDbackgroundTexture"].texture!) // (game, pausebutton texture, heart texture, background texture)
+        this.pauseMenu = new Menu(this, this.loader.resources["menuBackgroundTexture"].texture!, this.uiTextures)
+        this.pauseMenu.visible = false;
+        this.pixi.stage.addChild(this.ui, this.pauseMenu)
+
+        this.pixi.ticker.add((delta) => this.update())
+
+
 
         this.basicText = new PIXI.Text(`Score ${this.score}`, this.textStyle);
         this.basicText.x = 100
@@ -131,48 +169,55 @@ export class Game {
 
     }
     update() {
-        this.spawner.update()
-        this.player.update()
-        this.smog.update()
-        this.weather.update()
-        for (let i = 0; i < this.leafs.length; i++) {
-            this.leafs[i].update()
-
-        }
-
-        for (let building of this.buildings) {
-            building.update(this.score)
-        }
-
-        for (let i = 0; i < this.cars.length; i++) {
-            if (this.collision(this.player, this.cars[i]) && !this.player.hit) {
-                console.log("player touches object")
-                this.player.hitcar()
+        if (!this.menuActive) { // pixi.stop() might be a better idea
+            this.spawner.update()
+            this.player.update()
+            this.smog.update()
+            this.weather.update()
+            for (let i = 0; i < this.leafs.length; i++) {
+                this.leafs[i].update()
 
             }
 
-        }
-        this.player.update(delta)
-        for (let car of this.cars) {
-            car.update(delta)
+            for (let building of this.buildings) {
+                building.update(this.score)
+            }
+
+            for (let i = 0; i < this.cars.length; i++) {
+                if (this.collision(this.player, this.cars[i]) && !this.player.hit) {
+                    console.log("player touches object")
+                    this.player.hitcar()
+
+                }
+
+            }
+            this.player.update(delta)
+            for (let car of this.cars) {
+                car.update(delta)
+            }
+
+            for (let i = 0; i < this.objects.length; i++) {
+                if (this.collision(this.player, this.objects[i])) {
+
+                    this.score++;
+
+                    this.basicText.text = `Score ${this.score}`
+
+                    //console.log("player touches object")
+
+
+                    this.objects[i].destroy();
+                    this.objects.splice(i, 1)
+
+                }
+            }
+                }
+            }
+        // else {
+        //     this.pixi.stop() // needs a way to start pixi again though
+        // }
         }
 
-        for (let i = 0; i < this.objects.length; i++) {
-            if (this.collision(this.player, this.objects[i])) {
-
-                this.score++;
-    
-                this.basicText.text = `Score ${this.score}`
-    
-                console.log("player touches object")
-    
-    
-                this.objects[i].destroy();
-                this.objects.splice(i, 1)
-    
-            }  
-        }
-    }
     updateWeather(x : number, y : number) {
         for (let i = 0; i < this.leafs.length; i++) {
             this.leafs[i].changeWeather(x, y)
@@ -196,6 +241,30 @@ export class Game {
             && bounds1.x + bounds1.width > bounds2.x
             && bounds1.y < bounds2.y + bounds2.height
             && bounds1.y + bounds1.height > bounds2.y;
+    }
+
+    public togglePauseMenu(){
+        switch (this.menuActive){
+            case false:
+                this.menuActive = true;
+                this.pauseMenu.visible = true;
+                for(let object of this.objects){
+                    object.visible = false;
+                }
+                break;
+            case true:
+                this.menuActive = false;
+                this.pauseMenu.visible = false;
+                for(let object of this.objects){
+                    object.visible = true
+                }
+
+                break;
+            default:
+                console.log('error toggling pausemenu')
+                break;
+        }
+
     }
 }
 

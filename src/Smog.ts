@@ -37,7 +37,7 @@ export class Smog extends PIXI.Graphics{
         this.radius -= 1
         this.clear()
         this.draw()
-        console.log(`radius: ${this.radius}`)
+        //console.log(`radius: ${this.radius}`)
         }
         else{
             //console.log(`radius is already 0`)
