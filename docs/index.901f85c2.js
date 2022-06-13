@@ -589,7 +589,7 @@ class Game {
         });
         document.body.appendChild(this.pixi.view);
         this.loader = new _pixiJs.Loader();
-        this.loader.add('sharkTexture', _dinoPngDefault.default).add('fishTexture', _fishPngDefault.default).add('bubbleTexture', _bubblePngDefault.default).add('waterTexture', _waterJpgDefault.default).add('cityTexture', _cityPngDefault.default).add('carTexture', _carPngDefault.default).add('buildingTexture1', _buildingTexture1PngDefault.default).add('buildingTexture2', _buildingTexture2PngDefault.default).add('buildingTexture3', _buildingTexture3PngDefault.default).add('buildingB1', _buildingB1PngDefault.default).add('buildingB2', _buildingB2PngDefault.default).add('buildingB3', _buildingB3PngDefault.default).add('leafTexture', _leafPngDefault.default).add('dinoTexture', _dinoPngDefault.default).add('cityTexture', _cityPngDefault.default).add('HPDbackgroundTexture', _tilePngDefault.default).add('menuBackgroundTexture', _menuBackgroundPngDefault.default).add('uiElement0', _yellowUI0PngDefault.default) // cant get spritesheets to work
+        this.loader.add('sharkTexture', _dinoPngDefault.default).add('fishTexture', _fishPngDefault.default).add('bubbleTexture', _bubblePngDefault.default).add('waterTexture', _waterJpgDefault.default).add('cityTexture', _cityPngDefault.default).add('carTexture', _carPngDefault.default).add('buildingTexture1', _buildingTexture1PngDefault.default).add('buildingTexture2', _buildingTexture2PngDefault.default).add('buildingTexture3', _buildingTexture3PngDefault.default).add('buildingB1', _buildingB1PngDefault.default).add('buildingB2', _buildingB2PngDefault.default).add('buildingB3', _buildingB3PngDefault.default).add('leafTexture', _leafPngDefault.default).add('dinoTexture', _dinoPngDefault.default).add('HPDbackgroundTexture', _tilePngDefault.default).add('menuBackgroundTexture', _menuBackgroundPngDefault.default).add('uiElement0', _yellowUI0PngDefault.default) // cant get spritesheets to work
         .add('uiElement1', _yellowUI1PngDefault.default) // cant get spritesheets to work
         .add('uiElement2', _yellowUI2PngDefault.default) // cant get spritesheets to work
         .add('uiElement3', _yellowUI3PngDefault.default) // cant get spritesheets to work
@@ -37753,7 +37753,7 @@ class HPDisplay extends _pixiJs.Container {
         console.log("HPDisplay added");
         this.game = game;
         this.y = y;
-        for(let i = 0; i < this.game.shark.health; i++)this.addHeart(i, fullTexture);
+        for(let i = 0; i < this.game.player.health; i++)this.addHeart(i, fullTexture);
         this.x = x - (this.width + 10);
     }
     addHeart(i, fullTexture) {
@@ -37766,10 +37766,10 @@ class HPDisplay extends _pixiJs.Container {
     }
     update() {
         // not able to check if this works yet, as health isnt being modified while game runs.
-        if (this.game.shark.health < this.hearts.length) {
+        if (this.game.player.health < this.hearts.length) {
             this.hearts[this.hearts.length - 1].destroy();
             this.hearts.pop();
-        } else if (this.game.shark.health > this.hearts.length) this.addHeart(this.hearts.length - 1, this.fullTexture);
+        } else if (this.game.player.health > this.hearts.length) this.addHeart(this.hearts.length - 1, this.fullTexture);
     }
 }
 

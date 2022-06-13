@@ -84,7 +84,6 @@ export class Game {
             .add('buildingB3', buildingB3)
             .add('leafTexture', leafImage)
             .add('dinoTexture', dinoImage)
-            .add('cityTexture', cityImage)
             .add('HPDbackgroundTexture', HPDbackgroundImage)
             .add('menuBackgroundTexture', menuBackgroundImage)
             .add('uiElement0', uiElement0Image) // cant get spritesheets to work

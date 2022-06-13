@@ -16,7 +16,7 @@ export class HPDisplay extends PIXI.Container {
         console.log("HPDisplay added")
         this.game = game
         this.y = y
-        for (let i = 0; i < this.game.shark.health; i++) {
+        for (let i = 0; i < this.game.player.health; i++) {
             this.addHeart(i, fullTexture)
         }
         this.x = x - (this.width + 10)
@@ -33,11 +33,11 @@ export class HPDisplay extends PIXI.Container {
 
     update() {
         // not able to check if this works yet, as health isnt being modified while game runs.
-        if (this.game.shark.health < this.hearts.length) {
+        if (this.game.player.health < this.hearts.length) {
             this.hearts[this.hearts.length - 1].destroy()
             this.hearts.pop()
         }
-        else if (this.game.shark.health > this.hearts.length) {
+        else if (this.game.player.health > this.hearts.length) {
             this.addHeart(this.hearts.length - 1, this.fullTexture)
         }
     }

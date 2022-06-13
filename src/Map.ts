@@ -1,14 +1,14 @@
 import * as PIXI from "pixi.js"
-import { Shark } from "./Shark"
+import { Player } from "./Player"
 import { Game } from "./game"
 
 export class Map {
     private game : Game
-    private player : Shark
+    private player : Player
     private borderHorizontal : number
     private borderVertical : number
 
-    constructor(game : Game, player : Shark){
+    constructor(game : Game, player : Player){
         this.game = game
         this.player = player
         this.borderHorizontal = 0
