@@ -102,6 +102,10 @@ export class Game {
             this.loader.resources["uiElement3"].texture!
         ]
 
+        this.player = new Player(this, this.loader.resources["sharkTexture"].texture!)
+        this.smog = new Smog(this.player, window.innerWidth)
+        this.spawner = new Spawn(100, 100, (3 * 60), this.loader.resources["fishTexture"].texture!, this)
+
         //map
         let sprite = new TilingSprite(this.loader.resources["waterTexture"].texture!, this.pixi.screen.width, this.pixi.screen.height)
         this.map = new Map(this, this.player)
@@ -122,9 +126,9 @@ export class Game {
         city.scale.set(3, 2.69)
 
         //traits
-        this.player = new Player(this, this.loader.resources["sharkTexture"].texture!)
-        this.smog = new Smog(this.player, window.innerWidth)
-        this.spawner = new Spawn(100, 100, (3 * 60), this.loader.resources["fishTexture"].texture!, this)
+        //this.player = new Player(this, this.loader.resources["sharkTexture"].texture!)
+        //this.smog = new Smog(this.player, window.innerWidth)
+        //this.spawner = new Spawn(100, 100, (3 * 60), this.loader.resources["fishTexture"].texture!, this)
         this.pixi.stage.addChild(this.smog, this.player)
         //this.pixi.stage.addChild(this.spawner)
 

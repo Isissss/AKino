@@ -52,7 +52,6 @@ export class Player extends PIXI.Sprite {
     this.counter = 0
     this.hit = true
     this.health--;
-    this.game.basicText.text = `Levens ${this.health}`
   }
 
   jump() {

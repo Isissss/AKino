@@ -605,6 +605,9 @@ class Game {
             this.loader.resources["uiElement2"].texture,
             this.loader.resources["uiElement3"].texture
         ];
+        this.player = new _player.Player(this, this.loader.resources["sharkTexture"].texture);
+        this.smog = new _smog.Smog(this.player, window.innerWidth);
+        this.spawner = new _spawn.Spawn(100, 100, 180, this.loader.resources["fishTexture"].texture, this);
         //map
         let sprite = new _pixiJs.TilingSprite(this.loader.resources["waterTexture"].texture, this.pixi.screen.width, this.pixi.screen.height);
         this.map = new _map.Map(this, this.player);
@@ -620,9 +623,9 @@ class Game {
         city.anchor.set(0, 0);
         city.scale.set(3, 2.69);
         //traits
-        this.player = new _player.Player(this, this.loader.resources["sharkTexture"].texture);
-        this.smog = new _smog.Smog(this.player, window.innerWidth);
-        this.spawner = new _spawn.Spawn(100, 100, 180, this.loader.resources["fishTexture"].texture, this);
+        //this.player = new Player(this, this.loader.resources["sharkTexture"].texture!)
+        //this.smog = new Smog(this.player, window.innerWidth)
+        //this.spawner = new Spawn(100, 100, (3 * 60), this.loader.resources["fishTexture"].texture!, this)
         this.pixi.stage.addChild(this.smog, this.player);
         //this.pixi.stage.addChild(this.spawner)
         //cars
@@ -37458,7 +37461,6 @@ class Player extends _pixiJs.Sprite {
         this.counter = 0;
         this.hit = true;
         this.health--;
-        this.game.basicText.text = `Levens ${this.health}`;
     }
     jump() {
         console.log("jump!");
