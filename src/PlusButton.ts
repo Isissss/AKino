@@ -17,6 +17,6 @@ export class PlusButton extends Button {
     public buttonClicked() {
         this.parent.value = this.parent.value + this.increments
         this.parent.update()
-        console.log(`${this.parent.name} + Clicked`)
+        //console.log(`${this.parent.name} + Clicked`)
     }
 }

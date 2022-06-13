@@ -13,7 +13,7 @@ export class HPDisplay extends PIXI.Container {
     constructor(game: Game, fullTexture: PIXI.Texture, x: number = 0, y: number = 0) {
         super()
         this.fullTexture = fullTexture
-        console.log("HPDisplay added")
+        //console.log("HPDisplay added")
         this.game = game
         this.y = y
         for (let i = 0; i < this.game.player.health; i++) {
@@ -39,6 +39,9 @@ export class HPDisplay extends PIXI.Container {
         }
         else if (this.game.player.health > this.hearts.length) {
             this.addHeart(this.hearts.length - 1, this.fullTexture)
+        } else if (this.hearts.length === 0){
+            console.log("GAME OVER")
+            this.game.pixi.stop()
         }
     }
 }

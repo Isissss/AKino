@@ -22,7 +22,7 @@ export class UI extends PIXI.Container {
         this.x = -(this.game.pixi.screen.width / 2)
         this.y = -(this.game.pixi.screen.height / 2)
         // debug
-        console.log("UI Added")
+        //console.log("UI Added")
         // add a pausebutton
         this.pauseButton = new Button(this.game, pauseButtonTexture, 0, 0)
         this.healthDisplay = new HPDisplay(this.game, heartTexture, window.innerWidth, 0)
@@ -32,7 +32,7 @@ export class UI extends PIXI.Container {
         this.healthBackground.y = this.healthDisplay.y
         this.healthBackground.width = this.healthDisplay.width + 20
         this.healthBackground.height = this.healthDisplay.height + 10
-        console.log(this.healthBackground)
+        //console.log(this.healthBackground)
 
         // add all elements to the displayObject container
         this.addChild(this.pauseButton,this.healthBackground, this.healthDisplay)

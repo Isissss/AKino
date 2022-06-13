@@ -23,7 +23,8 @@ export class Smog extends PIXI.Graphics{
 
     draw() {
         this.beginFill(0xffffff)
-        this.drawCircle(this.player.x, this.player.y,this.radius)
+        this.alpha = 0.3
+        this.drawCircle(this.player.x, this.player.y,this.radius)        
         this.endFill
 
     }
@@ -32,19 +33,23 @@ export class Smog extends PIXI.Graphics{
        
     }
 
+    reset() {
+        this.radius = this.originalRadius
+            this.clear()
+            this.draw()
+    }
+
     update(){
         if(this.radius >= 1) {
         this.radius -= 1
         this.clear()
         this.draw()
-        console.log(`radius: ${this.radius}`)
+        //console.log(`radius: ${this.radius}`)
         }
         else{
-            console.log(`radius is already 0`)
-            console.log('resetting circle to 200 radius')
-            this.radius = this.originalRadius
-            this.clear()
-            this.draw()
+            //console.log(`radius is already 0`)
+            //console.log('resetting circle to 200 radius')
+            this.reset()
         }
     }
 
