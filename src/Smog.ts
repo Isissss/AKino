@@ -4,13 +4,13 @@ import { Player } from './Player'
 
 export class Smog extends PIXI.Graphics{
 
-    player : Player
-    radius:number
-    originalRadius:number
-    
+    player: Player
+    radius: number
+    originalRadius: number
 
 
-    constructor(player: Player, radius:number){
+
+    constructor(player: Player, radius: number) {
         super()
         this.player = player
         this.originalRadius = radius
@@ -23,13 +23,13 @@ export class Smog extends PIXI.Graphics{
 
     draw() {
         this.beginFill(0xffffff)
-        this.drawCircle(this.player.x, this.player.y,this.radius)
+        this.drawCircle(this.player.x, this.player.y, this.radius)
         this.endFill
 
     }
 
     updatePos() {
-       
+
     }
 
     update(){
@@ -40,8 +40,8 @@ export class Smog extends PIXI.Graphics{
         console.log(`radius: ${this.radius}`)
         }
         else{
-            console.log(`radius is already 0`)
-            console.log('resetting circle to 200 radius')
+            //console.log(`radius is already 0`)
+            //console.log('resetting circle to 200 radius')
             this.radius = this.originalRadius
             this.clear()
             this.draw()
