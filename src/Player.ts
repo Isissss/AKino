@@ -1,23 +1,15 @@
 import * as PIXI from "pixi.js"
-import { Game } from "./game"
 
 export class Player extends PIXI.Sprite {
   xspeed = 0
   yspeed = 0
-  private game: Game
-  public health: number
-  public hit: boolean
-  private counter: number = 0;
+  public xweather = 0
+  public yweather = 0
 
-  constructor(texture: PIXI.Texture, mygame: Game, health: number) {
+  constructor(texture: PIXI.Texture) {
     super(texture)
-    this.x = 150
-    this.y = 150
-    this.game = mygame
-    this.hit = false
-    this.health = health
-    this.scale.set(0.25)
-    this.anchor.set(0.15)
+    this.x = 100
+    this.y = 100
 
 
     window.addEventListener("keydown", (e: KeyboardEvent) => this.onKeyDown(e))
@@ -25,8 +17,20 @@ export class Player extends PIXI.Sprite {
   }
 
   update(delta: number) {
-    this.x += this.xspeed
-    this.y += this.yspeed
+    this.x += this.xspeed + this.xweather
+    this.y += this.yspeed + this.yweather
+    if (this.x > window.innerWidth) {
+      this.x = window.innerWidth
+    }
+    if (this.x < 0) {
+      this.x = 0
+    }
+    if (this.y > window.innerHeight) {
+      this.y = window.innerHeight
+    }
+    if (this.y < 0) {
+      this.y = 0
+    }
     this.counter += delta;
 
     // If player hits car (1.25s cooldown), set to false again so hit can occur again
@@ -38,7 +42,7 @@ export class Player extends PIXI.Sprite {
       this.game.endGame()
     }
   }
-  // Set counter to 0 for cooldown, 
+  // Set counter to 0 for cooldown,
   public hitcar() {
     this.counter = 0
     this.hit = true
@@ -90,7 +94,6 @@ export class Player extends PIXI.Sprite {
       case "ARROWLEFT":
       case "ARROWRIGHT":
         this.xspeed = 0
-
         break
       case "W":
       case "S":

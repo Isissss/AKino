@@ -6,6 +6,9 @@ import waterImage from "./images/water.jpg"
 import smokeImage from "./images/smog.png"
 import cityImage from "./images/city.png"
 import fishImage from "./images/fish.png"
+import leafImage from "./images/leaf.png"
+import dinoImage from "./images/dino.png"
+import cityImage from "./images/city.jpg"
 import buildingTexture1 from "./images/buildingTexture1.png"
 import buildingTexture2 from "./images/buildingTexture2.png"
 import buildingTexture3 from "./images/buildingTexture3.png"
@@ -21,6 +24,8 @@ import { Spawn } from './Spawn'
 import { Object } from './Object'
 import { Building } from './Building'
 import { Car } from './Car'
+import { Weather } from "./Weather"
+import { Leaf } from './Leaf'
 
 export class Game {
     pixi: PIXI.Application
@@ -39,6 +44,9 @@ export class Game {
     basicText: PIXI.Text;
     textStyle: PIXI.TextStyle;
     buildings: Building[] = []
+    leafs : Leaf[] = []
+    weather : Weather
+    city : PIXI.TilingSprite
 
     constructor() {
         this.pixi = new PIXI.Application({ width: window.innerWidth - 5, height: window.innerHeight - 5, backgroundColor: 0xAAAAA })
@@ -57,6 +65,9 @@ export class Game {
             .add('buildingB1', buildingB1)
             .add('buildingB2', buildingB2)
             .add('buildingB3', buildingB3)
+            .add('leafTexture', leafImage)
+            .add('dinoTexture', dinoImage)
+            .add('cityTexture', cityImage)
         this.loader.load(() => this.loadCompleted())
     }
 
@@ -66,6 +77,12 @@ export class Game {
         background.scale.set(2)
         this.pixi.stage.addChild(background)
 
+        //city
+        let city = new PIXI.Sprite(this.loader.resources["cityTexture"].texture!)
+        city.anchor.set(0, 0)
+        city.scale.set(3, 2.69)
+
+        //traits
         this.player = new Player(this.loader.resources["sharkTexture"].texture!)
         this.smog = new Smog(this.player, window.innerWidth)
         this.spawner = new Spawn(100, 100, (3 * 60), this.loader.resources["fishTexture"].texture!, this)
@@ -89,6 +106,15 @@ export class Game {
             this.pixi.stage.addChild(buildingB)
             this.buildings.push(buildingB)
         }
+        this.weather = new Weather(this.shark, 1000, this)
+        for (let i = 0; i < 4; i++) {
+            let leaf = new Leaf(this.loader.resources["leafTexture"].texture!)
+            leaf.scale.set(0.3,0.3)
+            leaf.anchor.set(0.5, 0.5)
+            this.leafs.push(leaf)
+            this.pixi.stage.addChild(leaf)
+        }
+
         this.pixi.ticker.add((delta) => this.update())
 
         this.textStyle = new PIXI.TextStyle({
@@ -108,6 +134,11 @@ export class Game {
         this.spawner.update()
         this.player.update()
         this.smog.update()
+        this.weather.update()
+        for (let i = 0; i < this.leafs.length; i++) {
+            this.leafs[i].update()
+
+        }
 
         for (let building of this.buildings) {
             building.update(this.score)
@@ -142,6 +173,10 @@ export class Game {
             }  
         }
     }
+    updateWeather(x : number, y : number) {
+        for (let i = 0; i < this.leafs.length; i++) {
+            this.leafs[i].changeWeather(x, y)
+        }
 
     public endGame() {
         console.log("game over!")
