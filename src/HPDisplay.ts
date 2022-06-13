@@ -39,6 +39,9 @@ export class HPDisplay extends PIXI.Container {
         }
         else if (this.game.player.health > this.hearts.length) {
             this.addHeart(this.hearts.length - 1, this.fullTexture)
+        } else if (this.hearts.length === 0){
+            console.log("GAME OVER")
+            this.game.pixi.stop()
         }
     }
 }

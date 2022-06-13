@@ -231,6 +231,7 @@ export class Game {
 
                 }
             }
+            this.ui.healthDisplay.update()
         }
     }
     // else {
