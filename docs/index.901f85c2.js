@@ -632,10 +632,8 @@ class Game {
         //buildings
         for(let i = 0; i < 5; i++){
             let building = new _building.Building(100 + i * 100, 200, this.loader.resources["buildingTexture1"].texture, this.loader.resources["buildingTexture2"].texture, this.loader.resources["buildingTexture3"].texture);
-            this.pixi.stage.addChild(building);
             this.buildings.push(building);
             let buildingB = new _building.Building(100 + i * 100, 250, this.loader.resources["buildingB1"].texture, this.loader.resources["buildingB2"].texture, this.loader.resources["buildingB3"].texture);
-            this.pixi.stage.addChild(buildingB);
             this.buildings.push(buildingB);
         }
         this.weather = new _weather.Weather(this.player, 1000, this);
@@ -661,9 +659,10 @@ class Game {
         this.basicText.x = 100;
         this.basicText.y = 100;
         // stage adding TEMP
-        this.pixi.stage.addChild(background, this.smog, this.player);
+        this.pixi.stage.addChild(background, this.player);
         for (let car of this.cars)this.pixi.stage.addChild(car);
-        this.pixi.stage.addChild(this.ui, this.pauseMenu);
+        for (let building of this.buildings)this.pixi.stage.addChild(building);
+        this.pixi.stage.addChild(this.smog, this.ui, this.pauseMenu);
         this.pixi.stage.addChild(this.basicText);
         this.pixi.ticker.add((delta)=>this.update(delta)
         );
@@ -731,7 +730,7 @@ class Game {
 }
 let g = new Game;
 
-},{"pixi.js":"dsYej","./images/dino.png":"c8KfO","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","./images/city.png":"a2rT6","./images/fish.png":"3tLwD","./images/leaf.png":"5tsPY","./images/buildingTexture1.png":"2g5jb","./images/buildingTexture2.png":"liaFA","./images/buildingTexture3.png":"gm23O","./images/buildingB1.png":"fkYnt","./images/buildingB2.png":"1yWjs","./images/buildingB3.png":"kzHCU","./images/car.png":"dnXSN","./images/tile.png":"dvchs","./images/menuBackground.png":"hVtuo","./images/YellowUI0.png":"dwRmK","./images/YellowUI1.png":"d9mKy","./images/YellowUI2.png":"4bojR","./images/YellowUI3.png":"iiYKS","./Player":"8YLWx","./Smog":"608Py","./Spawn":"6JGD8","./Building":"9ckPp","./Car":"d9weU","./Weather":"aPu1W","./Leaf":"cwtVd","./UI":"ef7dT","./Menu":"gQYVh","./Map":"5vXJ1","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./images/fish.png":"3tLwD","./Smog":"608Py","./Spawn":"6JGD8","./images/dino.png":"c8KfO","./images/city.png":"a2rT6","./images/leaf.png":"5tsPY","./images/buildingTexture1.png":"2g5jb","./images/buildingTexture2.png":"liaFA","./images/buildingTexture3.png":"gm23O","./images/buildingB1.png":"fkYnt","./images/buildingB2.png":"1yWjs","./images/buildingB3.png":"kzHCU","./images/car.png":"dnXSN","./images/tile.png":"dvchs","./images/menuBackground.png":"hVtuo","./images/YellowUI0.png":"dwRmK","./images/YellowUI1.png":"d9mKy","./images/YellowUI2.png":"4bojR","./images/YellowUI3.png":"iiYKS","./Player":"8YLWx","./Building":"9ckPp","./Car":"d9weU","./Weather":"aPu1W","./Leaf":"cwtVd","./UI":"ef7dT","./Menu":"gQYVh","./Map":"5vXJ1"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37246,8 +37245,8 @@ function __extends(d, b) {
     return AnimatedSprite1;
 }(_sprite.Sprite);
 
-},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"c8KfO":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "dino.174d8237.png" + "?" + Date.now();
+},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iMP3P":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble.56ab0ad6.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
 "use strict";
@@ -37283,17 +37282,103 @@ exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
 
-},{}],"iMP3P":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble.56ab0ad6.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"jj9Eg":[function(require,module,exports) {
+},{}],"jj9Eg":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "water.59ff4e4f.jpg" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"a2rT6":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "city.b93e9858.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"3tLwD":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "fish.510b053c.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"608Py":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Smog", ()=>Smog
+);
+var _pixiJs = require("pixi.js");
+class Smog extends _pixiJs.Graphics {
+    constructor(player, radius){
+        super();
+        this.player = player;
+        this.originalRadius = radius;
+        this.radius = this.originalRadius;
+        //this.interactive = true
+        this.draw();
+    }
+    draw() {
+        this.beginFill(16777215);
+        this.alpha = 0.3;
+        this.drawCircle(this.player.x, this.player.y, this.radius);
+        this.endFill;
+    }
+    updatePos() {}
+    update() {
+        if (this.radius >= 1) {
+            this.radius -= 1;
+            this.clear();
+            this.draw();
+            console.log(`radius: ${this.radius}`);
+        } else {
+            console.log(`radius is already 0`);
+            console.log('resetting circle to 200 radius');
+            this.radius = this.originalRadius;
+            this.clear();
+            this.draw();
+        }
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6JGD8":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Spawn", ()=>Spawn
+);
+var _pixiJs = require("pixi.js");
+var _object = require("./Object");
+class Spawn extends _pixiJs.Sprite {
+    timer = 0;
+    constructor(x, y, delay, texture, game){
+        super();
+        this.game = game;
+        this.x = x;
+        this.y = y;
+        this.delay = delay;
+        this.objectTexture = texture;
+    }
+    update() {
+        this.timer += 1;
+        console.log(this.timer);
+        if (this.timer > this.delay) {
+            let sprite = new _object.Object(this.objectTexture);
+            this.timer = 0;
+            this.game.spawnObject(sprite);
+            console.log("hello");
+        }
+    }
+}
+
+},{"pixi.js":"dsYej","./Object":"fjBpM","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fjBpM":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Object", ()=>Object
+);
+var _pixiJs = require("pixi.js");
+class Object extends _pixiJs.Sprite {
+    constructor(texture){
+        super(texture);
+        this.x = Math.random() * window.innerWidth - 5;
+        this.y = Math.random() * window.innerHeight - 5;
+        this.speed = 4;
+        this.anchor.set(0.5);
+    }
+    update() {
+        this.x += this.speed;
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"c8KfO":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "dino.174d8237.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"a2rT6":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "city.b93e9858.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"5tsPY":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "leaf.e574830e.png" + "?" + Date.now();
@@ -37354,6 +37439,7 @@ class Player extends _pixiJs.Sprite {
         super(texture);
         this.x = 100;
         this.y = 100;
+        this.scale.set(0.25);
         window.addEventListener("keydown", (e)=>this.onKeyDown(e)
         );
         window.addEventListener("keyup", (e)=>this.onKeyUp(e)
@@ -37422,91 +37508,6 @@ class Player extends _pixiJs.Sprite {
                 this.yspeed = 0;
                 break;
         }
-    }
-}
-
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"608Py":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Smog", ()=>Smog
-);
-var _pixiJs = require("pixi.js");
-class Smog extends _pixiJs.Graphics {
-    constructor(player, radius){
-        super();
-        this.player = player;
-        this.originalRadius = radius;
-        this.radius = this.originalRadius;
-        //this.interactive = true
-        this.draw();
-    }
-    draw() {
-        this.beginFill(16777215);
-        this.drawCircle(this.player.x, this.player.y, this.radius);
-        this.endFill;
-    }
-    updatePos() {}
-    update() {
-        if (this.radius >= 1) {
-            this.radius -= 1;
-            this.clear();
-            this.draw();
-            console.log(`radius: ${this.radius}`);
-        } else {
-            console.log(`radius is already 0`);
-            console.log('resetting circle to 200 radius');
-            this.radius = this.originalRadius;
-            this.clear();
-            this.draw();
-        }
-    }
-}
-
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6JGD8":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Spawn", ()=>Spawn
-);
-var _pixiJs = require("pixi.js");
-var _object = require("./Object");
-class Spawn extends _pixiJs.Sprite {
-    timer = 0;
-    constructor(x, y, delay, texture, game){
-        super();
-        this.game = game;
-        this.x = x;
-        this.y = y;
-        this.delay = delay;
-        this.objectTexture = texture;
-    }
-    update() {
-        this.timer += 1;
-        console.log(this.timer);
-        if (this.timer > this.delay) {
-            let sprite = new _object.Object(this.objectTexture);
-            this.timer = 0;
-            this.game.spawnObject(sprite);
-            console.log("hello");
-        }
-    }
-}
-
-},{"pixi.js":"dsYej","./Object":"fjBpM","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fjBpM":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Object", ()=>Object
-);
-var _pixiJs = require("pixi.js");
-class Object extends _pixiJs.Sprite {
-    constructor(texture){
-        super(texture);
-        this.x = Math.random() * window.innerWidth - 5;
-        this.y = Math.random() * window.innerHeight - 5;
-        this.speed = 4;
-        this.anchor.set(0.5);
-    }
-    update() {
-        this.x += this.speed;
     }
 }
 

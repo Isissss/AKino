@@ -138,11 +138,9 @@ export class Game {
         //buildings
         for (let i = 0; i < 5; i++) {
             let building = new Building(100 + (i * 100), 200, this.loader.resources["buildingTexture1"].texture!, this.loader.resources["buildingTexture2"].texture!, this.loader.resources["buildingTexture3"].texture!)
-            this.pixi.stage.addChild(building)
             this.buildings.push(building)
 
             let buildingB = new Building(100 + (i * 100), 250, this.loader.resources["buildingB1"].texture!, this.loader.resources["buildingB2"].texture!, this.loader.resources["buildingB3"].texture!)
-            this.pixi.stage.addChild(buildingB)
             this.buildings.push(buildingB)
         }
         this.weather = new Weather(this.player, 1000, this)
@@ -171,11 +169,14 @@ export class Game {
         this.basicText.y = 100
 
         // stage adding TEMP
-        this.pixi.stage.addChild(background, this.smog, this.player)
+        this.pixi.stage.addChild(background, this.player)
         for(let car of this.cars){
             this.pixi.stage.addChild(car)
         }
-        this.pixi.stage.addChild(this.ui, this.pauseMenu)        
+        for(let building of this.buildings){
+            this.pixi.stage.addChild(building)
+        }
+        this.pixi.stage.addChild(this.smog, this.ui, this.pauseMenu)        
         this.pixi.stage.addChild(this.basicText)
 
 
