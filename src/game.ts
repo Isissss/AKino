@@ -106,19 +106,15 @@ export class Game {
         this.smog = new Smog(this.player, window.innerWidth)
         this.spawner = new Spawn(100, 100, (3 * 60), this.loader.resources["fishTexture"].texture!, this)
 
-        //map
-        let sprite = new TilingSprite(this.loader.resources["waterTexture"].texture!, this.pixi.screen.width, this.pixi.screen.height)
+        //map        
         this.map = new Map(this, this.player)
-
-        this.pixi.stage.addChild(sprite)
-
         this.pixi.stage.x = this.pixi.screen.width / 2;
         this.pixi.stage.y = this.pixi.screen.height / 2;
 
         //background
         let background = new PIXI.Sprite(this.loader.resources["cityTexture"].texture!)
         background.scale.set(2)
-        this.pixi.stage.addChild(background)
+        
 
         //city
         let city = new PIXI.Sprite(this.loader.resources["cityTexture"].texture!)
@@ -129,7 +125,7 @@ export class Game {
         //this.player = new Player(this, this.loader.resources["sharkTexture"].texture!)
         //this.smog = new Smog(this.player, window.innerWidth)
         //this.spawner = new Spawn(100, 100, (3 * 60), this.loader.resources["fishTexture"].texture!, this)
-        this.pixi.stage.addChild(this.smog, this.player)
+        
         //this.pixi.stage.addChild(this.spawner)
 
         //cars
@@ -168,17 +164,25 @@ export class Game {
         this.ui = new UI(this, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["HPDbackgroundTexture"].texture!) // (game, pausebutton texture, heart texture, background texture)
         this.pauseMenu = new Menu(this, this.loader.resources["menuBackgroundTexture"].texture!, this.uiTextures)
         this.pauseMenu.visible = false;
-        this.pixi.stage.addChild(this.ui, this.pauseMenu)
 
-        this.pixi.ticker.add((delta) => this.update(delta))
-
-
-
+        //basictext?
         this.basicText = new PIXI.Text(`Score ${this.score}`, this.textStyle);
         this.basicText.x = 100
         this.basicText.y = 100
 
+        // stage adding TEMP
+        this.pixi.stage.addChild(background, this.smog, this.player)
+        for(let car of this.cars){
+            this.pixi.stage.addChild(car)
+        }
+        this.pixi.stage.addChild(this.ui, this.pauseMenu)        
         this.pixi.stage.addChild(this.basicText)
+
+
+
+
+
+        this.pixi.ticker.add((delta) => this.update(delta))
 
     }
 
