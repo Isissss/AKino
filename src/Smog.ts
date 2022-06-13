@@ -23,7 +23,8 @@ export class Smog extends PIXI.Graphics{
 
     draw() {
         this.beginFill(0xffffff)
-        this.drawCircle(this.player.x, this.player.y,this.radius)
+        this.alpha = 0.3
+        this.drawCircle(this.player.x, this.player.y,this.radius)        
         this.endFill
 
     }
