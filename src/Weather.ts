@@ -1,13 +1,13 @@
 import * as PIXI from "pixi.js"
-import { Shark } from "./Shark"
+import { Player } from "./Player"
 import { Game } from "./game"
 
 export class Weather {
-    private player : Shark
+    private player : Player
     private timer = 0
     private delay : number
     private game : Game
-    constructor(player : Shark, delay : number, game : Game){
+    constructor(player : Player, delay : number, game : Game){
         this.player = player
         this.delay = delay
         this.game = game

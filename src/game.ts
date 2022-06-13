@@ -39,7 +39,7 @@ export class Game {
     pixi: PIXI.Application
     loader: PIXI.Loader
     player: Player
-    map : Map
+    map: Map
     smog: Smog
     graphics: Graphics
     spawner: Spawn
@@ -123,7 +123,7 @@ export class Game {
         city.scale.set(3, 2.69)
 
         //traits
-        this.player = new Player(this.loader.resources["sharkTexture"].texture!)
+        this.player = new Player(this, this.loader.resources["sharkTexture"].texture!)
         this.smog = new Smog(this.player, window.innerWidth)
         this.spawner = new Spawn(100, 100, (3 * 60), this.loader.resources["fishTexture"].texture!, this)
         this.pixi.stage.addChild(this.smog, this.player)
@@ -167,7 +167,7 @@ export class Game {
         this.pauseMenu.visible = false;
         this.pixi.stage.addChild(this.ui, this.pauseMenu)
 
-        this.pixi.ticker.add((delta) => this.update())
+        this.pixi.ticker.add((delta) => this.update(delta))
 
 
 
@@ -178,10 +178,11 @@ export class Game {
         this.pixi.stage.addChild(this.basicText)
 
     }
-    update() {
+
+    update(delta: number) {
         if (!this.menuActive) { // pixi.stop() might be a better idea
             this.spawner.update()
-            this.player.update()
+            this.player.update(delta)
             this.smog.update()
             this.weather.update()
             this.map.update()
@@ -227,11 +228,12 @@ export class Game {
     // else {
     //     this.pixi.stop() // needs a way to start pixi again though
     // }
-}
 
-updateWeather(x : number, y : number) {
-    for (let i = 0; i < this.leafs.length; i++) {
-        this.leafs[i].changeWeather(x, y)
+
+    updateWeather(x: number, y: number) {
+        for (let i = 0; i < this.leafs.length; i++) {
+            this.leafs[i].changeWeather(x, y)
+        }
     }
 
     public endGame() {
@@ -254,7 +256,7 @@ updateWeather(x : number, y : number) {
             && bounds1.y + bounds1.height > bounds2.y;
     }
 
-    public togglePauseMenu(){
+    public togglePauseMenu() {
         switch (this.menuActive) {
             case false:
                 this.menuActive = true;

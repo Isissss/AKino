@@ -1,12 +1,17 @@
 import * as PIXI from "pixi.js"
+import { Game } from "./game"
 
 export class Player extends PIXI.Sprite {
   xspeed = 0
   yspeed = 0
   public xweather = 0
   public yweather = 0
+  counter: number
+  hit: boolean = false
+  health: number = 3
+  game: Game
 
-  constructor(texture: PIXI.Texture) {
+  constructor(game: Game, texture: PIXI.Texture) {
     super(texture)
     this.x = 100
     this.y = 100
