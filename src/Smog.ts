@@ -1,16 +1,16 @@
 import * as PIXI from 'pixi.js'
-import { Shark } from './Shark'
+import { Player } from './Player'
 
 
 export class Smog extends PIXI.Graphics{
 
-    player : Shark
+    player : Player
     radius:number
     originalRadius:number
     
 
 
-    constructor(player: Shark, radius:number){
+    constructor(player: Player, radius:number){
         super()
         this.player = player
         this.originalRadius = radius
