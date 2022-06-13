@@ -14,7 +14,7 @@ export class SettingsPage extends BookPage {
     constructor(name:string, game:Game, textstyle:PIXI.TextStyle, uiTextures: PIXI.Texture[]){
         super(name)
         this.name = name
-        console.log(uiTextures)
+        //console.log(uiTextures)
         this.SoundFXSlider = new Slider(game, "Geluidseffecten", 5, game.soundFX, uiTextures)
         this.bgMusicSlider = new Slider(game, "Achtergrondmuziek", 5, game.bgMusic, uiTextures)
         this.fontSizeSlider = new Slider(game, "Lettergrootte", 1, game.fontSize, uiTextures)

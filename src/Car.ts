@@ -46,7 +46,7 @@ export class Car extends PIXI.Sprite {
         this.getfilter()
       }
     } else {
-      console.log(this.x)
+      //console.log(this.x)
       if (this.x < 800) {
         this.angle = 180
         this.y -= this.speed

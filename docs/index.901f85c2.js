@@ -676,10 +676,8 @@ class Game {
             this.map.update();
             for(let i = 0; i < this.leafs.length; i++)this.leafs[i].update();
             for (let building of this.buildings)building.update(this.score);
-            for(let i2 = 0; i2 < this.cars.length; i2++)if (this.collision(this.player, this.cars[i2]) && !this.player.hit) {
-                console.log("player touches object");
-                this.player.hitcar();
-            }
+            for(let i2 = 0; i2 < this.cars.length; i2++)if (this.collision(this.player, this.cars[i2]) && !this.player.hit) //console.log("player touches object")
+            this.player.hitcar();
             this.player.update(delta);
             for (let car of this.cars)car.update(delta);
             for(let i3 = 0; i3 < this.objects.length; i3++)if (this.collision(this.player, this.objects[i3])) {
@@ -37325,10 +37323,10 @@ class Smog extends _pixiJs.Graphics {
             this.radius -= 1;
             this.clear();
             this.draw();
-            console.log(`radius: ${this.radius}`);
+        //console.log(`radius: ${this.radius}`)
         } else {
-            console.log(`radius is already 0`);
-            console.log('resetting circle to 200 radius');
+            //console.log(`radius is already 0`)
+            //console.log('resetting circle to 200 radius')
             this.radius = this.originalRadius;
             this.clear();
             this.draw();
@@ -37355,12 +37353,12 @@ class Spawn extends _pixiJs.Sprite {
     }
     update() {
         this.timer += 1;
-        console.log(this.timer);
+        //console.log(this.timer)
         if (this.timer > this.delay) {
             let sprite = new _object.Object(this.objectTexture);
             this.timer = 0;
             this.game.spawnObject(sprite);
-            console.log("hello");
+        //console.log("hello")
         }
     }
 }
@@ -37403,7 +37401,7 @@ class UI extends _pixiJs.Container {
         this.x = -(this.game.pixi.screen.width / 2);
         this.y = -(this.game.pixi.screen.height / 2);
         // debug
-        console.log("UI Added");
+        //console.log("UI Added")
         // add a pausebutton
         this.pauseButton = new _button.Button(this.game, pauseButtonTexture, 0, 0);
         this.healthDisplay = new _hpdisplay.HPDisplay(this.game, heartTexture, window.innerWidth, 0);
@@ -37413,7 +37411,7 @@ class UI extends _pixiJs.Container {
         this.healthBackground.y = this.healthDisplay.y;
         this.healthBackground.width = this.healthDisplay.width + 20;
         this.healthBackground.height = this.healthDisplay.height + 10;
-        console.log(this.healthBackground);
+        //console.log(this.healthBackground)
         // add all elements to the displayObject container
         this.addChild(this.pauseButton, this.healthBackground, this.healthDisplay);
     }
@@ -37434,12 +37432,12 @@ class Button extends _pixiJs.Sprite {
         this.interactive = true;
         this.buttonMode = true;
         this.game = game;
-        console.log("Button Added");
+        //console.log("Button Added")
         this.on('pointerdown', ()=>this.buttonClicked()
         );
     }
     buttonClicked() {
-        console.log("Button Clicked");
+        //console.log("Button Clicked")
         this.game.togglePauseMenu();
     }
 }
@@ -37456,7 +37454,7 @@ class HPDisplay extends _pixiJs.Container {
     constructor(game, fullTexture, x = 0, y = 0){
         super();
         this.fullTexture = fullTexture;
-        console.log("HPDisplay added");
+        //console.log("HPDisplay added")
         this.game = game;
         this.y = y;
         for(let i = 0; i < this.game.player.health; i++)this.addHeart(i, fullTexture);
@@ -37527,7 +37525,7 @@ class SettingsPage extends _bookPage.BookPage {
     constructor(name, game, textstyle, uiTextures){
         super(name);
         this.name = name;
-        console.log(uiTextures);
+        //console.log(uiTextures)
         this.SoundFXSlider = new _slider.Slider(game, "Geluidseffecten", 5, game.soundFX, uiTextures);
         this.bgMusicSlider = new _slider.Slider(game, "Achtergrondmuziek", 5, game.bgMusic, uiTextures);
         this.fontSizeSlider = new _slider.Slider(game, "Lettergrootte", 1, game.fontSize, uiTextures);
@@ -37617,7 +37615,7 @@ class MinusButton extends _button.Button {
     buttonClicked() {
         this.parent.value = this.parent.value + this.increments * -1;
         this.parent.update();
-        console.log(`${this.parent.name} - Clicked`);
+    //console.log(`${this.parent.name} - Clicked`)
     }
 }
 
@@ -37636,7 +37634,7 @@ class PlusButton extends _button.Button {
     buttonClicked() {
         this.parent.value = this.parent.value + this.increments;
         this.parent.update();
-        console.log(`${this.parent.name} + Clicked`);
+    //console.log(`${this.parent.name} + Clicked`)
     }
 }
 
@@ -37833,7 +37831,7 @@ class Car extends _pixiJs.Sprite {
                 this.getfilter();
             }
         } else {
-            console.log(this.x);
+            //console.log(this.x)
             if (this.x < 800) {
                 this.angle = 180;
                 this.y -= this.speed;

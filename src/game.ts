@@ -205,7 +205,7 @@ export class Game {
 
             for (let i = 0; i < this.cars.length; i++) {
                 if (this.collision(this.player, this.cars[i]) && !this.player.hit) {
-                    console.log("player touches object")
+                    //console.log("player touches object")
                     this.player.hitcar()
 
                 }
