@@ -170,11 +170,14 @@ export class Game {
 
         // stage adding TEMP
         this.pixi.stage.addChild(background, this.player)
-        for(let car of this.cars){
+        for(const car of this.cars){
             this.pixi.stage.addChild(car)
         }
-        for(let building of this.buildings){
+        for(const building of this.buildings){
             this.pixi.stage.addChild(building)
+        }
+        for(const leaf of this.leafs){
+            this.pixi.stage.addChild(leaf)
         }
         this.pixi.stage.addChild(this.smog, this.ui, this.pauseMenu)        
         this.pixi.stage.addChild(this.basicText)
