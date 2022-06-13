@@ -22,6 +22,8 @@ export class Map {
             this.game.pixi.stage.pivot.set(this.game.pixi.screen.width + this.borderHorizontal, this.game.pixi.stage.pivot.y)
             // set the new border a full screen away
             this.borderHorizontal += this.game.pixi.screen.width
+            // Make the UI follow the camera
+            this.game.ui.x = -(this.game.pixi.screen.width / 2) + this.borderHorizontal
         }
         // check if the player has crossed the left border
         if (this.player.x <= -(this.game.pixi.screen.width / 2) + this.borderHorizontal) {
@@ -29,6 +31,8 @@ export class Map {
             this.game.pixi.stage.pivot.set(-(this.game.pixi.screen.width) + this.borderHorizontal, this.game.pixi.stage.pivot.y)
             // set the new border a full screen away
             this.borderHorizontal -= this.game.pixi.screen.width
+            // Make the UI follow the camera
+            this.game.ui.x = -(this.game.pixi.screen.width / 2) + this.borderHorizontal
         }
         // check if the player has crossed the top border
         if (this.player.y >= this.game.pixi.screen.height / 2 + this.borderVertical) {
@@ -36,6 +40,8 @@ export class Map {
             this.game.pixi.stage.pivot.set(this.game.pixi.stage.pivot.x, this.game.pixi.screen.height + this.borderVertical)
             // set the new border a full screen away
             this.borderVertical += this.game.pixi.screen.height
+            // Make the UI follow the camera
+            this.game.ui.y = -(this.game.pixi.screen.height / 2) + this.borderVertical
         }
         // check if the player has crossed the bottom border
         if (this.player.y <= -(this.game.pixi.screen.height / 2) + this.borderVertical) {
@@ -43,6 +49,8 @@ export class Map {
             this.game.pixi.stage.pivot.set(this.game.pixi.stage.pivot.x, -(this.game.pixi.screen.height) + this.borderVertical)
             // set the new border a full screen away
             this.borderVertical -= this.game.pixi.screen.height
+            // Make the UI follow the camera
+            this.game.ui.y = -(this.game.pixi.screen.height / 2) + this.borderVertical
         }
        
     }

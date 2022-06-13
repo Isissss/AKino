@@ -16,11 +16,11 @@ export class UI extends PIXI.Container {
     //behaviours
     constructor(game: Game, pauseButtonTexture: PIXI.Texture, heartTexture: PIXI.Texture, backgroundTexture: PIXI.Texture){
         super()
-        //container's own x and y position
-        this.x = 0
-        this.y = 0
         // need access to the game, to display correct values
         this.game = game
+        //container's own x and y position
+        this.x = -(this.game.pixi.screen.width / 2)
+        this.y = -(this.game.pixi.screen.height / 2)
         // debug
         console.log("UI Added")
         // add a pausebutton
