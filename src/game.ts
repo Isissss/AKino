@@ -25,7 +25,7 @@ export class Game {
     textStyle: PIXI.TextStyle;
 
     constructor() {
-        this.pixi = new PIXI.Application({ width: 1200, height: 700 })
+        this.pixi = new PIXI.Application({ width: window.innerWidth - 20, height: window.innerHeight - 20 })
         document.body.appendChild(this.pixi.view)
 
         this.loader = new PIXI.Loader()
@@ -40,9 +40,9 @@ export class Game {
 
     loadCompleted() {
         this.player = new Player(this.loader.resources["sharkTexture"].texture!, this, 2)
-        this.car = new Car(this.loader.resources["carTexture"].texture!, false, 1200, 625)
-        this.car3 = new Car(this.loader.resources["carTexture"].texture!, false, 1600, 625)
-        this.car2 = new Car(this.loader.resources["carTexture"].texture!, true, 640, -300)
+        this.car = new Car(this.loader.resources["carTexture"].texture!, false, 1200, 625, this)
+        this.car3 = new Car(this.loader.resources["carTexture"].texture!, false, 1400, 625, this)
+        this.car2 = new Car(this.loader.resources["carTexture"].texture!, true, 640, -300, this)
 
         this.cars.push(this.car)
         this.cars.push(this.car3)
@@ -66,13 +66,12 @@ export class Game {
         });
 
         this.basicText = new PIXI.Text(`Levens ${this.player.health}`, this.textStyle);
-        // this.basicText.x = 100
-        // this.basicText.y = 100
-
         this.pixi.stage.addChild(this.basicText)
 
     }
     update(delta: number) {
+
+
         for (let i = 0; i < this.cars.length; i++) {
             if (this.collision(this.player, this.cars[i]) && !this.player.hit) {
                 console.log("player touches object")
