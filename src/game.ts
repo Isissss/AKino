@@ -23,7 +23,7 @@ import uiElement2Image from "./images/YellowUI2.png" // cant get spritesheets to
 import uiElement3Image from "./images/YellowUI3.png" // cant get spritesheets to work
 import audioScreenImage from "./images/audioscreen.png"
 
-import backgroundMusic from "url:./sound/computerNoise_003.ogg"
+import backgroundMusic from "url:./sound/supermax.mp3"
 
 import { Player } from "./Player"
 import { Smog } from './Smog'
@@ -104,7 +104,7 @@ export class Game {
 
         this.audioScreen = new audioScreen(this.loader.resources["audioScreenTexture"].texture!, this.loader.resources["backgroundMusicFile"].data!)
 
-        this.pixi.stage.addChild(audioScreen)
+        this.pixi.stage.addChild(this.audioScreen)
         let bgMusic = this.loader.resources["backgroundMusicFile"].data!
         bgMusic.play()
 
@@ -166,16 +166,16 @@ export class Game {
             this.pixi.stage.addChild(leaf)
         }
 
-        this.textStyle = new PIXI.TextStyle({
-            fontSize: 31,
-            fontWeight: "bold",
-            trim: false
-        });
+        // this.textStyle = new PIXI.TextStyle({
+        //     fontSize: 31,
+        //     fontWeight: "bold",
+        //     trim: false
+        // });
 
         // ui and menu
-        this.ui = new UI(this, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["HPDbackgroundTexture"].texture!) // (game, pausebutton texture, heart texture, background texture)
-        this.pauseMenu = new Menu(this, this.loader.resources["menuBackgroundTexture"].texture!, this.uiTextures)
-        this.pauseMenu.visible = false;
+        // this.ui = new UI(this, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["HPDbackgroundTexture"].texture!) // (game, pausebutton texture, heart texture, background texture)
+        // this.pauseMenu = new Menu(this, this.loader.resources["menuBackgroundTexture"].texture!, this.uiTextures)
+        // this.pauseMenu.visible = false;
 
         //basictext?
         this.basicText = new PIXI.Text(`Score ${this.score}`, this.textStyle);
@@ -195,9 +195,6 @@ export class Game {
         }
         this.pixi.stage.addChild(this.smog, this.ui, this.pauseMenu)
         this.pixi.stage.addChild(this.basicText)
-
-
-
 
 
         this.pixi.ticker.add((delta) => this.update(delta))
