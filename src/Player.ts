@@ -2,23 +2,24 @@ import * as PIXI from "pixi.js"
 import { Game } from "./game"
 
 export class Player extends PIXI.Sprite {
-    xspeed = 0
-    yspeed = 0
-    counter: number
-    hit: boolean = false
-    health: number = 3
-    game: Game
-    public filter: PIXI.Filter
+    private xspeed = 0
+    private yspeed = 0
+    private counter: number
+    private hit: boolean = false
+    private health: number = 3
+    private filter: PIXI.Filter
 
-    constructor(game: Game, texture: PIXI.Texture) {
+
+    constructor(texture: PIXI.Texture) {
         super(texture)
-        this.x = 100
+        this.x = window.innerWidth / 2.5
         this.y = 100
-        this.game = game
+
         this.filter = new PIXI.filters.ColorMatrixFilter()
         window.addEventListener("keydown", (e: KeyboardEvent) => this.onKeyDown(e))
         window.addEventListener("keyup", (e: KeyboardEvent) => this.onKeyUp(e))
     }
+
 
     update(delta: number) {
         this.x += this.xspeed
@@ -56,7 +57,7 @@ export class Player extends PIXI.Sprite {
 
     public setFilter(tint: number) {
         this.filters = [this.filter]
-        this.filter.hue(tint, false) // HUE filter
+        this.filter.hue(tint) // HUE filter
     }
 
     jump() {
@@ -71,14 +72,14 @@ export class Player extends PIXI.Sprite {
             case "A":
             case "ARROWLEFT":
                 this.xspeed = -4
-                this.scale.set(0.25)
+                this.scale.set(1)
 
 
                 break
             case "D":
             case "ARROWRIGHT":
                 this.xspeed = 4
-                this.scale.set(-0.25, 0.25)
+                this.scale.set(-1, 1)
 
                 break
             case "W":
