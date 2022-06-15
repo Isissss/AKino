@@ -529,37 +529,37 @@ var _fishPng = require("./images/fish.png");
 var _fishPngDefault = parcelHelpers.interopDefault(_fishPng);
 var _carPng = require("./images/car.png");
 var _carPngDefault = parcelHelpers.interopDefault(_carPng);
-var _car = require("./Car");
+var _purplePng = require("./images/purple.png");
+var _purplePngDefault = parcelHelpers.interopDefault(_purplePng);
+var _greenJpg = require("./images/green.jpg");
+var _greenJpgDefault = parcelHelpers.interopDefault(_greenJpg);
+var _pinkJpg = require("./images/pink.jpg");
+var _pinkJpgDefault = parcelHelpers.interopDefault(_pinkJpg);
 var _player = require("./Player");
+var _color = require("./Color");
 class Game {
-    cars = [];
     score = 0;
     constructor(){
         this.pixi = new _pixiJs.Application({
             width: window.innerWidth - 20,
-            height: window.innerHeight - 20
+            height: window.innerHeight - 20,
+            backgroundColor: 768955
         });
         document.body.appendChild(this.pixi.view);
         this.loader = new _pixiJs.Loader();
-        this.loader.add('sharkTexture', _dinoPngDefault.default).add('fishTexture', _fishPngDefault.default).add('bubbleTexture', _bubblePngDefault.default).add('cityTexture', _cityPngDefault.default).add('carTexture', _carPngDefault.default);
+        this.loader.add('sharkTexture', _dinoPngDefault.default).add('fishTexture', _fishPngDefault.default).add('bubbleTexture', _bubblePngDefault.default).add('cityTexture', _cityPngDefault.default).add('carTexture', _carPngDefault.default).add('purpleTexture', _purplePngDefault.default).add('pinkTexture', _pinkJpgDefault.default).add('greenTexture', _greenJpgDefault.default);
         this.loader.load(()=>this.loadCompleted()
         );
     }
     loadCompleted() {
-        this.player = new _player.Player(this.loader.resources["sharkTexture"].texture, this, 2);
-        this.car = new _car.Car(this.loader.resources["carTexture"].texture, false, 1200, 625, this);
-        this.car3 = new _car.Car(this.loader.resources["carTexture"].texture, false, 1400, 625, this);
-        this.car2 = new _car.Car(this.loader.resources["carTexture"].texture, true, 640, -300, this);
-        this.cars.push(this.car);
-        this.cars.push(this.car3);
-        this.cars.push(this.car2);
-        let background = new _pixiJs.Sprite(this.loader.resources["cityTexture"].texture);
-        background.scale.set(2);
-        this.pixi.stage.addChild(background);
+        this.player = new _player.Player(this, this.loader.resources["sharkTexture"].texture);
         this.pixi.stage.addChild(this.player);
-        this.pixi.stage.addChild(this.car);
-        this.pixi.stage.addChild(this.car2);
-        this.pixi.stage.addChild(this.car3);
+        this.color = new _color.Color(this.loader.resources["purpleTexture"].texture, 100, 100, 200, this.player);
+        this.color2 = new _color.Color(this.loader.resources["pinkTexture"].texture, 200, 100, 600, this.player);
+        this.color3 = new _color.Color(this.loader.resources["greenTexture"].texture, 300, 100, 0, this.player);
+        this.pixi.stage.addChild(this.color);
+        this.pixi.stage.addChild(this.color2);
+        this.pixi.stage.addChild(this.color3);
         this.pixi.ticker.add((delta)=>this.update(delta)
         );
         this.textStyle = new _pixiJs.TextStyle({
@@ -571,26 +571,12 @@ class Game {
         this.pixi.stage.addChild(this.basicText);
     }
     update(delta) {
-        for(let i = 0; i < this.cars.length; i++)if (this.collision(this.player, this.cars[i]) && !this.player.hit) {
-            console.log("player touches object");
-            this.player.hitcar();
-        }
         this.player.update(delta);
-        for (let car of this.cars)car.update(delta);
-    }
-    endGame() {
-        console.log("game over!");
-        this.pixi.stop();
-    }
-    collision(sprite1, sprite2) {
-        const bounds1 = sprite1.getBounds();
-        const bounds2 = sprite2.getBounds();
-        return bounds1.x < bounds2.x + bounds2.width && bounds1.x + bounds1.width > bounds2.x && bounds1.y < bounds2.y + bounds2.height && bounds1.y + bounds1.height > bounds2.y;
     }
 }
 let g = new Game;
 
-},{"pixi.js":"dsYej","./images/dino.png":"c8KfO","./images/bubble.png":"iMP3P","./images/city.png":"a2rT6","./images/fish.png":"3tLwD","./images/car.png":"dnXSN","./Car":"d9weU","./Player":"8YLWx","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./images/dino.png":"c8KfO","./images/bubble.png":"iMP3P","./images/city.png":"a2rT6","./images/fish.png":"3tLwD","./images/car.png":"dnXSN","./Player":"8YLWx","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./Color":"MxnPf","./images/purple.png":"8urw9","./images/green.jpg":"dkC8t","./images/pink.jpg":"b5kpT"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37154,68 +37140,7 @@ module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "fish.5
 },{"./helpers/bundle-url":"lgJ39"}],"dnXSN":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "car.80a2d4f3.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"d9weU":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Car", ()=>Car
-);
-var _pixiJs = require("pixi.js");
-class Car extends _pixiJs.Sprite {
-    constructor(texture, left, startx, starty, game){
-        super(texture);
-        this.x = startx;
-        this.left = left;
-        this.y = starty;
-        this.startx = startx;
-        this.starty = starty;
-        this.anchor.set(0.5);
-        this.scale.set(0.2);
-        this.speed = 1.5;
-        this.game = game;
-        this.angle = this.left ? 360 : 90;
-        this.filter = new _pixiJs.filters.ColorMatrixFilter();
-        this.getfilter();
-    }
-    getfilter() {
-        this.filters = [
-            this.filter
-        ];
-        this.filter.hue(Math.random() * 360, false) // HUE filter
-        ;
-    }
-    resetPosition() {
-        this.x = this.startx;
-        this.y = this.starty;
-        this.angle = this.left ? 360 : 90;
-    }
-    update(delta) {
-        // If car turns left, turning points
-        if (this.left) {
-            if (this.y > 620) {
-                this.angle = 90;
-                this.x -= this.speed;
-            } else this.y += this.speed;
-            //If car reaches end of screen, set back to start loc
-            if (this.x < this.game.pixi.screen.left - 50) {
-                this.resetPosition();
-                this.getfilter();
-            }
-        } else {
-            //Turning points other cars
-            if (this.x < 800) {
-                this.angle = 180;
-                this.y -= this.speed;
-            } else this.x -= this.speed;
-            //If car reaches top of screen, set back to start loc
-            if (this.y < this.game.pixi.screen.top - 50) {
-                this.resetPosition();
-                this.getfilter();
-            }
-        }
-    }
-}
-
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8YLWx":[function(require,module,exports) {
+},{"./helpers/bundle-url":"lgJ39"}],"8YLWx":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Player", ()=>Player
@@ -37224,39 +37149,43 @@ var _pixiJs = require("pixi.js");
 class Player extends _pixiJs.Sprite {
     xspeed = 0;
     yspeed = 0;
-    counter = 0;
-    constructor(texture, mygame, health){
+    hit = false;
+    health = 3;
+    constructor(game, texture){
         super(texture);
-        this.x = 150;
-        this.y = 150;
-        this.game = mygame;
-        this.hit = false;
-        this.health = health;
-        this.scale.set(0.25);
-        this.anchor.set(0.5);
-        this.hitbox = new _pixiJs.Rectangle(-150 * this.scale.x, 0, 300 * this.scale.x, 150 * this.scale.x);
+        this.x = 100;
+        this.y = 100;
+        this.game = game;
+        this.filter = new _pixiJs.filters.ColorMatrixFilter();
         window.addEventListener("keydown", (e)=>this.onKeyDown(e)
         );
         window.addEventListener("keyup", (e)=>this.onKeyUp(e)
         );
     }
-    getBounds() {
-        return new _pixiJs.Rectangle(this.x + this.hitbox.x, this.y + this.hitbox.y, this.hitbox.width, this.hitbox.height);
-    }
     update(delta) {
         this.x += this.xspeed;
         this.y += this.yspeed;
+        if (this.x > window.innerWidth) this.x = window.innerWidth;
+        if (this.x < 0) this.x = 0;
+        if (this.y > window.innerHeight) this.y = window.innerHeight;
+        if (this.y < 0) this.y = 0;
         this.counter += delta;
         // If player hits car (1.25s cooldown), set to false again so hit can occur again
         if (this.counter > 125 && this.hit == true) this.hit = false;
-        if (this.health < 1) this.game.endGame();
+        this.health;
     }
-    // Set counter to 0 for cooldown, 
+    // Set counter to 0 for cooldown,
     hitcar() {
         this.counter = 0;
         this.hit = true;
         this.health--;
-        this.game.basicText.text = `Levens ${this.health}`;
+    }
+    setFilter(tint) {
+        this.filters = [
+            this.filter
+        ];
+        this.filter.hue(tint, false) // HUE filter
+        ;
     }
     jump() {
         console.log("jump!");
@@ -37306,6 +37235,42 @@ class Player extends _pixiJs.Sprite {
     }
 }
 
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"MxnPf":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Color", ()=>Color
+);
+var _pixiJs = require("pixi.js");
+class Color extends _pixiJs.Sprite {
+    constructor(texture, x, y, tint, player){
+        super(texture);
+        this.x = x;
+        this.y = y;
+        this.player = player;
+        this.width = 50;
+        this.height = 50;
+        this.interactive = true // make clickable
+        ;
+        this.buttonMode = true // show hand cursor
+        ;
+        this.on('pointerdown', ()=>this.onClick()
+        );
+        this.color = tint;
+    }
+    onClick() {
+        this.player.setFilter(this.color);
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8urw9":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "purple.6c30f144.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"dkC8t":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "green.b8cc44e0.jpg" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"b5kpT":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "pink.e04931ab.jpg" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
 
 //# sourceMappingURL=index.901f85c2.js.map

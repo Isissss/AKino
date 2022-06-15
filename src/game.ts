@@ -5,9 +5,12 @@ import waterImage from "./images/water.jpg"
 import cityImage from "./images/city.png"
 import fishImage from "./images/fish.png"
 import carImage from "./images/car.png"
-import { Car } from './Car'
+import purpleImage from "./images/purple.png"
+import greenImage from "./images/green.jpg"
+import pinkImage from "./images/pink.jpg"
 import { Graphics } from 'pixi.js'
 import { Player } from './Player'
+import { Color } from './Color'
 
 
 export class Game {
@@ -15,17 +18,16 @@ export class Game {
     loader: PIXI.Loader
     player: Player
     graphics: Graphics
-    cars: Car[] = []
     score: number = 0
-    car: Car
-    car3: Car
     gameover: boolean
-    car2: Car
+    color1: Color
+    color2: Color
+    color3: Color
     basicText: PIXI.Text;
     textStyle: PIXI.TextStyle;
 
     constructor() {
-        this.pixi = new PIXI.Application({ width: window.innerWidth - 20, height: window.innerHeight - 20 })
+        this.pixi = new PIXI.Application({ width: window.innerWidth - 20, height: window.innerHeight - 20, backgroundColor: 0xBBBBB })
         document.body.appendChild(this.pixi.view)
 
         this.loader = new PIXI.Loader()
@@ -34,28 +36,25 @@ export class Game {
             .add('bubbleTexture', bubbleImage)
             .add('cityTexture', cityImage)
             .add('carTexture', carImage)
+            .add('purpleTexture', purpleImage)
+            .add('pinkTexture', pinkImage)
+            .add('greenTexture', greenImage)
         this.loader.load(() => this.loadCompleted())
 
     }
 
     loadCompleted() {
-        this.player = new Player(this.loader.resources["sharkTexture"].texture!, this, 2)
-        this.car = new Car(this.loader.resources["carTexture"].texture!, false, 1200, 625, this)
-        this.car3 = new Car(this.loader.resources["carTexture"].texture!, false, 1400, 625, this)
-        this.car2 = new Car(this.loader.resources["carTexture"].texture!, true, 640, -300, this)
-
-        this.cars.push(this.car)
-        this.cars.push(this.car3)
-        this.cars.push(this.car2)
-
-        let background = new PIXI.Sprite(this.loader.resources["cityTexture"].texture!)
-        background.scale.set(2)
-        this.pixi.stage.addChild(background)
-
+        this.player = new Player(this, this.loader.resources["sharkTexture"].texture!)
         this.pixi.stage.addChild(this.player)
-        this.pixi.stage.addChild(this.car)
-        this.pixi.stage.addChild(this.car2)
-        this.pixi.stage.addChild(this.car3)
+
+        this.color = new Color(this.loader.resources["purpleTexture"].texture!, 100, 100, 200, this.player)
+        this.color2 = new Color(this.loader.resources["pinkTexture"].texture!, 200, 100, 600, this.player)
+        this.color3 = new Color(this.loader.resources["greenTexture"].texture!, 300, 100, 0, this.player)
+
+
+        this.pixi.stage.addChild(this.color)
+        this.pixi.stage.addChild(this.color2)
+        this.pixi.stage.addChild(this.color3)
 
         this.pixi.ticker.add((delta) => this.update(delta))
 
@@ -70,34 +69,7 @@ export class Game {
 
     }
     update(delta: number) {
-
-
-        for (let i = 0; i < this.cars.length; i++) {
-            if (this.collision(this.player, this.cars[i]) && !this.player.hit) {
-                console.log("player touches object")
-                this.player.hitcar()
-
-            }
-
-        }
         this.player.update(delta)
-        for (let car of this.cars) {
-            car.update(delta)
-        }
-    }
-    public endGame() {
-        console.log("game over!")
-        this.pixi.stop();
-    }
-    collision(sprite1: PIXI.Sprite, sprite2: PIXI.Sprite) {
-        const bounds1 = sprite1.getBounds()
-        const bounds2 = sprite2.getBounds()
-
-        return bounds1.x < bounds2.x + bounds2.width
-            && bounds1.x + bounds1.width > bounds2.x
-            && bounds1.y < bounds2.y + bounds2.height
-            && bounds1.y + bounds1.height > bounds2.y;
     }
 }
-
 let g = new Game

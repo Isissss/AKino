@@ -4,35 +4,38 @@ import { Game } from "./game"
 export class Player extends PIXI.Sprite {
     xspeed = 0
     yspeed = 0
-    private game: Game
-    hitbox: PIXI.Rectangle
-    public health: number
-    public hit: boolean
-    private counter: number = 0;
+    counter: number
+    hit: boolean = false
+    health: number = 3
+    game: Game
+    public filter: PIXI.Filter
 
-    constructor(texture: PIXI.Texture, mygame: Game, health: number) {
+    constructor(game: Game, texture: PIXI.Texture) {
         super(texture)
-        this.x = 150
-        this.y = 150
-        this.game = mygame
-        this.hit = false
-        this.health = health
-
-        this.scale.set(0.25)
-
-        this.anchor.set(0.5)
-
-        this.hitbox = new PIXI.Rectangle(-150 * this.scale.x, 0, 300 * this.scale.x, 150 * this.scale.x)
+        this.x = 100
+        this.y = 100
+        this.game = game
+        this.filter = new PIXI.filters.ColorMatrixFilter()
         window.addEventListener("keydown", (e: KeyboardEvent) => this.onKeyDown(e))
         window.addEventListener("keyup", (e: KeyboardEvent) => this.onKeyUp(e))
-    }
-    public getBounds(): PIXI.Rectangle {
-        return new PIXI.Rectangle(this.x + this.hitbox.x, this.y + this.hitbox.y, this.hitbox.width, this.hitbox.height)
     }
 
     update(delta: number) {
         this.x += this.xspeed
         this.y += this.yspeed
+
+        if (this.x > window.innerWidth) {
+            this.x = window.innerWidth
+        }
+        if (this.x < 0) {
+            this.x = 0
+        }
+        if (this.y > window.innerHeight) {
+            this.y = window.innerHeight
+        }
+        if (this.y < 0) {
+            this.y = 0
+        }
         this.counter += delta;
 
         // If player hits car (1.25s cooldown), set to false again so hit can occur again
@@ -41,15 +44,19 @@ export class Player extends PIXI.Sprite {
         }
 
         if (this.health < 1) {
-            this.game.endGame()
+            //this.game.endGame()
         }
     }
-    // Set counter to 0 for cooldown, 
+    // Set counter to 0 for cooldown,
     public hitcar() {
         this.counter = 0
         this.hit = true
         this.health--;
-        this.game.basicText.text = `Levens ${this.health}`
+    }
+
+    public setFilter(tint: number) {
+        this.filters = [this.filter]
+        this.filter.hue(tint, false) // HUE filter
     }
 
     jump() {
@@ -96,7 +103,6 @@ export class Player extends PIXI.Sprite {
             case "ARROWLEFT":
             case "ARROWRIGHT":
                 this.xspeed = 0
-
                 break
             case "W":
             case "S":
