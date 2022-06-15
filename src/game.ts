@@ -21,6 +21,9 @@ import uiElement0Image from "./images/YellowUI0.png" // cant get spritesheets to
 import uiElement1Image from "./images/YellowUI1.png" // cant get spritesheets to work
 import uiElement2Image from "./images/YellowUI2.png" // cant get spritesheets to work
 import uiElement3Image from "./images/YellowUI3.png" // cant get spritesheets to work
+import audioScreenImage from "./images/audioscreen.png"
+
+import backgroundMusic from "url:./sound/computerNoise_003.ogg"
 
 import { Player } from "./Player"
 import { Smog } from './Smog'
@@ -34,6 +37,7 @@ import { Leaf } from './Leaf'
 import { UI } from './UI'
 import { Menu } from './Menu'
 import { Map } from "./Map"
+import { audioScreen } from './audioScreen'
 
 export class Game {
     pixi: PIXI.Application
@@ -63,6 +67,7 @@ export class Game {
     soundFX: number = 50 // temp placeholder for volume Sound Effects => number
     bgMusic: number = 50 // temp placeholder for volume Background Music => number
     fontSize: number = 20 // placeholder for fontsize => number
+    audioScreen: audioScreen
 
     constructor() {
         this.pixi = new PIXI.Application({ width: window.innerWidth - 5, height: window.innerHeight - 5, backgroundColor: 0xAAAAA })
@@ -90,10 +95,19 @@ export class Game {
             .add('uiElement1', uiElement1Image) // cant get spritesheets to work
             .add('uiElement2', uiElement2Image) // cant get spritesheets to work
             .add('uiElement3', uiElement3Image) // cant get spritesheets to work
+            .add('audioScreenTexture', audioScreenImage)
+            .add("backgroundMusicFile", backgroundMusic)
         this.loader.load(() => this.loadCompleted())
     }
 
     loadCompleted() {
+
+        this.audioScreen = new audioScreen(this.loader.resources["audioScreenTexture"].texture!, this.loader.resources["backgroundMusicFile"].data!)
+
+        this.pixi.stage.addChild(audioScreen)
+        let bgMusic = this.loader.resources["backgroundMusicFile"].data!
+        bgMusic.play()
+
         //packing UI textures into array
         this.uiTextures = [
             this.loader.resources["uiElement0"].texture!,
@@ -114,7 +128,7 @@ export class Game {
         //background
         let background = new PIXI.Sprite(this.loader.resources["cityTexture"].texture!)
         background.scale.set(2)
-        
+
 
         //city
         let city = new PIXI.Sprite(this.loader.resources["cityTexture"].texture!)
@@ -125,7 +139,7 @@ export class Game {
         //this.player = new Player(this, this.loader.resources["sharkTexture"].texture!)
         //this.smog = new Smog(this.player, window.innerWidth)
         //this.spawner = new Spawn(100, 100, (3 * 60), this.loader.resources["fishTexture"].texture!, this)
-        
+
         //this.pixi.stage.addChild(this.spawner)
 
         //cars
@@ -170,16 +184,16 @@ export class Game {
 
         // stage adding TEMP
         this.pixi.stage.addChild(background, this.player)
-        for(const car of this.cars){
+        for (const car of this.cars) {
             this.pixi.stage.addChild(car)
         }
-        for(const building of this.buildings){
+        for (const building of this.buildings) {
             this.pixi.stage.addChild(building)
         }
-        for(const leaf of this.leafs){
+        for (const leaf of this.leafs) {
             this.pixi.stage.addChild(leaf)
         }
-        this.pixi.stage.addChild(this.smog, this.ui, this.pauseMenu)        
+        this.pixi.stage.addChild(this.smog, this.ui, this.pauseMenu)
         this.pixi.stage.addChild(this.basicText)
 
 
