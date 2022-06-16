@@ -28,7 +28,7 @@ class Game {
 
     }
 
-    loadCompleted() {
+    private loadCompleted() {
         this.s = new Smog(this.pixi.screen.width/2, this.pixi.screen.height/2, 100)
             
         
@@ -38,7 +38,7 @@ class Game {
         this.pixi.ticker.add((delta) => this.update(delta))
     }
 
-    update(delta: number) {
+     private update(delta: number) {
         //console.log("Updating...")
         this.s.update()    
         
