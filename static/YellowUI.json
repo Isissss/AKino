@@ -1,0 +1,47 @@
+{"frames": {
+
+"YellowUI0.png":
+{
+	"frame": {"x":0,"y":0,"w":14,"h":10},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":10},
+	"sourceSize": {"w":14,"h":10}
+},
+"YellowUI1.png":
+{
+	"frame": {"x":0,"y":12,"w":14,"h":10},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":10},
+	"sourceSize": {"w":14,"h":10}
+},
+"YellowUI2.png":
+{
+	"frame": {"x":0,"y":24,"w":14,"h":14},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":14},
+	"sourceSize": {"w":14,"h":14}
+},
+"YellowUI3.png":
+{
+	"frame": {"x":0,"y":40,"w":14,"h":14},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":14},
+	"sourceSize": {"w":14,"h":14}
+}},
+"animations": {
+	"YellowUI": ["YellowUI0.png","YellowUI1.png","YellowUI2.png","YellowUI3.png"]
+},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "YellowUI.png",
+	"format": "RGBA8888",
+	"size": {"w":14,"h":54},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:9ec7ab789376f8f117fe9e662367148c:cc78ce6538d09ab51ccc599a6281cddc:0c7171e52ded2cf551d65ba04561de2b$"
+}
+}
