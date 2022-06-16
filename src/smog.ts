@@ -16,23 +16,17 @@ export class Smog extends PIXI.Graphics{
         this.yPos = y
         this.radius = radius
         this.interactive = true
-        this.draw()
-        
-        
+        this.draw()       
     }
 
-    draw() {
+    private draw() {
         this.beginFill(0xffffff)
         this.drawCircle(this.xPos,this.yPos,this.radius)
         this.endFill
 
     }
 
-    updatePos() {
-       
-    }
-
-    update(){
+    public update(){
         if(this.radius >= 1) {
         this.radius -= 0.1
         this.clear()
@@ -47,7 +41,4 @@ export class Smog extends PIXI.Graphics{
             this.draw()
         }
     }
-
-
-
 }
