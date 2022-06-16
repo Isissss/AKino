@@ -21,7 +21,7 @@ export class Button extends PIXI.Sprite {
 
     }
 
-    public buttonClicked(){
+    protected buttonClicked(){
         console.log("Button Clicked")
         this.game.togglePauseMenu()
     }

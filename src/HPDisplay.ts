@@ -31,7 +31,7 @@ export class HPDisplay extends PIXI.Container {
         this.hearts.push(heart)
     }
 
-    update() {
+    public update() {
         // not able to check if this works yet, as health isnt being modified while game runs.
         if (this.game.shark.health < this.hearts.length) {
             this.hearts[this.hearts.length - 1].destroy()
