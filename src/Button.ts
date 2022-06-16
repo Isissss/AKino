@@ -9,7 +9,7 @@ export class Button extends PIXI.Sprite {
     game: Game
 
     //behaviours
-    constructor(game: Game,texture: Texture, x: number = 0, y: number = 0){
+    constructor(game: Game, texture: Texture, x: number = 0, y: number = 0) {
         super(texture)
         this.x = x
         this.y = y
@@ -21,7 +21,7 @@ export class Button extends PIXI.Sprite {
 
     }
 
-    public buttonClicked(){
+    public buttonClicked() {
         //console.log("Button Clicked")
         this.game.togglePauseMenu()
     }

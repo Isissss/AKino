@@ -1,12 +1,12 @@
 import * as PIXI from 'pixi.js'
 
-export class BookPage extends PIXI.Container{
+export class BookPage extends PIXI.Container {
 
     public title: PIXI.Text
     public titleStyle: PIXI.TextStyle
 
 
-    constructor(name:string){
+    constructor(name: string) {
         super()
         this.width = 361
         this.height = 608
@@ -24,9 +24,9 @@ export class BookPage extends PIXI.Container{
             "textBaseline": "middle"
         });
         this.title = new PIXI.Text(name, this.titleStyle)
-        this.title.anchor.set(0,5)
-        this.title.x = this.width/2
-        this.title.y = this.title.height/2
+        this.title.anchor.set(0, 5)
+        this.title.x = this.width / 2
+        this.title.y = this.title.height / 2
         this.addChild(this.title)
-        }
     }
+}
