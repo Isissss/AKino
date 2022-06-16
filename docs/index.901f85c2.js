@@ -559,8 +559,10 @@ var _yellowUI3Png = require("./images/YellowUI3.png"); // cant get spritesheets 
 var _yellowUI3PngDefault = parcelHelpers.interopDefault(_yellowUI3Png);
 var _audioscreenPng = require("./images/audioscreen.png");
 var _audioscreenPngDefault = parcelHelpers.interopDefault(_audioscreenPng);
-var _supermaxMp3 = require("url:./sound/supermax.mp3");
-var _supermaxMp3Default = parcelHelpers.interopDefault(_supermaxMp3);
+var _relaxingMp3 = require("url:./sound/relaxing.mp3");
+var _relaxingMp3Default = parcelHelpers.interopDefault(_relaxingMp3);
+var _pickupsoundWav = require("url:./sound/pickupsound.wav");
+var _pickupsoundWavDefault = parcelHelpers.interopDefault(_pickupsoundWav);
 var _player = require("./Player");
 var _smog = require("./Smog");
 var _spawn = require("./Spawn");
@@ -596,7 +598,7 @@ class Game {
         .add('uiElement1', _yellowUI1PngDefault.default) // cant get spritesheets to work
         .add('uiElement2', _yellowUI2PngDefault.default) // cant get spritesheets to work
         .add('uiElement3', _yellowUI3PngDefault.default) // cant get spritesheets to work
-        .add('audioScreenTexture', _audioscreenPngDefault.default).add("backgroundMusicFile", _supermaxMp3Default.default);
+        .add('audioScreenTexture', _audioscreenPngDefault.default).add("backgroundMusicFile", _relaxingMp3Default.default).add("pickupsoundFile", _pickupsoundWavDefault.default);
         this.loader.load(()=>this.loadCompleted()
         );
     }
@@ -737,7 +739,7 @@ class Game {
 }
 let g = new Game;
 
-},{"pixi.js":"dsYej","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./images/fish.png":"3tLwD","./Smog":"608Py","./Spawn":"6JGD8","./images/dino.png":"c8KfO","./images/city.png":"a2rT6","./images/leaf.png":"5tsPY","./images/buildingTexture1.png":"2g5jb","./images/buildingTexture2.png":"liaFA","./images/buildingTexture3.png":"gm23O","./images/buildingB1.png":"fkYnt","./images/buildingB2.png":"1yWjs","./images/buildingB3.png":"kzHCU","./images/car.png":"dnXSN","./images/tile.png":"dvchs","./images/menuBackground.png":"hVtuo","./images/YellowUI0.png":"dwRmK","./images/YellowUI1.png":"d9mKy","./images/YellowUI2.png":"4bojR","./images/YellowUI3.png":"iiYKS","./Player":"8YLWx","./Building":"9ckPp","./Car":"d9weU","./Weather":"aPu1W","./Leaf":"cwtVd","./Map":"5vXJ1","./audioScreen":"jtcP6","./images/audioscreen.png":"d0MKD","url:./sound/supermax.mp3":"81L1N"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./images/fish.png":"3tLwD","./Smog":"608Py","./Spawn":"6JGD8","./images/dino.png":"c8KfO","./images/city.png":"a2rT6","./images/leaf.png":"5tsPY","./images/buildingTexture1.png":"2g5jb","./images/buildingTexture2.png":"liaFA","./images/buildingTexture3.png":"gm23O","./images/buildingB1.png":"fkYnt","./images/buildingB2.png":"1yWjs","./images/buildingB3.png":"kzHCU","./images/car.png":"dnXSN","./images/tile.png":"dvchs","./images/menuBackground.png":"hVtuo","./images/YellowUI0.png":"dwRmK","./images/YellowUI1.png":"d9mKy","./images/YellowUI2.png":"4bojR","./images/YellowUI3.png":"iiYKS","./images/audioscreen.png":"d0MKD","./Player":"8YLWx","./Building":"9ckPp","./Car":"d9weU","./Weather":"aPu1W","./Leaf":"cwtVd","./Map":"5vXJ1","url:./sound/pickupsound.wav":"201Zx","./audioScreen":"jtcP6","url:./sound/relaxing.mp3":"i5zAd"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37430,6 +37432,9 @@ module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "Yellow
 },{"./helpers/bundle-url":"lgJ39"}],"iiYKS":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "YellowUI3.86591660.png" + "?" + Date.now();
 
+},{"./helpers/bundle-url":"lgJ39"}],"d0MKD":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "audioscreen.52b36ab7.png" + "?" + Date.now();
+
 },{"./helpers/bundle-url":"lgJ39"}],"8YLWx":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
@@ -37751,7 +37756,10 @@ class Map {
     }
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jtcP6":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"201Zx":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "pickupsound.e04c446e.wav" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"jtcP6":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "audioScreen", ()=>audioScreen
@@ -37762,8 +37770,8 @@ class audioScreen extends _pixiJs.Sprite {
         super(texture);
         this.interactive = true;
         this.buttonMode = true;
-        this.x = 0;
-        this.y = 0;
+        this.x = window.innerWidth;
+        this.y = window.innerHeight;
         this.sound = sound;
         this.on("pointerdown", ()=>this.clicked()
         );
@@ -37774,11 +37782,8 @@ class audioScreen extends _pixiJs.Sprite {
     }
 }
 
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"d0MKD":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "audioscreen.52b36ab7.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"81L1N":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "supermax.65b2970d.mp3" + "?" + Date.now();
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"i5zAd":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "relaxing.6d6f3898.mp3" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
 

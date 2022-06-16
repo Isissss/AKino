@@ -23,7 +23,8 @@ import uiElement2Image from "./images/YellowUI2.png" // cant get spritesheets to
 import uiElement3Image from "./images/YellowUI3.png" // cant get spritesheets to work
 import audioScreenImage from "./images/audioscreen.png"
 
-import backgroundMusic from "url:./sound/supermax.mp3"
+import backgroundMusic from "url:./sound/relaxing.mp3"
+import pickUpSound from "url:./sound/pickupsound.wav"
 
 import { Player } from "./Player"
 import { Smog } from './Smog'
@@ -68,6 +69,7 @@ export class Game {
     bgMusic: number = 50 // temp placeholder for volume Background Music => number
     fontSize: number = 20 // placeholder for fontsize => number
     audioScreen: audioScreen
+    pickUpSound: HTMLAudioElement
 
     constructor() {
         this.pixi = new PIXI.Application({ width: window.innerWidth - 5, height: window.innerHeight - 5, backgroundColor: 0xAAAAA })
@@ -97,6 +99,7 @@ export class Game {
             .add('uiElement3', uiElement3Image) // cant get spritesheets to work
             .add('audioScreenTexture', audioScreenImage)
             .add("backgroundMusicFile", backgroundMusic)
+            .add("pickupsoundFile", pickUpSound)
         this.loader.load(() => this.loadCompleted())
     }
 
