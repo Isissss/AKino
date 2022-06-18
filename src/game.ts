@@ -48,8 +48,8 @@ export class Game {
     uiTextures: PIXI.Texture[] = []
     ui: UI // UI container class
     pauseMenu: Menu; // container class for the menu
-    states: number[] = [0,1,2,3]// startscreen, in-game, endscreen, game over state
-    private _state: number = 0
+    //states: number[] = [0,1,2,3]// startscreen, in-game, endscreen, game over state
+    //private _state: number = 0
     menuActive: boolean = false; // variable to check if updates need to be run
     score: number = 0
     car: Car
