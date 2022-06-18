@@ -48,6 +48,8 @@ export class Game {
     uiTextures: PIXI.Texture[] = []
     ui: UI // UI container class
     pauseMenu: Menu; // container class for the menu
+    states: number[] = [0,1,2,3]// startscreen, in-game, endscreen, game over state
+    private _state: number = 0
     menuActive: boolean = false; // variable to check if updates need to be run
     score: number = 0
     car: Car
@@ -241,9 +243,22 @@ export class Game {
     // else {
     //     this.pixi.stop() // needs a way to start pixi again though
     // }
+    
+    public get state() : number {
+        return this._state;
+    }
 
+    public set state(v : number) {
+        if( v >= 0 && v < this.states.length){
+        this._state = v;
+        } else {
+            console.log(`Can't set state with value: ${v}`)
+        }
+    }
+    
+    
 
-    updateWeather(x: number, y: number) {
+    public updateWeather(x: number, y: number) {
         for (let i = 0; i < this.leafs.length; i++) {
             this.leafs[i].changeWeather(x, y)
         }
@@ -259,7 +274,7 @@ export class Game {
         this.objects.push(object)
     }
 
-    collision(sprite1: PIXI.Sprite, sprite2: PIXI.Sprite) {
+    private collision(sprite1: PIXI.Sprite, sprite2: PIXI.Sprite) {
         const bounds1 = sprite1.getBounds()
         const bounds2 = sprite2.getBounds()
 
