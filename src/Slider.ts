@@ -30,6 +30,7 @@ export class Slider extends PIXI.Container {
         this.minusButton.x = this.displayName.x + this.displayName.width + this.margin
         this.displayValue.x = this.minusButton.x + this.minusButton.width + this.margin
         this.plusButton.x = this.displayValue.x + this.displayValue.width + this.margin
+        this.x = -25
         this.addChild(this.displayName, this.minusButton, this.plusButton, this.displayValue)
     }
 

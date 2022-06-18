@@ -34,6 +34,7 @@ import { Leaf } from './Leaf'
 import { UI } from './UI'
 import { Menu } from './Menu'
 import { Map } from "./Map"
+import { StartScreen } from './StartScreen'
 
 export class Game {
     pixi: PIXI.Application
@@ -47,9 +48,10 @@ export class Game {
     cars: Car[] = []
     uiTextures: PIXI.Texture[] = []
     ui: UI // UI container class
-    pauseMenu: Menu; // container class for the menu
-    //states: number[] = [0,1,2,3]// startscreen, in-game, endscreen, game over state
-    //private _state: number = 0
+    startscreen: StartScreen; // container class for the startscreen
+    pauseMenu: Menu; // container class for the in-game menu
+    states: number[] = [0,1,2,3]// startscreen, in-game, endscreen, game over state
+    private _state: number = 0
     menuActive: boolean = false; // variable to check if updates need to be run
     score: number = 0
     car: Car
@@ -183,6 +185,16 @@ export class Game {
         }
         this.pixi.stage.addChild(this.smog, this.ui, this.pauseMenu)        
         this.pixi.stage.addChild(this.basicText)
+
+        // create End Screen
+
+        // create Game Over Screen
+
+        // create Start Screen
+        // this.startscreen = new StartScreen(this,this.loader.resources["cityTexture"].texture! ,this.loader.resources["menuBackgroundTexture"].texture!, this.uiTextures)
+        // this.pixi.stage.addChild(this.startscreen)
+        // this.menuActive = true;
+        // this.ui.visible= false;
 
 
 

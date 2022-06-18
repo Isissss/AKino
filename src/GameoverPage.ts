@@ -36,7 +36,7 @@ export class StartScreen extends PIXI.Container{
                 stroke: "#e34a6f",
                 strokeThickness: 5
             })
-        this.name = "Game Ended"
+        this.name = "Game Over"
         this.title = new PIXI.Text(this.name, this.style)
         this.title.anchor.set(0.5, 0)
         this.title.x = 0

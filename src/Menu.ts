@@ -7,6 +7,7 @@ export class Menu extends PIXI.Container {
     background: PIXI.Sprite
     game: Game
     rightPage: SettingsPage
+    leftPage: PIXI.Container
 
     constructor(game: Game, backgroundTexture: PIXI.Texture, uiElements: PIXI.Texture[]) {
         super()
@@ -26,10 +27,24 @@ export class Menu extends PIXI.Container {
         this.x = 0
         this.y = 0
 
+        switch (this.game.state) {
+            case 0: // if on the start screen, Left Page allows to start game
+            this.leftPage = new SettingsPage("Start", this.game, this.game.textStyle, uiElements)
+                break;
+            case 1: // if in-game Left Page is a questlog
+            this.leftPage = new SettingsPage("Questslog", this.game, this.game.textStyle, uiElements)
+                break;
+            default: // on End and Game Over screen, left page allows to restart game, and shows score
+            this.leftPage = new SettingsPage("End", this.game, this.game.textStyle, uiElements)
+                break;
+        }
+
 
         this.rightPage = new SettingsPage('Instellingen', this.game, this.game.textStyle, uiElements)
         this.rightPage.x = 50
         this.rightPage.y = 5
-        this.addChild(this.rightPage)
+        this.leftPage.x = -350
+        this.leftPage.y = 5
+        this.addChild(this.leftPage,this.rightPage)
     }
 }
