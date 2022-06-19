@@ -21,6 +21,15 @@ import uiElement0Image from "./images/YellowUI0.png" // cant get spritesheets to
 import uiElement1Image from "./images/YellowUI1.png" // cant get spritesheets to work
 import uiElement2Image from "./images/YellowUI2.png" // cant get spritesheets to work
 import uiElement3Image from "./images/YellowUI3.png" // cant get spritesheets to work
+import uiElement4Image from "./images/YellowUI4.png" // cant get spritesheets to work
+import uiElement5Image from "./images/YellowUI5.png" // cant get spritesheets to work
+import uiElement6Image from "./images/YellowUI6.png" // cant get spritesheets to work
+import uiElement7Image from "./images/GreenUI0.png" // cant get spritesheets to work
+import uiElement8Image from "./images/GreenUI1.png" // cant get spritesheets to work
+import uiElement9Image from "./images/GreenUI2.png" // cant get spritesheets to work
+import uiElement10Image from "./images/RedUI0.png" // cant get spritesheets to work
+import uiElement11Image from "./images/RedUI1.png" // cant get spritesheets to work
+import uiElement12Image from "./images/RedUI2.png" // cant get spritesheets to work
 
 import { Player } from "./Player"
 import { Smog } from './Smog'
@@ -94,6 +103,15 @@ export class Game {
             .add('uiElement1', uiElement1Image) // cant get spritesheets to work
             .add('uiElement2', uiElement2Image) // cant get spritesheets to work
             .add('uiElement3', uiElement3Image) // cant get spritesheets to work
+            .add('uiElement4', uiElement4Image) // cant get spritesheets to work
+            .add('uiElement5', uiElement5Image) // cant get spritesheets to work
+            .add('uiElement6', uiElement6Image) // cant get spritesheets to work
+            .add('uiElement7', uiElement7Image) // cant get spritesheets to work
+            .add('uiElement8', uiElement8Image) // cant get spritesheets to work
+            .add('uiElement9', uiElement9Image) // cant get spritesheets to work
+            .add('uiElement10', uiElement10Image) // cant get spritesheets to work
+            .add('uiElement11', uiElement11Image) // cant get spritesheets to work
+            .add('uiElement12', uiElement12Image) // cant get spritesheets to work
         this.loader.load(() => this.loadCompleted())
     }
 
@@ -103,7 +121,16 @@ export class Game {
             this.loader.resources["uiElement0"].texture!,
             this.loader.resources["uiElement1"].texture!,
             this.loader.resources["uiElement2"].texture!,
-            this.loader.resources["uiElement3"].texture!
+            this.loader.resources["uiElement3"].texture!,
+            this.loader.resources["uiElement4"].texture!,
+            this.loader.resources["uiElement5"].texture!,
+            this.loader.resources["uiElement6"].texture!,
+            this.loader.resources["uiElement7"].texture!,
+            this.loader.resources["uiElement8"].texture!,
+            this.loader.resources["uiElement9"].texture!,
+            this.loader.resources["uiElement10"].texture!,
+            this.loader.resources["uiElement11"].texture!,
+            this.loader.resources["uiElement12"].texture!
         ]
 
         this.player = new Player(this, this.loader.resources["sharkTexture"].texture!)
@@ -190,11 +217,11 @@ export class Game {
 
         // create Game Over Screen
 
-        // create Start Screen
-        // this.startscreen = new StartScreen(this,this.loader.resources["cityTexture"].texture! ,this.loader.resources["menuBackgroundTexture"].texture!, this.uiTextures)
-        // this.pixi.stage.addChild(this.startscreen)
-        // this.menuActive = true;
-        // this.ui.visible= false;
+        //create Start Screen
+         this.startscreen = new StartScreen(this,this.loader.resources["cityTexture"].texture! ,this.loader.resources["menuBackgroundTexture"].texture!, this.uiTextures)
+         this.pixi.stage.addChild(this.startscreen)
+         this.menuActive = true;
+         this.ui.visible= false;
 
 
 

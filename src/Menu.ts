@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js'
 import { Button } from './Button'
 import { Game } from './game'
 import { SettingsPage } from './SettingsPage'
+import { StartPage } from './StartPage'
 
 export class Menu extends PIXI.Container {
     background: PIXI.Sprite
@@ -29,7 +30,7 @@ export class Menu extends PIXI.Container {
 
         switch (this.game.state) {
             case 0: // if on the start screen, Left Page allows to start game
-            this.leftPage = new SettingsPage("Start", this.game, this.game.textStyle, uiElements)
+            this.leftPage = new StartPage("Start", this.game, this.game.textStyle, uiElements)
                 break;
             case 1: // if in-game Left Page is a questlog
             this.leftPage = new SettingsPage("Questslog", this.game, this.game.textStyle, uiElements)

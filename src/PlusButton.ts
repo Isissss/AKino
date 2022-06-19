@@ -9,7 +9,7 @@ export class PlusButton extends Button {
     increments: number
 
     constructor(game: Game, parent: Slider, increments: number, texture: PIXI.Texture) {
-        super(game, texture)
+        super(game, [texture])
         this.parent = parent
         this.increments = increments
     }

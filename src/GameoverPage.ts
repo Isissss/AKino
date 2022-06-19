@@ -1,52 +1,26 @@
 import * as PIXI from 'pixi.js'
+import { BookPage } from './BookPage'
 import { Game } from './game'
-import { Menu } from './Menu'
+import { Slider } from './Slider'
 
-export class StartScreen extends PIXI.Container{
+export class EndPage extends BookPage {
 
-    game: Game
-    background: PIXI.Sprite
-    menuBackground: PIXI.Texture
     name: string
-    style: PIXI.TextStyle
-    title: PIXI.Text
-    uiElements: PIXI.Texture[]
-    startMenu: Menu
+    SoundFXSlider: Slider
+    bgMusicSlider: Slider
+    fontSizeSlider: Slider
 
 
-    constructor(game: Game, screenBackground: PIXI.Texture, menuBackgroundTexture: PIXI.Texture, uiElements: PIXI.Texture[]){
-        super()
-        this.game = game;
-        this.background = new PIXI.Sprite(screenBackground)
-        this.background.anchor.set(0.5)
-        this.background.scale.set(3)
-        this.style= new PIXI.TextStyle({
-                dropShadow: true,
-                dropShadowAlpha: 0.8,
-                dropShadowAngle: 0.1,
-                dropShadowBlur: 10,
-                dropShadowColor: "#e34a6f",
-                dropShadowDistance: 3,
-                fill: "#eeeeee",
-                fontFamily: "Tahoma, Geneva, sans-serif",
-                fontSize: 128,
-                fontVariant: "small-caps",
-                fontWeight: "700",
-                lineJoin: "bevel",
-                stroke: "#e34a6f",
-                strokeThickness: 5
-            })
-        this.name = "Game Over"
-        this.title = new PIXI.Text(this.name, this.style)
-        this.title.anchor.set(0.5, 0)
-        this.title.x = 0
-        this.title.y = 0 - window.innerHeight/2 + 15
-        
-        this.menuBackground = menuBackgroundTexture;
-        this.uiElements = uiElements;
-
-        this.startMenu = new Menu(this.game, this.menuBackground, this.uiElements)
-        this.addChild(this.background, this.startMenu, this.title)
-
+    constructor(name: string, game: Game, textstyle: PIXI.TextStyle, uiTextures: PIXI.Texture[]) {
+        super(name)
+        this.name = name
+        //console.log(uiTextures)
+        this.SoundFXSlider = new Slider(game, "Geluidseffecten", 5, game.soundFX, uiTextures)
+        this.bgMusicSlider = new Slider(game, "Achtergrondmuziek", 5, game.bgMusic, uiTextures)
+        this.fontSizeSlider = new Slider(game, "Lettergrootte", 1, game.fontSize, uiTextures)
+        this.bgMusicSlider.y = this.bgMusicSlider.height + 5
+        this.fontSizeSlider.y = this.bgMusicSlider.y + this.bgMusicSlider.height + 5
+        this.addChild(this.SoundFXSlider, this.bgMusicSlider, this.fontSizeSlider)
     }
+
 }
