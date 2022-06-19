@@ -39,7 +39,7 @@ export class Game {
         this.shark = new Player(this.loader.resources["sharkTexture"].texture!, this)
         this.pixi.stage.addChild(this.shark)
 
-        this.building = new Building(this.loader.resources["bubbleTexture"].texture!, 300, 500, this)
+        this.building = new Building(this.loader.resources["bubbleTexture"].texture!, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["bubbleTexture"].texture!, 300, 500, this)
         this.pixi.stage.addChild(this.building)
         this.pixi.ticker.add(() => this.update(1000 / 60))
 

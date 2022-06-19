@@ -528,7 +528,7 @@ var _waterJpg = require("./images/water.jpg");
 var _waterJpgDefault = parcelHelpers.interopDefault(_waterJpg);
 var _fishPng = require("./images/fish.png");
 var _fishPngDefault = parcelHelpers.interopDefault(_fishPng);
-var _object = require("./Object");
+var _building = require("./Building");
 var _matterJs = require("matter-js");
 var _matterJsDefault = parcelHelpers.interopDefault(_matterJs);
 class Game {
@@ -548,8 +548,8 @@ class Game {
     loadCompleted() {
         this.shark = new _player.Player(this.loader.resources["sharkTexture"].texture, this);
         this.pixi.stage.addChild(this.shark);
-        this.object = new _object.Object(this.loader.resources["bubbleTexture"].texture, 300, 500, this);
-        this.pixi.stage.addChild(this.object);
+        this.building = new _building.Building(this.loader.resources["bubbleTexture"].texture, this.loader.resources["bubbleTexture"].texture, this.loader.resources["bubbleTexture"].texture, 300, 500, this);
+        this.pixi.stage.addChild(this.building);
         this.pixi.ticker.add(()=>this.update(1000 / 60)
         );
         this.engine.gravity.y = 0;
@@ -561,7 +561,7 @@ class Game {
 }
 let g = new Game;
 
-},{"pixi.js":"dsYej","./images/dino.png":"c8KfO","./images/fish.png":"3tLwD","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./images/water.jpg":"jj9Eg","./Player":"8YLWx","matter-js":"2oYKU","./Object":"fjBpM","./images/building.png":"2iueJ"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./images/dino.png":"c8KfO","./images/fish.png":"3tLwD","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./images/water.jpg":"jj9Eg","./Player":"8YLWx","matter-js":"2oYKU","./images/building.png":"2iueJ","./Building":"9ckPp"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -45011,17 +45011,20 @@ var global = arguments[3];
     ]);
 });
 
-},{}],"fjBpM":[function(require,module,exports) {
+},{}],"2iueJ":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "building.c4a49ca3.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"9ckPp":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Object", ()=>Object
+parcelHelpers.export(exports, "Building", ()=>Building
 );
 var _pixiJs = require("pixi.js");
 var _matterJs = require("matter-js");
 var _matterJsDefault = parcelHelpers.interopDefault(_matterJs);
-class Object extends _pixiJs.Sprite {
-    constructor(texture, x, y, game){
-        super(texture);
+class Building extends _pixiJs.Sprite {
+    constructor(texture1, texture2, texture3, x, y, game){
+        super(texture1);
         this.x = x;
         this.y = y;
         this.anchor.set(0.5);
@@ -45033,12 +45036,17 @@ class Object extends _pixiJs.Sprite {
         ;
         _matterJsDefault.default.Composite.add(game.engine.world, this.rigidBody);
         console.log(this.rigidBody);
+        this.texture1 = texture1;
+        this.texture2 = texture2;
+        this.texture3 = texture3;
+    }
+    update(score) {
+        if (score <= 2) this.texture = this.texture1;
+        else if (score <= 5) this.texture = this.texture2;
+        else this.texture = this.texture3;
     }
 }
 
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","matter-js":"2oYKU"}],"2iueJ":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "building.c4a49ca3.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
+},{"pixi.js":"dsYej","matter-js":"2oYKU","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
 
 //# sourceMappingURL=index.901f85c2.js.map
