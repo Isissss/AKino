@@ -30,13 +30,20 @@ export class Menu extends PIXI.Container {
 
         switch (this.game.state) {
             case 0: // if on the start screen, Left Page allows to start game
-            this.leftPage = new StartPage("Start", this.game, this.game.textStyle, uiElements)
+                this.leftPage = new StartPage("Start", this.game, this.game.textStyle, uiElements)
                 break;
             case 1: // if in-game Left Page is a questlog
-            this.leftPage = new SettingsPage("Questslog", this.game, this.game.textStyle, uiElements)
+                this.leftPage = new SettingsPage("Questslog", this.game, this.game.textStyle, uiElements)
                 break;
+            case 2:
+                this.leftPage = new StartPage("Game Finished", this.game, this.game.textStyle, uiElements)
+                break;
+            case 3:
+                this.leftPage = new StartPage("Game Over", this.game, this.game.textStyle, uiElements)
+                break;
+
             default: // on End and Game Over screen, left page allows to restart game, and shows score
-            this.leftPage = new SettingsPage("End", this.game, this.game.textStyle, uiElements)
+            this.leftPage = new StartPage("CRITICAL ERROR", this.game, this.game.textStyle, uiElements)
                 break;
         }
 

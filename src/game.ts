@@ -191,8 +191,6 @@ export class Game {
 
         // ui and menu
         this.ui = new UI(this, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["HPDbackgroundTexture"].texture!) // (game, pausebutton texture, heart texture, background texture)
-        this.pauseMenu = new Menu(this, this.loader.resources["menuBackgroundTexture"].texture!, this.uiTextures)
-        this.pauseMenu.visible = false;
 
         //basictext?
         this.basicText = new PIXI.Text(`Score ${this.score}`, this.textStyle);
@@ -210,12 +208,8 @@ export class Game {
         for(const leaf of this.leafs){
             this.pixi.stage.addChild(leaf)
         }
-        this.pixi.stage.addChild(this.smog, this.ui, this.pauseMenu)        
+        this.pixi.stage.addChild(this.smog, this.ui)        
         this.pixi.stage.addChild(this.basicText)
-
-        // create End Screen
-
-        // create Game Over Screen
 
         //create Start Screen
          this.startscreen = new StartScreen(this,this.loader.resources["cityTexture"].texture! ,this.loader.resources["menuBackgroundTexture"].texture!, this.uiTextures)
@@ -232,56 +226,73 @@ export class Game {
     }
 
     update(delta: number) {
-        if (!this.menuActive) { // pixi.stop() might be a better idea
-            this.spawner.update()
-            this.player.update(delta)
-            this.smog.update()
-            this.weather.update()
-            this.map.update()
-            for (let i = 0; i < this.leafs.length; i++) {
-                this.leafs[i].update()
-
-            }
-
-            for (let building of this.buildings) {
-                building.update(this.score)
-            }
-
-            for (let i = 0; i < this.cars.length; i++) {
-                if (this.collision(this.player, this.cars[i]) && !this.player.hit) {
-                    //console.log("player touches object")
-                    this.player.hitcar()
-
+        switch (this.state) {
+            case 0:
+                break;
+            case 1:
+                if (!this.menuActive) { // pixi.stop() might be a better idea
+                    this.spawner.update()
+                    this.player.update(delta)
+                    this.smog.update()
+                    this.weather.update()
+                    this.map.update()
+                    for (let i = 0; i < this.leafs.length; i++) {
+                        this.leafs[i].update()
+        
+                    }
+        
+                    for (let building of this.buildings) {
+                        building.update(this.score)
+                    }
+        
+                    for (let i = 0; i < this.cars.length; i++) {
+                        if (this.collision(this.player, this.cars[i]) && !this.player.hit) {
+                            //console.log("player touches object")
+                            this.player.hitcar()
+        
+                        }
+        
+                    }
+                    this.player.update(delta)
+                    for (let car of this.cars) {
+                        car.update(delta)
+                    }
+        
+                    for (let i = 0; i < this.objects.length; i++) {
+                        if (this.collision(this.player, this.objects[i])) {
+        
+                            this.score++;
+                            this.smog.reset()
+                            if(this.score >= 2){
+                                this.endGame(2)
+                            }
+        
+                            this.basicText.text = `Score ${this.score}`
+        
+                            //console.log("player touches object")
+        
+        
+                            this.objects[i].destroy();
+                            this.objects.splice(i, 1)
+        
+                        }
+                    }
+                    this.ui.healthDisplay.update()
                 }
-
-            }
-            this.player.update(delta)
-            for (let car of this.cars) {
-                car.update(delta)
-            }
-
-            for (let i = 0; i < this.objects.length; i++) {
-                if (this.collision(this.player, this.objects[i])) {
-
-                    this.score++;
-                    this.smog.reset()
-
-                    this.basicText.text = `Score ${this.score}`
-
-                    //console.log("player touches object")
-
-
-                    this.objects[i].destroy();
-                    this.objects.splice(i, 1)
-
-                }
-            }
-            this.ui.healthDisplay.update()
+                break;
+                case 2:
+                    this.ui.visible = false
+                    this.togglePauseMenu()
+                    this.pixi.stop()
+                    break;
+                case 3:
+                    this.ui.visible = false
+                    this.togglePauseMenu()
+                    this.pixi.stop()
+                    break;
         }
+        
     }
-    // else {
-    //     this.pixi.stop() // needs a way to start pixi again though
-    // }
     
     public get state() : number {
         return this._state;
@@ -303,9 +314,10 @@ export class Game {
         }
     }
 
-    public endGame() {
-        console.log("game over!")
-        this.pixi.stop();
+    public endGame(state:number) {
+        this.state = state
+        console.log(`game over reason: ${state}`)
+        
     }
 
     public spawnObject(object: Object) {
@@ -327,14 +339,15 @@ export class Game {
         switch (this.menuActive) {
             case false:
                 this.menuActive = true;
-                this.pauseMenu.visible = true;
+                this.pauseMenu = new Menu(this, this.loader.resources["menuBackgroundTexture"].texture!, this.uiTextures)
+                this.pixi.stage.addChild(this.pauseMenu)
                 for (let object of this.objects) {
                     object.visible = false;
                 }
                 break;
             case true:
                 this.menuActive = false;
-                this.pauseMenu.visible = false;
+                this.pauseMenu.destroy()
                 for (let object of this.objects) {
                     object.visible = true
                 }

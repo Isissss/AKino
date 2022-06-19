@@ -46,7 +46,7 @@ export class Player extends PIXI.Sprite {
     }
 
     if (this.health < 1) {
-      //this.game.endGame()
+      this.game.endGame(3)
     }
   }
   // Set counter to 0 for cooldown,
