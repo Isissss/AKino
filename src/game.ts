@@ -1,26 +1,24 @@
 import * as PIXI from 'pixi.js'
-import { Shark } from "./Shark"
+import { Player } from "./Player"
 import sharkImage from "./images/dino.png"
-import bubbleImage from "./images/bubble.png"
+import bubbleImage from "./images/building.png"
 import waterImage from "./images/water.jpg"
-import smokeImage from "./images/smog.png"
+import smokeImage from "./images/building.png"
 import fishImage from "./images/fish.png"
 import { Smog } from './Smog'
 import { Graphics } from 'pixi.js'
 import { Spawn } from './Spawn'
-import { Object } from './Object'
+import { Building } from './Building'
+import Matter from 'matter-js'
 
 export class Game {
     pixi: PIXI.Application
     loader: PIXI.Loader
-    shark: Shark
-    smog: Smog
+    shark: Player
+    engine: Matter.Engine
     graphics: Graphics
-    spawner: Spawn
-    objects : Object[] = []
-    score: number = 0
-    basicText: PIXI.Text;
-    textStyle: PIXI.TextStyle;
+    building: Building
+
 
     constructor() {
         this.pixi = new PIXI.Application({ width: window.innerWidth - 5, height: window.innerHeight - 5, backgroundColor: 0xAAAAA })
@@ -32,64 +30,25 @@ export class Game {
             .add('bubbleTexture', bubbleImage)
             .add('waterTexture', waterImage)
         this.loader.load(() => this.loadCompleted())
+
+        this.engine = Matter.Engine.create()
+
     }
 
     loadCompleted() {
-        this.shark = new Shark(this.loader.resources["sharkTexture"].texture!)
-        this.smog = new Smog(this.shark, window.innerWidth)
-        this.spawner = new Spawn(100, 100, (3 * 60), this.loader.resources["fishTexture"].texture!, this)
-        this.pixi.stage.addChild(this.smog)
-        this.pixi.stage.addChild(this.spawner)
+        this.shark = new Player(this.loader.resources["sharkTexture"].texture!, this)
         this.pixi.stage.addChild(this.shark)
-        this.pixi.ticker.add((delta) => this.update())
 
-        this.textStyle = new PIXI.TextStyle({
-            fontSize: 31,
-            fontWeight: "bold",
-            trim: false
-        });
+        this.building = new Building(this.loader.resources["bubbleTexture"].texture!, 300, 500, this)
+        this.pixi.stage.addChild(this.building)
+        this.pixi.ticker.add(() => this.update(1000 / 60))
 
-        this.basicText = new PIXI.Text(`Score ${this.score}`, this.textStyle);
-        this.basicText.x = 100
-        this.basicText.y = 100
-
-        this.pixi.stage.addChild(this.basicText)
-
+        this.engine.gravity.y = 0
     }
-    update() {
-        this.spawner.update()
-        this.shark.update()
-        this.smog.update()
-        for (let i = 0; i < this.objects.length; i++) {
-            if (this.collision(this.shark, this.objects[i])) {
+    update(delta: number) {
+        Matter.Engine.update(this.engine, 1000 / 60)
+        this.shark.update(delta)
 
-                this.score++;
-    
-                this.basicText.text = `Score ${this.score}`
-    
-                console.log("player touches object")
-    
-    
-                this.objects[i].destroy();
-                this.objects.splice(i, 1)
-    
-            }  
-        }
-    }
-
-    public spawnObject(object: Object) {
-        this.pixi.stage.addChild(object)
-        this.objects.push(object)
-    }
-
-    collision(sprite1: PIXI.Sprite, sprite2: PIXI.Sprite) {
-        const bounds1 = sprite1.getBounds()
-        const bounds2 = sprite2.getBounds()
-
-        return bounds1.x < bounds2.x + bounds2.width
-            && bounds1.x + bounds1.width > bounds2.x
-            && bounds1.y < bounds2.y + bounds2.height
-            && bounds1.y + bounds1.height > bounds2.y;
     }
 }
 
