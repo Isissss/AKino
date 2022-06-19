@@ -144,20 +144,12 @@ export class Game {
 
         //background
         let background = new PIXI.Sprite(this.loader.resources["cityTexture"].texture!)
-        background.scale.set(2)
-        
+        background.scale.set(2)        
 
         //city
         let city = new PIXI.Sprite(this.loader.resources["cityTexture"].texture!)
         city.anchor.set(0, 0)
         city.scale.set(3, 2.69)
-
-        //traits
-        //this.player = new Player(this, this.loader.resources["sharkTexture"].texture!)
-        //this.smog = new Smog(this.player, window.innerWidth)
-        //this.spawner = new Spawn(100, 100, (3 * 60), this.loader.resources["fishTexture"].texture!, this)
-        
-        //this.pixi.stage.addChild(this.spawner)
 
         //cars
         this.car = new Car(this.loader.resources["carTexture"].texture!, false, 1200, 625)
@@ -189,7 +181,7 @@ export class Game {
             trim: false
         });
 
-        // ui and menu
+        // ui
         this.ui = new UI(this, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["HPDbackgroundTexture"].texture!) // (game, pausebutton texture, heart texture, background texture)
 
         //basictext?
@@ -212,10 +204,10 @@ export class Game {
         this.pixi.stage.addChild(this.basicText)
 
         //create Start Screen
-         this.startscreen = new StartScreen(this,this.loader.resources["cityTexture"].texture! ,this.loader.resources["menuBackgroundTexture"].texture!, this.uiTextures)
-         this.pixi.stage.addChild(this.startscreen)
-         this.menuActive = true;
-         this.ui.visible= false;
+        this.startscreen = new StartScreen(this,this.loader.resources["cityTexture"].texture! ,this.loader.resources["menuBackgroundTexture"].texture!, this.uiTextures)
+        this.pixi.stage.addChild(this.startscreen)
+        this.menuActive = true;
+        this.ui.visible= false;
 
 
 
@@ -263,7 +255,7 @@ export class Game {
         
                             this.score++;
                             this.smog.reset()
-                            if(this.score >= 2){
+                            if(this.score >= 20){
                                 this.endGame(2)
                             }
         
@@ -340,6 +332,8 @@ export class Game {
             case false:
                 this.menuActive = true;
                 this.pauseMenu = new Menu(this, this.loader.resources["menuBackgroundTexture"].texture!, this.uiTextures)
+                this.pauseMenu.y = this.map.borderVertical // QUICK FIX ;; DIRTY
+                this.pauseMenu.x = this.map.borderHorizontal // QUICK FIX ;; DIRTY
                 this.pixi.stage.addChild(this.pauseMenu)
                 for (let object of this.objects) {
                     object.visible = false;
