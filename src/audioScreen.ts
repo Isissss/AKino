@@ -7,8 +7,8 @@ export class audioScreen extends PIXI.Sprite {
     super(texture)
     this.interactive = true
     this.buttonMode = true
-    this.x = window.innerWidth
-    this.y = window.innerHeight
+    this.x = 0
+    this.y = 0
     this.sound = sound
     this.on("pointerdown", () => this.clicked())
   }
