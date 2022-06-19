@@ -106,7 +106,6 @@ export class Game {
     loadCompleted() {
 
         this.audioScreen = new audioScreen(this.loader.resources["audioScreenTexture"].texture!, this.loader.resources["backgroundMusicFile"].data!)
-        // let pickUpSound = this.loader.resources["pickupSound"].data! 
         let bgMusic = this.loader.resources["backgroundMusicFile"].data!
         bgMusic.play()
 
