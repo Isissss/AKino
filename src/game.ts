@@ -1,4 +1,17 @@
 import * as PIXI from 'pixi.js'
+import { Player } from "./Player"
+import { Smog } from './Smog'
+import { Graphics, Spritesheet, TilingSprite } from 'pixi.js'
+import { Spawn } from './Spawn'
+import Matter from 'matter-js'
+import { Object } from './Object'
+import { Building } from './Building'
+import { Car } from './Car'
+import { Weather } from "./Weather"
+import { Leaf } from './Leaf'
+import { UI } from './UI'
+import { Menu } from './Menu'
+import { Map } from "./Map"
 
 import sharkImage from "./images/dino.png"
 import bubbleImage from "./images/bubble.png"
@@ -21,19 +34,6 @@ import uiElement0Image from "./images/YellowUI0.png" // cant get spritesheets to
 import uiElement1Image from "./images/YellowUI1.png" // cant get spritesheets to work
 import uiElement2Image from "./images/YellowUI2.png" // cant get spritesheets to work
 import uiElement3Image from "./images/YellowUI3.png" // cant get spritesheets to work
-
-import { Player } from "./Player"
-import { Smog } from './Smog'
-import { Graphics, Spritesheet, TilingSprite } from 'pixi.js'
-import { Spawn } from './Spawn'
-import { Object } from './Object'
-import { Building } from './Building'
-import { Car } from './Car'
-import { Weather } from "./Weather"
-import { Leaf } from './Leaf'
-import { UI } from './UI'
-import { Menu } from './Menu'
-import { Map } from "./Map"
 
 export class Game {
     pixi: PIXI.Application
@@ -63,6 +63,8 @@ export class Game {
     soundFX: number = 50 // temp placeholder for volume Sound Effects => number
     bgMusic: number = 50 // temp placeholder for volume Background Music => number
     fontSize: number = 20 // placeholder for fontsize => number
+    engine: Matter.Engine
+    building: Building
 
     constructor() {
         this.pixi = new PIXI.Application({ width: window.innerWidth - 5, height: window.innerHeight - 5, backgroundColor: 0xAAAAA })
@@ -91,6 +93,9 @@ export class Game {
             .add('uiElement2', uiElement2Image) // cant get spritesheets to work
             .add('uiElement3', uiElement3Image) // cant get spritesheets to work
         this.loader.load(() => this.loadCompleted())
+
+        this.engine = Matter.Engine.create()
+
     }
 
     loadCompleted() {
@@ -102,11 +107,11 @@ export class Game {
             this.loader.resources["uiElement3"].texture!
         ]
 
-        this.player = new Player(this, this.loader.resources["sharkTexture"].texture!)
+        this.player = new Player(this.loader.resources["sharkTexture"].texture!, this)
         this.smog = new Smog(this.player, window.innerWidth)
         this.spawner = new Spawn(100, 100, (3 * 60), this.loader.resources["fishTexture"].texture!, this)
 
-        //map        
+        //map
         this.map = new Map(this, this.player)
         this.pixi.stage.x = this.pixi.screen.width / 2;
         this.pixi.stage.y = this.pixi.screen.height / 2;
@@ -114,7 +119,7 @@ export class Game {
         //background
         let background = new PIXI.Sprite(this.loader.resources["cityTexture"].texture!)
         background.scale.set(2)
-        
+
 
         //city
         let city = new PIXI.Sprite(this.loader.resources["cityTexture"].texture!)
@@ -125,7 +130,7 @@ export class Game {
         //this.player = new Player(this, this.loader.resources["sharkTexture"].texture!)
         //this.smog = new Smog(this.player, window.innerWidth)
         //this.spawner = new Spawn(100, 100, (3 * 60), this.loader.resources["fishTexture"].texture!, this)
-        
+
         //this.pixi.stage.addChild(this.spawner)
 
         //cars
@@ -137,10 +142,10 @@ export class Game {
 
         //buildings
         for (let i = 0; i < 5; i++) {
-            let building = new Building(100 + (i * 100), 200, this.loader.resources["buildingTexture1"].texture!, this.loader.resources["buildingTexture2"].texture!, this.loader.resources["buildingTexture3"].texture!)
+            let building = new Building(100 + (i * 100), 200, this.loader.resources["buildingTexture1"].texture!, this.loader.resources["buildingTexture2"].texture!, this.loader.resources["buildingTexture3"].texture!, this)
             this.buildings.push(building)
 
-            let buildingB = new Building(100 + (i * 100), 250, this.loader.resources["buildingB1"].texture!, this.loader.resources["buildingB2"].texture!, this.loader.resources["buildingB3"].texture!)
+            let buildingB = new Building(100 + (i * 100), 250, this.loader.resources["buildingB1"].texture!, this.loader.resources["buildingB2"].texture!, this.loader.resources["buildingB3"].texture!, this)
             this.buildings.push(buildingB)
         }
         this.weather = new Weather(this.player, 1000, this)
@@ -157,6 +162,9 @@ export class Game {
             fontWeight: "bold",
             trim: false
         });
+
+        this.engine.gravity.y = 0
+        this.pixi.ticker.add(() => this.update(1000 / 60))
 
         // ui and menu
         this.ui = new UI(this, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["HPDbackgroundTexture"].texture!) // (game, pausebutton texture, heart texture, background texture)
@@ -179,7 +187,7 @@ export class Game {
         for(const leaf of this.leafs){
             this.pixi.stage.addChild(leaf)
         }
-        this.pixi.stage.addChild(this.smog, this.ui, this.pauseMenu)        
+        this.pixi.stage.addChild(this.smog, this.ui, this.pauseMenu)
         this.pixi.stage.addChild(this.basicText)
 
 
@@ -190,7 +198,10 @@ export class Game {
 
     }
 
-    update(delta: number) {
+    private update(delta: number) {
+        Matter.Engine.update(this.engine, 1000 / 60)
+        this.player.update(delta)
+
         if (!this.menuActive) { // pixi.stop() might be a better idea
             this.spawner.update()
             this.player.update(delta)
@@ -236,8 +247,7 @@ export class Game {
                 }
             }
             this.ui.healthDisplay.update()
-        }
-    }
+        }}
     // else {
     //     this.pixi.stop() // needs a way to start pixi again though
     // }
@@ -253,6 +263,7 @@ export class Game {
         console.log("game over!")
         this.pixi.stop();
     }
+
 
     public spawnObject(object: Object) {
         this.pixi.stage.addChild(object)
@@ -295,3 +306,4 @@ export class Game {
 }
 
 let g = new Game
+

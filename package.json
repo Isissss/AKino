@@ -10,7 +10,9 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "pixi.js": "^6.3.2"
+        "@types/matter-js": "^0.17.7",
+        "matter-js": "^0.18.0",
+        "pixi.js": "^6.4.2"
     },
     "devDependencies": {
         "parcel": "^2.4.0",
