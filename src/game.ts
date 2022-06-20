@@ -31,6 +31,10 @@ import uiElement9Image from "./images/GreenUI2.png" // cant get spritesheets to 
 import uiElement10Image from "./images/RedUI0.png" // cant get spritesheets to work
 import uiElement11Image from "./images/RedUI1.png" // cant get spritesheets to work
 import uiElement12Image from "./images/RedUI2.png" // cant get spritesheets to work
+import audioScreenImage from "./images/audioscreen.png"
+
+import backgroundMusic from "url:./sound/relaxing.mp3"
+import pickUpSound from "url:./sound/pickupsound.mp3"
 
 import { Player } from "./Player"
 import { Smog } from './Smog'
@@ -77,6 +81,8 @@ export class Game {
     soundFX: number = 50 // temp placeholder for volume Sound Effects => number
     bgMusic: number = 50 // temp placeholder for volume Background Music => number
     fontSize: number = 20 // placeholder for fontsize => number
+    audioScreen: audioScreen
+    pickUpSound: HTMLAudioElement
     engine: Matter.Engine
     building: Building
 
@@ -115,6 +121,9 @@ export class Game {
             .add('uiElement10', uiElement10Image) // cant get spritesheets to work
             .add('uiElement11', uiElement11Image) // cant get spritesheets to work
             .add('uiElement12', uiElement12Image) // cant get spritesheets to work
+            .add('audioScreenTexture', audioScreenImage)
+            .add("backgroundMusicFile", backgroundMusic)
+            .add("pickupsoundFile", pickUpSound)
         this.loader.load(() => this.loadCompleted())
 
         this.engine = Matter.Engine.create()
@@ -122,6 +131,11 @@ export class Game {
     }
 
     loadCompleted() {
+
+        this.audioScreen = new audioScreen(this.loader.resources["audioScreenTexture"].texture!, this.loader.resources["backgroundMusicFile"].data!)
+        let bgMusic = this.loader.resources["backgroundMusicFile"].data!
+        bgMusic.play()
+
         //packing UI textures into array
         this.uiTextures = [
             this.loader.resources["uiElement0"].texture!,
@@ -151,6 +165,7 @@ export class Game {
         //background
         let background = new PIXI.Sprite(this.loader.resources["cityTexture"].texture!)
         background.scale.set(2)
+
 
         //city
         let city = new PIXI.Sprite(this.loader.resources["cityTexture"].texture!)
@@ -191,7 +206,6 @@ export class Game {
         this.pixi.ticker.add(() => this.update(1000 / 60))
 
         // ui and menu
-        // ui
         this.ui = new UI(this, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["HPDbackgroundTexture"].texture!) // (game, pausebutton texture, heart texture, background texture)
 
         //basictext?
@@ -201,13 +215,13 @@ export class Game {
 
         // stage adding TEMP
         this.pixi.stage.addChild(background, this.player)
-        for(const car of this.cars){
+        for (const car of this.cars) {
             this.pixi.stage.addChild(car)
         }
-        for(const building of this.buildings){
+        for (const building of this.buildings) {
             this.pixi.stage.addChild(building)
         }
-        for(const leaf of this.leafs){
+        for (const leaf of this.leafs) {
             this.pixi.stage.addChild(leaf)
         }
 
@@ -222,6 +236,7 @@ export class Game {
 
 
 
+        this.pixi.stage.addChild(this.audioScreen)
 
 
         this.pixi.ticker.add((delta) => this.update(delta))
