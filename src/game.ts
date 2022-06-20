@@ -81,7 +81,6 @@ export class Game {
     soundFX: number = 50 // temp placeholder for volume Sound Effects => number
     bgMusic: number = 50 // temp placeholder for volume Background Music => number
     fontSize: number = 20 // placeholder for fontsize => number
-    audioScreen: audioScreen
     pickUpSound: HTMLAudioElement
     engine: Matter.Engine
     building: Building
@@ -132,7 +131,6 @@ export class Game {
 
     loadCompleted() {
 
-        this.audioScreen = new audioScreen(this.loader.resources["audioScreenTexture"].texture!, this.loader.resources["backgroundMusicFile"].data!)
         let bgMusic = this.loader.resources["backgroundMusicFile"].data!
         bgMusic.play()
 
@@ -233,10 +231,6 @@ export class Game {
         this.pixi.stage.addChild(this.startscreen)
         this.menuActive = true;
         this.ui.visible= false;
-
-
-
-        this.pixi.stage.addChild(this.audioScreen)
 
 
         this.pixi.ticker.add((delta) => this.update(delta))
