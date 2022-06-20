@@ -3,7 +3,7 @@ import { BookPage } from './BookPage'
 import { Game } from './game'
 import { Slider } from './Slider'
 
-export class SettingsPage extends BookPage {
+export class QuestlogPage extends BookPage {
 
     name: string
     SoundFXSlider: Slider

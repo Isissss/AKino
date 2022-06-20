@@ -4,12 +4,12 @@ import { Game } from './game';
 import { Slider } from './Slider';
 
 export class PlusButton extends Button {
-    
+
     parent: Slider
     increments: number
 
-    constructor(game: Game, parent: Slider, increments: number, texture:PIXI.Texture){
-        super(game, texture)
+    constructor(game: Game, parent: Slider, increments: number, texture: PIXI.Texture) {
+        super(game, [texture])
         this.parent = parent
         this.increments = increments
     }

@@ -4,15 +4,15 @@ import * as PIXI from "pixi.js"
 
 
 export class Player extends PIXI.Sprite {
-    rigidBody: Matter.Body
-    xspeed = 0
-    yspeed = 0
+    private rigidBody: Matter.Body
+    private xspeed = 0
+    private yspeed = 0
     public xweather = 0
     public yweather = 0
-    counter: number
-    hit: boolean = false
-    health: number = 3
-    game: Game
+    private counter: number
+    public hit: boolean = false
+    public health: number = 3
+    private game: Game
 
 
     constructor(texture: PIXI.Texture, game: Game) {

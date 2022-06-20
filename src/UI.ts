@@ -24,7 +24,7 @@ export class UI extends PIXI.Container {
         // debug
         //console.log("UI Added")
         // add a pausebutton
-        this.pauseButton = new Button(this.game, pauseButtonTexture, 0, 0)
+        this.pauseButton = new Button(this.game,[pauseButtonTexture], 0, 0)
         this.healthDisplay = new HPDisplay(this.game, heartTexture, window.innerWidth, 0)
         this.healthBackground = new PIXI.Sprite(backgroundTexture)
         this.healthBackground.anchor.set(1,0)

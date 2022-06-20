@@ -1,17 +1,5 @@
 import * as PIXI from 'pixi.js'
-import { Player } from "./Player"
-import { Smog } from './Smog'
-import { Graphics, Spritesheet, TilingSprite } from 'pixi.js'
-import { Spawn } from './Spawn'
 import Matter from 'matter-js'
-import { Object } from './Object'
-import { Building } from './Building'
-import { Car } from './Car'
-import { Weather } from "./Weather"
-import { Leaf } from './Leaf'
-import { UI } from './UI'
-import { Menu } from './Menu'
-import { Map } from "./Map"
 
 import sharkImage from "./images/dino.png"
 import bubbleImage from "./images/bubble.png"
@@ -34,6 +22,29 @@ import uiElement0Image from "./images/YellowUI0.png" // cant get spritesheets to
 import uiElement1Image from "./images/YellowUI1.png" // cant get spritesheets to work
 import uiElement2Image from "./images/YellowUI2.png" // cant get spritesheets to work
 import uiElement3Image from "./images/YellowUI3.png" // cant get spritesheets to work
+import uiElement4Image from "./images/YellowUI4.png" // cant get spritesheets to work
+import uiElement5Image from "./images/YellowUI5.png" // cant get spritesheets to work
+import uiElement6Image from "./images/YellowUI6.png" // cant get spritesheets to work
+import uiElement7Image from "./images/GreenUI0.png" // cant get spritesheets to work
+import uiElement8Image from "./images/GreenUI1.png" // cant get spritesheets to work
+import uiElement9Image from "./images/GreenUI2.png" // cant get spritesheets to work
+import uiElement10Image from "./images/RedUI0.png" // cant get spritesheets to work
+import uiElement11Image from "./images/RedUI1.png" // cant get spritesheets to work
+import uiElement12Image from "./images/RedUI2.png" // cant get spritesheets to work
+
+import { Player } from "./Player"
+import { Smog } from './Smog'
+import { Graphics, Spritesheet, TilingSprite } from 'pixi.js'
+import { Spawn } from './Spawn'
+import { Object } from './Object'
+import { Building } from './Building'
+import { Car } from './Car'
+import { Weather } from "./Weather"
+import { Leaf } from './Leaf'
+import { UI } from './UI'
+import { Menu } from './Menu'
+import { Map } from "./Map"
+import { StartScreen } from './StartScreen'
 
 export class Game {
     pixi: PIXI.Application
@@ -47,7 +58,10 @@ export class Game {
     cars: Car[] = []
     uiTextures: PIXI.Texture[] = []
     ui: UI // UI container class
-    pauseMenu: Menu; // container class for the menu
+    startscreen: StartScreen; // container class for the startscreen
+    pauseMenu: Menu; // container class for the in-game menu
+    states: number[] = [0,1,2,3]// startscreen, in-game, endscreen, game over state
+    private _state: number = 0
     menuActive: boolean = false; // variable to check if updates need to be run
     score: number = 0
     car: Car
@@ -92,6 +106,15 @@ export class Game {
             .add('uiElement1', uiElement1Image) // cant get spritesheets to work
             .add('uiElement2', uiElement2Image) // cant get spritesheets to work
             .add('uiElement3', uiElement3Image) // cant get spritesheets to work
+            .add('uiElement4', uiElement4Image) // cant get spritesheets to work
+            .add('uiElement5', uiElement5Image) // cant get spritesheets to work
+            .add('uiElement6', uiElement6Image) // cant get spritesheets to work
+            .add('uiElement7', uiElement7Image) // cant get spritesheets to work
+            .add('uiElement8', uiElement8Image) // cant get spritesheets to work
+            .add('uiElement9', uiElement9Image) // cant get spritesheets to work
+            .add('uiElement10', uiElement10Image) // cant get spritesheets to work
+            .add('uiElement11', uiElement11Image) // cant get spritesheets to work
+            .add('uiElement12', uiElement12Image) // cant get spritesheets to work
         this.loader.load(() => this.loadCompleted())
 
         this.engine = Matter.Engine.create()
@@ -104,14 +127,23 @@ export class Game {
             this.loader.resources["uiElement0"].texture!,
             this.loader.resources["uiElement1"].texture!,
             this.loader.resources["uiElement2"].texture!,
-            this.loader.resources["uiElement3"].texture!
+            this.loader.resources["uiElement3"].texture!,
+            this.loader.resources["uiElement4"].texture!,
+            this.loader.resources["uiElement5"].texture!,
+            this.loader.resources["uiElement6"].texture!,
+            this.loader.resources["uiElement7"].texture!,
+            this.loader.resources["uiElement8"].texture!,
+            this.loader.resources["uiElement9"].texture!,
+            this.loader.resources["uiElement10"].texture!,
+            this.loader.resources["uiElement11"].texture!,
+            this.loader.resources["uiElement12"].texture!
         ]
 
         this.player = new Player(this.loader.resources["sharkTexture"].texture!, this)
         this.smog = new Smog(this.player, window.innerWidth)
         this.spawner = new Spawn(100, 100, (3 * 60), this.loader.resources["fishTexture"].texture!, this)
 
-        //map
+        //map        
         this.map = new Map(this, this.player)
         this.pixi.stage.x = this.pixi.screen.width / 2;
         this.pixi.stage.y = this.pixi.screen.height / 2;
@@ -120,18 +152,10 @@ export class Game {
         let background = new PIXI.Sprite(this.loader.resources["cityTexture"].texture!)
         background.scale.set(2)
 
-
         //city
         let city = new PIXI.Sprite(this.loader.resources["cityTexture"].texture!)
         city.anchor.set(0, 0)
         city.scale.set(3, 2.69)
-
-        //traits
-        //this.player = new Player(this, this.loader.resources["sharkTexture"].texture!)
-        //this.smog = new Smog(this.player, window.innerWidth)
-        //this.spawner = new Spawn(100, 100, (3 * 60), this.loader.resources["fishTexture"].texture!, this)
-
-        //this.pixi.stage.addChild(this.spawner)
 
         //cars
         this.car = new Car(this.loader.resources["carTexture"].texture!, false, 1200, 625)
@@ -167,9 +191,8 @@ export class Game {
         this.pixi.ticker.add(() => this.update(1000 / 60))
 
         // ui and menu
+        // ui
         this.ui = new UI(this, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["HPDbackgroundTexture"].texture!) // (game, pausebutton texture, heart texture, background texture)
-        this.pauseMenu = new Menu(this, this.loader.resources["menuBackgroundTexture"].texture!, this.uiTextures)
-        this.pauseMenu.visible = false;
 
         //basictext?
         this.basicText = new PIXI.Text(`Score ${this.score}`, this.textStyle);
@@ -187,8 +210,15 @@ export class Game {
         for(const leaf of this.leafs){
             this.pixi.stage.addChild(leaf)
         }
-        this.pixi.stage.addChild(this.smog, this.ui, this.pauseMenu)
+
+        this.pixi.stage.addChild(this.smog, this.ui)
         this.pixi.stage.addChild(this.basicText)
+
+        //create Start Screen
+        this.startscreen = new StartScreen(this,this.loader.resources["cityTexture"].texture! ,this.loader.resources["menuBackgroundTexture"].texture!, this.uiTextures)
+        this.pixi.stage.addChild(this.startscreen)
+        this.menuActive = true;
+        this.ui.visible= false;
 
 
 
@@ -229,7 +259,71 @@ export class Game {
             for (let car of this.cars) {
                 car.update(delta)
             }
+            switch (this.state) {
+                case 0:
+                    break;
+                case 1:
+                    if (!this.menuActive) { // pixi.stop() might be a better idea
+                        this.spawner.update()
+                        this.player.update(delta)
+                        this.smog.update()
+                        this.weather.update()
+                        this.map.update()
+                        for (let i = 0; i < this.leafs.length; i++) {
+                            this.leafs[i].update()
 
+                        }
+
+                        for (let building of this.buildings) {
+                            building.update(this.score)
+                        }
+
+                        for (let i = 0; i < this.cars.length; i++) {
+                            if (this.collision(this.player, this.cars[i]) && !this.player.hit) {
+                                //console.log("player touches object")
+                                this.player.hitcar()
+
+                            }
+
+                        }
+                        this.player.update(delta)
+                        for (let car of this.cars) {
+                            car.update(delta)
+                        }
+
+                        for (let i = 0; i < this.objects.length; i++) {
+                            if (this.collision(this.player, this.objects[i])) {
+
+                                this.score++;
+                                this.smog.reset()
+                                if(this.score >= 20){
+                                    this.endGame(2)
+                                }
+
+                                this.basicText.text = `Score ${this.score}`
+
+                                //console.log("player touches object")
+
+
+                                this.objects[i].destroy();
+                                this.objects.splice(i, 1)
+
+                            }
+                        }
+                        this.ui.healthDisplay.update()
+                    }
+                    break;
+                case 2:
+                    this.ui.visible = false
+                    this.togglePauseMenu()
+                    this.pixi.stop()
+                    break;
+                case 3:
+                    this.ui.visible = false
+                    this.togglePauseMenu()
+                    this.pixi.stop()
+                    break;
+            }
             for (let i = 0; i < this.objects.length; i++) {
                 if (this.collision(this.player, this.objects[i])) {
 
@@ -253,15 +347,30 @@ export class Game {
     // }
 
 
-    updateWeather(x: number, y: number) {
+    public get state() : number {
+        return this._state;
+    }
+
+    public set state(v : number) {
+        if( v >= 0 && v < this.states.length){
+        this._state = v;
+        } else {
+            console.log(`Can't set state with value: ${v}`)
+        }
+    }
+
+
+
+    public updateWeather(x: number, y: number) {
         for (let i = 0; i < this.leafs.length; i++) {
             this.leafs[i].changeWeather(x, y)
         }
     }
 
-    public endGame() {
-        console.log("game over!")
-        this.pixi.stop();
+    public endGame(state:number) {
+        this.state = state
+        console.log(`game over reason: ${state}`)
+
     }
 
 
@@ -270,7 +379,7 @@ export class Game {
         this.objects.push(object)
     }
 
-    collision(sprite1: PIXI.Sprite, sprite2: PIXI.Sprite) {
+    private collision(sprite1: PIXI.Sprite, sprite2: PIXI.Sprite) {
         const bounds1 = sprite1.getBounds()
         const bounds2 = sprite2.getBounds()
 
@@ -284,14 +393,17 @@ export class Game {
         switch (this.menuActive) {
             case false:
                 this.menuActive = true;
-                this.pauseMenu.visible = true;
+                this.pauseMenu = new Menu(this, this.loader.resources["menuBackgroundTexture"].texture!, this.uiTextures)
+                this.pauseMenu.y = this.map.borderVertical // QUICK FIX ;; DIRTY
+                this.pauseMenu.x = this.map.borderHorizontal // QUICK FIX ;; DIRTY
+                this.pixi.stage.addChild(this.pauseMenu)
                 for (let object of this.objects) {
                     object.visible = false;
                 }
                 break;
             case true:
                 this.menuActive = false;
-                this.pauseMenu.visible = false;
+                this.pauseMenu.destroy()
                 for (let object of this.objects) {
                     object.visible = true
                 }
