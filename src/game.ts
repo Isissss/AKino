@@ -217,11 +217,11 @@ export class Game {
 
     }
 
-    update(delta: number) {
+    private update(delta: number) {
         switch (this.state) {
-            case 0:
+            case 0: // startscreen
                 break;
-            case 1:
+            case 1: // ingame
                 if (!this.menuActive) { // pixi.stop() might be a better idea
                     this.spawner.update()
                     this.player.update(delta)
@@ -272,12 +272,12 @@ export class Game {
                     this.ui.healthDisplay.update()
                 }
                 break;
-                case 2:
+                case 2: // Finsihed Game
                     this.ui.visible = false
                     this.togglePauseMenu()
                     this.pixi.stop()
                     break;
-                case 3:
+                case 3: // Game Over
                     this.ui.visible = false
                     this.togglePauseMenu()
                     this.pixi.stop()
