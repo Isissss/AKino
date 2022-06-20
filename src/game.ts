@@ -238,36 +238,6 @@ export class Game {
     }
 
     private update(delta: number) {
-        Matter.Engine.update(this.engine, 1000 / 60)
-        this.player.update(delta)
-
-        if (!this.menuActive) { // pixi.stop() might be a better idea
-            this.spawner.update()
-            this.player.update(delta)
-            this.smog.update()
-            this.weather.update()
-            this.map.update()
-            for (let i = 0; i < this.leafs.length; i++) {
-                this.leafs[i].update()
-
-            }
-
-            for (let building of this.buildings) {
-                building.update(this.score)
-            }
-
-            for (let i = 0; i < this.cars.length; i++) {
-                if (this.collision(this.player, this.cars[i]) && !this.player.hit) {
-                    //console.log("player touches object")
-                    this.player.hitcar()
-
-                }
-
-            }
-            this.player.update(delta)
-            for (let car of this.cars) {
-                car.update(delta)
-            }
             switch (this.state) {
                 case 0:
                     break;
@@ -276,6 +246,7 @@ export class Game {
                         this.spawner.update()
                         this.player.update(delta)
                         this.smog.update()
+                        Matter.Engine.update(this.engine, 1000 / 60)
                         this.weather.update()
                         this.map.update()
                         for (let i = 0; i < this.leafs.length; i++) {
@@ -291,7 +262,8 @@ export class Game {
                             if (this.collision(this.player, this.cars[i]) && !this.player.hit) {
                                 //console.log("player touches object")
                                 this.player.hitcar()
-
+                                let hitByCarSound = this.loader.resources["hitsoundFile"].data!
+                                hitByCarSound.play()
                             }
 
                         }
@@ -304,6 +276,7 @@ export class Game {
                             if (this.collision(this.player, this.objects[i])) {
 
                                 this.score++;
+                                this.objects[i].pickedUp()
                                 this.smog.reset()
                                 if(this.score >= 20){
                                     this.endGame(2)
@@ -333,24 +306,8 @@ export class Game {
                     this.pixi.stop()
                     break;
             }
-            for (let i = 0; i < this.objects.length; i++) {
-                if (this.collision(this.player, this.objects[i])) {
 
-                    this.score++;
-                    this.smog.reset()
-
-                    this.basicText.text = `Score ${this.score}`
-
-                    //console.log("player touches object")
-
-
-                    this.objects[i].destroy();
-                    this.objects.splice(i, 1)
-
-                }
-            }
-            this.ui.healthDisplay.update()
-        }}
+        }
     // else {
     //     this.pixi.stop() // needs a way to start pixi again though
     // }
