@@ -563,6 +563,8 @@ var _relaxingMp3 = require("url:./sound/relaxing.mp3");
 var _relaxingMp3Default = parcelHelpers.interopDefault(_relaxingMp3);
 var _pickupsoundMp3 = require("url:./sound/pickupsound.mp3");
 var _pickupsoundMp3Default = parcelHelpers.interopDefault(_pickupsoundMp3);
+var _hitSoundMp3 = require("url:./sound/hitSound.mp3");
+var _hitSoundMp3Default = parcelHelpers.interopDefault(_hitSoundMp3);
 var _player = require("./Player");
 var _smog = require("./Smog");
 var _spawn = require("./Spawn");
@@ -600,7 +602,7 @@ class Game {
         .add('uiElement1', _yellowUI1PngDefault.default) // cant get spritesheets to work
         .add('uiElement2', _yellowUI2PngDefault.default) // cant get spritesheets to work
         .add('uiElement3', _yellowUI3PngDefault.default) // cant get spritesheets to work
-        .add('audioScreenTexture', _audioscreenPngDefault.default).add("backgroundMusicFile", _relaxingMp3Default.default).add("pickupsoundFile", _pickupsoundMp3Default.default);
+        .add('audioScreenTexture', _audioscreenPngDefault.default).add("backgroundMusicFile", _relaxingMp3Default.default).add("pickupsoundFile", _pickupsoundMp3Default.default).add("hitsoundFile", _hitSoundMp3Default.default);
         this.loader.load(()=>this.loadCompleted()
         );
     }
@@ -690,8 +692,12 @@ class Game {
             this.map.update();
             for(let i = 0; i < this.leafs.length; i++)this.leafs[i].update();
             for (let building of this.buildings)building.update(this.score);
-            for(let i2 = 0; i2 < this.cars.length; i2++)if (this.collision(this.player, this.cars[i2]) && !this.player.hit) //console.log("player touches object")
-            this.player.hitcar();
+            for(let i2 = 0; i2 < this.cars.length; i2++)if (this.collision(this.player, this.cars[i2]) && !this.player.hit) {
+                //console.log("player touches object")
+                this.player.hitcar();
+                let hitByCar = this.loader.resources["hitsoundFile"].data;
+                hitByCar.cars[i2].play();
+            }
             this.player.update(delta);
             for (let car of this.cars)car.update(delta);
             for(let i3 = 0; i3 < this.objects.length; i3++)if (this.collision(this.player, this.objects[i3])) {
@@ -745,7 +751,7 @@ class Game {
 }
 let g = new Game;
 
-},{"pixi.js":"dsYej","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./images/fish.png":"3tLwD","./Smog":"608Py","./Spawn":"6JGD8","./images/dino.png":"c8KfO","./images/city.png":"a2rT6","./images/leaf.png":"5tsPY","./images/buildingTexture1.png":"2g5jb","./images/buildingTexture2.png":"liaFA","./images/buildingTexture3.png":"gm23O","./images/buildingB1.png":"fkYnt","./images/buildingB2.png":"1yWjs","./images/buildingB3.png":"kzHCU","./images/car.png":"dnXSN","./images/tile.png":"dvchs","./images/menuBackground.png":"hVtuo","./images/YellowUI0.png":"dwRmK","./images/YellowUI1.png":"d9mKy","./images/YellowUI2.png":"4bojR","./images/YellowUI3.png":"iiYKS","./Player":"8YLWx","./Building":"9ckPp","./Car":"d9weU","./Weather":"aPu1W","./Leaf":"cwtVd","./Map":"5vXJ1","./audioScreen":"jtcP6","./images/audioscreen.png":"d0MKD","url:./sound/relaxing.mp3":"i5zAd","url:./sound/pickupsound.mp3":"3qwyk","./UI":"ef7dT","./Menu":"gQYVh"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./images/fish.png":"3tLwD","./Smog":"608Py","./Spawn":"6JGD8","./images/dino.png":"c8KfO","./images/city.png":"a2rT6","./images/leaf.png":"5tsPY","./images/buildingTexture1.png":"2g5jb","./images/buildingTexture2.png":"liaFA","./images/buildingTexture3.png":"gm23O","./images/buildingB1.png":"fkYnt","./images/buildingB2.png":"1yWjs","./images/buildingB3.png":"kzHCU","./images/car.png":"dnXSN","./images/tile.png":"dvchs","./images/menuBackground.png":"hVtuo","./images/YellowUI0.png":"dwRmK","./images/YellowUI1.png":"d9mKy","./images/YellowUI2.png":"4bojR","./images/YellowUI3.png":"iiYKS","./Player":"8YLWx","./Building":"9ckPp","./Car":"d9weU","./Weather":"aPu1W","./Leaf":"cwtVd","./Map":"5vXJ1","./audioScreen":"jtcP6","./images/audioscreen.png":"d0MKD","url:./sound/relaxing.mp3":"i5zAd","url:./sound/pickupsound.mp3":"3qwyk","./UI":"ef7dT","./Menu":"gQYVh","url:./sound/hitSound.mp3":"fk7E1"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -38052,6 +38058,9 @@ class PlusButton extends _button.Button {
     }
 }
 
-},{"./Button":"5X7GA","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
+},{"./Button":"5X7GA","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fk7E1":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "hitSound.2d960a24.mp3" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
 
 //# sourceMappingURL=index.901f85c2.js.map

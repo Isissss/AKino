@@ -25,6 +25,7 @@ import audioScreenImage from "./images/audioscreen.png"
 
 import backgroundMusic from "url:./sound/relaxing.mp3"
 import pickUpSound from "url:./sound/pickupsound.mp3"
+import hitSound from "url:./sound/hitSound.mp3"
 
 import { Player } from "./Player"
 import { Smog } from './Smog'
@@ -70,6 +71,7 @@ export class Game {
     fontSize: number = 20 // placeholder for fontsize => number
     audioScreen: audioScreen
     pickUpSound: HTMLAudioElement
+    hitSound: HTMLAudioElement
 
     constructor() {
         this.pixi = new PIXI.Application({ width: window.innerWidth - 5, height: window.innerHeight - 5, backgroundColor: 0xAAAAA })
@@ -100,6 +102,7 @@ export class Game {
             .add('audioScreenTexture', audioScreenImage)
             .add("backgroundMusicFile", backgroundMusic)
             .add("pickupsoundFile", pickUpSound)
+            .add("hitsoundFile", hitSound)
         this.loader.load(() => this.loadCompleted())
     }
 
@@ -223,9 +226,10 @@ export class Game {
 
             for (let i = 0; i < this.cars.length; i++) {
                 if (this.collision(this.player, this.cars[i]) && !this.player.hit) {
-                    //console.log("player touches object")
+                    // console.log("player touches object")
                     this.player.hitcar()
-
+                    let hitByCarSound = this.loader.resources["hitsoundFile"].data!
+                    hitByCarSound.play()
                 }
 
             }
