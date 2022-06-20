@@ -107,7 +107,9 @@ export class Game {
 
         this.audioScreen = new audioScreen(this.loader.resources["audioScreenTexture"].texture!, this.loader.resources["backgroundMusicFile"].data!)
         let bgMusic = this.loader.resources["backgroundMusicFile"].data!
-        bgMusic.play()
+        bgMusic.play({
+            volume: 0.3
+        })
 
         //packing UI textures into array
         this.uiTextures = [
@@ -223,7 +225,7 @@ export class Game {
                 if (this.collision(this.player, this.cars[i]) && !this.player.hit) {
                     //console.log("player touches object")
                     this.player.hitcar()
-        
+
                 }
 
             }
@@ -236,8 +238,9 @@ export class Game {
                 if (this.collision(this.player, this.objects[i])) {
 
                     this.score++;
+                    this.objects[i].pickedUp()
                     this.smog.reset()
-                    
+
 
                     this.basicText.text = `Score ${this.score}`
 

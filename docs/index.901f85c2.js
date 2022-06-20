@@ -606,9 +606,10 @@ class Game {
     }
     loadCompleted() {
         this.audioScreen = new _audioScreen.audioScreen(this.loader.resources["audioScreenTexture"].texture, this.loader.resources["backgroundMusicFile"].data);
-        // let pickUpSound = this.loader.resources["pickupSound"].data! 
         let bgMusic = this.loader.resources["backgroundMusicFile"].data;
-        bgMusic.play();
+        bgMusic.play({
+            volume: 0.3
+        });
         //packing UI textures into array
         this.uiTextures = [
             this.loader.resources["uiElement0"].texture,
@@ -695,6 +696,7 @@ class Game {
             for (let car of this.cars)car.update(delta);
             for(let i3 = 0; i3 < this.objects.length; i3++)if (this.collision(this.player, this.objects[i3])) {
                 this.score++;
+                this.objects[i3].pickedUp();
                 this.smog.reset();
                 this.basicText.text = `Score ${this.score}`;
                 //console.log("player touches object")
@@ -743,7 +745,7 @@ class Game {
 }
 let g = new Game;
 
-},{"pixi.js":"dsYej","./images/dino.png":"c8KfO","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","./images/city.png":"a2rT6","./images/fish.png":"3tLwD","./images/leaf.png":"5tsPY","./images/buildingTexture1.png":"2g5jb","./images/buildingTexture2.png":"liaFA","./images/buildingTexture3.png":"gm23O","./images/buildingB1.png":"fkYnt","./images/buildingB2.png":"1yWjs","./images/buildingB3.png":"kzHCU","./images/car.png":"dnXSN","./images/tile.png":"dvchs","./images/menuBackground.png":"hVtuo","./images/YellowUI0.png":"dwRmK","./images/YellowUI1.png":"d9mKy","./images/YellowUI2.png":"4bojR","./images/YellowUI3.png":"iiYKS","./images/audioscreen.png":"d0MKD","url:./sound/relaxing.mp3":"i5zAd","./Player":"8YLWx","./Smog":"608Py","./Spawn":"6JGD8","./Building":"9ckPp","./Car":"d9weU","./Weather":"aPu1W","./Leaf":"cwtVd","./UI":"ef7dT","./Menu":"gQYVh","./Map":"5vXJ1","./audioScreen":"jtcP6","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","url:./sound/pickupsound.mp3":"3qwyk"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./images/fish.png":"3tLwD","./Smog":"608Py","./Spawn":"6JGD8","./images/dino.png":"c8KfO","./images/city.png":"a2rT6","./images/leaf.png":"5tsPY","./images/buildingTexture1.png":"2g5jb","./images/buildingTexture2.png":"liaFA","./images/buildingTexture3.png":"gm23O","./images/buildingB1.png":"fkYnt","./images/buildingB2.png":"1yWjs","./images/buildingB3.png":"kzHCU","./images/car.png":"dnXSN","./images/tile.png":"dvchs","./images/menuBackground.png":"hVtuo","./images/YellowUI0.png":"dwRmK","./images/YellowUI1.png":"d9mKy","./images/YellowUI2.png":"4bojR","./images/YellowUI3.png":"iiYKS","./Player":"8YLWx","./Building":"9ckPp","./Car":"d9weU","./Weather":"aPu1W","./Leaf":"cwtVd","./Map":"5vXJ1","./audioScreen":"jtcP6","./images/audioscreen.png":"d0MKD","url:./sound/relaxing.mp3":"i5zAd","url:./sound/pickupsound.mp3":"3qwyk","./UI":"ef7dT","./Menu":"gQYVh"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37258,8 +37260,8 @@ function __extends(d, b) {
     return AnimatedSprite1;
 }(_sprite.Sprite);
 
-},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"c8KfO":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "dino.174d8237.png" + "?" + Date.now();
+},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iMP3P":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble.56ab0ad6.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
 "use strict";
@@ -37295,17 +37297,111 @@ exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
 
-},{}],"iMP3P":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble.56ab0ad6.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"jj9Eg":[function(require,module,exports) {
+},{}],"jj9Eg":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "water.59ff4e4f.jpg" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"a2rT6":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "city.b93e9858.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"3tLwD":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "fish.510b053c.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"608Py":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Smog", ()=>Smog
+);
+var _pixiJs = require("pixi.js");
+class Smog extends _pixiJs.Graphics {
+    constructor(player, radius){
+        super();
+        this.player = player;
+        this.originalRadius = radius;
+        this.radius = this.originalRadius;
+        //this.interactive = true
+        this.draw();
+    }
+    draw() {
+        this.beginFill(16777215);
+        this.alpha = 0.3;
+        this.drawCircle(this.player.x, this.player.y, this.radius);
+        this.endFill;
+    }
+    updatePos() {}
+    reset() {
+        this.radius = this.originalRadius;
+        this.clear();
+        this.draw();
+    }
+    update() {
+        if (this.radius >= 1) {
+            this.radius -= 1;
+            this.clear();
+            this.draw();
+        //console.log(`radius: ${this.radius}`)
+        } else //console.log(`radius is already 0`)
+        //console.log('resetting circle to 200 radius')
+        this.reset();
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6JGD8":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Spawn", ()=>Spawn
+);
+var _pixiJs = require("pixi.js");
+var _object = require("./Object");
+class Spawn extends _pixiJs.Sprite {
+    timer = 0;
+    constructor(x, y, delay, texture, game){
+        super();
+        this.game = game;
+        this.x = x;
+        this.y = y;
+        this.delay = delay;
+        this.objectTexture = texture;
+    }
+    update() {
+        this.timer += 1;
+        //console.log(this.timer)
+        if (this.timer > this.delay) {
+            let sprite = new _object.Object(this.objectTexture, this.game);
+            this.timer = 0;
+            this.game.spawnObject(sprite);
+        //console.log("hello")
+        }
+    }
+}
+
+},{"pixi.js":"dsYej","./Object":"fjBpM","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fjBpM":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Object", ()=>Object
+);
+var _pixiJs = require("pixi.js");
+class Object extends _pixiJs.Sprite {
+    constructor(texture, game){
+        super(texture);
+        this.game = game;
+        this.x = Math.random() * window.innerWidth - 5;
+        this.y = Math.random() * window.innerHeight - 5;
+        this.speed = 4;
+        this.anchor.set(0.5);
+        this.pickupSound = this.game.loader.resources["pickupsoundFile"].data;
+    }
+    update() {
+        this.x += this.speed;
+    }
+    pickedUp() {
+        this.pickupSound.pause();
+        this.pickupSound.play();
+        console.log("Pakt op");
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"c8KfO":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "dino.174d8237.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"a2rT6":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "city.b93e9858.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"5tsPY":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "leaf.e574830e.png" + "?" + Date.now();
@@ -37348,12 +37444,6 @@ module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "Yellow
 
 },{"./helpers/bundle-url":"lgJ39"}],"iiYKS":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "YellowUI3.86591660.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"d0MKD":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "audioscreen.52b36ab7.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"i5zAd":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "relaxing.6d6f3898.mp3" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"8YLWx":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -37443,98 +37533,6 @@ class Player extends _pixiJs.Sprite {
                 this.yspeed = 0;
                 break;
         }
-    }
-}
-
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"608Py":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Smog", ()=>Smog
-);
-var _pixiJs = require("pixi.js");
-class Smog extends _pixiJs.Graphics {
-    constructor(player, radius){
-        super();
-        this.player = player;
-        this.originalRadius = radius;
-        this.radius = this.originalRadius;
-        //this.interactive = true
-        this.draw();
-    }
-    draw() {
-        this.beginFill(16777215);
-        this.alpha = 0.3;
-        this.drawCircle(this.player.x, this.player.y, this.radius);
-        this.endFill;
-    }
-    updatePos() {}
-    reset() {
-        this.radius = this.originalRadius;
-        this.clear();
-        this.draw();
-    }
-    update() {
-        if (this.radius >= 1) {
-            this.radius -= 1;
-            this.clear();
-            this.draw();
-        //console.log(`radius: ${this.radius}`)
-        } else //console.log(`radius is already 0`)
-        //console.log('resetting circle to 200 radius')
-        this.reset();
-    }
-}
-
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6JGD8":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Spawn", ()=>Spawn
-);
-var _pixiJs = require("pixi.js");
-var _object = require("./Object");
-class Spawn extends _pixiJs.Sprite {
-    timer = 0;
-    constructor(x, y, delay, texture, game){
-        super();
-        this.game = game;
-        this.x = x;
-        this.y = y;
-        this.delay = delay;
-        this.objectTexture = texture;
-    }
-    update() {
-        this.timer += 1;
-        //console.log(this.timer)
-        if (this.timer > this.delay) {
-            let sprite = new _object.Object(this.objectTexture, this.game);
-            this.timer = 0;
-            this.game.spawnObject(sprite);
-        //console.log("hello")
-        }
-    }
-}
-
-},{"pixi.js":"dsYej","./Object":"fjBpM","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fjBpM":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Object", ()=>Object
-);
-var _pixiJs = require("pixi.js");
-class Object extends _pixiJs.Sprite {
-    constructor(texture, game){
-        super(texture);
-        this.game = game;
-        this.x = Math.random() * window.innerWidth - 5;
-        this.y = Math.random() * window.innerHeight - 5;
-        this.speed = 4;
-        this.anchor.set(0.5);
-        this.pickupSound = this.game.loader.resources["pickupsoundFile"].data;
-    }
-    update() {
-        this.x += this.speed;
-    }
-    pickedUp() {
-        this.pickupSound.play();
     }
 }
 
@@ -37708,7 +37706,99 @@ class Leaf extends _pixiJs.Sprite {
     }
 }
 
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ef7dT":[function(require,module,exports) {
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5vXJ1":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Map", ()=>Map
+);
+class Map {
+    constructor(game, player){
+        this.game = game;
+        this.player = player;
+        this.borderHorizontal = 0;
+        this.borderVertical = 0;
+    }
+    update() {
+        // check if the player has crossed the right border
+        if (this.player.x >= this.game.pixi.screen.width / 2 + this.borderHorizontal) {
+            // set the camera a screen away from its original position
+            this.game.pixi.stage.pivot.set(this.game.pixi.screen.width + this.borderHorizontal, this.game.pixi.stage.pivot.y);
+            // set the new border a full screen away
+            this.borderHorizontal += this.game.pixi.screen.width;
+            // Make the UI follow the camera
+            this.game.ui.x = -(this.game.pixi.screen.width / 2) + this.borderHorizontal;
+            // Make the Menu follow the camera
+            this.game.pauseMenu.x = this.borderHorizontal;
+        }
+        // check if the player has crossed the left border
+        if (this.player.x <= -(this.game.pixi.screen.width / 2) + this.borderHorizontal) {
+            // set the camera a screen away from its original position
+            this.game.pixi.stage.pivot.set(-this.game.pixi.screen.width + this.borderHorizontal, this.game.pixi.stage.pivot.y);
+            // set the new border a full screen away
+            this.borderHorizontal -= this.game.pixi.screen.width;
+            // Make the UI follow the camera
+            this.game.ui.x = -(this.game.pixi.screen.width / 2) + this.borderHorizontal;
+            // Make the Menu follow the camera
+            this.game.pauseMenu.x = this.borderHorizontal;
+        }
+        // check if the player has crossed the top border
+        if (this.player.y >= this.game.pixi.screen.height / 2 + this.borderVertical) {
+            // set the camera a screen away from its original position
+            this.game.pixi.stage.pivot.set(this.game.pixi.stage.pivot.x, this.game.pixi.screen.height + this.borderVertical);
+            // set the new border a full screen away
+            this.borderVertical += this.game.pixi.screen.height;
+            // Make the UI follow the camera
+            this.game.ui.y = -(this.game.pixi.screen.height / 2) + this.borderVertical;
+            // Make the Menu follow the camera
+            this.game.pauseMenu.y = this.borderVertical;
+        }
+        // check if the player has crossed the bottom border
+        if (this.player.y <= -(this.game.pixi.screen.height / 2) + this.borderVertical) {
+            // set the camera a screen away from its original position
+            this.game.pixi.stage.pivot.set(this.game.pixi.stage.pivot.x, -this.game.pixi.screen.height + this.borderVertical);
+            // set the new border a full screen away
+            this.borderVertical -= this.game.pixi.screen.height;
+            // Make the UI follow the camera
+            this.game.ui.y = -(this.game.pixi.screen.height / 2) + this.borderVertical;
+            // Make the Menu follow the camera
+            this.game.pauseMenu.y = this.borderVertical;
+        }
+    }
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jtcP6":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "audioScreen", ()=>audioScreen
+);
+var _pixiJs = require("pixi.js");
+class audioScreen extends _pixiJs.Sprite {
+    constructor(texture, sound){
+        super(texture);
+        this.interactive = true;
+        this.buttonMode = true;
+        this.x = 0;
+        this.y = 0;
+        this.sound = sound;
+        this.on("pointerdown", ()=>this.clicked()
+        );
+    }
+    clicked() {
+        this.sound.play();
+        this.destroy();
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"d0MKD":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "audioscreen.52b36ab7.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"i5zAd":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "relaxing.6d6f3898.mp3" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"3qwyk":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "pickupsound.9ec87b5e.mp3" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"ef7dT":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 // class to hold all UI elements that appear on screen.
@@ -37962,92 +38052,6 @@ class PlusButton extends _button.Button {
     }
 }
 
-},{"./Button":"5X7GA","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5vXJ1":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Map", ()=>Map
-);
-class Map {
-    constructor(game, player){
-        this.game = game;
-        this.player = player;
-        this.borderHorizontal = 0;
-        this.borderVertical = 0;
-    }
-    update() {
-        // check if the player has crossed the right border
-        if (this.player.x >= this.game.pixi.screen.width / 2 + this.borderHorizontal) {
-            // set the camera a screen away from its original position
-            this.game.pixi.stage.pivot.set(this.game.pixi.screen.width + this.borderHorizontal, this.game.pixi.stage.pivot.y);
-            // set the new border a full screen away
-            this.borderHorizontal += this.game.pixi.screen.width;
-            // Make the UI follow the camera
-            this.game.ui.x = -(this.game.pixi.screen.width / 2) + this.borderHorizontal;
-            // Make the Menu follow the camera
-            this.game.pauseMenu.x = this.borderHorizontal;
-        }
-        // check if the player has crossed the left border
-        if (this.player.x <= -(this.game.pixi.screen.width / 2) + this.borderHorizontal) {
-            // set the camera a screen away from its original position
-            this.game.pixi.stage.pivot.set(-this.game.pixi.screen.width + this.borderHorizontal, this.game.pixi.stage.pivot.y);
-            // set the new border a full screen away
-            this.borderHorizontal -= this.game.pixi.screen.width;
-            // Make the UI follow the camera
-            this.game.ui.x = -(this.game.pixi.screen.width / 2) + this.borderHorizontal;
-            // Make the Menu follow the camera
-            this.game.pauseMenu.x = this.borderHorizontal;
-        }
-        // check if the player has crossed the top border
-        if (this.player.y >= this.game.pixi.screen.height / 2 + this.borderVertical) {
-            // set the camera a screen away from its original position
-            this.game.pixi.stage.pivot.set(this.game.pixi.stage.pivot.x, this.game.pixi.screen.height + this.borderVertical);
-            // set the new border a full screen away
-            this.borderVertical += this.game.pixi.screen.height;
-            // Make the UI follow the camera
-            this.game.ui.y = -(this.game.pixi.screen.height / 2) + this.borderVertical;
-            // Make the Menu follow the camera
-            this.game.pauseMenu.y = this.borderVertical;
-        }
-        // check if the player has crossed the bottom border
-        if (this.player.y <= -(this.game.pixi.screen.height / 2) + this.borderVertical) {
-            // set the camera a screen away from its original position
-            this.game.pixi.stage.pivot.set(this.game.pixi.stage.pivot.x, -this.game.pixi.screen.height + this.borderVertical);
-            // set the new border a full screen away
-            this.borderVertical -= this.game.pixi.screen.height;
-            // Make the UI follow the camera
-            this.game.ui.y = -(this.game.pixi.screen.height / 2) + this.borderVertical;
-            // Make the Menu follow the camera
-            this.game.pauseMenu.y = this.borderVertical;
-        }
-    }
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jtcP6":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "audioScreen", ()=>audioScreen
-);
-var _pixiJs = require("pixi.js");
-class audioScreen extends _pixiJs.Sprite {
-    constructor(texture, sound){
-        super(texture);
-        this.interactive = true;
-        this.buttonMode = true;
-        this.x = 0;
-        this.y = 0;
-        this.sound = sound;
-        this.on("pointerdown", ()=>this.clicked()
-        );
-    }
-    clicked() {
-        this.sound.play();
-        this.destroy();
-    }
-}
-
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3qwyk":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "pickupsound.9ec87b5e.mp3" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
+},{"./Button":"5X7GA","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
 
 //# sourceMappingURL=index.901f85c2.js.map
