@@ -11,7 +11,6 @@ export class QuestlogPage extends BookPage {
     constructor(name: string, game: Game, textstyle: PIXI.TextStyle, uiTextures: PIXI.Texture[]) {
         super(name)
         this.name = name
-        //console.log(uiTextures)
         this.text = new PIXI.Text(
             `Hier zouden Quests \nkomen te staan,\nals we die hadden. \nHuidige Score: ${game.score.toString()}`,
             textstyle

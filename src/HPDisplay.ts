@@ -13,7 +13,6 @@ export class HPDisplay extends PIXI.Container {
     constructor(game: Game, fullTexture: PIXI.Texture, x: number = 0, y: number = 0) {
         super()
         this.fullTexture = fullTexture
-        //console.log("HPDisplay added")
         this.game = game
         this.y = y
         for (let i = 0; i < this.game.player.health; i++) {

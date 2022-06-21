@@ -15,8 +15,9 @@ export class PlusButton extends Button {
     }
 
     public buttonClicked() {
+        if(this.parent.value < 100){
         this.parent.value = this.parent.value + this.increments
         this.parent.update()
-        //console.log(`${this.parent.name} + Clicked`)
+        }
     }
 }

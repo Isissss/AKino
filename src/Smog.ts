@@ -15,7 +15,6 @@ export class Smog extends PIXI.Graphics {
         this.player = player
         this.originalRadius = radius
         this.radius = this.originalRadius
-        //this.interactive = true
         this.draw()
 
 
@@ -40,11 +39,8 @@ export class Smog extends PIXI.Graphics {
             this.radius -= 1
             this.clear()
             this.draw()
-            //console.log(`radius: ${this.radius}`)
         }
         else {
-            //console.log(`radius is already 0`)
-            //console.log('resetting circle to 200 radius')
             this.reset()
         }
     }

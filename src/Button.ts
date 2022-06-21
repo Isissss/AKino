@@ -24,13 +24,11 @@ export class Button extends PIXI.Container {
         this.interactive = true
         this.buttonMode = true
         this.game = game
-        //console.log("Button Added")
         this.on('pointerdown', () => this.buttonClicked())
 
     }
 
     public buttonClicked() {
-        //console.log("Button Clicked")
         this.game.togglePauseMenu()
     }
 }

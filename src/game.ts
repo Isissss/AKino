@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js'
 import Matter from 'matter-js'
 
+
 import sharkImage from "./images/dino.png"
 import bubbleImage from "./images/bubble.png"
 import waterImage from "./images/water.jpg"
@@ -58,7 +59,7 @@ import hitSound from "url:./sound/hitsound.mp3"
 
 import { Player } from "./Player"
 import { Smog } from './Smog'
-import { Graphics, Spritesheet, TilingSprite } from 'pixi.js'
+import { Graphics } from 'pixi.js'
 import { Spawn } from './Spawn'
 import { Object } from './Object'
 import { Building } from './Building'
@@ -69,10 +70,11 @@ import { UI } from './UI'
 import { Menu } from './Menu'
 import { Map } from "./Map"
 import { StartScreen } from './StartScreen'
+import { AssetLoader } from "./AssetLoader"
 
 export class Game {
     pixi: PIXI.Application
-    loader: PIXI.Loader
+    loader: AssetLoader
     player: Player
     map: Map
     smog: Smog
@@ -86,7 +88,7 @@ export class Game {
     ui: UI // UI container class
     startscreen: StartScreen; // container class for the startscreen
     pauseMenu: Menu; // container class for the in-game menu
-    states: number[] = [0,1,2,3]// startscreen, in-game, endscreen, game over state
+    states: number[] = [0, 1, 2, 3]// startscreen, in-game, endscreen, game over state
     private _state: number = 0
     menuActive: boolean = false; // variable to check if updates need to be run
     score: number = 0
@@ -98,16 +100,19 @@ export class Game {
     basicText: PIXI.Text;
     textStyle: PIXI.TextStyle;
     buildings: Building[] = []
+    private dinoTextures: PIXI.Texture[] = [];
     leafs: Leaf[] = []
     weather: Weather
     city: PIXI.TilingSprite
-    private _soundFXVolume: number = 0.5// temp placeholder for volume Sound Effects => number
-    private _bgMusicVolume: number = 0.5 // temp placeholder for volume Background Music => number
-    fontSize: number = 20 // placeholder for fontsize => number
+    private _soundFXVolume: number = 0.5 //Volume for sound Effects
+    private _bgMusicVolume: number = 0.5 //Volume for Background Music
+    private _fontSize: number = 20 //Fontsize for text
     pickUpSound: HTMLAudioElement
     engine: Matter.Engine
     building: Building
-    bgMusicFile: HTMLAudioElement
+    bgMusicSound: HTMLAudioElement
+    hitByCarSound: HTMLAudioElement
+    ObjectPickupSound: HTMLAudioElement
 
     constructor() {
         this.pixi = new PIXI.Application({ width: 1920, height: 940, backgroundColor: 0xAAAAA })
@@ -115,61 +120,27 @@ export class Game {
         console.log(window.innerWidth)
         document.body.appendChild(this.pixi.view)
 
-        this.loader = new PIXI.Loader()
-        this.loader
-            .add('sharkTexture', sharkImage)
-            .add('solarTexture', SolarImage)
-            .add('windmillTexture', WindmillImage)
-            .add('bubbleTexture', bubbleImage)
-            .add('waterTexture', waterImage)
-            .add('cityTexture', cityImage)
-            .add('carTexture', carImage)
-            .add('buildingA1', buildingA1)
-            .add('buildingA2', buildingA2)
-            .add('buildingA3', buildingA3)
-            .add('buildingB1', buildingB1)
-            .add('buildingB2', buildingB2)
-            .add('buildingB3', buildingB3)
-            .add('buildingC1', buildingC1)
-            .add('buildingC2', buildingC2)
-            .add('buildingC3', buildingC3)
-            .add('buildingD1', buildingD1)
-            .add('buildingD2', buildingD2)
-            .add('buildingD3', buildingD3)
-            .add('buildingE1', buildingE1)
-            .add('buildingE2', buildingE2)
-            .add('buildingE3', buildingE3)
-            .add('buildingF1', buildingF1)
-            .add('buildingF2', buildingF2)
-            .add('buildingF3', buildingF3)
-            .add('leafTexture', leafImage)
-            .add('dinoTexture', dinoImage)
-            .add('HPDbackgroundTexture', HPDbackgroundImage)
-            .add('menuBackgroundTexture', menuBackgroundImage)
-            .add('uiElement0', uiElement0Image) // cant get spritesheets to work
-            .add('uiElement1', uiElement1Image) // cant get spritesheets to work
-            .add('uiElement2', uiElement2Image) // cant get spritesheets to work
-            .add('uiElement3', uiElement3Image) // cant get spritesheets to work
-            .add('uiElement4', uiElement4Image) // cant get spritesheets to work
-            .add('uiElement5', uiElement5Image) // cant get spritesheets to work
-            .add('uiElement6', uiElement6Image) // cant get spritesheets to work
-            .add('uiElement7', uiElement7Image) // cant get spritesheets to work
-            .add('uiElement8', uiElement8Image) // cant get spritesheets to work
-            .add('uiElement9', uiElement9Image) // cant get spritesheets to work
-            .add('uiElement10', uiElement10Image) // cant get spritesheets to work
-            .add('uiElement11', uiElement11Image) // cant get spritesheets to work
-            .add('uiElement12', uiElement12Image) // cant get spritesheets to work
-            .add('heartTexture', heartImage)
-            .add('audioScreenTexture', audioScreenImage)
-            .add("backgroundMusicFile", backgroundMusic)
-            .add("pickupsoundFile", pickUpSound)
-            .add("hitsoundFile", hitSound)
-        this.loader.load(() => this.loadCompleted())
-
+        // Load all images
+        this.loader = new AssetLoader(this)
+        // Create new matterjs engine for anti-passthrough
         this.engine = Matter.Engine.create()
+
+
+    }
+
+    public createDinoFrames() {
+
+        for (let i = 1; i < 6; i++) {
+            const texture = PIXI.Texture.from(`dino_${i}.png`);
+            this.dinoTextures.push(texture);
+            //console.log(this.dinoTextures)
+        }
     }
 
     loadCompleted() {
+        //create Dino animation frames
+        this.createDinoFrames()
+
         //packing UI textures into array
         this.uiTextures = [
             this.loader.resources["uiElement0"].texture!,
@@ -203,7 +174,9 @@ export class Game {
         ]
 
 
-        this.player = new Player(this.loader.resources["sharkTexture"].texture!, this)
+        //initialize player, smog, object spawner
+
+        this.player = new Player(this.dinoTextures, this)
         this.smog = new Smog(this.player, window.innerWidth)
         this.spawner = new Spawn(100, 100, (3 * 60), this.objectTextures, this)
 
@@ -214,6 +187,7 @@ export class Game {
 
         //background
         let background = new PIXI.Sprite(this.loader.resources["cityTexture"].texture!)
+
         background.anchor.set(0,0)
         background.position.set(-window.innerWidth/2,-window.innerHeight/2)
         background.scale.set(4.48, 3.6)
@@ -283,26 +257,26 @@ export class Game {
         
 
         this.textStyle = new PIXI.TextStyle({
-            fontSize: 31,
+            fontSize: this.fontSize,
             fontWeight: "bold",
             trim: false
         });
 
+        //set Matter.js gravity
         this.engine.gravity.y = 0
-        //this.pixi.ticker.add(() => this.update(1000 / 60))
 
-        // ui and menu
+        //ui and menu
         this.ui = new UI(this, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["heartTexture"].texture!) // (game, pausebutton texture, heart texture)
-        
-        // music
-        this.bgMusicFile = this.loader.resources["backgroundMusicFile"].data!
 
-        // basictext?
-        this.basicText = new PIXI.Text(`Score ${this.score}`, this.textStyle);
-        this.basicText.x = 100
-        this.basicText.y = 100
+        //audio
+        this.bgMusicSound = this.loader.resources["backgroundMusicFile"].data!
+        this.bgMusicSound.volume = this.bgMusicVolume
+        this.hitByCarSound = this.loader.resources["hitsoundFile"].data!;
+        this.hitByCarSound.volume = this.soundFXVolume
+        this.ObjectPickupSound = this.loader.resources["pickupsoundFile"].data!
+        this.ObjectPickupSound.volume = this.soundFXVolume
 
-        // stage adding TEMP
+        //sorted stage adding 
         this.pixi.stage.addChild(background)
 
         for (const car of this.cars) {
@@ -319,126 +293,141 @@ export class Game {
         }
 
         this.pixi.stage.addChild(this.smog, this.ui)
-        this.pixi.stage.addChild(this.basicText)
 
-        //create Start Screen
-        this.startscreen = new StartScreen(this,this.loader.resources["cityTexture"].texture! ,this.loader.resources["menuBackgroundTexture"].texture!, this.uiTextures)
+        //create start screen
+        this.startscreen = new StartScreen(this, this.loader.resources["cityTexture"].texture!, this.loader.resources["menuBackgroundTexture"].texture!, this.uiTextures)
         this.pixi.stage.addChild(this.startscreen)
         this.menuActive = true;
-        this.ui.visible= false;
+        this.ui.visible = false;
 
-
+        //start running the ticker
         this.pixi.ticker.add((delta) => this.update(delta))
 
     }
 
     private update(delta: number) {
-            switch (this.state) {
-                case 0:
-                    break;
-                case 1:
-                    if (!this.menuActive) { // pixi.stop() might be a better idea
-                        this.spawner.update()
-                        this.player.update(delta)
-                        this.smog.update()
-                        Matter.Engine.update(this.engine, 1000 / 60)
-                        this.weather.update()
-                        this.map.update()
-                        for (let i = 0; i < this.leafs.length; i++) {
-                            this.leafs[i].update()
+        switch (this.state) {
+            case 0: //startscreen state
+                this.updateVolume()
+                break;
+            case 1: //in-game state
+                if (!this.menuActive) { // pixi.stop() might be a better idea
+                    this.spawner.update()
+                    this.player.update(delta)
+                    this.smog.update()
+                    Matter.Engine.update(this.engine, 1000 / 60)
+                    this.weather.update()
+                    this.map.update()
+                    for (let i = 0; i < this.leafs.length; i++) {
+                        this.leafs[i].update()
 
-                        }
-
-                        for (let building of this.buildings) {
-                            building.update(this.score)
-                        }
-
-                        for (let i = 0; i < this.cars.length; i++) {
-                            if (this.collision(this.player, this.cars[i]) && !this.player.hit) {
-                                //console.log("player touches object")
-                                this.player.hitcar()
-                                let hitByCarSound = this.loader.resources["hitsoundFile"].data!
-                                hitByCarSound.play()
-                                hitByCarSound.volume = this.soundFXVolume
-                            }
-
-                        }
-                        for (let car of this.cars) {
-                            car.update(delta)
-                        }
-
-                        for (let i = 0; i < this.objects.length; i++) {
-                            if (this.collision(this.player, this.objects[i])) {
-
-                                this.score++;
-                                this.objects[i].pickedUp()
-                                this.smog.reset()
-                                if(this.score >= 20){
-                                    this.endGame(2)
-                                }
-
-                                this.basicText.text = `Score ${this.score}`
-
-                                //console.log("player touches object")
-
-
-                                this.objects[i].destroy();
-                                this.objects.splice(i, 1)
-
-                            }
-                        }
-                        this.ui.healthDisplay.update()
                     }
-                    break;
-                case 2:
-                    this.ui.visible = false
-                    this.togglePauseMenu()
-                    this.pixi.stop()
-                    break;
-                case 3:
-                    this.ui.visible = false
-                    this.togglePauseMenu()
-                    this.pixi.stop()
-                    break;
-            }
 
+                    for (let building of this.buildings) {
+                        building.update(this.score)
+                    }
+
+                    for (let i = 0; i < this.cars.length; i++) {
+                        if (this.collision(this.player, this.cars[i]) && !this.player.hit) {
+                            this.player.hitcar()
+                            this.hitByCarSound.play()
+                            this.hitByCarSound.volume = this.soundFXVolume
+                        }
+
+                    }
+                    for (let car of this.cars) {
+                        car.update(delta)
+                    }
+
+                    for (let i = 0; i < this.objects.length; i++) {
+                        if (this.collision(this.player, this.objects[i])) {
+
+                            this.score++;
+                            this.objects[i].pickedUp()
+                            this.smog.reset()
+                            if (this.score >= 20) {
+                                this.endGame(2)
+                            }
+
+                            //console.log("player touches object")
+
+
+                            this.objects[i].destroy();
+                            this.objects.splice(i, 1)
+
+                        }
+                    }
+                    this.ui.healthDisplay.update()
+                    this.updateVolume()
+                }
+                break;
+            case 2: //finished game state
+                this.updateVolume()
+                this.ui.visible = false
+                this.togglePauseMenu()
+                this.pixi.stop()
+                break;
+            case 3://game over state
+                this.updateVolume()
+                this.ui.visible = false
+                this.togglePauseMenu()
+                this.pixi.stop()
+                break;
         }
 
+    }
 
-    public get state() : number {
+
+    public get state(): number {
         return this._state;
     }
 
-    public set state(v : number) {
-        if( v >= 0 && v < this.states.length){
-        this._state = v;
+    public set state(v: number) {
+        if (v >= 0 && v < this.states.length) {
+            this._state = v;
         } else {
             console.log(`Can't set state with value: ${v}`)
         }
     }
 
-    public get bgMusicVolume() : number {
+    public get bgMusicVolume(): number {
         return this._bgMusicVolume;
     }
 
     public set bgMusicVolume(v: number) {
-        let value = v/100
-        if(value >= 0 && value <= 1){
-            this._soundFXVolume = value
+                
+        if (v >= 0 && v <= 1) {
+            this._bgMusicVolume = v            
+        }
+        else {
+            console.log(`not a volume: ${v}`)
         }
 
     }
 
-    public get soundFXVolume() : number {
+    public get soundFXVolume(): number {
         return this._soundFXVolume;
     }
 
-    public set soundFXVolume(v: number) {
-        let value = v/100
-        if(value >= 0 && value <= 1){
-            this._soundFXVolume = value
+    public set soundFXVolume(v: number) {                
+        if (v >= 0 && v <= 1) {
+            this._soundFXVolume = v            
+        }else {
+            console.log(`not a volume: ${v}`)
         }
 
+    }
+
+    public get fontSize(): number {
+        return this._fontSize;
+    }
+
+    public set fontSize(v: number) {      
+        if (v >= 0 && v <= 40) {
+            this._fontSize = v
+        }else {
+            console.log(`fontsize too large: ${v}`)
+        }
     }
 
     public updateWeather(x: number, y: number) {
@@ -448,7 +437,7 @@ export class Game {
     }
 
 
-    public endGame(state:number) {
+    public endGame(state: number) {
         this.state = state
         console.log(`game over reason: ${state}`)
 
@@ -469,6 +458,13 @@ export class Game {
             && bounds1.x + bounds1.width > bounds2.x
             && bounds1.y < bounds2.y + bounds2.height
             && bounds1.y + bounds1.height > bounds2.y;
+    }
+
+
+    public updateVolume(){
+        this.bgMusicSound.volume = this.bgMusicVolume
+        this.ObjectPickupSound.volume = this.soundFXVolume
+        this.hitByCarSound.volume = this.soundFXVolume
     }
 
 

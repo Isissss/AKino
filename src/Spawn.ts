@@ -20,14 +20,12 @@ export class Spawn extends PIXI.Sprite {
 
     update() {
         this.timer += 1
-        //console.log(this.timer)
         if (this.timer > this.delay) {
             let i = Math.round(Math.random())
             let sprite = new Object(this.objectTextures[i], this.game)
             sprite.scale.set(7)
             this.timer = 0
             this.game.spawnObject(sprite)
-            //console.log("hello")
         }
     }
 }

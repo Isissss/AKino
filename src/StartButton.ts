@@ -24,7 +24,7 @@ export class StartButton extends Button {
        this.game.startscreen.visible = false;
        this.game.menuActive = false;
        this.game.ui.visible = true;
-       this.game.bgMusicFile.play()
-       this.game.bgMusicFile.volume = this.game.bgMusic
+       this.game.bgMusicSound.play()
+       this.game.bgMusicSound.volume = this.game.bgMusicVolume
     }
 }

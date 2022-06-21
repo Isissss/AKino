@@ -21,8 +21,6 @@ export class UI extends PIXI.Container {
         //container's own x and y position
         this.x = -(this.game.pixi.screen.width / 2)
         this.y = -(this.game.pixi.screen.height / 2)
-        // debug
-        //console.log("UI Added")
         // add a pausebutton
         this.pauseButton = new Button(this.game,[pauseButtonTexture], 0, 0)
         this.healthDisplay = new HPDisplay(this.game, heartTexture, window.innerWidth, 0)
