@@ -38,14 +38,14 @@ import { Weather } from "./Weather"
 import { Leaf } from './Leaf'
 import { UI } from './UI'
 import { Menu } from './Menu'
-import { Map } from "./Map"
+// import { Map } from "./Map"
 import { audioScreen } from './audioScreen'
 
 export class Game {
     pixi: PIXI.Application
     loader: PIXI.Loader
     player: Player
-    map: Map
+    // map: Map
     smog: Smog
     graphics: Graphics
     spawner: Spawn
@@ -127,9 +127,9 @@ export class Game {
         this.spawner = new Spawn(100, 100, (3 * 60), this.loader.resources["fishTexture"].texture!, this)
 
         //map        
-        this.map = new Map(this, this.player)
-        this.pixi.stage.x = this.pixi.screen.width / 2;
-        this.pixi.stage.y = this.pixi.screen.height / 2;
+        // this.map = new Map(this, this.player)
+        // this.pixi.stage.x = this.pixi.screen.width / 2;
+        // this.pixi.stage.y = this.pixi.screen.height / 2;
 
         //background
         let background = new PIXI.Sprite(this.loader.resources["cityTexture"].texture!)
@@ -214,7 +214,7 @@ export class Game {
             this.player.update(delta)
             this.smog.update()
             this.weather.update()
-            this.map.update()
+            // this.map.update()
             for (let i = 0; i < this.leafs.length; i++) {
                 this.leafs[i].update()
 
@@ -264,7 +264,7 @@ export class Game {
     // }
 
 
-    updateWeather(x: number, y: number) {
+    public updateWeather(x: number, y: number) {
         for (let i = 0; i < this.leafs.length; i++) {
             this.leafs[i].changeWeather(x, y)
         }
@@ -280,7 +280,7 @@ export class Game {
         this.objects.push(object)
     }
 
-    collision(sprite1: PIXI.Sprite, sprite2: PIXI.Sprite) {
+    public collision(sprite1: PIXI.Sprite, sprite2: PIXI.Sprite) {
         const bounds1 = sprite1.getBounds()
         const bounds2 = sprite2.getBounds()
 

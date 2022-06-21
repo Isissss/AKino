@@ -574,7 +574,7 @@ var _weather = require("./Weather");
 var _leaf = require("./Leaf");
 var _ui = require("./UI");
 var _menu = require("./Menu");
-var _map = require("./Map");
+// import { Map } from "./Map"
 var _audioScreen = require("./audioScreen");
 class Game {
     objects = [];
@@ -623,9 +623,9 @@ class Game {
         this.smog = new _smog.Smog(this.player, window.innerWidth);
         this.spawner = new _spawn.Spawn(100, 100, 180, this.loader.resources["fishTexture"].texture, this);
         //map        
-        this.map = new _map.Map(this, this.player);
-        this.pixi.stage.x = this.pixi.screen.width / 2;
-        this.pixi.stage.y = this.pixi.screen.height / 2;
+        // this.map = new Map(this, this.player)
+        // this.pixi.stage.x = this.pixi.screen.width / 2;
+        // this.pixi.stage.y = this.pixi.screen.height / 2;
         //background
         let background = new _pixiJs.Sprite(this.loader.resources["cityTexture"].texture);
         background.scale.set(2);
@@ -689,14 +689,14 @@ class Game {
             this.player.update(delta);
             this.smog.update();
             this.weather.update();
-            this.map.update();
+            // this.map.update()
             for(let i = 0; i < this.leafs.length; i++)this.leafs[i].update();
             for (let building of this.buildings)building.update(this.score);
             for(let i2 = 0; i2 < this.cars.length; i2++)if (this.collision(this.player, this.cars[i2]) && !this.player.hit) {
-                //console.log("player touches object")
+                // console.log("player touches object")
                 this.player.hitcar();
-                let hitByCar = this.loader.resources["hitsoundFile"].data;
-                hitByCar.cars[i2].play();
+                let hitByCarSound = this.loader.resources["hitsoundFile"].data;
+                hitByCarSound.play();
             }
             this.player.update(delta);
             for (let car of this.cars)car.update(delta);
@@ -751,7 +751,7 @@ class Game {
 }
 let g = new Game;
 
-},{"pixi.js":"dsYej","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./images/fish.png":"3tLwD","./Smog":"608Py","./Spawn":"6JGD8","./images/dino.png":"c8KfO","./images/city.png":"a2rT6","./images/leaf.png":"5tsPY","./images/buildingTexture1.png":"2g5jb","./images/buildingTexture2.png":"liaFA","./images/buildingTexture3.png":"gm23O","./images/buildingB1.png":"fkYnt","./images/buildingB2.png":"1yWjs","./images/buildingB3.png":"kzHCU","./images/car.png":"dnXSN","./images/tile.png":"dvchs","./images/menuBackground.png":"hVtuo","./images/YellowUI0.png":"dwRmK","./images/YellowUI1.png":"d9mKy","./images/YellowUI2.png":"4bojR","./images/YellowUI3.png":"iiYKS","./Player":"8YLWx","./Building":"9ckPp","./Car":"d9weU","./Weather":"aPu1W","./Leaf":"cwtVd","./Map":"5vXJ1","./audioScreen":"jtcP6","./images/audioscreen.png":"d0MKD","url:./sound/relaxing.mp3":"i5zAd","url:./sound/pickupsound.mp3":"3qwyk","./UI":"ef7dT","./Menu":"gQYVh","url:./sound/hitSound.mp3":"fk7E1"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./images/dino.png":"c8KfO","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","./images/city.png":"a2rT6","./images/fish.png":"3tLwD","./images/leaf.png":"5tsPY","./images/buildingTexture1.png":"2g5jb","./images/buildingTexture2.png":"liaFA","./images/buildingTexture3.png":"gm23O","./images/buildingB1.png":"fkYnt","./images/buildingB2.png":"1yWjs","./images/buildingB3.png":"kzHCU","./images/car.png":"dnXSN","./images/tile.png":"dvchs","./images/menuBackground.png":"hVtuo","./images/YellowUI0.png":"dwRmK","./images/YellowUI1.png":"d9mKy","./images/YellowUI2.png":"4bojR","./images/YellowUI3.png":"iiYKS","./images/audioscreen.png":"d0MKD","url:./sound/relaxing.mp3":"i5zAd","./Player":"8YLWx","./Smog":"608Py","./Spawn":"6JGD8","./Building":"9ckPp","./Car":"d9weU","./Weather":"aPu1W","./Leaf":"cwtVd","./UI":"ef7dT","./Menu":"gQYVh","./audioScreen":"jtcP6","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","url:./sound/pickupsound.mp3":"3qwyk","url:./sound/hitSound.mp3":"fk7E1"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37266,8 +37266,8 @@ function __extends(d, b) {
     return AnimatedSprite1;
 }(_sprite.Sprite);
 
-},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iMP3P":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble.56ab0ad6.png" + "?" + Date.now();
+},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"c8KfO":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "dino.174d8237.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
 "use strict";
@@ -37303,13 +37303,158 @@ exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
 
-},{}],"jj9Eg":[function(require,module,exports) {
+},{}],"iMP3P":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble.56ab0ad6.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"jj9Eg":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "water.59ff4e4f.jpg" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"a2rT6":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "city.b93e9858.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"3tLwD":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "fish.510b053c.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"608Py":[function(require,module,exports) {
+},{"./helpers/bundle-url":"lgJ39"}],"5tsPY":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "leaf.e574830e.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"2g5jb":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "buildingTexture1.554e77b5.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"liaFA":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "buildingTexture2.4ee0fed8.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"gm23O":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "buildingTexture3.07918d74.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"fkYnt":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "buildingB1.1350a833.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"1yWjs":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "buildingB2.a3b45b19.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"kzHCU":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "buildingB3.afabfd0a.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"dnXSN":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "car.80a2d4f3.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"dvchs":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "tile.69895f74.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"hVtuo":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "menuBackground.2e111865.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"dwRmK":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "YellowUI0.b08040e2.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"d9mKy":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "YellowUI1.d936fc7e.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"4bojR":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "YellowUI2.ccfbec3e.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"iiYKS":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "YellowUI3.86591660.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"d0MKD":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "audioscreen.52b36ab7.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"i5zAd":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "relaxing.6d6f3898.mp3" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"8YLWx":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Player", ()=>Player
+);
+var _pixiJs = require("pixi.js");
+class Player extends _pixiJs.Sprite {
+    xspeed = 0;
+    yspeed = 0;
+    xweather = 0;
+    yweather = 0;
+    hit = false;
+    health = 3;
+    constructor(game, texture){
+        super(texture);
+        this.x = 100;
+        this.y = 100;
+        this.game = game;
+        // buggy thing
+        this.game = game;
+        window.addEventListener("keydown", (e)=>this.onKeyDown(e)
+        );
+        window.addEventListener("keyup", (e)=>this.onKeyUp(e)
+        );
+    }
+    update(delta) {
+        this.x += this.xspeed + this.xweather;
+        this.y += this.yspeed + this.yweather;
+        if (this.x > window.innerWidth) this.x = window.innerWidth;
+        if (this.x < 0) this.x = 0;
+        if (this.y > window.innerHeight) this.y = window.innerHeight;
+        if (this.y < 0) this.y = 0;
+        this.counter += delta;
+        // If player hits car (1.25s cooldown), set to false again so hit can occur again
+        if (this.counter > 125 && this.hit == true) this.hit = false;
+        this.health;
+    }
+    // Set counter to 0 for cooldown,
+    hitcar() {
+        this.counter = 0;
+        this.hit = true;
+        this.health--;
+    }
+    jump() {
+        console.log("jump!");
+    }
+    onKeyDown(e) {
+        switch(e.key.toUpperCase()){
+            case " ":
+                this.jump();
+                break;
+            case "A":
+            case "ARROWLEFT":
+                this.xspeed = -4;
+                this.scale.set(0.25);
+                break;
+            case "D":
+            case "ARROWRIGHT":
+                this.xspeed = 4;
+                this.scale.set(-0.25, 0.25);
+                break;
+            case "W":
+            case "ARROWUP":
+                this.yspeed = -4;
+                break;
+            case "S":
+            case "ARROWDOWN":
+                this.yspeed = 4;
+                break;
+        }
+    }
+    onKeyUp(e) {
+        switch(e.key.toUpperCase()){
+            case " ":
+                break;
+            case "A":
+            case "D":
+            case "ARROWLEFT":
+            case "ARROWRIGHT":
+                this.xspeed = 0;
+                break;
+            case "W":
+            case "S":
+            case "ARROWUP":
+            case "ARROWDOWN":
+                this.yspeed = 0;
+                break;
+        }
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"608Py":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Smog", ()=>Smog
@@ -37400,145 +37545,6 @@ class Object extends _pixiJs.Sprite {
         this.pickupSound.pause();
         this.pickupSound.play();
         console.log("Pakt op");
-    }
-}
-
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"c8KfO":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "dino.174d8237.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"a2rT6":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "city.b93e9858.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"5tsPY":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "leaf.e574830e.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"2g5jb":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "buildingTexture1.554e77b5.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"liaFA":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "buildingTexture2.4ee0fed8.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"gm23O":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "buildingTexture3.07918d74.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"fkYnt":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "buildingB1.1350a833.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"1yWjs":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "buildingB2.a3b45b19.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"kzHCU":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "buildingB3.afabfd0a.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"dnXSN":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "car.80a2d4f3.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"dvchs":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "tile.69895f74.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"hVtuo":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "menuBackground.2e111865.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"dwRmK":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "YellowUI0.b08040e2.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"d9mKy":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "YellowUI1.d936fc7e.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"4bojR":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "YellowUI2.ccfbec3e.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"iiYKS":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "YellowUI3.86591660.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"8YLWx":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Player", ()=>Player
-);
-var _pixiJs = require("pixi.js");
-class Player extends _pixiJs.Sprite {
-    xspeed = 0;
-    yspeed = 0;
-    xweather = 0;
-    yweather = 0;
-    hit = false;
-    health = 3;
-    constructor(game, texture){
-        super(texture);
-        this.x = 100;
-        this.y = 100;
-        this.game = game;
-        // buggy thing
-        this.game = game;
-        window.addEventListener("keydown", (e)=>this.onKeyDown(e)
-        );
-        window.addEventListener("keyup", (e)=>this.onKeyUp(e)
-        );
-    }
-    update(delta) {
-        this.x += this.xspeed + this.xweather;
-        this.y += this.yspeed + this.yweather;
-        if (this.x > window.innerWidth) this.x = window.innerWidth;
-        if (this.x < 0) this.x = 0;
-        if (this.y > window.innerHeight) this.y = window.innerHeight;
-        if (this.y < 0) this.y = 0;
-        this.counter += delta;
-        // If player hits car (1.25s cooldown), set to false again so hit can occur again
-        if (this.counter > 125 && this.hit == true) this.hit = false;
-        this.health;
-    }
-    // Set counter to 0 for cooldown,
-    hitcar() {
-        this.counter = 0;
-        this.hit = true;
-        this.health--;
-    }
-    jump() {
-        console.log("jump!");
-    }
-    onKeyDown(e) {
-        switch(e.key.toUpperCase()){
-            case " ":
-                this.jump();
-                break;
-            case "A":
-            case "ARROWLEFT":
-                this.xspeed = -4;
-                this.scale.set(0.25);
-                break;
-            case "D":
-            case "ARROWRIGHT":
-                this.xspeed = 4;
-                this.scale.set(-0.25, 0.25);
-                break;
-            case "W":
-            case "ARROWUP":
-                this.yspeed = -4;
-                break;
-            case "S":
-            case "ARROWDOWN":
-                this.yspeed = 4;
-                break;
-        }
-    }
-    onKeyUp(e) {
-        switch(e.key.toUpperCase()){
-            case " ":
-                break;
-            case "A":
-            case "D":
-            case "ARROWLEFT":
-            case "ARROWRIGHT":
-                this.xspeed = 0;
-                break;
-            case "W":
-            case "S":
-            case "ARROWUP":
-            case "ARROWDOWN":
-                this.yspeed = 0;
-                break;
-        }
     }
 }
 
@@ -37712,99 +37718,7 @@ class Leaf extends _pixiJs.Sprite {
     }
 }
 
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5vXJ1":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Map", ()=>Map
-);
-class Map {
-    constructor(game, player){
-        this.game = game;
-        this.player = player;
-        this.borderHorizontal = 0;
-        this.borderVertical = 0;
-    }
-    update() {
-        // check if the player has crossed the right border
-        if (this.player.x >= this.game.pixi.screen.width / 2 + this.borderHorizontal) {
-            // set the camera a screen away from its original position
-            this.game.pixi.stage.pivot.set(this.game.pixi.screen.width + this.borderHorizontal, this.game.pixi.stage.pivot.y);
-            // set the new border a full screen away
-            this.borderHorizontal += this.game.pixi.screen.width;
-            // Make the UI follow the camera
-            this.game.ui.x = -(this.game.pixi.screen.width / 2) + this.borderHorizontal;
-            // Make the Menu follow the camera
-            this.game.pauseMenu.x = this.borderHorizontal;
-        }
-        // check if the player has crossed the left border
-        if (this.player.x <= -(this.game.pixi.screen.width / 2) + this.borderHorizontal) {
-            // set the camera a screen away from its original position
-            this.game.pixi.stage.pivot.set(-this.game.pixi.screen.width + this.borderHorizontal, this.game.pixi.stage.pivot.y);
-            // set the new border a full screen away
-            this.borderHorizontal -= this.game.pixi.screen.width;
-            // Make the UI follow the camera
-            this.game.ui.x = -(this.game.pixi.screen.width / 2) + this.borderHorizontal;
-            // Make the Menu follow the camera
-            this.game.pauseMenu.x = this.borderHorizontal;
-        }
-        // check if the player has crossed the top border
-        if (this.player.y >= this.game.pixi.screen.height / 2 + this.borderVertical) {
-            // set the camera a screen away from its original position
-            this.game.pixi.stage.pivot.set(this.game.pixi.stage.pivot.x, this.game.pixi.screen.height + this.borderVertical);
-            // set the new border a full screen away
-            this.borderVertical += this.game.pixi.screen.height;
-            // Make the UI follow the camera
-            this.game.ui.y = -(this.game.pixi.screen.height / 2) + this.borderVertical;
-            // Make the Menu follow the camera
-            this.game.pauseMenu.y = this.borderVertical;
-        }
-        // check if the player has crossed the bottom border
-        if (this.player.y <= -(this.game.pixi.screen.height / 2) + this.borderVertical) {
-            // set the camera a screen away from its original position
-            this.game.pixi.stage.pivot.set(this.game.pixi.stage.pivot.x, -this.game.pixi.screen.height + this.borderVertical);
-            // set the new border a full screen away
-            this.borderVertical -= this.game.pixi.screen.height;
-            // Make the UI follow the camera
-            this.game.ui.y = -(this.game.pixi.screen.height / 2) + this.borderVertical;
-            // Make the Menu follow the camera
-            this.game.pauseMenu.y = this.borderVertical;
-        }
-    }
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jtcP6":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "audioScreen", ()=>audioScreen
-);
-var _pixiJs = require("pixi.js");
-class audioScreen extends _pixiJs.Sprite {
-    constructor(texture, sound){
-        super(texture);
-        this.interactive = true;
-        this.buttonMode = true;
-        this.x = 0;
-        this.y = 0;
-        this.sound = sound;
-        this.on("pointerdown", ()=>this.clicked()
-        );
-    }
-    clicked() {
-        this.sound.play();
-        this.destroy();
-    }
-}
-
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"d0MKD":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "audioscreen.52b36ab7.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"i5zAd":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "relaxing.6d6f3898.mp3" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"3qwyk":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "pickupsound.9ec87b5e.mp3" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"ef7dT":[function(require,module,exports) {
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ef7dT":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 // class to hold all UI elements that appear on screen.
@@ -38058,7 +37972,33 @@ class PlusButton extends _button.Button {
     }
 }
 
-},{"./Button":"5X7GA","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fk7E1":[function(require,module,exports) {
+},{"./Button":"5X7GA","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jtcP6":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "audioScreen", ()=>audioScreen
+);
+var _pixiJs = require("pixi.js");
+class audioScreen extends _pixiJs.Sprite {
+    constructor(texture, sound){
+        super(texture);
+        this.interactive = true;
+        this.buttonMode = true;
+        this.x = 0;
+        this.y = 0;
+        this.sound = sound;
+        this.on("pointerdown", ()=>this.clicked()
+        );
+    }
+    clicked() {
+        this.sound.play();
+        this.destroy();
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3qwyk":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "pickupsound.9ec87b5e.mp3" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"fk7E1":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "hitSound.2d960a24.mp3" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
