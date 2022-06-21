@@ -24,8 +24,9 @@ export class HPDisplay extends PIXI.Container {
 
     private addHeart(i: number, fullTexture: PIXI.Texture) {
         let heart = new PIXI.Sprite(fullTexture)
+        heart.scale.set(5.5)
         heart.x = i * (heart.width + 3)
-        heart.y = this.y
+        heart.y = this.y+ 7.5
         heart.tint = 0xff0000
         this.addChild(heart)
         this.hearts.push(heart)
@@ -34,14 +35,17 @@ export class HPDisplay extends PIXI.Container {
     update() {
         // not able to check if this works yet, as health isnt being modified while game runs.
         if (this.game.player.health < this.hearts.length) {
+            if(this.hearts.length > 0){
             this.hearts[this.hearts.length - 1].destroy()
             this.hearts.pop()
+            }
         }
         else if (this.game.player.health > this.hearts.length) {
             this.addHeart(this.hearts.length - 1, this.fullTexture)
-        } else if (this.hearts.length === 0){
-            console.log("GAME OVER")
-            this.game.pixi.stop()
+        } else {
+            //do nothing
+            return;
         }
+        
     }
 }

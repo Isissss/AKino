@@ -10,11 +10,11 @@ export class UI extends PIXI.Container {
 
     pauseButton: Button
     healthDisplay: HPDisplay
-    healthBackground: PIXI.Sprite
+    
     
 
     //behaviours
-    constructor(game: Game, pauseButtonTexture: PIXI.Texture, heartTexture: PIXI.Texture, backgroundTexture: PIXI.Texture){
+    constructor(game: Game, pauseButtonTexture: PIXI.Texture, heartTexture: PIXI.Texture){
         super()
         // need access to the game, to display correct values
         this.game = game
@@ -24,18 +24,12 @@ export class UI extends PIXI.Container {
         // debug
         //console.log("UI Added")
         // add a pausebutton
-        this.pauseButton = new Button(this.game, pauseButtonTexture, 0, 0)
+        this.pauseButton = new Button(this.game,[pauseButtonTexture], 0, 0)
         this.healthDisplay = new HPDisplay(this.game, heartTexture, window.innerWidth, 0)
-        this.healthBackground = new PIXI.Sprite(backgroundTexture)
-        this.healthBackground.anchor.set(1,0)
-        this.healthBackground.x = window.innerWidth
-        this.healthBackground.y = this.healthDisplay.y
-        this.healthBackground.width = this.healthDisplay.width + 20
-        this.healthBackground.height = this.healthDisplay.height + 10
-        //console.log(this.healthBackground)
+        
 
         // add all elements to the displayObject container
-        this.addChild(this.pauseButton,this.healthBackground, this.healthDisplay)
+        this.addChild(this.pauseButton, this.healthDisplay)
 
     }
 }

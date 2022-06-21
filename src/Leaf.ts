@@ -23,17 +23,17 @@ export class Leaf extends PIXI.Sprite{
         this.x += this.xweather * this.speed
         this.y += this.yweather * this.speed
         this.rotation += this.rotationSpeed
-        if (this.x > window.innerWidth) {
-            this.x = 0
+        if (this.x > (window.innerWidth * 2) - (window.innerWidth / 2)) {
+            this.x = -(window.innerWidth / 2)
           }
-          if (this.x < 0) {
-            this.x = window.innerWidth
+          if (this.x < -(window.innerWidth / 2)) {
+            this.x = (window.innerWidth * 2) - (window.innerWidth / 2)
           }
-          if (this.y > window.innerHeight) {
-            this.y = 0
+          if (this.y > (window.innerHeight * 2) - (window.innerHeight / 2)) {
+            this.y = -(window.innerHeight / 2)
           }
-          if (this.y < 0) {
-            this.y = window.innerHeight
+          if (this.y < -(window.innerHeight / 2)) {
+            this.y = (window.innerHeight * 2) - (window.innerHeight / 2)
           }
     }
 
