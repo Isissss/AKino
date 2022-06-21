@@ -34,11 +34,16 @@ export class HPDisplay extends PIXI.Container {
     update() {
         // not able to check if this works yet, as health isnt being modified while game runs.
         if (this.game.player.health < this.hearts.length) {
+            if(this.hearts.length > 0){
             this.hearts[this.hearts.length - 1].destroy()
             this.hearts.pop()
+            }
         }
         else if (this.game.player.health > this.hearts.length) {
             this.addHeart(this.hearts.length - 1, this.fullTexture)
+        } else {
+            //do nothing
+            return;
         }
         
     }

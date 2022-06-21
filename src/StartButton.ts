@@ -25,5 +25,6 @@ export class StartButton extends Button {
        this.game.menuActive = false;
        this.game.ui.visible = true;
        this.game.bgMusicFile.play()
+       this.game.bgMusicFile.volume = this.game.bgMusic
     }
 }

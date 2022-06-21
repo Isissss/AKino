@@ -9,7 +9,7 @@ export class Player extends PIXI.Sprite {
     private yspeed = 0
     public xweather = 0
     public yweather = 0
-    private counter: number
+    private counter: number = 0
     public hit: boolean = false
     public health: number = 3
     private game: Game
@@ -64,9 +64,6 @@ export class Player extends PIXI.Sprite {
         // If player hits car (1.25s cooldown), set to false again so hit can occur again
         if (this.counter > 125 && this.hit) {
             this.hit = false
-            if (this.health < 1) {
-                this.game.endGame(3)
-            }
         }
     }
 
@@ -75,6 +72,9 @@ export class Player extends PIXI.Sprite {
         this.counter = 0
         this.hit = true
         this.health--;
+        if (this.health < 1) {
+            this.game.endGame(3)
+        }
     }
 
 

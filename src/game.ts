@@ -4,8 +4,8 @@ import Matter from 'matter-js'
 import sharkImage from "./images/dino.png"
 import bubbleImage from "./images/bubble.png"
 import waterImage from "./images/water.jpg"
-import smokeImage from "./images/smog.png"
-import cityImage from "./images/city.png"
+//import smokeImage from "./images/smog.png"
+import cityImage from "./images/pixelMap.png"
 import fishImage from "./images/fish.png"
 import leafImage from "./images/leaf.png"
 import dinoImage from "./images/dino.png"
@@ -79,8 +79,8 @@ export class Game {
     leafs: Leaf[] = []
     weather: Weather
     city: PIXI.TilingSprite
-    soundFX: number = 50 // temp placeholder for volume Sound Effects => number
-    bgMusic: number = 50 // temp placeholder for volume Background Music => number
+    soundFX: number = 0.5// temp placeholder for volume Sound Effects => number
+    bgMusic: number = 0.5 // temp placeholder for volume Background Music => number
     fontSize: number = 20 // placeholder for fontsize => number
     pickUpSound: HTMLAudioElement
     engine: Matter.Engine
@@ -129,7 +129,6 @@ export class Game {
         this.loader.load(() => this.loadCompleted())
 
         this.engine = Matter.Engine.create()
-
     }
 
     loadCompleted() {
@@ -161,13 +160,9 @@ export class Game {
 
         //background
         let background = new PIXI.Sprite(this.loader.resources["cityTexture"].texture!)
-        background.scale.set(2)
-
-
-        //city
-        let city = new PIXI.Sprite(this.loader.resources["cityTexture"].texture!)
-        city.anchor.set(0, 0)
-        city.scale.set(3, 2.69)
+        background.anchor.set(0,0)
+        background.position.set(-window.innerWidth/2,-window.innerHeight/2)
+        background.scale.set(4.475, 3.825)
 
         //cars
         this.car = new Car(this.loader.resources["carTexture"].texture!, false, 1200, 625)
@@ -200,7 +195,7 @@ export class Game {
         });
 
         this.engine.gravity.y = 0
-        this.pixi.ticker.add(() => this.update(1000 / 60))
+        //this.pixi.ticker.add(() => this.update(1000 / 60))
 
         // ui and menu
         this.ui = new UI(this, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["HPDbackgroundTexture"].texture!) // (game, pausebutton texture, heart texture, background texture)
@@ -269,7 +264,6 @@ export class Game {
                             }
 
                         }
-                        this.player.update(delta)
                         for (let car of this.cars) {
                             car.update(delta)
                         }
