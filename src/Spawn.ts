@@ -6,15 +6,15 @@ import { Object } from './Object'
 export class Spawn extends PIXI.Sprite {
     private timer = 0
     private delay: number
-    private objectTexture: PIXI.Texture
+    private objectTextures: PIXI.Texture[]
     private game: Game
-    constructor(x: number, y: number, delay: number, texture: PIXI.Texture, game: Game) {
+    constructor(x: number, y: number, delay: number, textures: PIXI.Texture[] = [], game: Game) {
         super()
         this.game = game
         this.x = x
         this.y = y
         this.delay = delay
-        this.objectTexture = texture
+        this.objectTextures = textures
     }
 
 
@@ -22,7 +22,9 @@ export class Spawn extends PIXI.Sprite {
         this.timer += 1
         //console.log(this.timer)
         if (this.timer > this.delay) {
-            let sprite = new Object(this.objectTexture, this.game)
+            let i = Math.round(Math.random())
+            let sprite = new Object(this.objectTextures[i], this.game)
+            sprite.scale.set(7)
             this.timer = 0
             this.game.spawnObject(sprite)
             //console.log("hello")

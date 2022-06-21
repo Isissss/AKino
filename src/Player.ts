@@ -37,28 +37,15 @@ export class Player extends PIXI.Sprite {
             label: "Player"
         }
 
-        this.rigidBody = Matter.Bodies.rectangle(this.x, this.y, this.width, this.height, playerOptions)
+        this.rigidBody = Matter.Bodies.rectangle(this.x, this.y, this.width, this.height-30, playerOptions)
         Matter.Composite.add(game.engine.world, this.rigidBody)
     }
 
     public update(delta: number) {
         // Translate character based on speed
-        Matter.Body.translate(this.rigidBody, {x: this.xspeed, y: this.yspeed})
-        this.x = this.rigidBody.position.x + this.xweather
-        this.y = this.rigidBody.position.y + this.yweather
-
-        if (this.x > window.innerWidth) {
-            this.x = window.innerWidth
-        }
-        if (this.x < 0) {
-            this.x = 0
-        }
-        if (this.y > window.innerHeight) {
-            this.y = window.innerHeight
-        }
-        if (this.y < 0) {
-            this.y = 0
-        }
+        Matter.Body.translate(this.rigidBody, { x: this.xspeed + this.xweather, y: this.yspeed + this.yweather })
+        this.x = this.rigidBody.position.x
+        this.y = this.rigidBody.position.y
         this.counter += delta;
 
         // If player hits car (1.25s cooldown), set to false again so hit can occur again

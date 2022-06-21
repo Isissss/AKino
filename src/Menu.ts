@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js'
 import { Button } from './Button'
 import { EndPage } from './EndPage'
 import { Game } from './game'
+import { QuestlogPage } from './QuestlogPage'
 import { SettingsPage } from './SettingsPage'
 import { StartPage } from './StartPage'
 
@@ -34,7 +35,7 @@ export class Menu extends PIXI.Container {
                 this.leftPage = new StartPage("Start", this.game, this.game.textStyle, uiElements)
                 break;
             case 1: // if in-game Left Page is a questlog
-                this.leftPage = new SettingsPage("Questslog", this.game, this.game.textStyle, uiElements)
+                this.leftPage = new QuestlogPage("Questlog", this.game, this.game.textStyle, uiElements)
                 break;
             case 2:
                 this.leftPage = new EndPage("Game Finished", this.game, this.game.textStyle, uiElements)

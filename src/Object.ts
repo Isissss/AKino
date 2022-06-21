@@ -8,8 +8,8 @@ export class Object extends PIXI.Sprite{
     constructor(texture: PIXI.Texture, game: Game) {
         super(texture)
         this.game  = game
-        this.x = (Math.random() * window.innerWidth) - 5
-        this.y = (Math.random() * window.innerHeight) - 5
+        this.x = Math.random() * (window.innerWidth * 2) - (window.innerWidth / 2)
+        this.y = Math.random() * (window.innerHeight * 2) - (window.innerHeight / 2)
         this.speed = 4;
         this.anchor.set(0.5);
 

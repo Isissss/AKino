@@ -24,8 +24,9 @@ export class HPDisplay extends PIXI.Container {
 
     private addHeart(i: number, fullTexture: PIXI.Texture) {
         let heart = new PIXI.Sprite(fullTexture)
+        heart.scale.set(5.5)
         heart.x = i * (heart.width + 3)
-        heart.y = this.y
+        heart.y = this.y+ 7.5
         heart.tint = 0xff0000
         this.addChild(heart)
         this.hearts.push(heart)

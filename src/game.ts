@@ -4,17 +4,19 @@ import Matter from 'matter-js'
 import sharkImage from "./images/dino.png"
 import bubbleImage from "./images/bubble.png"
 import waterImage from "./images/water.jpg"
+import heartImage from "./images/heart.png"
 //import smokeImage from "./images/smog.png"
 import cityImage from "./images/pixelMap.png"
-import fishImage from "./images/fish.png"
+import SolarImage from "./images/object1.png"
+import WindmillImage from "./images/object2.png"
 import leafImage from "./images/leaf.png"
 import dinoImage from "./images/dino.png"
-import buildingTexture1 from "./images/buildingTexture1.png"
-import buildingTexture2 from "./images/buildingTexture2.png"
-import buildingTexture3 from "./images/buildingTexture3.png"
-import buildingB1 from "./images/buildingB1.png"
-import buildingB2 from "./images/buildingB2.png"
-import buildingB3 from "./images/buildingB3.png"
+import buildingTexture1 from "./images/A1.png"
+import buildingTexture2 from "./images/A2.png"
+import buildingTexture3 from "./images/A3.png"
+import buildingB1 from "./images/B1.png"
+import buildingB2 from "./images/B2.png"
+import buildingB3 from "./images/B3.png"
 import carImage from "./images/car.png"
 import HPDbackgroundImage from "./images/tile.png" // needs replacement / better way of creating the background
 import menuBackgroundImage from "./images/menuBackground.png" // Menu book
@@ -59,6 +61,7 @@ export class Game {
     smog: Smog
     graphics: Graphics
     spawner: Spawn
+    objectTextures: PIXI.Texture[] = []
     objects: Object[] = []
     cars: Car[] = []
     uiTextures: PIXI.Texture[] = []
@@ -94,7 +97,8 @@ export class Game {
         this.loader = new PIXI.Loader()
         this.loader
             .add('sharkTexture', sharkImage)
-            .add('fishTexture', fishImage)
+            .add('solarTexture', SolarImage)
+            .add('windmillTexture', WindmillImage)
             .add('bubbleTexture', bubbleImage)
             .add('waterTexture', waterImage)
             .add('cityTexture', cityImage)
@@ -122,6 +126,7 @@ export class Game {
             .add('uiElement10', uiElement10Image) // cant get spritesheets to work
             .add('uiElement11', uiElement11Image) // cant get spritesheets to work
             .add('uiElement12', uiElement12Image) // cant get spritesheets to work
+            .add('heartTexture', heartImage)
             .add('audioScreenTexture', audioScreenImage)
             .add("backgroundMusicFile", backgroundMusic)
             .add("pickupsoundFile", pickUpSound)
@@ -149,9 +154,15 @@ export class Game {
             this.loader.resources["uiElement12"].texture!
         ]
 
+        //packing object textures into array
+        this.objectTextures = [
+            this.loader.resources["solarTexture"].texture!,
+            this.loader.resources["windmillTexture"].texture!
+        ]
+
         this.player = new Player(this.loader.resources["sharkTexture"].texture!, this)
         this.smog = new Smog(this.player, window.innerWidth)
-        this.spawner = new Spawn(100, 100, (3 * 60), this.loader.resources["fishTexture"].texture!, this)
+        this.spawner = new Spawn(100, 100, (3 * 60), this.objectTextures, this)
 
         //map        
         this.map = new Map(this, this.player)
@@ -174,9 +185,11 @@ export class Game {
         //buildings
         for (let i = 0; i < 5; i++) {
             let building = new Building(100 + (i * 100), 200, this.loader.resources["buildingTexture1"].texture!, this.loader.resources["buildingTexture2"].texture!, this.loader.resources["buildingTexture3"].texture!, this)
+            building.scale.set(7)
             this.buildings.push(building)
 
             let buildingB = new Building(100 + (i * 100), 250, this.loader.resources["buildingB1"].texture!, this.loader.resources["buildingB2"].texture!, this.loader.resources["buildingB3"].texture!, this)
+            buildingB.scale.set(7)
             this.buildings.push(buildingB)
         }
         this.weather = new Weather(this.player, 1000, this)
@@ -198,7 +211,7 @@ export class Game {
         //this.pixi.ticker.add(() => this.update(1000 / 60))
 
         // ui and menu
-        this.ui = new UI(this, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["HPDbackgroundTexture"].texture!) // (game, pausebutton texture, heart texture, background texture)
+        this.ui = new UI(this, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["heartTexture"].texture!) // (game, pausebutton texture, heart texture)
         
         // music
         this.bgMusicFile = this.loader.resources["backgroundMusicFile"].data!
@@ -209,13 +222,17 @@ export class Game {
         this.basicText.y = 100
 
         // stage adding TEMP
-        this.pixi.stage.addChild(background, this.player)
+        this.pixi.stage.addChild(background)
+
         for (const car of this.cars) {
             this.pixi.stage.addChild(car)
         }
         for (const building of this.buildings) {
             this.pixi.stage.addChild(building)
         }
+
+        this.pixi.stage.addChild(this.player)
+
         for (const leaf of this.leafs) {
             this.pixi.stage.addChild(leaf)
         }
