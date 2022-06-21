@@ -9,14 +9,14 @@ export class Building extends PIXI.Sprite {
     private texture2: PIXI.Texture
     private texture3: PIXI.Texture
 
-    constructor(x: number, y: number, texture1: PIXI.Texture, texture2: PIXI.Texture, texture3: PIXI.Texture,  game: Game) {
+    constructor(x: number, y: number, texture1: PIXI.Texture, texture2: PIXI.Texture, texture3: PIXI.Texture, game: Game) {
         super(texture1)
         this.x = x
         this.y = y
         this.anchor.set(0.5);
 
         //Static element of game, for buildings so players cannot pass through
-        this.rigidBody = Matter.Bodies.rectangle(x, y, this.width, this.height, { isStatic: true, label: "Platform" }) //x,y,w,h
+        this.rigidBody = Matter.Bodies.rectangle(x, y, this.width + 5, this.height + 5, { isStatic: true, label: "Platform" }) //x,y,w,h
         Matter.Composite.add(game.engine.world, this.rigidBody)
         console.log(this.rigidBody)
 
