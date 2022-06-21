@@ -4,7 +4,7 @@ import Matter from 'matter-js'
 
 import { Player } from "./Player"
 import { Smog } from './Smog'
-import { Graphics, Spritesheet, TilingSprite } from 'pixi.js'
+import { Graphics } from 'pixi.js'
 import { Spawn } from './Spawn'
 import { Object } from './Object'
 import { Building } from './Building'
@@ -53,7 +53,9 @@ export class Game {
     pickUpSound: HTMLAudioElement
     engine: Matter.Engine
     building: Building
-    bgMusicFile: HTMLAudioElement
+    bgMusicSound: HTMLAudioElement
+    hitByCarSound: HTMLAudioElement
+    ObjectPickupSound: HTMLAudioElement
 
     constructor() {
         this.pixi = new PIXI.Application({ width: window.innerWidth - 5, height: window.innerHeight - 5, backgroundColor: 0xAAAAA })
@@ -155,7 +157,12 @@ export class Game {
         this.ui = new UI(this, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["heartTexture"].texture!) // (game, pausebutton texture, heart texture)
 
         // music
-        this.bgMusicFile = this.loader.resources["backgroundMusicFile"].data!
+        this.bgMusicSound = this.loader.resources["backgroundMusicFile"].data!
+        this.bgMusicSound.volume = this.bgMusicVolume
+        this.hitByCarSound = this.loader.resources["hitsoundFile"].data!;
+        this.hitByCarSound.volume = this.soundFXVolume
+        this.ObjectPickupSound = this.loader.resources["pickupsoundFile"].data!
+        this.ObjectPickupSound.volume = this.soundFXVolume
 
         // basictext?
         this.basicText = new PIXI.Text(`Score ${this.score}`, this.textStyle);
@@ -195,6 +202,7 @@ export class Game {
     private update(delta: number) {
         switch (this.state) {
             case 0:
+                this.updateVolume()
                 break;
             case 1:
                 if (!this.menuActive) { // pixi.stop() might be a better idea
@@ -217,9 +225,8 @@ export class Game {
                         if (this.collision(this.player, this.cars[i]) && !this.player.hit) {
                             //console.log("player touches object")
                             this.player.hitcar()
-                            let hitByCarSound = this.loader.resources["hitsoundFile"].data!
-                            hitByCarSound.play()
-                            hitByCarSound.volume = this.soundFXVolume
+                            this.hitByCarSound.play()
+                            this.hitByCarSound.volume = this.soundFXVolume
                         }
 
                     }
@@ -248,14 +255,17 @@ export class Game {
                         }
                     }
                     this.ui.healthDisplay.update()
+                    this.updateVolume()
                 }
                 break;
             case 2:
+                this.updateVolume()
                 this.ui.visible = false
                 this.togglePauseMenu()
                 this.pixi.stop()
                 break;
             case 3:
+                this.updateVolume()
                 this.ui.visible = false
                 this.togglePauseMenu()
                 this.pixi.stop()
@@ -282,9 +292,13 @@ export class Game {
     }
 
     public set bgMusicVolume(v: number) {
-        let value = v / 100
-        if (value >= 0 && value <= 1) {
-            this._soundFXVolume = value
+        console.log(v)         
+        if (v >= 0 && v <= 1) {
+            this._bgMusicVolume = v
+            console.log(this.bgMusicVolume)
+        }
+        else {
+            console.log(`not a volume: ${v}`)
         }
 
     }
@@ -293,10 +307,13 @@ export class Game {
         return this._soundFXVolume;
     }
 
-    public set soundFXVolume(v: number) {
-        let value = v / 100
-        if (value >= 0 && value <= 1) {
-            this._soundFXVolume = value
+    public set soundFXVolume(v: number) {  
+        console.log(v)      
+        if (v >= 0 && v <= 1) {
+            this._soundFXVolume = v
+            console.log(this.soundFXVolume)
+        }else {
+            console.log(`not a volume: ${v}`)
         }
 
     }
@@ -329,6 +346,13 @@ export class Game {
             && bounds1.x + bounds1.width > bounds2.x
             && bounds1.y < bounds2.y + bounds2.height
             && bounds1.y + bounds1.height > bounds2.y;
+    }
+
+
+    public updateVolume(){
+        this.bgMusicSound.volume = this.bgMusicVolume
+        this.ObjectPickupSound.volume = this.soundFXVolume
+        this.hitByCarSound.volume = this.soundFXVolume
     }
 
 

@@ -21,6 +21,7 @@ export class Object extends PIXI.Sprite{
     }
 
     pickedUp(){
-        this.pickupSound.play()
+        this.game.ObjectPickupSound.volume = this.game.soundFXVolume
+        this.game.ObjectPickupSound.play()
     }
 }
