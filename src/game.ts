@@ -280,7 +280,7 @@ export class Game {
         this.objects.push(object)
     }
 
-    public collision(sprite1: PIXI.Sprite, sprite2: PIXI.Sprite) {
+    private collision(sprite1: PIXI.Sprite, sprite2: PIXI.Sprite) {
         const bounds1 = sprite1.getBounds()
         const bounds2 = sprite2.getBounds()
 
