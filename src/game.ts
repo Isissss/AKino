@@ -11,12 +11,29 @@ import SolarImage from "./images/object1.png"
 import WindmillImage from "./images/object2.png"
 import leafImage from "./images/leaf.png"
 import dinoImage from "./images/dino.png"
-import buildingTexture1 from "./images/A1.png"
-import buildingTexture2 from "./images/A2.png"
-import buildingTexture3 from "./images/A3.png"
+
+import buildingA1 from "./images/A1.png"
+import buildingA2 from "./images/A2.png"
+import buildingA3 from "./images/A3.png"
 import buildingB1 from "./images/B1.png"
 import buildingB2 from "./images/B2.png"
 import buildingB3 from "./images/B3.png"
+import buildingC1 from "./images/C1.png"
+import buildingC2 from "./images/C2.png"
+import buildingC3 from "./images/C3.png"
+import buildingD1 from "./images/D1.png"
+import buildingD2 from "./images/D2.png"
+import buildingD3 from "./images/D3.png"
+import buildingE1 from "./images/E1.png"
+import buildingE2 from "./images/E2.png"
+import buildingE3 from "./images/E3.png"
+import buildingF1 from "./images/F1.png"
+import buildingF2 from "./images/F2.png"
+import buildingF3 from "./images/F3.png"
+
+import buildingTexture1 from "./images/A1.png"
+import buildingTexture2 from "./images/A2.png"
+import buildingTexture3 from "./images/A3.png"
 import carImage from "./images/car.png"
 import HPDbackgroundImage from "./images/tile.png" // needs replacement / better way of creating the background
 import menuBackgroundImage from "./images/menuBackground.png" // Menu book
@@ -62,6 +79,7 @@ export class Game {
     graphics: Graphics
     spawner: Spawn
     objectTextures: PIXI.Texture[] = []
+    buildingTextures: PIXI.Texture[][] = []
     objects: Object[] = []
     cars: Car[] = []
     uiTextures: PIXI.Texture[] = []
@@ -73,9 +91,10 @@ export class Game {
     menuActive: boolean = false; // variable to check if updates need to be run
     score: number = 0
     car: Car
-    car3: Car
-    gameover: boolean
     car2: Car
+    car3: Car
+    car4: Car
+    gameover: boolean
     basicText: PIXI.Text;
     textStyle: PIXI.TextStyle;
     buildings: Building[] = []
@@ -91,7 +110,9 @@ export class Game {
     bgMusicFile: HTMLAudioElement
 
     constructor() {
-        this.pixi = new PIXI.Application({ width: window.innerWidth - 5, height: window.innerHeight - 5, backgroundColor: 0xAAAAA })
+        this.pixi = new PIXI.Application({ width: 1920, height: 940, backgroundColor: 0xAAAAA })
+        console.log(window.innerHeight)
+        console.log(window.innerWidth)
         document.body.appendChild(this.pixi.view)
 
         this.loader = new PIXI.Loader()
@@ -103,12 +124,24 @@ export class Game {
             .add('waterTexture', waterImage)
             .add('cityTexture', cityImage)
             .add('carTexture', carImage)
-            .add('buildingTexture1', buildingTexture1)
-            .add('buildingTexture2', buildingTexture2)
-            .add('buildingTexture3', buildingTexture3)
+            .add('buildingA1', buildingA1)
+            .add('buildingA2', buildingA2)
+            .add('buildingA3', buildingA3)
             .add('buildingB1', buildingB1)
             .add('buildingB2', buildingB2)
             .add('buildingB3', buildingB3)
+            .add('buildingC1', buildingC1)
+            .add('buildingC2', buildingC2)
+            .add('buildingC3', buildingC3)
+            .add('buildingD1', buildingD1)
+            .add('buildingD2', buildingD2)
+            .add('buildingD3', buildingD3)
+            .add('buildingE1', buildingE1)
+            .add('buildingE2', buildingE2)
+            .add('buildingE3', buildingE3)
+            .add('buildingF1', buildingF1)
+            .add('buildingF2', buildingF2)
+            .add('buildingF3', buildingF3)
             .add('leafTexture', leafImage)
             .add('dinoTexture', dinoImage)
             .add('HPDbackgroundTexture', HPDbackgroundImage)
@@ -159,6 +192,16 @@ export class Game {
             this.loader.resources["solarTexture"].texture!,
             this.loader.resources["windmillTexture"].texture!
         ]
+        //packing building textures into array
+        this.buildingTextures = [
+            [this.loader.resources["buildingA1"].texture!, this.loader.resources["buildingA2"].texture!, this.loader.resources["buildingA3"].texture!],
+            [this.loader.resources["buildingB1"].texture!, this.loader.resources["buildingB2"].texture!, this.loader.resources["buildingB3"].texture!],
+            [this.loader.resources["buildingC1"].texture!, this.loader.resources["buildingC2"].texture!, this.loader.resources["buildingC3"].texture!],
+            [this.loader.resources["buildingD1"].texture!, this.loader.resources["buildingD2"].texture!, this.loader.resources["buildingD3"].texture!],
+            [this.loader.resources["buildingE1"].texture!, this.loader.resources["buildingE2"].texture!, this.loader.resources["buildingE3"].texture!],
+            [this.loader.resources["buildingF1"].texture!, this.loader.resources["buildingF2"].texture!, this.loader.resources["buildingF3"].texture!]
+        ]
+
 
         this.player = new Player(this.loader.resources["sharkTexture"].texture!, this)
         this.smog = new Smog(this.player, window.innerWidth)
@@ -173,24 +216,61 @@ export class Game {
         let background = new PIXI.Sprite(this.loader.resources["cityTexture"].texture!)
         background.anchor.set(0,0)
         background.position.set(-window.innerWidth/2,-window.innerHeight/2)
-        background.scale.set(4.475, 3.825)
+        background.scale.set(4.48, 3.6)
 
         //cars
-        this.car = new Car(this.loader.resources["carTexture"].texture!, false, 1200, 625)
-        this.car3 = new Car(this.loader.resources["carTexture"].texture!, false, 1600, 625)
-        this.car2 = new Car(this.loader.resources["carTexture"].texture!, true, 640, -300)
+        this.car = new Car(this.loader.resources["carTexture"].texture!, 1, -1000, 60)
+        this.car2 = new Car(this.loader.resources["carTexture"].texture!, 2, 1960, -500)
+        this.car3 = new Car(this.loader.resources["carTexture"].texture!, 3, 2900, 750)
+        this.car4 = new Car(this.loader.resources["carTexture"].texture!, 4, -50, 1450)
+        console.log(this.car2)
+        //this.car3 = new Car(this.loader.resources["carTexture"].texture!, false, 1600, 625)
+        //this.car2 = new Car(this.loader.resources["carTexture"].texture!, true, 640, -300)
 
-        this.cars.push(this.car, this.car2, this.car3)
+        this.cars.push(this.car, this.car2, this.car3, this.car4)
 
         //buildings
         for (let i = 0; i < 5; i++) {
-            let building = new Building(100 + (i * 100), 200, this.loader.resources["buildingTexture1"].texture!, this.loader.resources["buildingTexture2"].texture!, this.loader.resources["buildingTexture3"].texture!, this)
+            let randomizer = Math.round(Math.random() * 5)
+            console.log(randomizer)
+            let building = new Building(Math.random() * 700 + 190, Math.random() * 300 - 390, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this)
             building.scale.set(7)
             this.buildings.push(building)
-
-            let buildingB = new Building(100 + (i * 100), 250, this.loader.resources["buildingB1"].texture!, this.loader.resources["buildingB2"].texture!, this.loader.resources["buildingB3"].texture!, this)
-            buildingB.scale.set(7)
-            this.buildings.push(buildingB)
+        }
+        for (let i = 0; i < 5; i++) {
+            let randomizer = Math.round(Math.random() * 5)
+            console.log(randomizer)
+            let building = new Building(Math.random() * 600 - 920, Math.random() * 300 + 340, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this)
+            building.scale.set(7)
+            this.buildings.push(building)
+        }
+        for (let i = 0; i < 5; i++) {
+            let randomizer = Math.round(Math.random() * 5)
+            console.log(randomizer)
+            let building = new Building(Math.random() * 700 + 120, Math.random() * 300 + 1090, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this)
+            building.scale.set(7)
+            this.buildings.push(building)
+        }
+        for (let i = 0; i < 5; i++) {
+            let randomizer = Math.round(Math.random() * 5)
+            console.log(randomizer)
+            let building = new Building(Math.random() * 700 + 1090, Math.random() * 300 + 1090, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this)
+            building.scale.set(7)
+            this.buildings.push(building)
+        }
+        for (let i = 0; i < 5; i++) {
+            let randomizer = Math.round(Math.random() * 5)
+            console.log(randomizer)
+            let building = new Building(Math.random() * 700 + 1090, Math.random() * 300 - 390, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this)
+            building.scale.set(7)
+            this.buildings.push(building)
+        }
+        for (let i = 0; i < 5; i++) {
+            let randomizer = Math.round(Math.random() * 5)
+            console.log(randomizer)
+            let building = new Building(Math.random() * 600 + 2290, Math.random() * 300 + 340, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this)
+            building.scale.set(7)
+            this.buildings.push(building)
         }
         this.weather = new Weather(this.player, 1000, this)
         for (let i = 0; i < 4; i++) {
@@ -200,6 +280,7 @@ export class Game {
             this.leafs.push(leaf)
             this.pixi.stage.addChild(leaf)
         }
+        
 
         this.textStyle = new PIXI.TextStyle({
             fontSize: 31,

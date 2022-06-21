@@ -43,7 +43,8 @@ export class Player extends PIXI.Sprite {
 
     public update(delta: number) {
         // Translate character based on speed
-        Matter.Body.translate(this.rigidBody, { x: this.xspeed + this.xweather, y: this.yspeed + this.yweather })
+        //Matter.Body.translate(this.rigidBody, { x: this.xspeed + this.xweather, y: this.yspeed + this.yweather })
+        Matter.Body.translate(this.rigidBody, { x: this.xspeed, y: this.yspeed})
         this.x = this.rigidBody.position.x
         this.y = this.rigidBody.position.y
         this.counter += delta;
@@ -52,6 +53,8 @@ export class Player extends PIXI.Sprite {
         if (this.counter > 125 && this.hit) {
             this.hit = false
         }
+
+        console.log("x = " + this.x + "y = " + this.y)
     }
 
     // Set counter to 0 for cooldown,

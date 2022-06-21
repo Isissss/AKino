@@ -1,0 +1,1 @@
+{"mappings":"AAAA;;;;;;;AAOA","sources":["src/style.css"],"sourcesContent":["body {\r\n    background-color: rgb(27, 25, 45);\r\n    margin: 0;\r\n    padding: 0;\r\n    overflow: hidden; /* Hide scrollbars */\r\n}\r\n\r\ncanvas {\r\n    width:auto;\r\n    height:100vh;\r\n}"],"names":[],"version":3,"file":"index.fcf714d7.css.map","sourceRoot":"/__parcel_source_root/"}
