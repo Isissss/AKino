@@ -82,8 +82,8 @@ export class Game {
     leafs: Leaf[] = []
     weather: Weather
     city: PIXI.TilingSprite
-    soundFX: number = 0.5// temp placeholder for volume Sound Effects => number
-    bgMusic: number = 0.5 // temp placeholder for volume Background Music => number
+    private _soundFXVolume: number = 0.5// temp placeholder for volume Sound Effects => number
+    private _bgMusicVolume: number = 0.5 // temp placeholder for volume Background Music => number
     fontSize: number = 20 // placeholder for fontsize => number
     pickUpSound: HTMLAudioElement
     engine: Matter.Engine
@@ -278,6 +278,7 @@ export class Game {
                                 this.player.hitcar()
                                 let hitByCarSound = this.loader.resources["hitsoundFile"].data!
                                 hitByCarSound.play()
+                                hitByCarSound.volume = this.soundFXVolume
                             }
 
                         }
@@ -321,9 +322,6 @@ export class Game {
             }
 
         }
-    // else {
-    //     this.pixi.stop() // needs a way to start pixi again though
-    // }
 
 
     public get state() : number {
@@ -338,13 +336,36 @@ export class Game {
         }
     }
 
+    public get bgMusicVolume() : number {
+        return this._bgMusicVolume;
+    }
 
+    public set bgMusicVolume(v: number) {
+        let value = v/100
+        if(value >= 0 && value <= 1){
+            this._soundFXVolume = value
+        }
+
+    }
+
+    public get soundFXVolume() : number {
+        return this._soundFXVolume;
+    }
+
+    public set soundFXVolume(v: number) {
+        let value = v/100
+        if(value >= 0 && value <= 1){
+            this._soundFXVolume = value
+        }
+
+    }
 
     public updateWeather(x: number, y: number) {
         for (let i = 0; i < this.leafs.length; i++) {
             this.leafs[i].changeWeather(x, y)
         }
     }
+
 
     public endGame(state:number) {
         this.state = state
@@ -358,6 +379,7 @@ export class Game {
         this.objects.push(object)
     }
 
+
     private collision(sprite1: PIXI.Sprite, sprite2: PIXI.Sprite) {
         const bounds1 = sprite1.getBounds()
         const bounds2 = sprite2.getBounds()
@@ -367,6 +389,7 @@ export class Game {
             && bounds1.y < bounds2.y + bounds2.height
             && bounds1.y + bounds1.height > bounds2.y;
     }
+
 
     public togglePauseMenu() {
         switch (this.menuActive) {
@@ -395,6 +418,7 @@ export class Game {
 
     }
 }
+
 
 let g = new Game
 

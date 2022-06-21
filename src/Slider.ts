@@ -19,7 +19,7 @@ export class Slider extends PIXI.Container {
     constructor(game: Game, name: string, value: number, increments: number, textures: PIXI.Texture[]) {
         super()
         this.name = name
-        this.value = value
+        this.value = value * 100
         this.textures = textures
         this.displayName = new PIXI.Text(this.name, this.style)
         this.minusButton = new MinusButton(this.game, this, increments, this.textures[0])
