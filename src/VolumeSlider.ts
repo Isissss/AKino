@@ -17,13 +17,10 @@ export class VolumeSlider extends Slider {
     public update() {
         switch (this.name){            
             case "Geluidseffecten":
-
-                console.log(this.value)
                 this.game.soundFXVolume = (this.value/100)
                 this.game.updateVolume()
                 break;
             case "Achtergrondmuziek":
-                console.log(this.value)
                 this.game.bgMusicVolume = (this.value/100)
                 this.game.updateVolume()
                 break;

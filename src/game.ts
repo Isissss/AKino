@@ -40,16 +40,15 @@ export class Game {
     car3: Car
     gameover: boolean
     car2: Car
-    basicText: PIXI.Text;
     textStyle: PIXI.TextStyle;
     buildings: Building[] = []
     private dinoTextures: PIXI.Texture[] = [];
     leafs: Leaf[] = []
     weather: Weather
     city: PIXI.TilingSprite
-    private _soundFXVolume: number = 0.5// temp placeholder for volume Sound Effects => number
-    private _bgMusicVolume: number = 0.5 // temp placeholder for volume Background Music => number
-    fontSize: number = 20 // placeholder for fontsize => number
+    private _soundFXVolume: number = 0.5 //Volume for sound Effects
+    private _bgMusicVolume: number = 0.5 //Volume for Background Music
+    private _fontSize: number = 20 //Fontsize for text
     pickUpSound: HTMLAudioElement
     engine: Matter.Engine
     building: Building
@@ -74,12 +73,14 @@ export class Game {
         for (let i = 1; i < 6; i++) {
             const texture = PIXI.Texture.from(`dino_${i}.png`);
             this.dinoTextures.push(texture);
-            console.log(this.dinoTextures)
+            //console.log(this.dinoTextures)
         }
     }
 
     loadCompleted() {
+        //create Dino animation frames
         this.createDinoFrames()
+
         //packing UI textures into array
         this.uiTextures = [
             this.loader.resources["uiElement0"].texture!,
@@ -102,6 +103,8 @@ export class Game {
             this.loader.resources["solarTexture"].texture!,
             this.loader.resources["windmillTexture"].texture!
         ]
+
+        //initialize player, smog, object spawner
 
         this.player = new Player(this.dinoTextures, this)
         this.smog = new Smog(this.player, window.innerWidth)
@@ -145,18 +148,18 @@ export class Game {
         }
 
         this.textStyle = new PIXI.TextStyle({
-            fontSize: 31,
+            fontSize: this.fontSize,
             fontWeight: "bold",
             trim: false
         });
 
+        //set Matter.js gravity
         this.engine.gravity.y = 0
-        //this.pixi.ticker.add(() => this.update(1000 / 60))
 
-        // ui and menu
+        //ui and menu
         this.ui = new UI(this, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["heartTexture"].texture!) // (game, pausebutton texture, heart texture)
 
-        // music
+        //audio
         this.bgMusicSound = this.loader.resources["backgroundMusicFile"].data!
         this.bgMusicSound.volume = this.bgMusicVolume
         this.hitByCarSound = this.loader.resources["hitsoundFile"].data!;
@@ -164,12 +167,7 @@ export class Game {
         this.ObjectPickupSound = this.loader.resources["pickupsoundFile"].data!
         this.ObjectPickupSound.volume = this.soundFXVolume
 
-        // basictext?
-        this.basicText = new PIXI.Text(`Score ${this.score}`, this.textStyle);
-        this.basicText.x = 100
-        this.basicText.y = 100
-
-        // stage adding TEMP
+        //sorted stage adding 
         this.pixi.stage.addChild(background)
 
         for (const car of this.cars) {
@@ -186,25 +184,24 @@ export class Game {
         }
 
         this.pixi.stage.addChild(this.smog, this.ui)
-        this.pixi.stage.addChild(this.basicText)
 
-        //create Start Screen
+        //create start screen
         this.startscreen = new StartScreen(this, this.loader.resources["cityTexture"].texture!, this.loader.resources["menuBackgroundTexture"].texture!, this.uiTextures)
         this.pixi.stage.addChild(this.startscreen)
         this.menuActive = true;
         this.ui.visible = false;
 
-
+        //start running the ticker
         this.pixi.ticker.add((delta) => this.update(delta))
 
     }
 
     private update(delta: number) {
         switch (this.state) {
-            case 0:
+            case 0: //startscreen state
                 this.updateVolume()
                 break;
-            case 1:
+            case 1: //in-game state
                 if (!this.menuActive) { // pixi.stop() might be a better idea
                     this.spawner.update()
                     this.player.update(delta)
@@ -223,7 +220,6 @@ export class Game {
 
                     for (let i = 0; i < this.cars.length; i++) {
                         if (this.collision(this.player, this.cars[i]) && !this.player.hit) {
-                            //console.log("player touches object")
                             this.player.hitcar()
                             this.hitByCarSound.play()
                             this.hitByCarSound.volume = this.soundFXVolume
@@ -244,8 +240,6 @@ export class Game {
                                 this.endGame(2)
                             }
 
-                            this.basicText.text = `Score ${this.score}`
-
                             //console.log("player touches object")
 
 
@@ -258,13 +252,13 @@ export class Game {
                     this.updateVolume()
                 }
                 break;
-            case 2:
+            case 2: //finished game state
                 this.updateVolume()
                 this.ui.visible = false
                 this.togglePauseMenu()
                 this.pixi.stop()
                 break;
-            case 3:
+            case 3://game over state
                 this.updateVolume()
                 this.ui.visible = false
                 this.togglePauseMenu()
@@ -292,10 +286,9 @@ export class Game {
     }
 
     public set bgMusicVolume(v: number) {
-        console.log(v)         
+                
         if (v >= 0 && v <= 1) {
-            this._bgMusicVolume = v
-            console.log(this.bgMusicVolume)
+            this._bgMusicVolume = v            
         }
         else {
             console.log(`not a volume: ${v}`)
@@ -307,15 +300,25 @@ export class Game {
         return this._soundFXVolume;
     }
 
-    public set soundFXVolume(v: number) {  
-        console.log(v)      
+    public set soundFXVolume(v: number) {                
         if (v >= 0 && v <= 1) {
-            this._soundFXVolume = v
-            console.log(this.soundFXVolume)
+            this._soundFXVolume = v            
         }else {
             console.log(`not a volume: ${v}`)
         }
 
+    }
+
+    public get fontSize(): number {
+        return this._fontSize;
+    }
+
+    public set fontSize(v: number) {      
+        if (v >= 0 && v <= 40) {
+            this._fontSize = v
+        }else {
+            console.log(`fontsize too large: ${v}`)
+        }
     }
 
     public updateWeather(x: number, y: number) {

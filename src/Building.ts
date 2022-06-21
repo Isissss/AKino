@@ -18,7 +18,6 @@ export class Building extends PIXI.Sprite {
         //Static element of game, for buildings so players cannot pass through
         this.rigidBody = Matter.Bodies.rectangle(x, y, this.width + 5, this.height + 5, { isStatic: true, label: "Platform" }) //x,y,w,h
         Matter.Composite.add(game.engine.world, this.rigidBody)
-        console.log(this.rigidBody)
 
         this.texture1 = texture1
         this.texture2 = texture2

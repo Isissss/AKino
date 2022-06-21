@@ -18,7 +18,5 @@ export class MinusButton extends Button {
         this.parent.value = this.parent.value + (this.increments * -1)
         this.parent.update()
         }
-        //console.log(`${this.parent.name} - Clicked`)
-
     }
 }

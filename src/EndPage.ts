@@ -25,7 +25,7 @@ export class EndPage extends BookPage {
         for(const name of this.names) {
             const credit = new PIXI.Text(name, game.textStyle)
             credit.y = credit.height*i +90
-            credit.scale.set(0.5)
+            credit.scale.set(0.8)
             this.addChild(credit)
             this.credits.push(credit)
             i++
