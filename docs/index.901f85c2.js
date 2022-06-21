@@ -519,25 +519,11 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Game", ()=>Game
 );
 var _pixiJs = require("pixi.js");
-var _dinoPng = require("./images/dino.png");
-var _dinoPngDefault = parcelHelpers.interopDefault(_dinoPng);
-var _bubblePng = require("./images/bubble.png");
-var _bubblePngDefault = parcelHelpers.interopDefault(_bubblePng);
-var _cityPng = require("./images/city.png");
-var _cityPngDefault = parcelHelpers.interopDefault(_cityPng);
-var _fishPng = require("./images/fish.png");
-var _fishPngDefault = parcelHelpers.interopDefault(_fishPng);
-var _carPng = require("./images/car.png");
-var _carPngDefault = parcelHelpers.interopDefault(_carPng);
-var _purplePng = require("./images/purple.png");
-var _purplePngDefault = parcelHelpers.interopDefault(_purplePng);
-var _greenJpg = require("./images/green.jpg");
-var _greenJpgDefault = parcelHelpers.interopDefault(_greenJpg);
-var _pinkJpg = require("./images/pink.jpg");
-var _pinkJpgDefault = parcelHelpers.interopDefault(_pinkJpg);
 var _player = require("./Player");
 var _color = require("./Color");
+var _assetLoader = require("./AssetLoader");
 class Game {
+    dinoTextures = [];
     score = 0;
     constructor(){
         this.pixi = new _pixiJs.Application({
@@ -546,29 +532,34 @@ class Game {
             backgroundColor: 768955
         });
         document.body.appendChild(this.pixi.view);
-        this.loader = new _pixiJs.Loader();
-        this.loader.add('sharkTexture', _dinoPngDefault.default).add('fishTexture', _fishPngDefault.default).add('bubbleTexture', _bubblePngDefault.default).add('cityTexture', _cityPngDefault.default).add('carTexture', _carPngDefault.default).add('purpleTexture', _purplePngDefault.default).add('pinkTexture', _pinkJpgDefault.default).add('greenTexture', _greenJpgDefault.default);
-        this.loader.load(()=>this.loadCompleted()
-        );
+        this.assetLoader = new _assetLoader.AssetLoader(this);
+    }
+    createDinoFrames() {
+        for(let i = 1; i < 6; i++){
+            const texture = _pixiJs.Texture.from(`dino_${i}.png`);
+            this.dinoTextures.push(texture);
+            console.log(this.dinoTextures);
+        }
     }
     loadCompleted() {
-        this.player = new _player.Player(this, this.loader.resources["sharkTexture"].texture);
+        this.createDinoFrames();
+        this.player = new _player.Player(this, this.dinoTextures);
         this.pixi.stage.addChild(this.player);
-        this.color = new _color.Color(this.loader.resources["purpleTexture"].texture, 100, 100, 200, this.player);
-        this.color2 = new _color.Color(this.loader.resources["pinkTexture"].texture, 200, 100, 600, this.player);
-        this.color3 = new _color.Color(this.loader.resources["greenTexture"].texture, 300, 100, 0, this.player);
+        this.color = new _color.Color(this.assetLoader.resources["purpleTexture"].texture, 100, 100, 200, this.player);
+        this.color2 = new _color.Color(this.assetLoader.resources["pinkTexture"].texture, 200, 100, 600, this.player);
+        this.color3 = new _color.Color(this.assetLoader.resources["greenTexture"].texture, 300, 100, 0, this.player);
         this.pixi.stage.addChild(this.color);
         this.pixi.stage.addChild(this.color2);
         this.pixi.stage.addChild(this.color3);
         this.pixi.ticker.add((delta)=>this.update(delta)
         );
-        this.textStyle = new _pixiJs.TextStyle({
-            fontSize: 31,
-            fontWeight: "bold",
-            trim: false
-        });
-        this.basicText = new _pixiJs.Text(`Levens ${this.player.health}`, this.textStyle);
-        this.pixi.stage.addChild(this.basicText);
+    // this.textStyle = new PIXI.TextStyle({
+    //     fontSize: 31,
+    //     fontWeight: "bold",
+    //     trim: false
+    // });
+    // this.basicText = new PIXI.Text(`Levens ${this.player.health}`, this.textStyle);
+    // this.pixi.stage.addChild(this.basicText)
     }
     update(delta) {
         this.player.update(delta);
@@ -576,7 +567,7 @@ class Game {
 }
 let g = new Game;
 
-},{"pixi.js":"dsYej","./images/dino.png":"c8KfO","./images/bubble.png":"iMP3P","./images/city.png":"a2rT6","./images/fish.png":"3tLwD","./images/car.png":"dnXSN","./Player":"8YLWx","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./Color":"MxnPf","./images/purple.png":"8urw9","./images/green.jpg":"dkC8t","./images/pink.jpg":"b5kpT"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./Player":"8YLWx","./Color":"MxnPf","./AssetLoader":"8VDU2"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37091,7 +37082,185 @@ function __extends(d, b) {
     return AnimatedSprite1;
 }(_sprite.Sprite);
 
-},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"c8KfO":[function(require,module,exports) {
+},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8YLWx":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Player", ()=>Player
+);
+var _pixiJs = require("pixi.js");
+class Player extends _pixiJs.AnimatedSprite {
+    xspeed = 0;
+    yspeed = 0;
+    hit = false;
+    health = 3;
+    constructor(game, animation){
+        super(animation);
+        this.animationSpeed = 0.1;
+        // this.loop = false
+        this.filter = new _pixiJs.filters.ColorMatrixFilter();
+        window.addEventListener("keydown", (e)=>this.onKeyDown(e)
+        );
+        window.addEventListener("keyup", (e)=>this.onKeyUp(e)
+        );
+    }
+    update(delta) {
+        super.update(delta);
+        this.x += this.xspeed;
+        this.y += this.yspeed;
+        if (this.x > window.innerWidth) this.x = window.innerWidth;
+        if (this.x < 0) this.x = 0;
+        if (this.y > window.innerHeight) this.y = window.innerHeight;
+        if (this.y < 0) this.y = 0;
+        this.counter += delta;
+        // If player hits car (1.25s cooldown), set to false again so hit can occur again
+        if (this.counter > 125 && this.hit == true) this.hit = false;
+        this.health;
+    }
+    // Set counter to 0 for cooldown,
+    hitcar() {
+        this.counter = 0;
+        this.hit = true;
+        this.health--;
+    }
+    setFilter(tint) {
+        this.filters = [
+            this.filter
+        ];
+        this.filter.hue(tint) // HUE filter
+        ;
+    }
+    jump() {
+        console.log("jump!");
+    }
+    onKeyDown(e) {
+        switch(e.key.toUpperCase()){
+            case " ":
+                this.jump();
+                break;
+            case "A":
+            case "ARROWLEFT":
+                this.xspeed = -4;
+                this.scale.set(-1, 1);
+                this.play();
+                break;
+            case "D":
+            case "ARROWRIGHT":
+                this.xspeed = 4;
+                this.scale.set(1);
+                this.play();
+                break;
+            case "W":
+            case "ARROWUP":
+                this.yspeed = -4;
+                this.play();
+                break;
+            case "S":
+            case "ARROWDOWN":
+                this.yspeed = 4;
+                this.play();
+                break;
+        }
+    }
+    onKeyUp(e) {
+        switch(e.key.toUpperCase()){
+            case " ":
+                break;
+            case "A":
+            case "D":
+            case "ARROWLEFT":
+            case "ARROWRIGHT":
+                this.xspeed = 0;
+                this.stop();
+                break;
+            case "W":
+            case "S":
+            case "ARROWUP":
+            case "ARROWDOWN":
+                this.yspeed = 0;
+                this.stop();
+                break;
+        }
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"MxnPf":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Color", ()=>Color
+);
+var _pixiJs = require("pixi.js");
+class Color extends _pixiJs.Sprite {
+    constructor(texture, x, y, tint, player){
+        super(texture);
+        this.x = x;
+        this.y = y;
+        this.player = player;
+        this.width = 50;
+        this.height = 50;
+        this.interactive = true // make clickable
+        ;
+        this.buttonMode = true // show hand cursor
+        ;
+        this.on('pointerdown', ()=>this.onClick()
+        );
+        this.color = tint;
+    }
+    onClick() {
+        this.player.setFilter(this.color);
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8VDU2":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "AssetLoader", ()=>AssetLoader
+);
+var _pixiJs = require("pixi.js");
+var _dinoPng = require("./images/dino.png");
+var _dinoPngDefault = parcelHelpers.interopDefault(_dinoPng);
+var _bubblePng = require("./images/bubble.png");
+var _bubblePngDefault = parcelHelpers.interopDefault(_bubblePng);
+var _cityPng = require("./images/city.png");
+var _cityPngDefault = parcelHelpers.interopDefault(_cityPng);
+var _fishPng = require("./images/fish.png");
+var _fishPngDefault = parcelHelpers.interopDefault(_fishPng);
+var _carPng = require("./images/car.png");
+var _carPngDefault = parcelHelpers.interopDefault(_carPng);
+var _purplePng = require("./images/purple.png");
+var _purplePngDefault = parcelHelpers.interopDefault(_purplePng);
+var _greenJpg = require("./images/green.jpg");
+var _greenJpgDefault = parcelHelpers.interopDefault(_greenJpg);
+var _pinkJpg = require("./images/pink.jpg");
+var _pinkJpgDefault = parcelHelpers.interopDefault(_pinkJpg);
+class AssetLoader extends _pixiJs.Loader {
+    constructor(game){
+        super();
+        this.game = game;
+        this.graphics = new _pixiJs.Graphics();
+        game.pixi.stage.addChild(this.graphics);
+        this.add('sharkTexture', _dinoPngDefault.default).add('fishTexture', _fishPngDefault.default).add('bubbleTexture', _bubblePngDefault.default).add('cityTexture', _cityPngDefault.default).add('carTexture', _carPngDefault.default).add('purpleTexture', _purplePngDefault.default).add('pinkTexture', _pinkJpgDefault.default).add('greenTexture', _greenJpgDefault.default).add("spritesheet", "dino.json");
+        this.onProgress.add((loader)=>this.showProgress(loader)
+        );
+        this.onError.add((arg)=>{
+            console.error(arg);
+        });
+        this.load(()=>{
+            this.graphics.destroy();
+            game.loadCompleted();
+        });
+    }
+    showProgress(loader) {
+        console.log(`Loading ${loader.progress}%`);
+        let offset = 50;
+        let barWidth = (this.game.pixi.screen.width - offset * 2) * (loader.progress / 100);
+        this.graphics.clear();
+        this.graphics.beginFill(3333705);
+        this.graphics.drawRect(offset, this.game.pixi.screen.height / 2 - 20, barWidth, 40);
+        this.graphics.endFill();
+    }
+}
+
+},{"pixi.js":"dsYej","./images/dino.png":"c8KfO","./images/bubble.png":"iMP3P","./images/city.png":"a2rT6","./images/fish.png":"3tLwD","./images/car.png":"dnXSN","./images/purple.png":"8urw9","./images/green.jpg":"dkC8t","./images/pink.jpg":"b5kpT","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"c8KfO":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "dino.174d8237.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
@@ -37140,129 +37309,7 @@ module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "fish.5
 },{"./helpers/bundle-url":"lgJ39"}],"dnXSN":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "car.80a2d4f3.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"8YLWx":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Player", ()=>Player
-);
-var _pixiJs = require("pixi.js");
-class Player extends _pixiJs.Sprite {
-    xspeed = 0;
-    yspeed = 0;
-    hit = false;
-    health = 3;
-    constructor(game, texture){
-        super(texture);
-        this.x = 100;
-        this.y = 100;
-        this.game = game;
-        this.filter = new _pixiJs.filters.ColorMatrixFilter();
-        window.addEventListener("keydown", (e)=>this.onKeyDown(e)
-        );
-        window.addEventListener("keyup", (e)=>this.onKeyUp(e)
-        );
-    }
-    update(delta) {
-        this.x += this.xspeed;
-        this.y += this.yspeed;
-        if (this.x > window.innerWidth) this.x = window.innerWidth;
-        if (this.x < 0) this.x = 0;
-        if (this.y > window.innerHeight) this.y = window.innerHeight;
-        if (this.y < 0) this.y = 0;
-        this.counter += delta;
-        // If player hits car (1.25s cooldown), set to false again so hit can occur again
-        if (this.counter > 125 && this.hit == true) this.hit = false;
-        this.health;
-    }
-    // Set counter to 0 for cooldown,
-    hitcar() {
-        this.counter = 0;
-        this.hit = true;
-        this.health--;
-    }
-    setFilter(tint) {
-        this.filters = [
-            this.filter
-        ];
-        this.filter.hue(tint, false) // HUE filter
-        ;
-    }
-    jump() {
-        console.log("jump!");
-    }
-    onKeyDown(e) {
-        switch(e.key.toUpperCase()){
-            case " ":
-                this.jump();
-                break;
-            case "A":
-            case "ARROWLEFT":
-                this.xspeed = -4;
-                this.scale.set(0.25);
-                break;
-            case "D":
-            case "ARROWRIGHT":
-                this.xspeed = 4;
-                this.scale.set(-0.25, 0.25);
-                break;
-            case "W":
-            case "ARROWUP":
-                this.yspeed = -4;
-                break;
-            case "S":
-            case "ARROWDOWN":
-                this.yspeed = 4;
-                break;
-        }
-    }
-    onKeyUp(e) {
-        switch(e.key.toUpperCase()){
-            case " ":
-                break;
-            case "A":
-            case "D":
-            case "ARROWLEFT":
-            case "ARROWRIGHT":
-                this.xspeed = 0;
-                break;
-            case "W":
-            case "S":
-            case "ARROWUP":
-            case "ARROWDOWN":
-                this.yspeed = 0;
-                break;
-        }
-    }
-}
-
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"MxnPf":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Color", ()=>Color
-);
-var _pixiJs = require("pixi.js");
-class Color extends _pixiJs.Sprite {
-    constructor(texture, x, y, tint, player){
-        super(texture);
-        this.x = x;
-        this.y = y;
-        this.player = player;
-        this.width = 50;
-        this.height = 50;
-        this.interactive = true // make clickable
-        ;
-        this.buttonMode = true // show hand cursor
-        ;
-        this.on('pointerdown', ()=>this.onClick()
-        );
-        this.color = tint;
-    }
-    onClick() {
-        this.player.setFilter(this.color);
-    }
-}
-
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8urw9":[function(require,module,exports) {
+},{"./helpers/bundle-url":"lgJ39"}],"8urw9":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "purple.6c30f144.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"dkC8t":[function(require,module,exports) {
