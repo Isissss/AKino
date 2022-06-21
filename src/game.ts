@@ -35,6 +35,7 @@ import audioScreenImage from "./images/audioscreen.png"
 
 import backgroundMusic from "url:./sound/relaxing.mp3"
 import pickUpSound from "url:./sound/pickupsound.mp3"
+import hitSound from "url:./sound/hitsound.mp3"
 
 import { Player } from "./Player"
 import { Smog } from './Smog'
@@ -84,6 +85,7 @@ export class Game {
     pickUpSound: HTMLAudioElement
     engine: Matter.Engine
     building: Building
+    bgMusicFile: HTMLAudioElement
 
     constructor() {
         this.pixi = new PIXI.Application({ width: window.innerWidth - 5, height: window.innerHeight - 5, backgroundColor: 0xAAAAA })
@@ -123,6 +125,7 @@ export class Game {
             .add('audioScreenTexture', audioScreenImage)
             .add("backgroundMusicFile", backgroundMusic)
             .add("pickupsoundFile", pickUpSound)
+            .add("hitsoundFile", hitSound)
         this.loader.load(() => this.loadCompleted())
 
         this.engine = Matter.Engine.create()
@@ -130,10 +133,6 @@ export class Game {
     }
 
     loadCompleted() {
-
-        let bgMusic = this.loader.resources["backgroundMusicFile"].data!
-        bgMusic.play()
-
         //packing UI textures into array
         this.uiTextures = [
             this.loader.resources["uiElement0"].texture!,
@@ -205,8 +204,11 @@ export class Game {
 
         // ui and menu
         this.ui = new UI(this, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["HPDbackgroundTexture"].texture!) // (game, pausebutton texture, heart texture, background texture)
+        
+        // music
+        this.bgMusicFile = this.loader.resources["backgroundMusicFile"].data!
 
-        //basictext?
+        // basictext?
         this.basicText = new PIXI.Text(`Score ${this.score}`, this.textStyle);
         this.basicText.x = 100
         this.basicText.y = 100
