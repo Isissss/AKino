@@ -49,7 +49,7 @@ export class Player extends PIXI.AnimatedSprite {
     } else if (this.x + xspeed < -(this.game.pixi.view.width / 2)) {
       return 0
     } else {
-    return this.xspeed
+    return this.xspeed + this.xweather
     }
   }
   borderChecky(yspeed: number){
@@ -58,7 +58,7 @@ export class Player extends PIXI.AnimatedSprite {
     } else if (this.y + yspeed < -(this.game.pixi.view.height / 2)) {
       return 0
     } else {
-    return this.yspeed
+    return this.yspeed + this.yweather
     }
   }
 

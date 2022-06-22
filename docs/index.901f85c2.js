@@ -717,7 +717,7 @@ class Game {
         //set Matter.js gravity
         this.engine.gravity.y = 0;
         //ui and menu
-        this.ui = new _ui.UI(this, this.loader.resources["bubbleTexture"].texture, this.loader.resources["heartTexture"].texture) // (game, pausebutton texture, heart texture)
+        this.ui = new _ui.UI(this, this.loader.resources["pauseTexture"].texture, this.loader.resources["heartTexture"].texture) // (game, pausebutton texture, heart texture)
         ;
         //audio
         this.bgMusicSound = this.loader.resources["backgroundMusicFile"].data;
@@ -46891,12 +46891,12 @@ class Player extends _pixiJs.AnimatedSprite {
     borderCheckx(xspeed) {
         if (this.x + xspeed > this.game.pixi.view.width / 2 * 3) return 0;
         else if (this.x + xspeed < -(this.game.pixi.view.width / 2)) return 0;
-        else return this.xspeed;
+        else return this.xspeed + this.xweather;
     }
     borderChecky(yspeed) {
         if (this.y + yspeed > this.game.pixi.view.height / 2 * 3) return 0;
         else if (this.y + yspeed < -(this.game.pixi.view.height / 2)) return 0;
-        else return this.yspeed;
+        else return this.yspeed + this.yweather;
     }
     update(delta) {
         super.update(delta);
@@ -47290,6 +47290,7 @@ class UI extends _pixiJs.Container {
         this.pauseButton = new _button.Button(this.game, [
             pauseButtonTexture
         ], 0, 0);
+        this.pauseButton.scale.set(3);
         this.healthDisplay = new _hpdisplay.HPDisplay(this.game, heartTexture, window.innerWidth, 0);
         // add all elements to the displayObject container
         this.addChild(this.pauseButton, this.healthDisplay);
@@ -47860,6 +47861,8 @@ var _dinoPng = require("./images/dino.png");
 var _dinoPngDefault = parcelHelpers.interopDefault(_dinoPng);
 var _bubblePng = require("./images/bubble.png");
 var _bubblePngDefault = parcelHelpers.interopDefault(_bubblePng);
+var _pauseButtonPng = require("./images/pauseButton.png");
+var _pauseButtonPngDefault = parcelHelpers.interopDefault(_pauseButtonPng);
 var _waterJpg = require("./images/water.jpg");
 var _waterJpgDefault = parcelHelpers.interopDefault(_waterJpg);
 var _heartPng = require("./images/heart.png");
@@ -47949,7 +47952,7 @@ class AssetLoader extends _pixiJs.Loader {
         this.game = game;
         this.graphics = new _pixiJs.Graphics();
         game.pixi.stage.addChild(this.graphics);
-        this.add('sharkTexture', _dinoPngDefault.default).add('solarTexture', _object1PngDefault.default).add('windmillTexture', _object2PngDefault.default).add('bubbleTexture', _bubblePngDefault.default).add('waterTexture', _waterJpgDefault.default).add('cityTexture', _pixelMapPngDefault.default).add('carTexture', _carPngDefault.default).add('buildingTexture1', _a1PngDefault.default).add('buildingTexture2', _a2PngDefault.default).add('buildingTexture3', _a3PngDefault.default).add('buildingA1', _a1PngDefault.default).add('buildingA2', _a2PngDefault.default).add('buildingA3', _a3PngDefault.default).add('buildingB1', _b1PngDefault.default).add('buildingB2', _b2PngDefault.default).add('buildingB3', _b3PngDefault.default).add('buildingC1', _c1PngDefault.default).add('buildingC2', _c2PngDefault.default).add('buildingC3', _c3PngDefault.default).add('buildingD1', _b1PngDefault.default).add('buildingD2', _b2PngDefault.default).add('buildingD3', _b3PngDefault.default).add('buildingE1', _e1PngDefault.default).add('buildingE2', _e2PngDefault.default).add('buildingE3', _e3PngDefault.default).add('buildingF1', _f1PngDefault.default).add('buildingF2', _f2PngDefault.default).add('buildingF3', _f3PngDefault.default).add('leafTexture', _leafPngDefault.default).add('dinoTexture', _dinoPngDefault.default).add('HPDbackgroundTexture', _tilePngDefault.default).add('menuBackgroundTexture', _menuBackgroundPngDefault.default).add('uiElement0', _yellowUI0PngDefault.default) // cant get spritesheets to work
+        this.add('sharkTexture', _dinoPngDefault.default).add('solarTexture', _object1PngDefault.default).add('windmillTexture', _object2PngDefault.default).add('bubbleTexture', _bubblePngDefault.default).add('waterTexture', _waterJpgDefault.default).add('cityTexture', _pixelMapPngDefault.default).add('carTexture', _carPngDefault.default).add('buildingTexture1', _a1PngDefault.default).add('buildingTexture2', _a2PngDefault.default).add('buildingTexture3', _a3PngDefault.default).add('buildingA1', _a1PngDefault.default).add('buildingA2', _a2PngDefault.default).add('buildingA3', _a3PngDefault.default).add('buildingB1', _b1PngDefault.default).add('buildingB2', _b2PngDefault.default).add('buildingB3', _b3PngDefault.default).add('buildingC1', _c1PngDefault.default).add('buildingC2', _c2PngDefault.default).add('buildingC3', _c3PngDefault.default).add('buildingD1', _b1PngDefault.default).add('buildingD2', _b2PngDefault.default).add('buildingD3', _b3PngDefault.default).add('buildingE1', _e1PngDefault.default).add('buildingE2', _e2PngDefault.default).add('buildingE3', _e3PngDefault.default).add('buildingF1', _f1PngDefault.default).add('buildingF2', _f2PngDefault.default).add('buildingF3', _f3PngDefault.default).add('leafTexture', _leafPngDefault.default).add('dinoTexture', _dinoPngDefault.default).add('HPDbackgroundTexture', _tilePngDefault.default).add('menuBackgroundTexture', _menuBackgroundPngDefault.default).add('pauseTexture', _pauseButtonPngDefault.default).add('uiElement0', _yellowUI0PngDefault.default) // cant get spritesheets to work
         .add('uiElement1', _yellowUI1PngDefault.default) // cant get spritesheets to work
         .add('uiElement2', _yellowUI2PngDefault.default) // cant get spritesheets to work
         .add('uiElement3', _yellowUI3PngDefault.default) // cant get spritesheets to work
@@ -47984,7 +47987,7 @@ class AssetLoader extends _pixiJs.Loader {
     }
 }
 
-},{"pixi.js":"dsYej","./images/dino.png":"c8KfO","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","./images/heart.png":"e2wO4","./images/pixelMap.png":"8n5vg","./images/object1.png":"8Mhko","./images/object2.png":"luVeW","./images/leaf.png":"5tsPY","./images/A1.png":"jVMM5","./images/A2.png":"8jc4G","./images/A3.png":"LKfs6","./images/B1.png":"jZkaI","./images/B2.png":"lbVPJ","./images/B3.png":"fRT7G","./images/C1.png":"1d8PL","./images/C2.png":"6FmSw","./images/C3.png":"hL0Or","./images/E1.png":"1iRzI","./images/E2.png":"3bEzS","./images/E3.png":"5nASQ","./images/F1.png":"9JStD","./images/F2.png":"cEm9g","./images/F3.png":"kvh1Z","./images/car.png":"dnXSN","./images/tile.png":"dvchs","./images/menuBackground.png":"hVtuo","./images/YellowUI0.png":"dwRmK","./images/YellowUI1.png":"d9mKy","./images/YellowUI2.png":"4bojR","./images/YellowUI3.png":"iiYKS","./images/YellowUI4.png":"ikcEs","./images/YellowUI5.png":"lUVol","./images/YellowUI6.png":"l1OGq","./images/GreenUI0.png":"5jyTO","./images/GreenUI1.png":"7mej2","./images/GreenUI2.png":"h0yQR","./images/RedUI0.png":"4uMrI","./images/RedUI1.png":"BWDJ0","./images/RedUI2.png":"2OgRy","./images/audioscreen.png":"d0MKD","url:./sound/relaxing.mp3":"i5zAd","url:./sound/pickupsound.mp3":"3qwyk","url:./sound/hitsound.mp3":"cMOh2","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"c8KfO":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./images/dino.png":"c8KfO","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","./images/heart.png":"e2wO4","./images/pixelMap.png":"8n5vg","./images/object1.png":"8Mhko","./images/object2.png":"luVeW","./images/leaf.png":"5tsPY","./images/A1.png":"jVMM5","./images/A2.png":"8jc4G","./images/A3.png":"LKfs6","./images/B1.png":"jZkaI","./images/B2.png":"lbVPJ","./images/B3.png":"fRT7G","./images/C1.png":"1d8PL","./images/C2.png":"6FmSw","./images/C3.png":"hL0Or","./images/E1.png":"1iRzI","./images/E2.png":"3bEzS","./images/E3.png":"5nASQ","./images/F1.png":"9JStD","./images/F2.png":"cEm9g","./images/F3.png":"kvh1Z","./images/car.png":"dnXSN","./images/tile.png":"dvchs","./images/menuBackground.png":"hVtuo","./images/YellowUI0.png":"dwRmK","./images/YellowUI1.png":"d9mKy","./images/YellowUI2.png":"4bojR","./images/YellowUI3.png":"iiYKS","./images/YellowUI4.png":"ikcEs","./images/YellowUI5.png":"lUVol","./images/YellowUI6.png":"l1OGq","./images/GreenUI0.png":"5jyTO","./images/GreenUI1.png":"7mej2","./images/GreenUI2.png":"h0yQR","./images/RedUI0.png":"4uMrI","./images/RedUI1.png":"BWDJ0","./images/RedUI2.png":"2OgRy","./images/audioscreen.png":"d0MKD","url:./sound/relaxing.mp3":"i5zAd","url:./sound/pickupsound.mp3":"3qwyk","url:./sound/hitsound.mp3":"cMOh2","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./images/pauseButton.png":"jrOhq"}],"c8KfO":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "dino.174d8237.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
@@ -48146,6 +48149,9 @@ module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "pickup
 
 },{"./helpers/bundle-url":"lgJ39"}],"cMOh2":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "hitsound.3da7ce8c.mp3" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"jrOhq":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "pauseButton.82c4ef55.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
 

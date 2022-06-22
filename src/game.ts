@@ -266,7 +266,7 @@ export class Game {
         this.engine.gravity.y = 0
 
         //ui and menu
-        this.ui = new UI(this, this.loader.resources["bubbleTexture"].texture!, this.loader.resources["heartTexture"].texture!) // (game, pausebutton texture, heart texture)
+        this.ui = new UI(this, this.loader.resources["pauseTexture"].texture!, this.loader.resources["heartTexture"].texture!) // (game, pausebutton texture, heart texture)
 
         //audio
         this.bgMusicSound = this.loader.resources["backgroundMusicFile"].data!

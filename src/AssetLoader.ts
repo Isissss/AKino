@@ -3,6 +3,7 @@ import { Game } from "./Game"
 
 import sharkImage from "./images/dino.png"
 import bubbleImage from "./images/bubble.png"
+import pauseImage from "./images/pauseButton.png"
 import waterImage from "./images/water.jpg"
 import heartImage from "./images/heart.png"
 //import smokeImage from "./images/smog.png"
@@ -98,6 +99,7 @@ export class AssetLoader extends PIXI.Loader {
             .add('dinoTexture', dinoImage)
             .add('HPDbackgroundTexture', HPDbackgroundImage)
             .add('menuBackgroundTexture', menuBackgroundImage)
+            .add('pauseTexture', pauseImage)
             .add('uiElement0', uiElement0Image) // cant get spritesheets to work
             .add('uiElement1', uiElement1Image) // cant get spritesheets to work
             .add('uiElement2', uiElement2Image) // cant get spritesheets to work
