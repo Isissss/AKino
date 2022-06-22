@@ -65,7 +65,6 @@ export class Player extends PIXI.AnimatedSprite {
   public update(delta: number) {
     super.update(delta)
 
-    console.log(this.borderCheckx(this.xspeed + this.xweather))
     if (this.xspeed != 0 || this.yspeed != 0) {
       this.play()
     } else {

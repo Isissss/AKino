@@ -864,7 +864,7 @@ class Game {
 }
 let g = new Game;
 
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./Smog":"608Py","./Spawn":"6JGD8","./Player":"8YLWx","./Building":"9ckPp","./Car":"d9weU","./Weather":"aPu1W","./Leaf":"cwtVd","./Map":"5vXJ1","./UI":"ef7dT","./Menu":"gQYVh","matter-js":"2oYKU","./StartScreen":"l9TZk","./AssetLoader":"8VDU2"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","matter-js":"2oYKU","./Player":"8YLWx","./Smog":"608Py","./Spawn":"6JGD8","./Building":"9ckPp","./Car":"d9weU","./Weather":"aPu1W","./Leaf":"cwtVd","./UI":"ef7dT","./Menu":"gQYVh","./Map":"5vXJ1","./StartScreen":"l9TZk","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./AssetLoader":"8VDU2"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -39045,210 +39045,7 @@ function __extends(d, b) {
     return AnimatedSprite1;
 }(_sprite.Sprite);
 
-},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"608Py":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Smog", ()=>Smog
-);
-var _pixiJs = require("pixi.js");
-class Smog extends _pixiJs.Graphics {
-    constructor(player, radius){
-        super();
-        this.player = player;
-        this.originalRadius = radius;
-        this.radius = this.originalRadius;
-        this.draw();
-    }
-    draw() {
-        this.beginFill(16777215);
-        this.alpha = 0.3;
-        this.drawCircle(this.player.x, this.player.y, this.radius);
-        this.endFill;
-    }
-    reset() {
-        this.radius = this.originalRadius;
-        this.clear();
-        this.draw();
-    }
-    update() {
-        if (this.radius >= 1) {
-            this.radius -= 1;
-            this.clear();
-            this.draw();
-        } else this.reset();
-    }
-}
-
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6JGD8":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Spawn", ()=>Spawn
-);
-var _pixiJs = require("pixi.js");
-var _object = require("./Object");
-class Spawn extends _pixiJs.Sprite {
-    timer = 0;
-    constructor(x, y, delay, textures = [], game){
-        super();
-        this.game = game;
-        this.x = x;
-        this.y = y;
-        this.delay = delay;
-        this.objectTextures = textures;
-    }
-    update() {
-        this.timer += 1;
-        if (this.timer > this.delay) {
-            let i = Math.round(Math.random());
-            let sprite = new _object.Object(this.objectTextures[i], this.game);
-            sprite.scale.set(7);
-            this.timer = 0;
-            this.game.spawnObject(sprite);
-        }
-    }
-}
-
-},{"pixi.js":"dsYej","./Object":"fjBpM","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fjBpM":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Object", ()=>Object
-);
-var _pixiJs = require("pixi.js");
-class Object extends _pixiJs.Sprite {
-    constructor(texture, game){
-        super(texture);
-        this.game = game;
-        this.x = Math.random() * (window.innerWidth * 2) - window.innerWidth / 2;
-        this.y = Math.random() * (window.innerHeight * 2) - window.innerHeight / 2;
-        this.speed = 4;
-        this.anchor.set(0.5);
-        this.pickupSound = this.game.loader.resources["pickupsoundFile"].data;
-    }
-    update() {
-        this.x += this.speed;
-    }
-    pickedUp() {
-        this.game.ObjectPickupSound.volume = this.game.soundFXVolume;
-        this.game.ObjectPickupSound.play();
-    }
-}
-
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8YLWx":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Player", ()=>Player
-);
-var _matterJs = require("matter-js");
-var _matterJsDefault = parcelHelpers.interopDefault(_matterJs);
-var _pixiJs = require("pixi.js");
-class Player extends _pixiJs.AnimatedSprite {
-    xspeed = 0;
-    yspeed = 0;
-    xweather = 0;
-    yweather = 0;
-    counter = 0;
-    hit = false;
-    health = 3;
-    constructor(animation, game){
-        super(animation);
-        this.animationSpeed = 0.1;
-        this.x = 100;
-        this.y = 100;
-        this.game = game;
-        this.scale.set(0.7);
-        this.anchor.set(0.5);
-        window.addEventListener("keydown", (e)=>this.onKeyDown(e)
-        );
-        window.addEventListener("keyup", (e)=>this.onKeyUp(e)
-        );
-        const playerOptions = {
-            density: 0.001,
-            friction: 0.7,
-            frictionStatic: 0,
-            frictionAir: 0.01,
-            restitution: 0.5,
-            inertia: Infinity,
-            inverseInertia: Infinity,
-            label: "Player"
-        };
-        this.rigidBody = _matterJsDefault.default.Bodies.rectangle(this.x, this.y, this.width, this.height, playerOptions);
-        _matterJsDefault.default.Composite.add(game.engine.world, this.rigidBody);
-    }
-    borderCheckx(xspeed) {
-        if (this.x + xspeed > this.game.pixi.view.width / 2 * 3) return 0;
-        else if (this.x + xspeed < -(this.game.pixi.view.width / 2)) return 0;
-        else return this.xspeed + this.xweather;
-    }
-    borderChecky(yspeed) {
-        if (this.y + yspeed > this.game.pixi.view.height / 2 * 3) return 0;
-        else if (this.y + yspeed < -(this.game.pixi.view.height / 2)) return 0;
-        else return this.yspeed + this.yweather;
-    }
-    update(delta) {
-        super.update(delta);
-        console.log(this.borderCheckx(this.xspeed + this.xweather));
-        if (this.xspeed != 0 || this.yspeed != 0) this.play();
-        else this.stop();
-        // Translate character based on speed
-        _matterJsDefault.default.Body.translate(this.rigidBody, {
-            x: this.borderCheckx(this.xspeed + this.xweather),
-            y: this.borderChecky(this.yspeed + this.yweather)
-        });
-        this.x = this.rigidBody.position.x;
-        this.y = this.rigidBody.position.y;
-        this.counter += delta;
-        // If player hits car (1.25s cooldown), set to false again so hit can occur again
-        if (this.counter > 125 && this.hit) this.hit = false;
-    }
-    // Set counter to 0 for cooldown,
-    hitcar() {
-        this.counter = 0;
-        this.hit = true;
-        this.health--;
-        if (this.health < 1) this.game.endGame(3);
-    }
-    onKeyDown(e) {
-        switch(e.key.toUpperCase()){
-            case "A":
-            case "ARROWLEFT":
-                this.xspeed = -4;
-                this.scale.set(-0.7, 0.7);
-                break;
-            case "D":
-            case "ARROWRIGHT":
-                this.xspeed = 4;
-                this.scale.set(0.7);
-                break;
-            case "W":
-            case "ARROWUP":
-                this.yspeed = -4;
-                break;
-            case "S":
-            case "ARROWDOWN":
-                this.yspeed = 4;
-        }
-    }
-    onKeyUp(e) {
-        switch(e.key.toUpperCase()){
-            case " ":
-                break;
-            case "A":
-            case "D":
-            case "ARROWLEFT":
-            case "ARROWRIGHT":
-                this.xspeed = 0;
-                break;
-            case "W":
-            case "S":
-            case "ARROWUP":
-            case "ARROWDOWN":
-                this.yspeed = 0;
-                break;
-        }
-    }
-}
-
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","matter-js":"2oYKU"}],"2oYKU":[function(require,module,exports) {
+},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2oYKU":[function(require,module,exports) {
 var global = arguments[3];
 /*!
  * matter-js 0.18.0 by @liabru
@@ -47050,7 +46847,209 @@ var global = arguments[3];
     ]);
 });
 
-},{}],"9ckPp":[function(require,module,exports) {
+},{}],"8YLWx":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Player", ()=>Player
+);
+var _matterJs = require("matter-js");
+var _matterJsDefault = parcelHelpers.interopDefault(_matterJs);
+var _pixiJs = require("pixi.js");
+class Player extends _pixiJs.AnimatedSprite {
+    xspeed = 0;
+    yspeed = 0;
+    xweather = 0;
+    yweather = 0;
+    counter = 0;
+    hit = false;
+    health = 3;
+    constructor(animation, game){
+        super(animation);
+        this.animationSpeed = 0.1;
+        this.x = 100;
+        this.y = 100;
+        this.game = game;
+        this.scale.set(0.7);
+        this.anchor.set(0.5);
+        window.addEventListener("keydown", (e)=>this.onKeyDown(e)
+        );
+        window.addEventListener("keyup", (e)=>this.onKeyUp(e)
+        );
+        const playerOptions = {
+            density: 0.001,
+            friction: 0.7,
+            frictionStatic: 0,
+            frictionAir: 0.01,
+            restitution: 0.5,
+            inertia: Infinity,
+            inverseInertia: Infinity,
+            label: "Player"
+        };
+        this.rigidBody = _matterJsDefault.default.Bodies.rectangle(this.x, this.y, this.width, this.height, playerOptions);
+        _matterJsDefault.default.Composite.add(game.engine.world, this.rigidBody);
+    }
+    borderCheckx(xspeed) {
+        if (this.x + xspeed > this.game.pixi.view.width / 2 * 3) return 0;
+        else if (this.x + xspeed < -(this.game.pixi.view.width / 2)) return 0;
+        else return this.xspeed + this.xweather;
+    }
+    borderChecky(yspeed) {
+        if (this.y + yspeed > this.game.pixi.view.height / 2 * 3) return 0;
+        else if (this.y + yspeed < -(this.game.pixi.view.height / 2)) return 0;
+        else return this.yspeed + this.yweather;
+    }
+    update(delta) {
+        super.update(delta);
+        if (this.xspeed != 0 || this.yspeed != 0) this.play();
+        else this.stop();
+        // Translate character based on speed
+        _matterJsDefault.default.Body.translate(this.rigidBody, {
+            x: this.borderCheckx(this.xspeed + this.xweather),
+            y: this.borderChecky(this.yspeed + this.yweather)
+        });
+        this.x = this.rigidBody.position.x;
+        this.y = this.rigidBody.position.y;
+        this.counter += delta;
+        // If player hits car (1.25s cooldown), set to false again so hit can occur again
+        if (this.counter > 125 && this.hit) this.hit = false;
+    }
+    // Set counter to 0 for cooldown,
+    hitcar() {
+        this.counter = 0;
+        this.hit = true;
+        this.health--;
+        if (this.health < 1) this.game.endGame(3);
+    }
+    onKeyDown(e) {
+        switch(e.key.toUpperCase()){
+            case "A":
+            case "ARROWLEFT":
+                this.xspeed = -4;
+                this.scale.set(-0.7, 0.7);
+                break;
+            case "D":
+            case "ARROWRIGHT":
+                this.xspeed = 4;
+                this.scale.set(0.7);
+                break;
+            case "W":
+            case "ARROWUP":
+                this.yspeed = -4;
+                break;
+            case "S":
+            case "ARROWDOWN":
+                this.yspeed = 4;
+        }
+    }
+    onKeyUp(e) {
+        switch(e.key.toUpperCase()){
+            case " ":
+                break;
+            case "A":
+            case "D":
+            case "ARROWLEFT":
+            case "ARROWRIGHT":
+                this.xspeed = 0;
+                break;
+            case "W":
+            case "S":
+            case "ARROWUP":
+            case "ARROWDOWN":
+                this.yspeed = 0;
+                break;
+        }
+    }
+}
+
+},{"matter-js":"2oYKU","pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"608Py":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Smog", ()=>Smog
+);
+var _pixiJs = require("pixi.js");
+class Smog extends _pixiJs.Graphics {
+    constructor(player, radius){
+        super();
+        this.player = player;
+        this.originalRadius = radius;
+        this.radius = this.originalRadius;
+        this.draw();
+    }
+    draw() {
+        this.beginFill(16777215);
+        this.alpha = 0.3;
+        this.drawCircle(this.player.x, this.player.y, this.radius);
+        this.endFill;
+    }
+    reset() {
+        this.radius = this.originalRadius;
+        this.clear();
+        this.draw();
+    }
+    update() {
+        if (this.radius >= 1) {
+            this.radius -= 1;
+            this.clear();
+            this.draw();
+        } else this.reset();
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6JGD8":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Spawn", ()=>Spawn
+);
+var _pixiJs = require("pixi.js");
+var _object = require("./Object");
+class Spawn extends _pixiJs.Sprite {
+    timer = 0;
+    constructor(x, y, delay, textures = [], game){
+        super();
+        this.game = game;
+        this.x = x;
+        this.y = y;
+        this.delay = delay;
+        this.objectTextures = textures;
+    }
+    update() {
+        this.timer += 1;
+        if (this.timer > this.delay) {
+            let i = Math.round(Math.random());
+            let sprite = new _object.Object(this.objectTextures[i], this.game);
+            sprite.scale.set(7);
+            this.timer = 0;
+            this.game.spawnObject(sprite);
+        }
+    }
+}
+
+},{"pixi.js":"dsYej","./Object":"fjBpM","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fjBpM":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Object", ()=>Object
+);
+var _pixiJs = require("pixi.js");
+class Object extends _pixiJs.Sprite {
+    constructor(texture, game){
+        super(texture);
+        this.game = game;
+        this.x = Math.random() * (window.innerWidth * 2) - window.innerWidth / 2;
+        this.y = Math.random() * (window.innerHeight * 2) - window.innerHeight / 2;
+        this.speed = 4;
+        this.anchor.set(0.5);
+        this.pickupSound = this.game.loader.resources["pickupsoundFile"].data;
+    }
+    update() {
+        this.x += this.speed;
+    }
+    pickedUp() {
+        this.game.ObjectPickupSound.volume = this.game.soundFXVolume;
+        this.game.ObjectPickupSound.play();
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9ckPp":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Building", ()=>Building
@@ -47082,7 +47081,7 @@ class Building extends _pixiJs.Sprite {
     }
 }
 
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","matter-js":"2oYKU"}],"d9weU":[function(require,module,exports) {
+},{"pixi.js":"dsYej","matter-js":"2oYKU","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"d9weU":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Car", ()=>Car
@@ -47268,67 +47267,7 @@ class Leaf extends _pixiJs.Sprite {
     }
 }
 
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5vXJ1":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Map", ()=>Map
-);
-class Map {
-    constructor(game, player){
-        this.game = game;
-        this.player = player;
-        this.borderHorizontal = 0;
-        this.borderVertical = 0;
-    }
-    update() {
-        // check if the player has crossed the right border
-        if (this.player.x >= this.game.pixi.screen.width / 2 + this.borderHorizontal) {
-            // set the camera a screen away from its original position
-            this.game.pixi.stage.pivot.set(this.game.pixi.screen.width + this.borderHorizontal, this.game.pixi.stage.pivot.y);
-            // set the new border a full screen away
-            this.borderHorizontal += this.game.pixi.screen.width;
-            // Make the UI follow the camera
-            this.game.ui.x = -(this.game.pixi.screen.width / 2) + this.borderHorizontal;
-        // Make the Menu follow the camera
-        //this.game.pauseMenu.x = this.borderHorizontal -> now done in game.ts due to new way of menu spawning
-        }
-        // check if the player has crossed the left border
-        if (this.player.x <= -(this.game.pixi.screen.width / 2) + this.borderHorizontal) {
-            // set the camera a screen away from its original position
-            this.game.pixi.stage.pivot.set(-this.game.pixi.screen.width + this.borderHorizontal, this.game.pixi.stage.pivot.y);
-            // set the new border a full screen away
-            this.borderHorizontal -= this.game.pixi.screen.width;
-            // Make the UI follow the camera
-            this.game.ui.x = -(this.game.pixi.screen.width / 2) + this.borderHorizontal;
-        // Make the Menu follow the camera
-        //this.game.pauseMenu.x = this.borderHorizontal -> now done in game.ts due to new way of menu spawning
-        }
-        // check if the player has crossed the top border
-        if (this.player.y >= this.game.pixi.screen.height / 2 + this.borderVertical) {
-            // set the camera a screen away from its original position
-            this.game.pixi.stage.pivot.set(this.game.pixi.stage.pivot.x, this.game.pixi.screen.height + this.borderVertical);
-            // set the new border a full screen away
-            this.borderVertical += this.game.pixi.screen.height;
-            // Make the UI follow the camera
-            this.game.ui.y = -(this.game.pixi.screen.height / 2) + this.borderVertical;
-        // Make the Menu follow the camera
-        //this.game.pauseMenu.y = this.borderVertical -> now done in game.ts due to new way of menu spawning
-        }
-        // check if the player has crossed the bottom border
-        if (this.player.y <= -(this.game.pixi.screen.height / 2) + this.borderVertical) {
-            // set the camera a screen away from its original position
-            this.game.pixi.stage.pivot.set(this.game.pixi.stage.pivot.x, -this.game.pixi.screen.height + this.borderVertical);
-            // set the new border a full screen away
-            this.borderVertical -= this.game.pixi.screen.height;
-            // Make the UI follow the camera
-            this.game.ui.y = -(this.game.pixi.screen.height / 2) + this.borderVertical;
-        // Make the Menu follow the camera
-        //this.game.pauseMenu.y = this.borderVertical -> now done in game.ts due to new way of menu spawning
-        }
-    }
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ef7dT":[function(require,module,exports) {
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ef7dT":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 // class to hold all UI elements that appear on screen.
@@ -47483,28 +47422,49 @@ class Menu extends _pixiJs.Container {
     }
 }
 
-},{"pixi.js":"dsYej","./SettingsPage":"4TlhK","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./EndPage":"fN9Hs","./QuestlogPage":"fSR7c","./StartPage":"8Ri6a"}],"4TlhK":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./EndPage":"fN9Hs","./SettingsPage":"4TlhK","./StartPage":"8Ri6a","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./QuestlogPage":"fSR7c"}],"fN9Hs":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "SettingsPage", ()=>SettingsPage
+parcelHelpers.export(exports, "EndPage", ()=>EndPage
 );
+var _pixiJs = require("pixi.js");
 var _bookPage = require("./BookPage");
-var _fontSizeSlider = require("./FontSizeSlider");
-var _volumeSlider = require("./VolumeSlider");
-class SettingsPage extends _bookPage.BookPage {
+var _endButton = require("./EndButton");
+class EndPage extends _bookPage.BookPage {
+    credits = [];
+    names = [
+        'Gemaakt door:',
+        'Wessel van Beek',
+        'Pim van Milt',
+        'Jeffrey van Otterloo',
+        'Isis Ton'
+    ];
     constructor(name, game, textstyle, uiTextures){
         super(name);
         this.name = name;
-        this.SoundFXSlider = new _volumeSlider.VolumeSlider(game, "Geluidseffecten", game.soundFXVolume, 5, uiTextures);
-        this.bgMusicSlider = new _volumeSlider.VolumeSlider(game, "Achtergrondmuziek", game.bgMusicVolume, 5, uiTextures);
-        this.fontSizeSlider = new _fontSizeSlider.FontSizeSlider(game, "Lettergrootte", game.fontSize, 1, uiTextures);
-        this.bgMusicSlider.y = this.bgMusicSlider.height + 5;
-        this.fontSizeSlider.y = this.bgMusicSlider.y + this.bgMusicSlider.height + 5;
-        this.addChild(this.SoundFXSlider, this.bgMusicSlider, this.fontSizeSlider);
+        this.title.x = 170;
+        this.endButton = new _endButton.EndButton(game, [
+            uiTextures[10],
+            uiTextures[11],
+            uiTextures[11],
+            uiTextures[11],
+            uiTextures[12]
+        ], "Opnieuw Proberen", 50, 0);
+        this.endButton.scale.set(3);
+        let i = 0;
+        for (const name1 of this.names){
+            const credit = new _pixiJs.Text(name1, game.textStyle);
+            credit.y = credit.height * i + 90;
+            credit.scale.set(0.8);
+            this.addChild(credit);
+            this.credits.push(credit);
+            i++;
+        }
+        this.addChild(this.endButton);
     }
 }
 
-},{"./BookPage":"bt7jv","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./FontSizeSlider":"23Tbt","./VolumeSlider":"d6Nj9"}],"bt7jv":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./BookPage":"bt7jv","./EndButton":"T4ChT","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bt7jv":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "BookPage", ()=>BookPage
@@ -47535,7 +47495,69 @@ class BookPage extends _pixiJs.Container {
     }
 }
 
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"23Tbt":[function(require,module,exports) {
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"T4ChT":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "EndButton", ()=>EndButton
+);
+var _startButton = require("./StartButton");
+class EndButton extends _startButton.StartButton {
+    constructor(game, textures, name, x = 0, y = 0){
+        super(game, textures, name, x, y);
+    }
+    buttonClicked() {
+        window.location.reload();
+    }
+}
+
+},{"./StartButton":"2npCb","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2npCb":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "StartButton", ()=>StartButton
+);
+var _pixiJs = require("pixi.js");
+var _button = require("./Button");
+class StartButton extends _button.Button {
+    constructor(game, textures, name, x = 0, y = 0){
+        super(game, textures, x, y);
+        this.text = new _pixiJs.Text(name, this.game.textStyle);
+        this.text.scale.set(0.3);
+        this.text.x = this.width / 2 - this.text.width / 2;
+        this.text.y = this.height / 2 - this.text.height / 2;
+        this.addChild(this.text);
+    }
+    buttonClicked() {
+        this.game.state = 1;
+        this.game.startscreen.visible = false;
+        this.game.menuActive = false;
+        this.game.ui.visible = true;
+        this.game.bgMusicSound.play();
+        this.game.bgMusicSound.volume = this.game.bgMusicVolume;
+    }
+}
+
+},{"pixi.js":"dsYej","./Button":"5X7GA","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4TlhK":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "SettingsPage", ()=>SettingsPage
+);
+var _bookPage = require("./BookPage");
+var _fontSizeSlider = require("./FontSizeSlider");
+var _volumeSlider = require("./VolumeSlider");
+class SettingsPage extends _bookPage.BookPage {
+    constructor(name, game, textstyle, uiTextures){
+        super(name);
+        this.name = name;
+        this.SoundFXSlider = new _volumeSlider.VolumeSlider(game, "Geluidseffecten", game.soundFXVolume, 5, uiTextures);
+        this.bgMusicSlider = new _volumeSlider.VolumeSlider(game, "Achtergrondmuziek", game.bgMusicVolume, 5, uiTextures);
+        this.fontSizeSlider = new _fontSizeSlider.FontSizeSlider(game, "Lettergrootte", game.fontSize, 1, uiTextures);
+        this.bgMusicSlider.y = this.bgMusicSlider.height + 5;
+        this.fontSizeSlider.y = this.bgMusicSlider.y + this.bgMusicSlider.height + 5;
+        this.addChild(this.SoundFXSlider, this.bgMusicSlider, this.fontSizeSlider);
+    }
+}
+
+},{"./BookPage":"bt7jv","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./FontSizeSlider":"23Tbt","./VolumeSlider":"d6Nj9"}],"23Tbt":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "FontSizeSlider", ()=>FontSizeSlider
@@ -47662,106 +47684,7 @@ class VolumeSlider extends _slider.Slider {
     }
 }
 
-},{"./Slider":"hz81g","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fN9Hs":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "EndPage", ()=>EndPage
-);
-var _pixiJs = require("pixi.js");
-var _bookPage = require("./BookPage");
-var _endButton = require("./EndButton");
-class EndPage extends _bookPage.BookPage {
-    credits = [];
-    names = [
-        'Gemaakt door:',
-        'Wessel van Beek',
-        'Pim van Milt',
-        'Jeffrey van Otterloo',
-        'Isis Ton'
-    ];
-    constructor(name, game, textstyle, uiTextures){
-        super(name);
-        this.name = name;
-        this.title.x = 170;
-        this.endButton = new _endButton.EndButton(game, [
-            uiTextures[10],
-            uiTextures[11],
-            uiTextures[11],
-            uiTextures[11],
-            uiTextures[12]
-        ], "Opnieuw Proberen", 50, 0);
-        this.endButton.scale.set(3);
-        let i = 0;
-        for (const name1 of this.names){
-            const credit = new _pixiJs.Text(name1, game.textStyle);
-            credit.y = credit.height * i + 90;
-            credit.scale.set(0.8);
-            this.addChild(credit);
-            this.credits.push(credit);
-            i++;
-        }
-        this.addChild(this.endButton);
-    }
-}
-
-},{"pixi.js":"dsYej","./BookPage":"bt7jv","./EndButton":"T4ChT","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"T4ChT":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "EndButton", ()=>EndButton
-);
-var _startButton = require("./StartButton");
-class EndButton extends _startButton.StartButton {
-    constructor(game, textures, name, x = 0, y = 0){
-        super(game, textures, name, x, y);
-    }
-    buttonClicked() {
-        window.location.reload();
-    }
-}
-
-},{"./StartButton":"2npCb","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2npCb":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "StartButton", ()=>StartButton
-);
-var _pixiJs = require("pixi.js");
-var _button = require("./Button");
-class StartButton extends _button.Button {
-    constructor(game, textures, name, x = 0, y = 0){
-        super(game, textures, x, y);
-        this.text = new _pixiJs.Text(name, this.game.textStyle);
-        this.text.scale.set(0.3);
-        this.text.x = this.width / 2 - this.text.width / 2;
-        this.text.y = this.height / 2 - this.text.height / 2;
-        this.addChild(this.text);
-    }
-    buttonClicked() {
-        this.game.state = 1;
-        this.game.startscreen.visible = false;
-        this.game.menuActive = false;
-        this.game.ui.visible = true;
-        this.game.bgMusicSound.play();
-        this.game.bgMusicSound.volume = this.game.bgMusicVolume;
-    }
-}
-
-},{"pixi.js":"dsYej","./Button":"5X7GA","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fSR7c":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "QuestlogPage", ()=>QuestlogPage
-);
-var _pixiJs = require("pixi.js");
-var _bookPage = require("./BookPage");
-class QuestlogPage extends _bookPage.BookPage {
-    constructor(name, game, textstyle, uiTextures){
-        super(name);
-        this.name = name;
-        this.text = new _pixiJs.Text(`Hier zouden Quests \nkomen te staan,\nals we die hadden. \nHuidige Score: ${game.score.toString()}`, textstyle);
-        this.addChild(this.text);
-    }
-}
-
-},{"pixi.js":"dsYej","./BookPage":"bt7jv","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8Ri6a":[function(require,module,exports) {
+},{"./Slider":"hz81g","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8Ri6a":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "StartPage", ()=>StartPage
@@ -47811,7 +47734,83 @@ class ResumeButton extends _startButton.StartButton {
     }
 }
 
-},{"./StartButton":"2npCb","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"l9TZk":[function(require,module,exports) {
+},{"./StartButton":"2npCb","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fSR7c":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "QuestlogPage", ()=>QuestlogPage
+);
+var _pixiJs = require("pixi.js");
+var _bookPage = require("./BookPage");
+class QuestlogPage extends _bookPage.BookPage {
+    constructor(name, game, textstyle, uiTextures){
+        super(name);
+        this.name = name;
+        this.text = new _pixiJs.Text(`Hier zouden Quests \nkomen te staan,\nals we die hadden. \nHuidige Score: ${game.score.toString()}`, textstyle);
+        this.addChild(this.text);
+    }
+}
+
+},{"pixi.js":"dsYej","./BookPage":"bt7jv","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5vXJ1":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Map", ()=>Map
+);
+class Map {
+    constructor(game, player){
+        this.game = game;
+        this.player = player;
+        this.borderHorizontal = 0;
+        this.borderVertical = 0;
+    }
+    update() {
+        // check if the player has crossed the right border
+        if (this.player.x >= this.game.pixi.screen.width / 2 + this.borderHorizontal) {
+            // set the camera a screen away from its original position
+            this.game.pixi.stage.pivot.set(this.game.pixi.screen.width + this.borderHorizontal, this.game.pixi.stage.pivot.y);
+            // set the new border a full screen away
+            this.borderHorizontal += this.game.pixi.screen.width;
+            // Make the UI follow the camera
+            this.game.ui.x = -(this.game.pixi.screen.width / 2) + this.borderHorizontal;
+        // Make the Menu follow the camera
+        //this.game.pauseMenu.x = this.borderHorizontal -> now done in game.ts due to new way of menu spawning
+        }
+        // check if the player has crossed the left border
+        if (this.player.x <= -(this.game.pixi.screen.width / 2) + this.borderHorizontal) {
+            // set the camera a screen away from its original position
+            this.game.pixi.stage.pivot.set(-this.game.pixi.screen.width + this.borderHorizontal, this.game.pixi.stage.pivot.y);
+            // set the new border a full screen away
+            this.borderHorizontal -= this.game.pixi.screen.width;
+            // Make the UI follow the camera
+            this.game.ui.x = -(this.game.pixi.screen.width / 2) + this.borderHorizontal;
+        // Make the Menu follow the camera
+        //this.game.pauseMenu.x = this.borderHorizontal -> now done in game.ts due to new way of menu spawning
+        }
+        // check if the player has crossed the top border
+        if (this.player.y >= this.game.pixi.screen.height / 2 + this.borderVertical) {
+            // set the camera a screen away from its original position
+            this.game.pixi.stage.pivot.set(this.game.pixi.stage.pivot.x, this.game.pixi.screen.height + this.borderVertical);
+            // set the new border a full screen away
+            this.borderVertical += this.game.pixi.screen.height;
+            // Make the UI follow the camera
+            this.game.ui.y = -(this.game.pixi.screen.height / 2) + this.borderVertical;
+        // Make the Menu follow the camera
+        //this.game.pauseMenu.y = this.borderVertical -> now done in game.ts due to new way of menu spawning
+        }
+        // check if the player has crossed the bottom border
+        if (this.player.y <= -(this.game.pixi.screen.height / 2) + this.borderVertical) {
+            // set the camera a screen away from its original position
+            this.game.pixi.stage.pivot.set(this.game.pixi.stage.pivot.x, -this.game.pixi.screen.height + this.borderVertical);
+            // set the new border a full screen away
+            this.borderVertical -= this.game.pixi.screen.height;
+            // Make the UI follow the camera
+            this.game.ui.y = -(this.game.pixi.screen.height / 2) + this.borderVertical;
+        // Make the Menu follow the camera
+        //this.game.pauseMenu.y = this.borderVertical -> now done in game.ts due to new way of menu spawning
+        }
+    }
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"l9TZk":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "StartScreen", ()=>StartScreen
