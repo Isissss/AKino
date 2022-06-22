@@ -4,17 +4,17 @@ import { Game } from "./game"
 import { HPDisplay } from "./HPDisplay"
 
 // class to hold all UI elements that appear on screen.
-export class UI extends PIXI.Container {    
+export class UI extends PIXI.Container {
     // traits
     game: Game
 
     pauseButton: Button
     healthDisplay: HPDisplay
-    
-    
+
+
 
     //behaviours
-    constructor(game: Game, pauseButtonTexture: PIXI.Texture, heartTexture: PIXI.Texture){
+    constructor(game: Game, pauseButtonTexture: PIXI.Texture, heartTexture: PIXI.Texture) {
         super()
         // need access to the game, to display correct values
         this.game = game
@@ -22,10 +22,12 @@ export class UI extends PIXI.Container {
         this.x = -(this.game.pixi.screen.width / 2)
         this.y = -(this.game.pixi.screen.height / 2)
         // add a pausebutton
-        this.pauseButton = new Button(this.game,[pauseButtonTexture], 0, 0)
+        this.pauseButton = new Button(this.game, [pauseButtonTexture], 0, 0)
         this.pauseButton.scale.set(3)
+        this.pauseButton.x = 15
+        this.pauseButton.y = 15
         this.healthDisplay = new HPDisplay(this.game, heartTexture, window.innerWidth, 0)
-        
+
 
         // add all elements to the displayObject container
         this.addChild(this.pauseButton, this.healthDisplay)
