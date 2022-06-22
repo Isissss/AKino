@@ -583,164 +583,10 @@ class Game {
     }
     loadCompleted() {
         // Initialize joystick class    
-        this.arcade = new _arcade.Arcade(this);
-        //create Dino animation frames
-        this.createDinoFrames();
-        //packing UI textures into array
-        this.uiTextures = [
-            this.loader.resources["uiElement0"].texture,
-            this.loader.resources["uiElement1"].texture,
-            this.loader.resources["uiElement2"].texture,
-            this.loader.resources["uiElement3"].texture,
-            this.loader.resources["uiElement4"].texture,
-            this.loader.resources["uiElement5"].texture,
-            this.loader.resources["uiElement6"].texture,
-            this.loader.resources["uiElement7"].texture,
-            this.loader.resources["uiElement8"].texture,
-            this.loader.resources["uiElement9"].texture,
-            this.loader.resources["uiElement10"].texture,
-            this.loader.resources["uiElement11"].texture,
-            this.loader.resources["uiElement12"].texture
-        ];
-        //packing object textures into array
-        this.objectTextures = [
-            this.loader.resources["solarTexture"].texture,
-            this.loader.resources["windmillTexture"].texture
-        ];
-        //packing building textures into array
-        this.buildingTextures = [
-            [
-                this.loader.resources["buildingA1"].texture,
-                this.loader.resources["buildingA2"].texture,
-                this.loader.resources["buildingA3"].texture
-            ],
-            [
-                this.loader.resources["buildingB1"].texture,
-                this.loader.resources["buildingB2"].texture,
-                this.loader.resources["buildingB3"].texture
-            ],
-            [
-                this.loader.resources["buildingC1"].texture,
-                this.loader.resources["buildingC2"].texture,
-                this.loader.resources["buildingC3"].texture
-            ],
-            [
-                this.loader.resources["buildingD1"].texture,
-                this.loader.resources["buildingD2"].texture,
-                this.loader.resources["buildingD3"].texture
-            ],
-            [
-                this.loader.resources["buildingE1"].texture,
-                this.loader.resources["buildingE2"].texture,
-                this.loader.resources["buildingE3"].texture
-            ],
-            [
-                this.loader.resources["buildingF1"].texture,
-                this.loader.resources["buildingF2"].texture,
-                this.loader.resources["buildingF3"].texture
-            ]
-        ];
-        //initialize player, smog, object spawner
+        this.arcade = new _arcade.Arcade(this, false, true);
         this.joystickListener = (e)=>this.initJoystick(e)
         ;
         document.addEventListener("joystickcreated", this.joystickListener);
-        this.smog = new _smog.Smog(this.player, window.innerWidth);
-        this.spawner = new _spawn.Spawn(100, 100, 180, this.objectTextures, this);
-        //map        
-        this.map = new _map.Map(this, this.player);
-        this.pixi.stage.x = this.pixi.screen.width / 2;
-        this.pixi.stage.y = this.pixi.screen.height / 2;
-        //background
-        let background = new _pixiJs.Sprite(this.loader.resources["cityTexture"].texture);
-        this;
-        background.anchor.set(0, 0);
-        background.position.set(-window.innerWidth / 2, -window.innerHeight / 2);
-        background.scale.set(4.48, 3.6);
-        //cars
-        this.car = new _car.Car(this.loader.resources["carTexture"].texture, 1, -1000, 60);
-        this.car2 = new _car.Car(this.loader.resources["carTexture"].texture, 2, 1960, -500);
-        this.car3 = new _car.Car(this.loader.resources["carTexture"].texture, 3, 2900, 750);
-        this.car4 = new _car.Car(this.loader.resources["carTexture"].texture, 4, -50, 1450);
-        //this.car3 = new Car(this.loader.resources["carTexture"].texture!, false, 1600, 625)
-        //this.car2 = new Car(this.loader.resources["carTexture"].texture!, true, 640, -300)
-        this.cars.push(this.car, this.car2, this.car3, this.car4);
-        //buildings
-        for(let i = 0; i < 5; i++){
-            let randomizer = Math.round(Math.random() * 5);
-            let building = new _building.Building(Math.random() * 700 + 190, Math.random() * 300 - 390, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this);
-            building.scale.set(7);
-            this.buildings.push(building);
-        }
-        for(let i1 = 0; i1 < 5; i1++){
-            let randomizer = Math.round(Math.random() * 5);
-            let building = new _building.Building(Math.random() * 600 - 920, Math.random() * 300 + 340, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this);
-            building.scale.set(7);
-            this.buildings.push(building);
-        }
-        for(let i2 = 0; i2 < 5; i2++){
-            let randomizer = Math.round(Math.random() * 5);
-            let building = new _building.Building(Math.random() * 700 + 120, Math.random() * 300 + 1090, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this);
-            building.scale.set(7);
-            this.buildings.push(building);
-        }
-        for(let i3 = 0; i3 < 5; i3++){
-            let randomizer = Math.round(Math.random() * 5);
-            let building = new _building.Building(Math.random() * 700 + 1090, Math.random() * 300 + 1090, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this);
-            building.scale.set(7);
-            this.buildings.push(building);
-        }
-        for(let i4 = 0; i4 < 5; i4++){
-            let randomizer = Math.round(Math.random() * 5);
-            let building = new _building.Building(Math.random() * 700 + 1090, Math.random() * 300 - 390, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this);
-            building.scale.set(7);
-            this.buildings.push(building);
-        }
-        for(let i5 = 0; i5 < 5; i5++){
-            let randomizer = Math.round(Math.random() * 5);
-            let building = new _building.Building(Math.random() * 600 + 2290, Math.random() * 300 + 340, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this);
-            building.scale.set(7);
-            this.buildings.push(building);
-        }
-        this.weather = new _weather.Weather(this.player, 1000, this);
-        for(let i6 = 0; i6 < 4; i6++){
-            let leaf = new _leaf.Leaf(this.loader.resources["leafTexture"].texture);
-            leaf.scale.set(0.3, 0.3);
-            leaf.anchor.set(0.5, 0.5);
-            this.leafs.push(leaf);
-            this.pixi.stage.addChild(leaf);
-        }
-        this.textStyle = new _pixiJs.TextStyle({
-            fontSize: this.fontSize,
-            fontWeight: "bold",
-            trim: false
-        });
-        //set Matter.js gravity
-        this.engine.gravity.y = 0;
-        //ui and menu
-        this.ui = new _ui.UI(this, this.loader.resources["pauseTexture"].texture, this.loader.resources["heartTexture"].texture) // (game, pausebutton texture, heart texture)
-        ;
-        //audio
-        this.bgMusicSound = this.loader.resources["backgroundMusicFile"].data;
-        this.bgMusicSound.volume = this.bgMusicVolume;
-        this.hitByCarSound = this.loader.resources["hitsoundFile"].data;
-        this.hitByCarSound.volume = this.soundFXVolume;
-        this.ObjectPickupSound = this.loader.resources["pickupsoundFile"].data;
-        this.ObjectPickupSound.volume = this.soundFXVolume;
-        //sorted stage adding 
-        this.pixi.stage.addChild(background);
-        for (const car of this.cars)this.pixi.stage.addChild(car);
-        for (const building of this.buildings)this.pixi.stage.addChild(building);
-        this.pixi.stage.addChild(this.player);
-        for (const leaf of this.leafs)this.pixi.stage.addChild(leaf);
-        this.pixi.stage.addChild(this.smog, this.ui);
-        //create start screen
-        this.startscreen = new _startScreen.StartScreen(this, this.loader.resources["cityTexture"].texture, this.loader.resources["menuBackgroundTexture"].texture, this.uiTextures);
-        this.pixi.stage.addChild(this.startscreen);
-        this.menuActive = true;
-        this.ui.visible = false;
-        //start running the ticker
-        this.pixi.ticker.add((delta)=>this.update(delta)
-        );
     }
     update(delta) {
         for (let joystick of this.arcade.Joysticks)joystick.update();
@@ -758,20 +604,20 @@ class Game {
                     this.map.update();
                     for(let i = 0; i < this.leafs.length; i++)this.leafs[i].update();
                     for (let building of this.buildings)building.update(this.score);
-                    for(let i7 = 0; i7 < this.cars.length; i7++)if (this.collision(this.player, this.cars[i7]) && !this.player.hit) {
+                    for(let i1 = 0; i1 < this.cars.length; i1++)if (this.collision(this.player, this.cars[i1]) && !this.player.hit) {
                         this.player.hitcar();
                         this.hitByCarSound.play();
                         this.hitByCarSound.volume = this.soundFXVolume;
                     }
                     for (let car of this.cars)car.update(delta);
-                    for(let i8 = 0; i8 < this.objects.length; i8++)if (this.collision(this.player, this.objects[i8])) {
+                    for(let i2 = 0; i2 < this.objects.length; i2++)if (this.collision(this.player, this.objects[i2])) {
                         this.score++;
-                        this.objects[i8].pickedUp();
+                        this.objects[i2].pickedUp();
                         this.smog.reset();
                         if (this.score >= this.endscore) this.endGame(2);
                         //console.log("player touches object")
-                        this.objects[i8].destroy();
-                        this.objects.splice(i8, 1);
+                        this.objects[i2].destroy();
+                        this.objects.splice(i2, 1);
                     }
                     this.ui.healthDisplay.update();
                     this.updateVolume();
@@ -844,7 +690,161 @@ class Game {
         let joystick = this.arcade.Joysticks[e.detail];
         for (const buttonEvent of joystick.ButtonEvents)document.addEventListener(buttonEvent, ()=>console.log(buttonEvent)
         );
+        //create Dino animation frames
+        this.createDinoFrames();
         this.player = new _player.Player(this.dinoTextures, joystick, this);
+        //packing UI textures into array
+        this.uiTextures = [
+            this.loader.resources["uiElement0"].texture,
+            this.loader.resources["uiElement1"].texture,
+            this.loader.resources["uiElement2"].texture,
+            this.loader.resources["uiElement3"].texture,
+            this.loader.resources["uiElement4"].texture,
+            this.loader.resources["uiElement5"].texture,
+            this.loader.resources["uiElement6"].texture,
+            this.loader.resources["uiElement7"].texture,
+            this.loader.resources["uiElement8"].texture,
+            this.loader.resources["uiElement9"].texture,
+            this.loader.resources["uiElement10"].texture,
+            this.loader.resources["uiElement11"].texture,
+            this.loader.resources["uiElement12"].texture
+        ];
+        //packing object textures into array
+        this.objectTextures = [
+            this.loader.resources["solarTexture"].texture,
+            this.loader.resources["windmillTexture"].texture
+        ];
+        //packing building textures into array
+        this.buildingTextures = [
+            [
+                this.loader.resources["buildingA1"].texture,
+                this.loader.resources["buildingA2"].texture,
+                this.loader.resources["buildingA3"].texture
+            ],
+            [
+                this.loader.resources["buildingB1"].texture,
+                this.loader.resources["buildingB2"].texture,
+                this.loader.resources["buildingB3"].texture
+            ],
+            [
+                this.loader.resources["buildingC1"].texture,
+                this.loader.resources["buildingC2"].texture,
+                this.loader.resources["buildingC3"].texture
+            ],
+            [
+                this.loader.resources["buildingD1"].texture,
+                this.loader.resources["buildingD2"].texture,
+                this.loader.resources["buildingD3"].texture
+            ],
+            [
+                this.loader.resources["buildingE1"].texture,
+                this.loader.resources["buildingE2"].texture,
+                this.loader.resources["buildingE3"].texture
+            ],
+            [
+                this.loader.resources["buildingF1"].texture,
+                this.loader.resources["buildingF2"].texture,
+                this.loader.resources["buildingF3"].texture
+            ]
+        ];
+        //initialize player, smog, object spawner
+        this.smog = new _smog.Smog(this.player, window.innerWidth);
+        this.spawner = new _spawn.Spawn(100, 100, 180, this.objectTextures, this);
+        //map        
+        this.map = new _map.Map(this, this.player);
+        this.pixi.stage.x = this.pixi.screen.width / 2;
+        this.pixi.stage.y = this.pixi.screen.height / 2;
+        //background
+        let background = new _pixiJs.Sprite(this.loader.resources["cityTexture"].texture);
+        this;
+        background.anchor.set(0, 0);
+        background.position.set(-window.innerWidth / 2, -window.innerHeight / 2);
+        background.scale.set(4.48, 3.6);
+        //cars
+        this.car = new _car.Car(this.loader.resources["carTexture"].texture, 1, -1000, 60);
+        this.car2 = new _car.Car(this.loader.resources["carTexture"].texture, 2, 1960, -500);
+        this.car3 = new _car.Car(this.loader.resources["carTexture"].texture, 3, 2900, 750);
+        this.car4 = new _car.Car(this.loader.resources["carTexture"].texture, 4, -50, 1450);
+        //this.car3 = new Car(this.loader.resources["carTexture"].texture!, false, 1600, 625)
+        //this.car2 = new Car(this.loader.resources["carTexture"].texture!, true, 640, -300)
+        this.cars.push(this.car, this.car2, this.car3, this.car4);
+        //buildings
+        for(let i = 0; i < 5; i++){
+            let randomizer = Math.round(Math.random() * 5);
+            let building = new _building.Building(Math.random() * 700 + 190, Math.random() * 300 - 390, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this);
+            building.scale.set(7);
+            this.buildings.push(building);
+        }
+        for(let i3 = 0; i3 < 5; i3++){
+            let randomizer = Math.round(Math.random() * 5);
+            let building = new _building.Building(Math.random() * 600 - 920, Math.random() * 300 + 340, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this);
+            building.scale.set(7);
+            this.buildings.push(building);
+        }
+        for(let i4 = 0; i4 < 5; i4++){
+            let randomizer = Math.round(Math.random() * 5);
+            let building = new _building.Building(Math.random() * 700 + 120, Math.random() * 300 + 1090, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this);
+            building.scale.set(7);
+            this.buildings.push(building);
+        }
+        for(let i5 = 0; i5 < 5; i5++){
+            let randomizer = Math.round(Math.random() * 5);
+            let building = new _building.Building(Math.random() * 700 + 1090, Math.random() * 300 + 1090, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this);
+            building.scale.set(7);
+            this.buildings.push(building);
+        }
+        for(let i6 = 0; i6 < 5; i6++){
+            let randomizer = Math.round(Math.random() * 5);
+            let building = new _building.Building(Math.random() * 700 + 1090, Math.random() * 300 - 390, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this);
+            building.scale.set(7);
+            this.buildings.push(building);
+        }
+        for(let i7 = 0; i7 < 5; i7++){
+            let randomizer = Math.round(Math.random() * 5);
+            let building = new _building.Building(Math.random() * 600 + 2290, Math.random() * 300 + 340, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this);
+            building.scale.set(7);
+            this.buildings.push(building);
+        }
+        this.weather = new _weather.Weather(this.player, 1000, this);
+        for(let i8 = 0; i8 < 4; i8++){
+            let leaf = new _leaf.Leaf(this.loader.resources["leafTexture"].texture);
+            leaf.scale.set(0.3, 0.3);
+            leaf.anchor.set(0.5, 0.5);
+            this.leafs.push(leaf);
+            this.pixi.stage.addChild(leaf);
+        }
+        this.textStyle = new _pixiJs.TextStyle({
+            fontSize: this.fontSize,
+            fontWeight: "bold",
+            trim: false
+        });
+        //set Matter.js gravity
+        this.engine.gravity.y = 0;
+        //ui and menu
+        this.ui = new _ui.UI(this, this.loader.resources["pauseTexture"].texture, this.loader.resources["heartTexture"].texture) // (game, pausebutton texture, heart texture)
+        ;
+        //audio
+        this.bgMusicSound = this.loader.resources["backgroundMusicFile"].data;
+        this.bgMusicSound.volume = this.bgMusicVolume;
+        this.hitByCarSound = this.loader.resources["hitsoundFile"].data;
+        this.hitByCarSound.volume = this.soundFXVolume;
+        this.ObjectPickupSound = this.loader.resources["pickupsoundFile"].data;
+        this.ObjectPickupSound.volume = this.soundFXVolume;
+        //sorted stage adding 
+        this.pixi.stage.addChild(background);
+        for (const car of this.cars)this.pixi.stage.addChild(car);
+        for (const building of this.buildings)this.pixi.stage.addChild(building);
+        this.pixi.stage.addChild(this.player);
+        for (const leaf of this.leafs)this.pixi.stage.addChild(leaf);
+        this.pixi.stage.addChild(this.smog, this.ui);
+        //create start screen
+        this.startscreen = new _startScreen.StartScreen(this, this.loader.resources["cityTexture"].texture, this.loader.resources["menuBackgroundTexture"].texture, this.uiTextures);
+        this.pixi.stage.addChild(this.startscreen);
+        this.menuActive = true;
+        this.ui.visible = false;
+        //start running the ticker
+        this.pixi.ticker.add((delta)=>this.update(delta)
+        );
     // alternatively you can handle single buttons
     // Handle button 0 (this is the first button, X-Button on a PS4 controller)
     // document.addEventListener(joystick.ButtonEvents[0], () => this.handleJump())
@@ -877,7 +877,7 @@ class Game {
 }
 let g = new Game;
 
-},{"pixi.js":"dsYej","matter-js":"2oYKU","./Player":"8YLWx","./Smog":"608Py","./Spawn":"6JGD8","./Building":"9ckPp","./Car":"d9weU","./Weather":"aPu1W","./Leaf":"cwtVd","./UI":"ef7dT","./Menu":"gQYVh","./Map":"5vXJ1","./StartScreen":"l9TZk","./AssetLoader":"8VDU2","./arcade/arcade":"hTQeZ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","matter-js":"2oYKU","./Player":"8YLWx","./Smog":"608Py","./Spawn":"6JGD8","./Building":"9ckPp","./Car":"d9weU","./Weather":"aPu1W","./Leaf":"cwtVd","./UI":"ef7dT","./Menu":"gQYVh","./Map":"5vXJ1","./StartScreen":"l9TZk","./AssetLoader":"8VDU2","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./arcade/arcade":"hTQeZ"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -46915,13 +46915,13 @@ class Player extends _pixiJs.AnimatedSprite {
     update(delta) {
         super.update(delta);
         if (this.joystick) {
-            if (this.joystick.Left) this.xspeed = -4;
+            if (this.joystick.Left) {
+                console.log("Left");
+                this.xspeed = -4;
+            } else if (this.joystick.Right) this.xspeed = 4;
             else this.xspeed = 0;
-            if (this.joystick.Right) this.xspeed = 4;
-            else this.xspeed = 0;
-            if (this.joystick.Up) this.yspeed = 4;
-            else this.yspeed = 0;
-            if (this.joystick.Down) this.yspeed = -4;
+            if (this.joystick.Up) this.yspeed = -4;
+            else if (this.joystick.Down) this.yspeed = 4;
             else this.yspeed = 0;
         }
         if (this.xspeed != 0 || this.yspeed != 0) this.play();

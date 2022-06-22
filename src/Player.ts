@@ -69,22 +69,20 @@ export class Player extends PIXI.AnimatedSprite {
 
     if (this.joystick) {
       if (this.joystick.Left) {
+        console.log("Left");
+        
         this.xspeed = -4
-      } else {
-        this.xspeed = 0
-      }
-      if (this.joystick.Right) {
+      } 
+      else if (this.joystick.Right) {
         this.xspeed = 4
       } else {
         this.xspeed = 0
       }
       if (this.joystick.Up) {
-        this.yspeed = 4
-      } else {
-        this.yspeed = 0
-      }
-      if (this.joystick.Down) {
         this.yspeed = -4
+      } 
+      else if (this.joystick.Down) {
+        this.yspeed = 4
       } else {
         this.yspeed = 0
       }
