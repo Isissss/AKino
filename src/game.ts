@@ -15,11 +15,14 @@ import { Menu } from './Menu'
 import { Map } from "./Map"
 import { StartScreen } from './StartScreen'
 import { AssetLoader } from "./AssetLoader"
+import { Arcade } from './arcade/arcade'
 
 export class Game {
     pixi: PIXI.Application
     loader: AssetLoader
     player: Player
+    private arcade: Arcade
+    private joystickListener: EventListener
     map: Map
     smog: Smog
     graphics: Graphics
@@ -61,7 +64,7 @@ export class Game {
     public filter: PIXI.Filter
   
     constructor() {
-        this.pixi = new PIXI.Application({ width: 1920, height: 940, backgroundColor: 0xAAAAA })
+        this.pixi = new PIXI.Application( {width: 1440, height: 900, backgroundColor: 0xAAAAA })
         console.log(window.innerHeight)
         console.log(window.innerWidth)
         document.body.appendChild(this.pixi.view)
@@ -86,6 +89,9 @@ export class Game {
     }
 
     loadCompleted() {
+        // Initialize joystick class    
+        this.arcade = new Arcade(this)
+
         //create Dino animation frames
         this.createDinoFrames()
 
@@ -124,10 +130,14 @@ export class Game {
 
         //initialize player, smog, object spawner
 
-        this.player = new Player(this.dinoTextures, this)
+        this.joystickListener = (e: Event) => this.initJoystick(e as CustomEvent)
+        document.addEventListener("joystickcreated", this.joystickListener)
+
+     
         this.smog = new Smog(this.player, window.innerWidth)
         this.spawner = new Spawn(100, 100, (3 * 60), this.objectTextures, this)
 
+    
         //map        
         this.map = new Map(this, this.player)
         this.pixi.stage.x = this.pixi.screen.width / 2;
@@ -243,12 +253,18 @@ export class Game {
         this.menuActive = true;
         this.ui.visible = false;
 
+
+
         //start running the ticker
         this.pixi.ticker.add((delta) => this.update(delta))
 
     }
 
     private update(delta: number) {
+        for (let joystick of this.arcade.Joysticks) {
+            joystick.update()
+        }
+        
         switch (this.state) {
             case 0: //startscreen state
                 this.updateVolume()
@@ -409,6 +425,25 @@ export class Game {
         this.hitByCarSound.volume = this.soundFXVolume
     }
 
+    private initJoystick(e: CustomEvent) {
+
+        let joystick = this.arcade.Joysticks[e.detail]
+
+        for (const buttonEvent of joystick.ButtonEvents) {
+            document.addEventListener(buttonEvent, () => console.log(buttonEvent))
+        }
+
+        this.player = new Player(this.dinoTextures, joystick, this)
+ 
+
+        // alternatively you can handle single buttons
+        // Handle button 0 (this is the first button, X-Button on a PS4 controller)
+        // document.addEventListener(joystick.ButtonEvents[0], () => this.handleJump())
+    }
+
+    public disconnect() {
+        document.removeEventListener("joystickcreated", this.joystickListener)
+    }
 
     public togglePauseMenu() {
         switch (this.menuActive) {
