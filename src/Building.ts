@@ -25,10 +25,10 @@ export class Building extends PIXI.Sprite {
     }
 
     public update(score: number) {
-        if (score <= 2) {
+        if (score <= 10) {
             this.texture = this.texture1
         }
-        else if (score <= 5) {
+        else if (score <= 25) {
             this.texture = this.texture2
         }
         else {
