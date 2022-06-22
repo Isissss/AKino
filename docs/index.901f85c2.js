@@ -46925,9 +46925,12 @@ class Player extends _pixiJs.AnimatedSprite {
         if (this.joystick) {
             if (this.joystick.Left) {
                 console.log("Left");
+                this.scale.set(-0.7, 0.7);
                 this.xspeed = -4;
-            } else if (this.joystick.Right) this.xspeed = 4;
-            else this.xspeed = 0;
+            } else if (this.joystick.Right) {
+                this.xspeed = 4;
+                this.scale.set(0.7);
+            } else this.xspeed = 0;
             if (this.joystick.Up) this.yspeed = -4;
             else if (this.joystick.Down) this.yspeed = 4;
             else this.yspeed = 0;
