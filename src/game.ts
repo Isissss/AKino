@@ -141,7 +141,7 @@ export class Game {
         this.car2 = new Car(this.loader.resources["carTexture"].texture!, 2, 1960, -500)
         this.car3 = new Car(this.loader.resources["carTexture"].texture!, 3, 2900, 750)
         this.car4 = new Car(this.loader.resources["carTexture"].texture!, 4, -50, 1450)
-        console.log(this.car2)
+      
         //this.car3 = new Car(this.loader.resources["carTexture"].texture!, false, 1600, 625)
         //this.car2 = new Car(this.loader.resources["carTexture"].texture!, true, 640, -300)
 
@@ -150,42 +150,37 @@ export class Game {
         //buildings
         for (let i = 0; i < 5; i++) {
             let randomizer = Math.round(Math.random() * 5)
-            console.log(randomizer)
+        
             let building = new Building(Math.random() * 700 + 190, Math.random() * 300 - 390, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this)
             building.scale.set(7)
             this.buildings.push(building)
         }
         for (let i = 0; i < 5; i++) {
             let randomizer = Math.round(Math.random() * 5)
-            console.log(randomizer)
             let building = new Building(Math.random() * 600 - 920, Math.random() * 300 + 340, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this)
             building.scale.set(7)
             this.buildings.push(building)
         }
         for (let i = 0; i < 5; i++) {
             let randomizer = Math.round(Math.random() * 5)
-            console.log(randomizer)
             let building = new Building(Math.random() * 700 + 120, Math.random() * 300 + 1090, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this)
             building.scale.set(7)
             this.buildings.push(building)
         }
         for (let i = 0; i < 5; i++) {
             let randomizer = Math.round(Math.random() * 5)
-            console.log(randomizer)
             let building = new Building(Math.random() * 700 + 1090, Math.random() * 300 + 1090, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this)
             building.scale.set(7)
             this.buildings.push(building)
         }
         for (let i = 0; i < 5; i++) {
             let randomizer = Math.round(Math.random() * 5)
-            console.log(randomizer)
             let building = new Building(Math.random() * 700 + 1090, Math.random() * 300 - 390, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this)
             building.scale.set(7)
             this.buildings.push(building)
         }
         for (let i = 0; i < 5; i++) {
             let randomizer = Math.round(Math.random() * 5)
-            console.log(randomizer)
             let building = new Building(Math.random() * 600 + 2290, Math.random() * 300 + 340, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this)
             building.scale.set(7)
             this.buildings.push(building)
