@@ -591,7 +591,7 @@ class Game {
     }
     loadCompleted() {
         // Initialize joystick class    
-        this.arcade = new _arcade.Arcade(this, false, true);
+        this.arcade = new _arcade.Arcade(this, false, false);
         this.joystickListener = (e)=>this.initJoystick(e)
         ;
         document.addEventListener("joystickcreated", this.joystickListener);

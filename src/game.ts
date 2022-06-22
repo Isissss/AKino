@@ -104,7 +104,7 @@ export class Game {
     
     loadCompleted() {
         // Initialize joystick class    
-        this.arcade = new Arcade(this, false, true)
+        this.arcade = new Arcade(this, false, false)
         
         this.joystickListener = (e: Event) => this.initJoystick(e as CustomEvent)
         document.addEventListener("joystickcreated", this.joystickListener)
