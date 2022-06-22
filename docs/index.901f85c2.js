@@ -549,6 +549,7 @@ class Game {
     _state = 0;
     menuActive = false;
     score = 0;
+    endscore = 50;
     buildings = [];
     dinoTextures = [];
     leafs = [];
@@ -646,6 +647,7 @@ class Game {
         this.pixi.stage.y = this.pixi.screen.height / 2;
         //background
         let background = new _pixiJs.Sprite(this.loader.resources["cityTexture"].texture);
+        this;
         background.anchor.set(0, 0);
         background.position.set(-window.innerWidth / 2, -window.innerHeight / 2);
         background.scale.set(4.48, 3.6);
@@ -760,7 +762,7 @@ class Game {
                         this.score++;
                         this.objects[i8].pickedUp();
                         this.smog.reset();
-                        if (this.score >= 20) this.endGame(2);
+                        if (this.score >= this.endscore) this.endGame(2);
                         //console.log("player touches object")
                         this.objects[i8].destroy();
                         this.objects.splice(i8, 1);

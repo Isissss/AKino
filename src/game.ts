@@ -38,6 +38,7 @@ export class Game {
     score: number = 0
     car: Car
     car2: Car
+    private endscore : number = 50
     car3: Car
     car4: Car
     gameover: boolean
@@ -57,12 +58,15 @@ export class Game {
     bgMusicSound: HTMLAudioElement
     hitByCarSound: HTMLAudioElement
     ObjectPickupSound: HTMLAudioElement
-
+    public filter: PIXI.Filter
+  
     constructor() {
         this.pixi = new PIXI.Application({ width: 1920, height: 940, backgroundColor: 0xAAAAA })
         console.log(window.innerHeight)
         console.log(window.innerWidth)
         document.body.appendChild(this.pixi.view)
+
+   
 
         // Load all images
         this.loader = new AssetLoader(this)
@@ -131,7 +135,7 @@ export class Game {
 
         //background
         let background = new PIXI.Sprite(this.loader.resources["cityTexture"].texture!)
-
+        this
         background.anchor.set(0,0)
         background.position.set(-window.innerWidth/2,-window.innerHeight/2)
         background.scale.set(4.48, 3.6)
@@ -284,12 +288,11 @@ export class Game {
                             this.score++;
                             this.objects[i].pickedUp()
                             this.smog.reset()
-                            if (this.score >= 20) {
+                            if (this.score >= this.endscore) {
                                 this.endGame(2)
                             }
 
                             //console.log("player touches object")
-
 
                             this.objects[i].destroy();
                             this.objects.splice(i, 1)
