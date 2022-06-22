@@ -1,5 +1,6 @@
 import Matter from 'matter-js'
 import { Game } from "./game"
+import { Joystick } from './arcade/joystick'
 import * as PIXI from "pixi.js"
 
 
@@ -13,12 +14,13 @@ export class Player extends PIXI.AnimatedSprite {
   public hit: boolean = false
   public health: number = 3
   private game: Game
+  private joystick: Joystick
 
 
-  constructor(animation: PIXI.Texture[], game: Game) {
+  constructor(animation: PIXI.Texture[], joystick: Joystick ,game: Game) {
     super(animation)
     this.animationSpeed = 0.1;
-
+    this.joystick = joystick
     this.x = 100
     this.y = 100
     this.game = game
@@ -65,6 +67,29 @@ export class Player extends PIXI.AnimatedSprite {
   public update(delta: number) {
     super.update(delta)
 
+    if (this.joystick) {
+      if (this.joystick.Left) {
+        this.xspeed = -4
+      } else {
+        this.xspeed = 0
+      }
+      if (this.joystick.Right) {
+        this.xspeed = 4
+      } else {
+        this.xspeed = 0
+      }
+      if (this.joystick.Up) {
+        this.yspeed = 4
+      } else {
+        this.yspeed = 0
+      }
+      if (this.joystick.Down) {
+        this.yspeed = -4
+      } else {
+        this.yspeed = 0
+      }
+  }
+
     if (this.xspeed != 0 || this.yspeed != 0) {
       this.play()
     } else {
@@ -92,6 +117,8 @@ export class Player extends PIXI.AnimatedSprite {
     }
   }
 
+
+  
 
   onKeyDown(e: KeyboardEvent): void {
     switch (e.key.toUpperCase()
