@@ -14,6 +14,7 @@ import { UI } from './UI'
 import { Menu } from './Menu'
 import { Map } from "./Map"
 import { StartScreen } from './StartScreen'
+import { EndPage} from './EndPage'
 import { AssetLoader } from "./AssetLoader"
 import { Arcade } from './arcade/arcade'
 
@@ -26,6 +27,7 @@ export class Game {
     map: Map
     smog: Smog
     graphics: Graphics
+    endpage: EndPage
     spawner: Spawn
     objectTextures: PIXI.Texture[] = []
     buildingTextures: PIXI.Texture[][] = []
@@ -79,6 +81,18 @@ export class Game {
 
     }
     
+    private startGame() {
+
+     
+        this.state = 1;
+        this.startscreen.visible = false;
+  
+        this.menuActive = false;
+        this.ui.visible = true;
+        this.bgMusicSound.play()
+        this.bgMusicSound.volume = this.bgMusicVolume
+    }
+
     public createDinoFrames() {
         
         for (let i = 1; i < 6; i++) {
@@ -214,6 +228,7 @@ export class Game {
         }
 
     }
+ 
 
     public get fontSize(): number {
         return this._fontSize;
@@ -269,7 +284,7 @@ export class Game {
         let joystick = this.arcade.Joysticks[e.detail]
 
         for (const buttonEvent of joystick.ButtonEvents) {
-            document.addEventListener(buttonEvent, () => console.log(buttonEvent))
+            document.addEventListener(buttonEvent, () => this.startGame())
         }
 
         //create Dino animation frames
@@ -431,7 +446,7 @@ export class Game {
         this.ui.visible = false;
 
 
-
+       
         //start running the ticker
         this.pixi.ticker.add((delta) => this.update(delta))
         // alternatively you can handle single buttons
