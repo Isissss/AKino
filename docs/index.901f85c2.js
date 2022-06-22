@@ -46888,14 +46888,25 @@ class Player extends _pixiJs.AnimatedSprite {
         this.rigidBody = _matterJsDefault.default.Bodies.rectangle(this.x, this.y, this.width, this.height, playerOptions);
         _matterJsDefault.default.Composite.add(game.engine.world, this.rigidBody);
     }
+    borderCheckx(xspeed) {
+        if (this.x + xspeed > this.game.pixi.view.width / 2 * 3) return 0;
+        else if (this.x + xspeed < -(this.game.pixi.view.width / 2)) return 0;
+        else return this.xspeed;
+    }
+    borderChecky(yspeed) {
+        if (this.y + yspeed > this.game.pixi.view.height / 2 * 3) return 0;
+        else if (this.y + yspeed < -(this.game.pixi.view.height / 2)) return 0;
+        else return this.yspeed;
+    }
     update(delta) {
         super.update(delta);
+        console.log(this.borderCheckx(this.xspeed + this.xweather));
         if (this.xspeed != 0 || this.yspeed != 0) this.play();
         else this.stop();
         // Translate character based on speed
         _matterJsDefault.default.Body.translate(this.rigidBody, {
-            x: this.xspeed + this.xweather,
-            y: this.yspeed + this.yweather
+            x: this.borderCheckx(this.xspeed + this.xweather),
+            y: this.borderChecky(this.yspeed + this.yweather)
         });
         this.x = this.rigidBody.position.x;
         this.y = this.rigidBody.position.y;
