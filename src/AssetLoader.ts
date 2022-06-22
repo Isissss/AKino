@@ -14,9 +14,24 @@ import dinoImage from "./images/dino.png"
 import buildingTexture1 from "./images/A1.png"
 import buildingTexture2 from "./images/A2.png"
 import buildingTexture3 from "./images/A3.png"
+import buildingA1 from "./images/A1.png"
+import buildingA2 from "./images/A2.png"
+import buildingA3 from "./images/A3.png"
 import buildingB1 from "./images/B1.png"
 import buildingB2 from "./images/B2.png"
 import buildingB3 from "./images/B3.png"
+import buildingC1 from "./images/C1.png"
+import buildingC2 from "./images/C2.png"
+import buildingC3 from "./images/C3.png"
+import buildingD1 from "./images/B1.png"
+import buildingD2 from "./images/B2.png"
+import buildingD3 from "./images/B3.png"
+import buildingE1 from "./images/E1.png"
+import buildingE2 from "./images/E2.png"
+import buildingE3 from "./images/E3.png"
+import buildingF1 from "./images/F1.png"
+import buildingF2 from "./images/F2.png"
+import buildingF3 from "./images/F3.png"
 import carImage from "./images/car.png"
 import HPDbackgroundImage from "./images/tile.png" // needs replacement / better way of creating the background
 import menuBackgroundImage from "./images/menuBackground.png" // Menu book
@@ -61,9 +76,24 @@ export class AssetLoader extends PIXI.Loader {
             .add('buildingTexture1', buildingTexture1)
             .add('buildingTexture2', buildingTexture2)
             .add('buildingTexture3', buildingTexture3)
+            .add('buildingA1', buildingA1)
+            .add('buildingA2', buildingA2)
+            .add('buildingA3', buildingA3)
             .add('buildingB1', buildingB1)
             .add('buildingB2', buildingB2)
             .add('buildingB3', buildingB3)
+            .add('buildingC1', buildingC1)
+            .add('buildingC2', buildingC2)
+            .add('buildingC3', buildingC3)
+            .add('buildingD1', buildingD1)
+            .add('buildingD2', buildingD2)
+            .add('buildingD3', buildingD3)
+            .add('buildingE1', buildingE1)
+            .add('buildingE2', buildingE2)
+            .add('buildingE3', buildingE3)
+            .add('buildingF1', buildingF1)
+            .add('buildingF2', buildingF2)
+            .add('buildingF3', buildingF3)
             .add('leafTexture', leafImage)
             .add('dinoTexture', dinoImage)
             .add('HPDbackgroundTexture', HPDbackgroundImage)
