@@ -2,7 +2,7 @@
  ![First prototype preview](https://cdn.discordapp.com/attachments/616573021846634497/989487583740461116/unknown.png)
 
  ![First prototype preview](https://cdn.discordapp.com/attachments/616573021846634497/989488215520067594/unknown.png)
-Due to the pollution theere is a lot of smog and extreme weather in the city. Collect windmills and solar panels and see the city evolve as you go! But beware for the cars on the road..  
+Due to the pollution there is a lot of smog and extreme weather in the city. Collect windmills and solar panels and see the city evolve as you go! But beware for the cars on the road..  
 
 ### [Play the game! [DESKTOP ONLY]](https://stud.hosted.hr.nl/1036029/Programmeren/AKino/docs/)   
 ### [Play the game! [ARCADE ONLY]](https://isissss.github.io/CLE4/)
@@ -14,8 +14,8 @@ Due to the pollution theere is a lot of smog and extreme weather in the city. Co
 | main      | - | 0 | Game's main branch |
 | <a href="https://github.com/Isissss/CLE4/tree/proto01">proto01</a>   | - | 1 | First combined prototype |
 | <a href="https://github.com/Isissss/CLE4/tree/proto02">proto02</a>   | - | 2 | Second combined prototype |
-| <a href="https://github.com/Isissss/CLE4/tree/Proto03">proto03</a>   | - | 2 | Third combined prototype |
-| <a href="https://github.com/Isissss/CLE4/tree/Arcade">Arcade</a>   | - | 2 | Arcade ready version of proto03 |
+| <a href="https://github.com/Isissss/CLE4/tree/Proto03">proto03</a>   | - | 3 | Third combined prototype |
+| <a href="https://github.com/Isissss/CLE4/tree/Arcade">Arcade</a>   | - | 3 | Arcade ready version of proto03 |
 | <a href="https://github.com/Isissss/CLE4/tree/Player">Player</a>   | Wessel | 1 | Prototype for keyboard movement |
 | <a href="https://github.com/Isissss/CLE4/tree/collision">collision</a>   | Isis | 1 | Prototype for collectable |
 | <a href="https://github.com/Isissss/CLE4/tree/Spawner">Spawner</a>   | Jeffrey | 1 | Prototype for spawning in objects |
@@ -36,5 +36,5 @@ Due to the pollution theere is a lot of smog and extreme weather in the city. Co
 Game made by 4 students of the Hogeschool Rotterdam. <br>
 <a href="https://github.com/Isissss">Isis Ton</a> <br>
 <a href="https://github.com/PimMiii">Pim van Milt</a> <br>
-<a href="https://github.com/RadiazOm">Jeffrey van Otterlo0</a> <br>
+<a href="https://github.com/RadiazOm">Jeffrey van Otterloo</a> <br>
 <a href="https://github.com/wesselvbbb1">Wessel van Beek</a> <br>
