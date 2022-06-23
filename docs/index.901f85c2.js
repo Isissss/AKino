@@ -521,99 +521,6 @@ parcelHelpers.export(exports, "Game", ()=>Game
 var _pixiJs = require("pixi.js");
 var _matterJs = require("matter-js");
 var _matterJsDefault = parcelHelpers.interopDefault(_matterJs);
-var _dinoPng = require("./images/dino.png");
-var _dinoPngDefault = parcelHelpers.interopDefault(_dinoPng);
-var _bubblePng = require("./images/bubble.png");
-var _bubblePngDefault = parcelHelpers.interopDefault(_bubblePng);
-var _waterJpg = require("./images/water.jpg");
-var _waterJpgDefault = parcelHelpers.interopDefault(_waterJpg);
-var _heartPng = require("./images/heart.png");
-var _heartPngDefault = parcelHelpers.interopDefault(_heartPng);
-//import smokeImage from "./images/smog.png"
-var _pixelMapPng = require("./images/pixelMap.png");
-var _pixelMapPngDefault = parcelHelpers.interopDefault(_pixelMapPng);
-var _object1Png = require("./images/object1.png");
-var _object1PngDefault = parcelHelpers.interopDefault(_object1Png);
-var _object2Png = require("./images/object2.png");
-var _object2PngDefault = parcelHelpers.interopDefault(_object2Png);
-var _leafPng = require("./images/leaf.png");
-var _leafPngDefault = parcelHelpers.interopDefault(_leafPng);
-var _a1Png = require("./images/A1.png");
-var _a1PngDefault = parcelHelpers.interopDefault(_a1Png);
-var _a2Png = require("./images/A2.png");
-var _a2PngDefault = parcelHelpers.interopDefault(_a2Png);
-var _a3Png = require("./images/A3.png");
-var _a3PngDefault = parcelHelpers.interopDefault(_a3Png);
-var _b1Png = require("./images/B1.png");
-var _b1PngDefault = parcelHelpers.interopDefault(_b1Png);
-var _b2Png = require("./images/B2.png");
-var _b2PngDefault = parcelHelpers.interopDefault(_b2Png);
-var _b3Png = require("./images/B3.png");
-var _b3PngDefault = parcelHelpers.interopDefault(_b3Png);
-var _c1Png = require("./images/C1.png");
-var _c1PngDefault = parcelHelpers.interopDefault(_c1Png);
-var _c2Png = require("./images/C2.png");
-var _c2PngDefault = parcelHelpers.interopDefault(_c2Png);
-var _c3Png = require("./images/C3.png");
-var _c3PngDefault = parcelHelpers.interopDefault(_c3Png);
-var _d1Png = require("./images/D1.png");
-var _d1PngDefault = parcelHelpers.interopDefault(_d1Png);
-var _d2Png = require("./images/D2.png");
-var _d2PngDefault = parcelHelpers.interopDefault(_d2Png);
-var _d3Png = require("./images/D3.png");
-var _d3PngDefault = parcelHelpers.interopDefault(_d3Png);
-var _e1Png = require("./images/E1.png");
-var _e1PngDefault = parcelHelpers.interopDefault(_e1Png);
-var _e2Png = require("./images/E2.png");
-var _e2PngDefault = parcelHelpers.interopDefault(_e2Png);
-var _e3Png = require("./images/E3.png");
-var _e3PngDefault = parcelHelpers.interopDefault(_e3Png);
-var _f1Png = require("./images/F1.png");
-var _f1PngDefault = parcelHelpers.interopDefault(_f1Png);
-var _f2Png = require("./images/F2.png");
-var _f2PngDefault = parcelHelpers.interopDefault(_f2Png);
-var _f3Png = require("./images/F3.png");
-var _f3PngDefault = parcelHelpers.interopDefault(_f3Png);
-var _carPng = require("./images/car.png");
-var _carPngDefault = parcelHelpers.interopDefault(_carPng);
-var _tilePng = require("./images/tile.png"); // needs replacement / better way of creating the background
-var _tilePngDefault = parcelHelpers.interopDefault(_tilePng);
-var _menuBackgroundPng = require("./images/menuBackground.png"); // Menu book
-var _menuBackgroundPngDefault = parcelHelpers.interopDefault(_menuBackgroundPng);
-var _yellowUI0Png = require("./images/YellowUI0.png"); // cant get spritesheets to work
-var _yellowUI0PngDefault = parcelHelpers.interopDefault(_yellowUI0Png);
-var _yellowUI1Png = require("./images/YellowUI1.png"); // cant get spritesheets to work
-var _yellowUI1PngDefault = parcelHelpers.interopDefault(_yellowUI1Png);
-var _yellowUI2Png = require("./images/YellowUI2.png"); // cant get spritesheets to work
-var _yellowUI2PngDefault = parcelHelpers.interopDefault(_yellowUI2Png);
-var _yellowUI3Png = require("./images/YellowUI3.png"); // cant get spritesheets to work
-var _yellowUI3PngDefault = parcelHelpers.interopDefault(_yellowUI3Png);
-var _yellowUI4Png = require("./images/YellowUI4.png"); // cant get spritesheets to work
-var _yellowUI4PngDefault = parcelHelpers.interopDefault(_yellowUI4Png);
-var _yellowUI5Png = require("./images/YellowUI5.png"); // cant get spritesheets to work
-var _yellowUI5PngDefault = parcelHelpers.interopDefault(_yellowUI5Png);
-var _yellowUI6Png = require("./images/YellowUI6.png"); // cant get spritesheets to work
-var _yellowUI6PngDefault = parcelHelpers.interopDefault(_yellowUI6Png);
-var _greenUI0Png = require("./images/GreenUI0.png"); // cant get spritesheets to work
-var _greenUI0PngDefault = parcelHelpers.interopDefault(_greenUI0Png);
-var _greenUI1Png = require("./images/GreenUI1.png"); // cant get spritesheets to work
-var _greenUI1PngDefault = parcelHelpers.interopDefault(_greenUI1Png);
-var _greenUI2Png = require("./images/GreenUI2.png"); // cant get spritesheets to work
-var _greenUI2PngDefault = parcelHelpers.interopDefault(_greenUI2Png);
-var _redUI0Png = require("./images/RedUI0.png"); // cant get spritesheets to work
-var _redUI0PngDefault = parcelHelpers.interopDefault(_redUI0Png);
-var _redUI1Png = require("./images/RedUI1.png"); // cant get spritesheets to work
-var _redUI1PngDefault = parcelHelpers.interopDefault(_redUI1Png);
-var _redUI2Png = require("./images/RedUI2.png"); // cant get spritesheets to work
-var _redUI2PngDefault = parcelHelpers.interopDefault(_redUI2Png);
-var _audioscreenPng = require("./images/audioscreen.png");
-var _audioscreenPngDefault = parcelHelpers.interopDefault(_audioscreenPng);
-var _relaxingMp3 = require("url:./sound/relaxing.mp3");
-var _relaxingMp3Default = parcelHelpers.interopDefault(_relaxingMp3);
-var _pickupsoundMp3 = require("url:./sound/pickupsound.mp3");
-var _pickupsoundMp3Default = parcelHelpers.interopDefault(_pickupsoundMp3);
-var _hitsoundMp3 = require("url:./sound/hitsound.mp3");
-var _hitsoundMp3Default = parcelHelpers.interopDefault(_hitsoundMp3);
 var _player = require("./Player");
 var _smog = require("./Smog");
 var _spawn = require("./Spawn");
@@ -625,6 +532,7 @@ var _ui = require("./UI");
 var _menu = require("./Menu");
 var _map = require("./Map");
 var _startScreen = require("./StartScreen");
+var _assetLoader = require("./AssetLoader");
 class Game {
     objectTextures = [];
     buildingTextures = [];
@@ -641,13 +549,15 @@ class Game {
     _state = 0;
     menuActive = false;
     score = 0;
+    endscore = 50;
     buildings = [];
+    dinoTextures = [];
     leafs = [];
-    _soundFXVolume = 0.5 // temp placeholder for volume Sound Effects => number
+    _soundFXVolume = 0.5 //Volume for sound Effects
     ;
-    _bgMusicVolume = 0.5 // temp placeholder for volume Background Music => number
+    _bgMusicVolume = 0.5 //Volume for Background Music
     ;
-    fontSize = 20 // placeholder for fontsize => number
+    _fontSize = 20 //Fontsize for text
     ;
     constructor(){
         this.pixi = new _pixiJs.Application({
@@ -658,26 +568,21 @@ class Game {
         console.log(window.innerHeight);
         console.log(window.innerWidth);
         document.body.appendChild(this.pixi.view);
-        this.loader = new _pixiJs.Loader();
-        this.loader.add('sharkTexture', _dinoPngDefault.default).add('solarTexture', _object1PngDefault.default).add('windmillTexture', _object2PngDefault.default).add('bubbleTexture', _bubblePngDefault.default).add('waterTexture', _waterJpgDefault.default).add('cityTexture', _pixelMapPngDefault.default).add('carTexture', _carPngDefault.default).add('buildingA1', _a1PngDefault.default).add('buildingA2', _a2PngDefault.default).add('buildingA3', _a3PngDefault.default).add('buildingB1', _b1PngDefault.default).add('buildingB2', _b2PngDefault.default).add('buildingB3', _b3PngDefault.default).add('buildingC1', _c1PngDefault.default).add('buildingC2', _c2PngDefault.default).add('buildingC3', _c3PngDefault.default).add('buildingD1', _d1PngDefault.default).add('buildingD2', _d2PngDefault.default).add('buildingD3', _d3PngDefault.default).add('buildingE1', _e1PngDefault.default).add('buildingE2', _e2PngDefault.default).add('buildingE3', _e3PngDefault.default).add('buildingF1', _f1PngDefault.default).add('buildingF2', _f2PngDefault.default).add('buildingF3', _f3PngDefault.default).add('leafTexture', _leafPngDefault.default).add('dinoTexture', _dinoPngDefault.default).add('HPDbackgroundTexture', _tilePngDefault.default).add('menuBackgroundTexture', _menuBackgroundPngDefault.default).add('uiElement0', _yellowUI0PngDefault.default) // cant get spritesheets to work
-        .add('uiElement1', _yellowUI1PngDefault.default) // cant get spritesheets to work
-        .add('uiElement2', _yellowUI2PngDefault.default) // cant get spritesheets to work
-        .add('uiElement3', _yellowUI3PngDefault.default) // cant get spritesheets to work
-        .add('uiElement4', _yellowUI4PngDefault.default) // cant get spritesheets to work
-        .add('uiElement5', _yellowUI5PngDefault.default) // cant get spritesheets to work
-        .add('uiElement6', _yellowUI6PngDefault.default) // cant get spritesheets to work
-        .add('uiElement7', _greenUI0PngDefault.default) // cant get spritesheets to work
-        .add('uiElement8', _greenUI1PngDefault.default) // cant get spritesheets to work
-        .add('uiElement9', _greenUI2PngDefault.default) // cant get spritesheets to work
-        .add('uiElement10', _redUI0PngDefault.default) // cant get spritesheets to work
-        .add('uiElement11', _redUI1PngDefault.default) // cant get spritesheets to work
-        .add('uiElement12', _redUI2PngDefault.default) // cant get spritesheets to work
-        .add('heartTexture', _heartPngDefault.default).add('audioScreenTexture', _audioscreenPngDefault.default).add("backgroundMusicFile", _relaxingMp3Default.default).add("pickupsoundFile", _pickupsoundMp3Default.default).add("hitsoundFile", _hitsoundMp3Default.default);
-        this.loader.load(()=>this.loadCompleted()
-        );
+        // Load all images
+        this.loader = new _assetLoader.AssetLoader(this);
+        // Create new matterjs engine for anti-passthrough
         this.engine = _matterJsDefault.default.Engine.create();
     }
+    createDinoFrames() {
+        for(let i = 1; i < 6; i++){
+            const texture = _pixiJs.Texture.from(`dino_${i}.png`);
+            this.dinoTextures.push(texture);
+        //console.log(this.dinoTextures)
+        }
+    }
     loadCompleted() {
+        //create Dino animation frames
+        this.createDinoFrames();
         //packing UI textures into array
         this.uiTextures = [
             this.loader.resources["uiElement0"].texture,
@@ -732,7 +637,8 @@ class Game {
                 this.loader.resources["buildingF3"].texture
             ]
         ];
-        this.player = new _player.Player(this.loader.resources["sharkTexture"].texture, this);
+        //initialize player, smog, object spawner
+        this.player = new _player.Player(this.dinoTextures, this);
         this.smog = new _smog.Smog(this.player, window.innerWidth);
         this.spawner = new _spawn.Spawn(100, 100, 180, this.objectTextures, this);
         //map        
@@ -741,6 +647,7 @@ class Game {
         this.pixi.stage.y = this.pixi.screen.height / 2;
         //background
         let background = new _pixiJs.Sprite(this.loader.resources["cityTexture"].texture);
+        this;
         background.anchor.set(0, 0);
         background.position.set(-window.innerWidth / 2, -window.innerHeight / 2);
         background.scale.set(4.48, 3.6);
@@ -805,40 +712,42 @@ class Game {
             this.pixi.stage.addChild(leaf);
         }
         this.textStyle = new _pixiJs.TextStyle({
-            fontSize: 31,
+            fontSize: this.fontSize,
             fontWeight: "bold",
             trim: false
         });
+        //set Matter.js gravity
         this.engine.gravity.y = 0;
-        //this.pixi.ticker.add(() => this.update(1000 / 60))
-        // ui and menu
-        this.ui = new _ui.UI(this, this.loader.resources["bubbleTexture"].texture, this.loader.resources["heartTexture"].texture) // (game, pausebutton texture, heart texture)
+        //ui and menu
+        this.ui = new _ui.UI(this, this.loader.resources["pauseTexture"].texture, this.loader.resources["heartTexture"].texture) // (game, pausebutton texture, heart texture)
         ;
-        // music
-        this.bgMusicFile = this.loader.resources["backgroundMusicFile"].data;
-        // basictext?
-        this.basicText = new _pixiJs.Text(`Score ${this.score}`, this.textStyle);
-        this.basicText.x = 100;
-        this.basicText.y = 100;
-        // stage adding TEMP
+        //audio
+        this.bgMusicSound = this.loader.resources["backgroundMusicFile"].data;
+        this.bgMusicSound.volume = this.bgMusicVolume;
+        this.hitByCarSound = this.loader.resources["hitsoundFile"].data;
+        this.hitByCarSound.volume = this.soundFXVolume;
+        this.ObjectPickupSound = this.loader.resources["pickupsoundFile"].data;
+        this.ObjectPickupSound.volume = this.soundFXVolume;
+        //sorted stage adding 
         this.pixi.stage.addChild(background);
         for (const car of this.cars)this.pixi.stage.addChild(car);
         for (const building of this.buildings)this.pixi.stage.addChild(building);
         this.pixi.stage.addChild(this.player);
         for (const leaf of this.leafs)this.pixi.stage.addChild(leaf);
         this.pixi.stage.addChild(this.smog, this.ui);
-        this.pixi.stage.addChild(this.basicText);
-        //create Start Screen
+        //create start screen
         this.startscreen = new _startScreen.StartScreen(this, this.loader.resources["cityTexture"].texture, this.loader.resources["menuBackgroundTexture"].texture, this.uiTextures);
         this.pixi.stage.addChild(this.startscreen);
         this.menuActive = true;
         this.ui.visible = false;
+        //start running the ticker
         this.pixi.ticker.add((delta)=>this.update(delta)
         );
     }
     update(delta) {
         switch(this.state){
             case 0:
+                this.updateVolume();
                 break;
             case 1:
                 if (!this.menuActive) {
@@ -851,32 +760,32 @@ class Game {
                     for(let i = 0; i < this.leafs.length; i++)this.leafs[i].update();
                     for (let building of this.buildings)building.update(this.score);
                     for(let i7 = 0; i7 < this.cars.length; i7++)if (this.collision(this.player, this.cars[i7]) && !this.player.hit) {
-                        //console.log("player touches object")
                         this.player.hitcar();
-                        let hitByCarSound = this.loader.resources["hitsoundFile"].data;
-                        hitByCarSound.play();
-                        hitByCarSound.volume = this.soundFXVolume;
+                        this.hitByCarSound.play();
+                        this.hitByCarSound.volume = this.soundFXVolume;
                     }
                     for (let car of this.cars)car.update(delta);
                     for(let i8 = 0; i8 < this.objects.length; i8++)if (this.collision(this.player, this.objects[i8])) {
                         this.score++;
                         this.objects[i8].pickedUp();
                         this.smog.reset();
-                        if (this.score >= 20) this.endGame(2);
-                        this.basicText.text = `Score ${this.score}`;
+                        if (this.score >= this.endscore) this.endGame(2);
                         //console.log("player touches object")
                         this.objects[i8].destroy();
                         this.objects.splice(i8, 1);
                     }
                     this.ui.healthDisplay.update();
+                    this.updateVolume();
                 }
                 break;
             case 2:
+                this.updateVolume();
                 this.ui.visible = false;
                 this.togglePauseMenu();
                 this.pixi.stop();
                 break;
             case 3:
+                this.updateVolume();
                 this.ui.visible = false;
                 this.togglePauseMenu();
                 this.pixi.stop();
@@ -894,15 +803,22 @@ class Game {
         return this._bgMusicVolume;
     }
     set bgMusicVolume(v) {
-        let value = v / 100;
-        if (value >= 0 && value <= 1) this._soundFXVolume = value;
+        if (v >= 0 && v <= 1) this._bgMusicVolume = v;
+        else console.log(`not a volume: ${v}`);
     }
     get soundFXVolume() {
         return this._soundFXVolume;
     }
     set soundFXVolume(v) {
-        let value = v / 100;
-        if (value >= 0 && value <= 1) this._soundFXVolume = value;
+        if (v >= 0 && v <= 1) this._soundFXVolume = v;
+        else console.log(`not a volume: ${v}`);
+    }
+    get fontSize() {
+        return this._fontSize;
+    }
+    set fontSize(v) {
+        if (v >= 0 && v <= 40) this._fontSize = v;
+        else console.log(`fontsize too large: ${v}`);
     }
     updateWeather(x, y) {
         for(let i = 0; i < this.leafs.length; i++)this.leafs[i].changeWeather(x, y);
@@ -919,6 +835,11 @@ class Game {
         const bounds1 = sprite1.getBounds();
         const bounds2 = sprite2.getBounds();
         return bounds1.x < bounds2.x + bounds2.width && bounds1.x + bounds1.width > bounds2.x && bounds1.y < bounds2.y + bounds2.height && bounds1.y + bounds1.height > bounds2.y;
+    }
+    updateVolume() {
+        this.bgMusicSound.volume = this.bgMusicVolume;
+        this.ObjectPickupSound.volume = this.soundFXVolume;
+        this.hitByCarSound.volume = this.soundFXVolume;
     }
     togglePauseMenu() {
         switch(this.menuActive){
@@ -945,7 +866,7 @@ class Game {
 }
 let g = new Game;
 
-},{"pixi.js":"dsYej","matter-js":"2oYKU","./images/dino.png":"c8KfO","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","./images/heart.png":"e2wO4","./images/pixelMap.png":"8n5vg","./images/object1.png":"8Mhko","./images/object2.png":"luVeW","./images/leaf.png":"5tsPY","./images/A1.png":"jVMM5","./images/A2.png":"8jc4G","./images/A3.png":"LKfs6","./images/B1.png":"jZkaI","./images/B2.png":"lbVPJ","./images/B3.png":"fRT7G","./images/car.png":"dnXSN","./images/tile.png":"dvchs","./images/menuBackground.png":"hVtuo","./images/YellowUI0.png":"dwRmK","./images/YellowUI1.png":"d9mKy","./images/YellowUI2.png":"4bojR","./images/YellowUI3.png":"iiYKS","./images/YellowUI4.png":"ikcEs","./images/YellowUI5.png":"lUVol","./images/YellowUI6.png":"l1OGq","./images/GreenUI0.png":"5jyTO","./images/GreenUI1.png":"7mej2","./images/GreenUI2.png":"h0yQR","./images/RedUI0.png":"4uMrI","./images/RedUI1.png":"BWDJ0","./images/RedUI2.png":"2OgRy","./images/audioscreen.png":"d0MKD","url:./sound/relaxing.mp3":"i5zAd","url:./sound/pickupsound.mp3":"3qwyk","url:./sound/hitsound.mp3":"cMOh2","./Player":"8YLWx","./Smog":"608Py","./Spawn":"6JGD8","./Building":"9ckPp","./Car":"d9weU","./Weather":"aPu1W","./Leaf":"cwtVd","./UI":"ef7dT","./Menu":"gQYVh","./Map":"5vXJ1","./StartScreen":"l9TZk","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./images/C1.png":"1d8PL","./images/C2.png":"6FmSw","./images/C3.png":"hL0Or","./images/D1.png":"dOdXn","./images/D2.png":"5ZjMS","./images/D3.png":"cWkGq","./images/E1.png":"1iRzI","./images/E2.png":"3bEzS","./images/E3.png":"5nASQ","./images/F1.png":"9JStD","./images/F2.png":"cEm9g","./images/F3.png":"kvh1Z"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","matter-js":"2oYKU","./Player":"8YLWx","./Smog":"608Py","./Spawn":"6JGD8","./Building":"9ckPp","./Car":"d9weU","./Weather":"aPu1W","./Leaf":"cwtVd","./UI":"ef7dT","./Menu":"gQYVh","./Map":"5vXJ1","./StartScreen":"l9TZk","./AssetLoader":"8VDU2","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -46928,143 +46849,7 @@ var global = arguments[3];
     ]);
 });
 
-},{}],"c8KfO":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "dino.174d8237.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
-"use strict";
-var bundleURL = {};
-function getBundleURLCached(id) {
-    var value = bundleURL[id];
-    if (!value) {
-        value = getBundleURL();
-        bundleURL[id] = value;
-    }
-    return value;
-}
-function getBundleURL() {
-    try {
-        throw new Error();
-    } catch (err) {
-        var matches = ('' + err.stack).match(/(https?|file|ftp):\/\/[^)\n]+/g);
-        if (matches) // The first two stack frames will be this function and getBundleURLCached.
-        // Use the 3rd one, which will be a runtime in the original bundle.
-        return getBaseURL(matches[2]);
-    }
-    return '/';
-}
-function getBaseURL(url) {
-    return ('' + url).replace(/^((?:https?|file|ftp):\/\/.+)\/[^/]+$/, '$1') + '/';
-} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
-function getOrigin(url) {
-    var matches = ('' + url).match(/(https?|file|ftp):\/\/[^/]+/);
-    if (!matches) throw new Error('Origin not found');
-    return matches[0];
-}
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-exports.getOrigin = getOrigin;
-
-},{}],"iMP3P":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble.56ab0ad6.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"jj9Eg":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "water.59ff4e4f.jpg" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"e2wO4":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "heart.6f575755.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"8n5vg":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "pixelMap.895221e9.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"8Mhko":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "object1.3698594e.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"luVeW":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "object2.9ca637c4.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"5tsPY":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "leaf.e574830e.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"jVMM5":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "A1.0214b6cf.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"8jc4G":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "A2.6b9c9311.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"LKfs6":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "A3.7797f225.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"jZkaI":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "B1.c6c34d56.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"lbVPJ":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "B2.9cfb46c1.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"fRT7G":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "B3.2279688e.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"dnXSN":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "car.80a2d4f3.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"dvchs":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "tile.69895f74.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"hVtuo":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "menuBackground.2e111865.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"dwRmK":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "YellowUI0.b08040e2.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"d9mKy":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "YellowUI1.d936fc7e.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"4bojR":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "YellowUI2.ccfbec3e.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"iiYKS":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "YellowUI3.86591660.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"ikcEs":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "YellowUI4.6408ae39.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"lUVol":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "YellowUI5.f59bc91a.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"l1OGq":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "YellowUI6.05d49edd.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"5jyTO":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "GreenUI0.ecacef98.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"7mej2":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "GreenUI1.449980c0.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"h0yQR":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "GreenUI2.6cd26c33.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"4uMrI":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "RedUI0.738e1c3b.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"BWDJ0":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "RedUI1.141e5620.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"2OgRy":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "RedUI2.34d8eed7.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"d0MKD":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "audioscreen.52b36ab7.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"i5zAd":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "relaxing.6d6f3898.mp3" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"3qwyk":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "pickupsound.9ec87b5e.mp3" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"cMOh2":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "hitsound.3da7ce8c.mp3" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"8YLWx":[function(require,module,exports) {
+},{}],"8YLWx":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Player", ()=>Player
@@ -47072,7 +46857,7 @@ parcelHelpers.export(exports, "Player", ()=>Player
 var _matterJs = require("matter-js");
 var _matterJsDefault = parcelHelpers.interopDefault(_matterJs);
 var _pixiJs = require("pixi.js");
-class Player extends _pixiJs.Sprite {
+class Player extends _pixiJs.AnimatedSprite {
     xspeed = 0;
     yspeed = 0;
     xweather = 0;
@@ -47080,13 +46865,14 @@ class Player extends _pixiJs.Sprite {
     counter = 0;
     hit = false;
     health = 3;
-    constructor(texture, game){
-        super(texture);
+    constructor(animation, game){
+        super(animation);
+        this.animationSpeed = 0.1;
         this.x = 100;
         this.y = 100;
         this.game = game;
-        this.scale.set(0.25);
-        this.anchor.set(0.5, 0.5);
+        this.scale.set(0.7);
+        this.anchor.set(0.5);
         window.addEventListener("keydown", (e)=>this.onKeyDown(e)
         );
         window.addEventListener("keyup", (e)=>this.onKeyUp(e)
@@ -47101,22 +46887,34 @@ class Player extends _pixiJs.Sprite {
             inverseInertia: Infinity,
             label: "Player"
         };
-        this.rigidBody = _matterJsDefault.default.Bodies.rectangle(this.x, this.y, this.width, this.height - 30, playerOptions);
+        this.rigidBody = _matterJsDefault.default.Bodies.rectangle(this.x, this.y, this.width, this.height, playerOptions);
         _matterJsDefault.default.Composite.add(game.engine.world, this.rigidBody);
     }
+    borderCheckx(xspeed) {
+        if (this.x + xspeed > this.game.pixi.view.width / 2 * 3) return 0;
+        else if (this.x + xspeed < -(this.game.pixi.view.width / 2)) return 0;
+        else return this.xspeed + this.xweather;
+    }
+    borderChecky(yspeed) {
+        if (this.y + yspeed > this.game.pixi.view.height / 2 * 3) return 0;
+        else if (this.y + yspeed < -(this.game.pixi.view.height / 2)) return 0;
+        else return this.yspeed + this.yweather;
+    }
     update(delta) {
+        super.update(delta);
+        console.log(this.borderCheckx(this.xspeed + this.xweather));
+        if (this.xspeed != 0 || this.yspeed != 0) this.play();
+        else this.stop();
         // Translate character based on speed
-        //Matter.Body.translate(this.rigidBody, { x: this.xspeed + this.xweather, y: this.yspeed + this.yweather })
         _matterJsDefault.default.Body.translate(this.rigidBody, {
-            x: this.xspeed,
-            y: this.yspeed
+            x: this.borderCheckx(this.xspeed + this.xweather),
+            y: this.borderChecky(this.yspeed + this.yweather)
         });
         this.x = this.rigidBody.position.x;
         this.y = this.rigidBody.position.y;
         this.counter += delta;
         // If player hits car (1.25s cooldown), set to false again so hit can occur again
         if (this.counter > 125 && this.hit) this.hit = false;
-        console.log("x = " + this.x + "y = " + this.y);
     }
     // Set counter to 0 for cooldown,
     hitcar() {
@@ -47130,12 +46928,12 @@ class Player extends _pixiJs.Sprite {
             case "A":
             case "ARROWLEFT":
                 this.xspeed = -4;
-                this.scale.set(0.25);
+                this.scale.set(-0.7, 0.7);
                 break;
             case "D":
             case "ARROWRIGHT":
                 this.xspeed = 4;
-                this.scale.set(-0.25, 0.25);
+                this.scale.set(0.7);
                 break;
             case "W":
             case "ARROWUP":
@@ -47178,7 +46976,6 @@ class Smog extends _pixiJs.Graphics {
         this.player = player;
         this.originalRadius = radius;
         this.radius = this.originalRadius;
-        //this.interactive = true
         this.draw();
     }
     draw() {
@@ -47197,10 +46994,7 @@ class Smog extends _pixiJs.Graphics {
             this.radius -= 1;
             this.clear();
             this.draw();
-        //console.log(`radius: ${this.radius}`)
-        } else //console.log(`radius is already 0`)
-        //console.log('resetting circle to 200 radius')
-        this.reset();
+        } else this.reset();
     }
 }
 
@@ -47223,14 +47017,12 @@ class Spawn extends _pixiJs.Sprite {
     }
     update() {
         this.timer += 1;
-        //console.log(this.timer)
         if (this.timer > this.delay) {
             let i = Math.round(Math.random());
             let sprite = new _object.Object(this.objectTextures[i], this.game);
             sprite.scale.set(7);
             this.timer = 0;
             this.game.spawnObject(sprite);
-        //console.log("hello")
         }
     }
 }
@@ -47255,7 +47047,8 @@ class Object extends _pixiJs.Sprite {
         this.x += this.speed;
     }
     pickedUp() {
-        this.pickupSound.play();
+        this.game.ObjectPickupSound.volume = this.game.soundFXVolume;
+        this.game.ObjectPickupSound.play();
     }
 }
 
@@ -47274,13 +47067,12 @@ class Building extends _pixiJs.Sprite {
         this.y = y;
         this.anchor.set(0.5);
         //Static element of game, for buildings so players cannot pass through
-        this.rigidBody = _matterJsDefault.default.Bodies.rectangle(x, y, this.width, this.height, {
+        this.rigidBody = _matterJsDefault.default.Bodies.rectangle(x, y, this.width + 5, this.height + 5, {
             isStatic: true,
             label: "Platform"
         }) //x,y,w,h
         ;
         _matterJsDefault.default.Composite.add(game.engine.world, this.rigidBody);
-        console.log(this.rigidBody);
         this.texture1 = texture1;
         this.texture2 = texture2;
         this.texture3 = texture3;
@@ -47496,12 +47288,11 @@ class UI extends _pixiJs.Container {
         //container's own x and y position
         this.x = -(this.game.pixi.screen.width / 2);
         this.y = -(this.game.pixi.screen.height / 2);
-        // debug
-        //console.log("UI Added")
         // add a pausebutton
         this.pauseButton = new _button.Button(this.game, [
             pauseButtonTexture
         ], 0, 0);
+        this.pauseButton.scale.set(3);
         this.healthDisplay = new _hpdisplay.HPDisplay(this.game, heartTexture, window.innerWidth, 0);
         // add all elements to the displayObject container
         this.addChild(this.pauseButton, this.healthDisplay);
@@ -47532,12 +47323,10 @@ class Button extends _pixiJs.Container {
         this.interactive = true;
         this.buttonMode = true;
         this.game = game;
-        //console.log("Button Added")
         this.on('pointerdown', ()=>this.buttonClicked()
         );
     }
     buttonClicked() {
-        //console.log("Button Clicked")
         this.game.togglePauseMenu();
     }
 }
@@ -47554,7 +47343,6 @@ class HPDisplay extends _pixiJs.Container {
     constructor(game, fullTexture, x = 0, y = 0){
         super();
         this.fullTexture = fullTexture;
-        //console.log("HPDisplay added")
         this.game = game;
         this.y = y;
         for(let i = 0; i < this.game.player.health; i++)this.addHeart(i, fullTexture);
@@ -47668,7 +47456,7 @@ class EndPage extends _bookPage.BookPage {
         for (const name1 of this.names){
             const credit = new _pixiJs.Text(name1, game.textStyle);
             credit.y = credit.height * i + 90;
-            credit.scale.set(0.5);
+            credit.scale.set(0.8);
             this.addChild(credit);
             this.credits.push(credit);
             i++;
@@ -47744,8 +47532,8 @@ class StartButton extends _button.Button {
         this.game.startscreen.visible = false;
         this.game.menuActive = false;
         this.game.ui.visible = true;
-        this.game.bgMusicFile.play();
-        this.game.bgMusicFile.volume = this.game.bgMusic;
+        this.game.bgMusicSound.play();
+        this.game.bgMusicSound.volume = this.game.bgMusicVolume;
     }
 }
 
@@ -47760,7 +47548,6 @@ class QuestlogPage extends _bookPage.BookPage {
     constructor(name, game, textstyle, uiTextures){
         super(name);
         this.name = name;
-        //console.log(uiTextures)
         this.text = new _pixiJs.Text(`Hier zouden Quests \nkomen te staan,\nals we die hadden. \nHuidige Score: ${game.score.toString()}`, textstyle);
         this.addChild(this.text);
     }
@@ -47772,22 +47559,40 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "SettingsPage", ()=>SettingsPage
 );
 var _bookPage = require("./BookPage");
-var _slider = require("./Slider");
+var _fontSizeSlider = require("./FontSizeSlider");
+var _volumeSlider = require("./VolumeSlider");
 class SettingsPage extends _bookPage.BookPage {
     constructor(name, game, textstyle, uiTextures){
         super(name);
         this.name = name;
-        //console.log(uiTextures)
-        this.SoundFXSlider = new _slider.Slider(game, "Geluidseffecten", game.soundFXVolume, 5, uiTextures);
-        this.bgMusicSlider = new _slider.Slider(game, "Achtergrondmuziek", game.bgMusicVolume, 5, uiTextures);
-        this.fontSizeSlider = new _slider.Slider(game, "Lettergrootte", game.fontSize, 1, uiTextures);
+        this.SoundFXSlider = new _volumeSlider.VolumeSlider(game, "Geluidseffecten", game.soundFXVolume, 5, uiTextures);
+        this.bgMusicSlider = new _volumeSlider.VolumeSlider(game, "Achtergrondmuziek", game.bgMusicVolume, 5, uiTextures);
+        this.fontSizeSlider = new _fontSizeSlider.FontSizeSlider(game, "Lettergrootte", game.fontSize, 1, uiTextures);
         this.bgMusicSlider.y = this.bgMusicSlider.height + 5;
         this.fontSizeSlider.y = this.bgMusicSlider.y + this.bgMusicSlider.height + 5;
         this.addChild(this.SoundFXSlider, this.bgMusicSlider, this.fontSizeSlider);
     }
 }
 
-},{"./BookPage":"bt7jv","./Slider":"hz81g","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hz81g":[function(require,module,exports) {
+},{"./BookPage":"bt7jv","./FontSizeSlider":"23Tbt","./VolumeSlider":"d6Nj9","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"23Tbt":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "FontSizeSlider", ()=>FontSizeSlider
+);
+var _slider = require("./Slider");
+class FontSizeSlider extends _slider.Slider {
+    constructor(game, name, value, increments, textures){
+        super(game, name, value, increments, textures);
+        this.game = game;
+    }
+    update() {
+        this.game.fontSize = this.value;
+        this.game.textStyle.fontSize = this.game.fontSize;
+        super.update();
+    }
+}
+
+},{"./Slider":"hz81g","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hz81g":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Slider", ()=>Slider
@@ -47800,7 +47605,7 @@ class Slider extends _pixiJs.Container {
     constructor(game, name, value, increments, textures){
         super();
         this.name = name;
-        this.value = value * 100;
+        this.value = value;
         this.textures = textures;
         this.displayName = new _pixiJs.Text(this.name, this.style);
         this.minusButton = new _minusButton.MinusButton(this.game, this, increments, this.textures[0]);
@@ -47836,9 +47641,10 @@ class MinusButton extends _button.Button {
         this.increments = increments;
     }
     buttonClicked() {
-        this.parent.value = this.parent.value + this.increments * -1;
-        this.parent.update();
-    //console.log(`${this.parent.name} - Clicked`)
+        if (this.parent.value > 0) {
+            this.parent.value = this.parent.value + this.increments * -1;
+            this.parent.update();
+        }
     }
 }
 
@@ -47857,13 +47663,45 @@ class PlusButton extends _button.Button {
         this.increments = increments;
     }
     buttonClicked() {
-        this.parent.value = this.parent.value + this.increments;
-        this.parent.update();
-    //console.log(`${this.parent.name} + Clicked`)
+        if (this.parent.value < 100) {
+            this.parent.value = this.parent.value + this.increments;
+            this.parent.update();
+        }
     }
 }
 
-},{"./Button":"5X7GA","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8Ri6a":[function(require,module,exports) {
+},{"./Button":"5X7GA","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"d6Nj9":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "VolumeSlider", ()=>VolumeSlider
+);
+var _slider = require("./Slider");
+class VolumeSlider extends _slider.Slider {
+    constructor(game, name, value, increments, textures){
+        super(game, name, value, increments, textures);
+        this.game = game;
+        this.value = value * 100;
+        super.update();
+    }
+    update() {
+        switch(this.name){
+            case "Geluidseffecten":
+                this.game.soundFXVolume = this.value / 100;
+                this.game.updateVolume();
+                break;
+            case "Achtergrondmuziek":
+                this.game.bgMusicVolume = this.value / 100;
+                this.game.updateVolume();
+                break;
+            default:
+                console.log("Slider Name not Valid");
+                break;
+        }
+        super.update();
+    }
+}
+
+},{"./Slider":"hz81g","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8Ri6a":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "StartPage", ()=>StartPage
@@ -47876,7 +47714,6 @@ class StartPage extends _bookPage.BookPage {
         super(name);
         this.name = name;
         this.title.x = 170;
-        //console.log(uiTextures)
         this.startButton = new _startButton.StartButton(game, [
             uiTextures[7],
             uiTextures[8],
@@ -48016,7 +47853,219 @@ class StartScreen extends _pixiJs.Container {
     }
 }
 
-},{"pixi.js":"dsYej","./Menu":"gQYVh","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1d8PL":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./Menu":"gQYVh","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8VDU2":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "AssetLoader", ()=>AssetLoader
+);
+var _pixiJs = require("pixi.js");
+var _dinoPng = require("./images/dino.png");
+var _dinoPngDefault = parcelHelpers.interopDefault(_dinoPng);
+var _bubblePng = require("./images/bubble.png");
+var _bubblePngDefault = parcelHelpers.interopDefault(_bubblePng);
+var _pauseButtonPng = require("./images/pauseButton.png");
+var _pauseButtonPngDefault = parcelHelpers.interopDefault(_pauseButtonPng);
+var _waterJpg = require("./images/water.jpg");
+var _waterJpgDefault = parcelHelpers.interopDefault(_waterJpg);
+var _heartPng = require("./images/heart.png");
+var _heartPngDefault = parcelHelpers.interopDefault(_heartPng);
+//import smokeImage from "./images/smog.png"
+var _pixelMapPng = require("./images/pixelMap.png");
+var _pixelMapPngDefault = parcelHelpers.interopDefault(_pixelMapPng);
+var _object1Png = require("./images/object1.png");
+var _object1PngDefault = parcelHelpers.interopDefault(_object1Png);
+var _object2Png = require("./images/object2.png");
+var _object2PngDefault = parcelHelpers.interopDefault(_object2Png);
+var _leafPng = require("./images/leaf.png");
+var _leafPngDefault = parcelHelpers.interopDefault(_leafPng);
+var _a1Png = require("./images/A1.png");
+var _a1PngDefault = parcelHelpers.interopDefault(_a1Png);
+var _a2Png = require("./images/A2.png");
+var _a2PngDefault = parcelHelpers.interopDefault(_a2Png);
+var _a3Png = require("./images/A3.png");
+var _a3PngDefault = parcelHelpers.interopDefault(_a3Png);
+var _b1Png = require("./images/B1.png");
+var _b1PngDefault = parcelHelpers.interopDefault(_b1Png);
+var _b2Png = require("./images/B2.png");
+var _b2PngDefault = parcelHelpers.interopDefault(_b2Png);
+var _b3Png = require("./images/B3.png");
+var _b3PngDefault = parcelHelpers.interopDefault(_b3Png);
+var _c1Png = require("./images/C1.png");
+var _c1PngDefault = parcelHelpers.interopDefault(_c1Png);
+var _c2Png = require("./images/C2.png");
+var _c2PngDefault = parcelHelpers.interopDefault(_c2Png);
+var _c3Png = require("./images/C3.png");
+var _c3PngDefault = parcelHelpers.interopDefault(_c3Png);
+var _e1Png = require("./images/E1.png");
+var _e1PngDefault = parcelHelpers.interopDefault(_e1Png);
+var _e2Png = require("./images/E2.png");
+var _e2PngDefault = parcelHelpers.interopDefault(_e2Png);
+var _e3Png = require("./images/E3.png");
+var _e3PngDefault = parcelHelpers.interopDefault(_e3Png);
+var _f1Png = require("./images/F1.png");
+var _f1PngDefault = parcelHelpers.interopDefault(_f1Png);
+var _f2Png = require("./images/F2.png");
+var _f2PngDefault = parcelHelpers.interopDefault(_f2Png);
+var _f3Png = require("./images/F3.png");
+var _f3PngDefault = parcelHelpers.interopDefault(_f3Png);
+var _carPng = require("./images/car.png");
+var _carPngDefault = parcelHelpers.interopDefault(_carPng);
+var _tilePng = require("./images/tile.png"); // needs replacement / better way of creating the background
+var _tilePngDefault = parcelHelpers.interopDefault(_tilePng);
+var _menuBackgroundPng = require("./images/menuBackground.png"); // Menu book
+var _menuBackgroundPngDefault = parcelHelpers.interopDefault(_menuBackgroundPng);
+var _yellowUI0Png = require("./images/YellowUI0.png"); // cant get spritesheets to work
+var _yellowUI0PngDefault = parcelHelpers.interopDefault(_yellowUI0Png);
+var _yellowUI1Png = require("./images/YellowUI1.png"); // cant get spritesheets to work
+var _yellowUI1PngDefault = parcelHelpers.interopDefault(_yellowUI1Png);
+var _yellowUI2Png = require("./images/YellowUI2.png"); // cant get spritesheets to work
+var _yellowUI2PngDefault = parcelHelpers.interopDefault(_yellowUI2Png);
+var _yellowUI3Png = require("./images/YellowUI3.png"); // cant get spritesheets to work
+var _yellowUI3PngDefault = parcelHelpers.interopDefault(_yellowUI3Png);
+var _yellowUI4Png = require("./images/YellowUI4.png"); // cant get spritesheets to work
+var _yellowUI4PngDefault = parcelHelpers.interopDefault(_yellowUI4Png);
+var _yellowUI5Png = require("./images/YellowUI5.png"); // cant get spritesheets to work
+var _yellowUI5PngDefault = parcelHelpers.interopDefault(_yellowUI5Png);
+var _yellowUI6Png = require("./images/YellowUI6.png"); // cant get spritesheets to work
+var _yellowUI6PngDefault = parcelHelpers.interopDefault(_yellowUI6Png);
+var _greenUI0Png = require("./images/GreenUI0.png"); // cant get spritesheets to work
+var _greenUI0PngDefault = parcelHelpers.interopDefault(_greenUI0Png);
+var _greenUI1Png = require("./images/GreenUI1.png"); // cant get spritesheets to work
+var _greenUI1PngDefault = parcelHelpers.interopDefault(_greenUI1Png);
+var _greenUI2Png = require("./images/GreenUI2.png"); // cant get spritesheets to work
+var _greenUI2PngDefault = parcelHelpers.interopDefault(_greenUI2Png);
+var _redUI0Png = require("./images/RedUI0.png"); // cant get spritesheets to work
+var _redUI0PngDefault = parcelHelpers.interopDefault(_redUI0Png);
+var _redUI1Png = require("./images/RedUI1.png"); // cant get spritesheets to work
+var _redUI1PngDefault = parcelHelpers.interopDefault(_redUI1Png);
+var _redUI2Png = require("./images/RedUI2.png"); // cant get spritesheets to work
+var _redUI2PngDefault = parcelHelpers.interopDefault(_redUI2Png);
+var _audioscreenPng = require("./images/audioscreen.png");
+var _audioscreenPngDefault = parcelHelpers.interopDefault(_audioscreenPng);
+var _relaxingMp3 = require("url:./sound/relaxing.mp3");
+var _relaxingMp3Default = parcelHelpers.interopDefault(_relaxingMp3);
+var _pickupsoundMp3 = require("url:./sound/pickupsound.mp3");
+var _pickupsoundMp3Default = parcelHelpers.interopDefault(_pickupsoundMp3);
+var _hitsoundMp3 = require("url:./sound/hitsound.mp3");
+var _hitsoundMp3Default = parcelHelpers.interopDefault(_hitsoundMp3);
+class AssetLoader extends _pixiJs.Loader {
+    constructor(game){
+        super();
+        this.game = game;
+        this.graphics = new _pixiJs.Graphics();
+        game.pixi.stage.addChild(this.graphics);
+        this.add('sharkTexture', _dinoPngDefault.default).add('solarTexture', _object1PngDefault.default).add('windmillTexture', _object2PngDefault.default).add('bubbleTexture', _bubblePngDefault.default).add('waterTexture', _waterJpgDefault.default).add('cityTexture', _pixelMapPngDefault.default).add('carTexture', _carPngDefault.default).add('buildingTexture1', _a1PngDefault.default).add('buildingTexture2', _a2PngDefault.default).add('buildingTexture3', _a3PngDefault.default).add('buildingA1', _a1PngDefault.default).add('buildingA2', _a2PngDefault.default).add('buildingA3', _a3PngDefault.default).add('buildingB1', _b1PngDefault.default).add('buildingB2', _b2PngDefault.default).add('buildingB3', _b3PngDefault.default).add('buildingC1', _c1PngDefault.default).add('buildingC2', _c2PngDefault.default).add('buildingC3', _c3PngDefault.default).add('buildingD1', _b1PngDefault.default).add('buildingD2', _b2PngDefault.default).add('buildingD3', _b3PngDefault.default).add('buildingE1', _e1PngDefault.default).add('buildingE2', _e2PngDefault.default).add('buildingE3', _e3PngDefault.default).add('buildingF1', _f1PngDefault.default).add('buildingF2', _f2PngDefault.default).add('buildingF3', _f3PngDefault.default).add('leafTexture', _leafPngDefault.default).add('dinoTexture', _dinoPngDefault.default).add('HPDbackgroundTexture', _tilePngDefault.default).add('menuBackgroundTexture', _menuBackgroundPngDefault.default).add('pauseTexture', _pauseButtonPngDefault.default).add('uiElement0', _yellowUI0PngDefault.default) // cant get spritesheets to work
+        .add('uiElement1', _yellowUI1PngDefault.default) // cant get spritesheets to work
+        .add('uiElement2', _yellowUI2PngDefault.default) // cant get spritesheets to work
+        .add('uiElement3', _yellowUI3PngDefault.default) // cant get spritesheets to work
+        .add('uiElement4', _yellowUI4PngDefault.default) // cant get spritesheets to work
+        .add('uiElement5', _yellowUI5PngDefault.default) // cant get spritesheets to work
+        .add('uiElement6', _yellowUI6PngDefault.default) // cant get spritesheets to work
+        .add('uiElement7', _greenUI0PngDefault.default) // cant get spritesheets to work
+        .add('uiElement8', _greenUI1PngDefault.default) // cant get spritesheets to work
+        .add('uiElement9', _greenUI2PngDefault.default) // cant get spritesheets to work
+        .add('uiElement10', _redUI0PngDefault.default) // cant get spritesheets to work
+        .add('uiElement11', _redUI1PngDefault.default) // cant get spritesheets to work
+        .add('uiElement12', _redUI2PngDefault.default) // cant get spritesheets to work
+        .add('heartTexture', _heartPngDefault.default).add('audioScreenTexture', _audioscreenPngDefault.default).add("backgroundMusicFile", _relaxingMp3Default.default).add("pickupsoundFile", _pickupsoundMp3Default.default).add("hitsoundFile", _hitsoundMp3Default.default).add("spritesheet", "dino.json");
+        this.onProgress.add((loader)=>this.showProgress(loader)
+        );
+        this.onError.add((arg)=>{
+            console.error(arg);
+        });
+        this.load(()=>{
+            this.graphics.destroy();
+            game.loadCompleted();
+        });
+    }
+    showProgress(loader) {
+        console.log(`Loading ${loader.progress}%`);
+        let offset = 50;
+        let barWidth = (this.game.pixi.screen.width - offset * 2) * (loader.progress / 100);
+        this.graphics.clear();
+        this.graphics.beginFill(3333705);
+        this.graphics.drawRect(offset, this.game.pixi.screen.height / 2 - 20, barWidth, 40);
+        this.graphics.endFill();
+    }
+}
+
+},{"pixi.js":"dsYej","./images/dino.png":"c8KfO","./images/bubble.png":"iMP3P","./images/water.jpg":"jj9Eg","./images/heart.png":"e2wO4","./images/pixelMap.png":"8n5vg","./images/object1.png":"8Mhko","./images/object2.png":"luVeW","./images/leaf.png":"5tsPY","./images/A1.png":"jVMM5","./images/A2.png":"8jc4G","./images/A3.png":"LKfs6","./images/B1.png":"jZkaI","./images/B2.png":"lbVPJ","./images/B3.png":"fRT7G","./images/C1.png":"1d8PL","./images/C2.png":"6FmSw","./images/C3.png":"hL0Or","./images/E1.png":"1iRzI","./images/E2.png":"3bEzS","./images/E3.png":"5nASQ","./images/F1.png":"9JStD","./images/F2.png":"cEm9g","./images/F3.png":"kvh1Z","./images/car.png":"dnXSN","./images/tile.png":"dvchs","./images/menuBackground.png":"hVtuo","./images/YellowUI0.png":"dwRmK","./images/YellowUI1.png":"d9mKy","./images/YellowUI2.png":"4bojR","./images/YellowUI3.png":"iiYKS","./images/YellowUI4.png":"ikcEs","./images/YellowUI5.png":"lUVol","./images/YellowUI6.png":"l1OGq","./images/GreenUI0.png":"5jyTO","./images/GreenUI1.png":"7mej2","./images/GreenUI2.png":"h0yQR","./images/RedUI0.png":"4uMrI","./images/RedUI1.png":"BWDJ0","./images/RedUI2.png":"2OgRy","./images/audioscreen.png":"d0MKD","url:./sound/relaxing.mp3":"i5zAd","url:./sound/pickupsound.mp3":"3qwyk","url:./sound/hitsound.mp3":"cMOh2","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./images/pauseButton.png":"jrOhq"}],"c8KfO":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "dino.174d8237.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
+"use strict";
+var bundleURL = {};
+function getBundleURLCached(id) {
+    var value = bundleURL[id];
+    if (!value) {
+        value = getBundleURL();
+        bundleURL[id] = value;
+    }
+    return value;
+}
+function getBundleURL() {
+    try {
+        throw new Error();
+    } catch (err) {
+        var matches = ('' + err.stack).match(/(https?|file|ftp):\/\/[^)\n]+/g);
+        if (matches) // The first two stack frames will be this function and getBundleURLCached.
+        // Use the 3rd one, which will be a runtime in the original bundle.
+        return getBaseURL(matches[2]);
+    }
+    return '/';
+}
+function getBaseURL(url) {
+    return ('' + url).replace(/^((?:https?|file|ftp):\/\/.+)\/[^/]+$/, '$1') + '/';
+} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
+function getOrigin(url) {
+    var matches = ('' + url).match(/(https?|file|ftp):\/\/[^/]+/);
+    if (!matches) throw new Error('Origin not found');
+    return matches[0];
+}
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+exports.getOrigin = getOrigin;
+
+},{}],"iMP3P":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble.56ab0ad6.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"jj9Eg":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "water.59ff4e4f.jpg" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"e2wO4":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "heart.6f575755.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"8n5vg":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "pixelMap.895221e9.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"8Mhko":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "object1.3698594e.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"luVeW":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "object2.9ca637c4.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"5tsPY":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "leaf.e574830e.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"jVMM5":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "A1.0214b6cf.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"8jc4G":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "A2.6b9c9311.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"LKfs6":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "A3.7797f225.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"jZkaI":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "B1.c6c34d56.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"lbVPJ":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "B2.9cfb46c1.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"fRT7G":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "B3.2279688e.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"1d8PL":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "C1.d4c1cf49.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"6FmSw":[function(require,module,exports) {
@@ -48024,15 +48073,6 @@ module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "C2.8be
 
 },{"./helpers/bundle-url":"lgJ39"}],"hL0Or":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "C3.e1bbd38f.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"dOdXn":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "D1.c9e49b4a.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"5ZjMS":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "D2.69025557.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"cWkGq":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "D3.8ffb3c29.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"1iRzI":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "E1.ea349769.png" + "?" + Date.now();
@@ -48051,6 +48091,69 @@ module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "F2.c02
 
 },{"./helpers/bundle-url":"lgJ39"}],"kvh1Z":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "F3.ca16aa06.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"dnXSN":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "car.80a2d4f3.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"dvchs":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "tile.69895f74.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"hVtuo":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "menuBackground.2e111865.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"dwRmK":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "YellowUI0.b08040e2.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"d9mKy":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "YellowUI1.d936fc7e.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"4bojR":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "YellowUI2.ccfbec3e.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"iiYKS":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "YellowUI3.86591660.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"ikcEs":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "YellowUI4.6408ae39.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"lUVol":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "YellowUI5.f59bc91a.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"l1OGq":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "YellowUI6.05d49edd.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"5jyTO":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "GreenUI0.ecacef98.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"7mej2":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "GreenUI1.449980c0.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"h0yQR":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "GreenUI2.6cd26c33.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"4uMrI":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "RedUI0.738e1c3b.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"BWDJ0":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "RedUI1.141e5620.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"2OgRy":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "RedUI2.34d8eed7.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"d0MKD":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "audioscreen.52b36ab7.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"i5zAd":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "relaxing.6d6f3898.mp3" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"3qwyk":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "pickupsound.9ec87b5e.mp3" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"cMOh2":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "hitsound.3da7ce8c.mp3" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"jrOhq":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "pauseButton.82c4ef55.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
 

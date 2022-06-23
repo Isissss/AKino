@@ -18,7 +18,7 @@ export class HPDisplay extends PIXI.Container {
         for (let i = 0; i < this.game.player.health; i++) {
             this.addHeart(i, fullTexture)
         }
-        this.x = x - (this.width + 10)
+        this.x = x - (this.width + 150)
     }
 
     private addHeart(i: number, fullTexture: PIXI.Texture) {
