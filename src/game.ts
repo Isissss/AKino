@@ -226,8 +226,8 @@ export class Game {
 
             for (let i = 0; i < this.cars.length; i++) {
                 if (this.collision(this.player, this.cars[i]) && !this.player.hit) {
-                    // console.log("player touches object")
                     this.player.hitcar()
+                    // when player gets hit by car play sound
                     let hitByCarSound = this.loader.resources["hitsoundFile"].data!
                     hitByCarSound.play()
                 }
@@ -242,6 +242,7 @@ export class Game {
                 if (this.collision(this.player, this.objects[i])) {
 
                     this.score++;
+                    // when player hits object play sound
                     this.objects[i].pickedUp()
                     this.smog.reset()
 

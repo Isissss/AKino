@@ -23,6 +23,5 @@ export class Object extends PIXI.Sprite {
     public pickedUp() {
         this.pickupSound.pause()
         this.pickupSound.play()
-        console.log("Pakt op")
     }
 }
