@@ -10,7 +10,7 @@ export class Car extends PIXI.Sprite {
   public game: Game
   private filter: PIXI.Filter
 
-  constructor(texture: PIXI.Texture, left: boolean, startx: number, starty: number, game: Game, speed: number) {
+  constructor(texture: PIXI.Texture, left: boolean, startx: number, starty: number, game: Game) {
     super(texture)
     this.x = startx
     this.left = left
@@ -19,7 +19,6 @@ export class Car extends PIXI.Sprite {
     this.starty = starty
     this.anchor.set(0.5)
     this.scale.set(0.2)
-    this.speed = speed
     this.game = game
     this.angle = (this.left ? 360 : 90)
     this.filter = new PIXI.filters.ColorMatrixFilter()

@@ -40,9 +40,9 @@ export class Game {
 
     loadCompleted() {
         this.player = new Player(this.loader.resources["sharkTexture"].texture!, this, 2)
-        this.car = new Car(this.loader.resources["carTexture"].texture!, false, 1200, 625, this, 2.5)
-        this.car3 = new Car(this.loader.resources["carTexture"].texture!, false, 1400, 625, this, 2.5)
-        this.car2 = new Car(this.loader.resources["carTexture"].texture!, true, 640, -300, this, 1.5)
+        this.car = new Car(this.loader.resources["carTexture"].texture!, false, 1200, 625, this)
+        this.car3 = new Car(this.loader.resources["carTexture"].texture!, false, 1400, 625, this)
+        this.car2 = new Car(this.loader.resources["carTexture"].texture!, true, 640, -300, this)
 
         this.cars.push(this.car)
         this.cars.push(this.car3)

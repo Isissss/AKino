@@ -547,9 +547,9 @@ class Game {
     }
     loadCompleted() {
         this.player = new _player.Player(this.loader.resources["sharkTexture"].texture, this, 2);
-        this.car = new _car.Car(this.loader.resources["carTexture"].texture, false, 1200, 625, this, 2.5);
-        this.car3 = new _car.Car(this.loader.resources["carTexture"].texture, false, 1400, 625, this, 2.5);
-        this.car2 = new _car.Car(this.loader.resources["carTexture"].texture, true, 640, -300, this, 1.5);
+        this.car = new _car.Car(this.loader.resources["carTexture"].texture, false, 1200, 625, this);
+        this.car3 = new _car.Car(this.loader.resources["carTexture"].texture, false, 1400, 625, this);
+        this.car2 = new _car.Car(this.loader.resources["carTexture"].texture, true, 640, -300, this);
         this.cars.push(this.car);
         this.cars.push(this.car3);
         this.cars.push(this.car2);
@@ -37205,7 +37205,7 @@ parcelHelpers.export(exports, "Car", ()=>Car
 var _pixiJs = require("pixi.js");
 class Car extends _pixiJs.Sprite {
     _speed = 1.5;
-    constructor(texture, left, startx, starty, game, speed){
+    constructor(texture, left, startx, starty, game){
         super(texture);
         this.x = startx;
         this.left = left;
@@ -37214,7 +37214,6 @@ class Car extends _pixiJs.Sprite {
         this.starty = starty;
         this.anchor.set(0.5);
         this.scale.set(0.2);
-        this.speed = speed;
         this.game = game;
         this.angle = this.left ? 360 : 90;
         this.filter = new _pixiJs.filters.ColorMatrixFilter();
