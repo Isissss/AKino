@@ -6,11 +6,11 @@ export class Car extends PIXI.Sprite {
   private left: boolean
   private startx: number
   private starty: number
-  private speed: number
+  private _speed: number = 1.5
   public game: Game
   private filter: PIXI.Filter
 
-  constructor(texture: PIXI.Texture, left: boolean, startx: number, starty: number, game: Game) {
+  constructor(texture: PIXI.Texture, left: boolean, startx: number, starty: number, game: Game, speed: number) {
     super(texture)
     this.x = startx
     this.left = left
@@ -19,12 +19,28 @@ export class Car extends PIXI.Sprite {
     this.starty = starty
     this.anchor.set(0.5)
     this.scale.set(0.2)
-    this.speed = 1.5
+    this.speed = speed
     this.game = game
     this.angle = (this.left ? 360 : 90)
     this.filter = new PIXI.filters.ColorMatrixFilter()
     this.getfilter()
 
+  }
+
+
+  public get speed(): number {
+    return this._speed;
+  }
+
+  public set speed(speed: number) {
+
+    if (speed >= 1 && speed < 3) {
+      this._speed = speed;
+    } else if (speed < 1) {
+       this._speed = 1 } 
+    else if (this.speed > 3) {
+      this._speed = 3
+    }
   }
 
   private getfilter() {

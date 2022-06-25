@@ -547,9 +547,9 @@ class Game {
     }
     loadCompleted() {
         this.player = new _player.Player(this.loader.resources["sharkTexture"].texture, this, 2);
-        this.car = new _car.Car(this.loader.resources["carTexture"].texture, false, 1200, 625, this);
-        this.car3 = new _car.Car(this.loader.resources["carTexture"].texture, false, 1400, 625, this);
-        this.car2 = new _car.Car(this.loader.resources["carTexture"].texture, true, 640, -300, this);
+        this.car = new _car.Car(this.loader.resources["carTexture"].texture, false, 1200, 625, this, 2.5);
+        this.car3 = new _car.Car(this.loader.resources["carTexture"].texture, false, 1400, 625, this, 2.5);
+        this.car2 = new _car.Car(this.loader.resources["carTexture"].texture, true, 640, -300, this, 1.5);
         this.cars.push(this.car);
         this.cars.push(this.car3);
         this.cars.push(this.car2);
@@ -574,6 +574,7 @@ class Game {
         for(let i = 0; i < this.cars.length; i++)if (this.collision(this.player, this.cars[i]) && !this.player.hit) {
             console.log("player touches object");
             this.player.hitcar();
+            for (let c of this.cars)c.speed = c.speed / 2;
         }
         this.player.update(delta);
         for (let car of this.cars)car.update(delta);
@@ -590,7 +591,7 @@ class Game {
 }
 let g = new Game;
 
-},{"pixi.js":"dsYej","./images/dino.png":"c8KfO","./images/bubble.png":"iMP3P","./images/city.png":"a2rT6","./images/fish.png":"3tLwD","./images/car.png":"dnXSN","./Car":"d9weU","./Player":"8YLWx","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./Player":"8YLWx","./Car":"d9weU","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./images/dino.png":"c8KfO","./images/bubble.png":"iMP3P","./images/city.png":"a2rT6","./images/fish.png":"3tLwD","./images/car.png":"dnXSN"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37105,117 +37106,7 @@ function __extends(d, b) {
     return AnimatedSprite1;
 }(_sprite.Sprite);
 
-},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"c8KfO":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "dino.174d8237.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
-"use strict";
-var bundleURL = {};
-function getBundleURLCached(id) {
-    var value = bundleURL[id];
-    if (!value) {
-        value = getBundleURL();
-        bundleURL[id] = value;
-    }
-    return value;
-}
-function getBundleURL() {
-    try {
-        throw new Error();
-    } catch (err) {
-        var matches = ('' + err.stack).match(/(https?|file|ftp):\/\/[^)\n]+/g);
-        if (matches) // The first two stack frames will be this function and getBundleURLCached.
-        // Use the 3rd one, which will be a runtime in the original bundle.
-        return getBaseURL(matches[2]);
-    }
-    return '/';
-}
-function getBaseURL(url) {
-    return ('' + url).replace(/^((?:https?|file|ftp):\/\/.+)\/[^/]+$/, '$1') + '/';
-} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
-function getOrigin(url) {
-    var matches = ('' + url).match(/(https?|file|ftp):\/\/[^/]+/);
-    if (!matches) throw new Error('Origin not found');
-    return matches[0];
-}
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-exports.getOrigin = getOrigin;
-
-},{}],"iMP3P":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble.56ab0ad6.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"a2rT6":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "city.b93e9858.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"3tLwD":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "fish.510b053c.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"dnXSN":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "car.80a2d4f3.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"d9weU":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Car", ()=>Car
-);
-var _pixiJs = require("pixi.js");
-class Car extends _pixiJs.Sprite {
-    constructor(texture, left, startx, starty, game){
-        super(texture);
-        this.x = startx;
-        this.left = left;
-        this.y = starty;
-        this.startx = startx;
-        this.starty = starty;
-        this.anchor.set(0.5);
-        this.scale.set(0.2);
-        this.speed = 1.5;
-        this.game = game;
-        this.angle = this.left ? 360 : 90;
-        this.filter = new _pixiJs.filters.ColorMatrixFilter();
-        this.getfilter();
-    }
-    getfilter() {
-        this.filters = [
-            this.filter
-        ];
-        this.filter.hue(Math.random() * 360, false) // HUE filter
-        ;
-    }
-    resetPosition() {
-        this.x = this.startx;
-        this.y = this.starty;
-        this.angle = this.left ? 360 : 90;
-    }
-    update(delta) {
-        // If car turns left, turning points
-        if (this.left) {
-            if (this.y > 620) {
-                this.angle = 90;
-                this.x -= this.speed;
-            } else this.y += this.speed;
-            //If car reaches end of screen, set back to start loc
-            if (this.x < this.game.pixi.screen.left - 50) {
-                this.resetPosition();
-                this.getfilter();
-            }
-        } else {
-            //Turning points other cars
-            if (this.x < 800) {
-                this.angle = 180;
-                this.y -= this.speed;
-            } else this.x -= this.speed;
-            //If car reaches top of screen, set back to start loc
-            if (this.y < this.game.pixi.screen.top - 50) {
-                this.resetPosition();
-                this.getfilter();
-            }
-        }
-    }
-}
-
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8YLWx":[function(require,module,exports) {
+},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8YLWx":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Player", ()=>Player
@@ -37306,6 +37197,125 @@ class Player extends _pixiJs.Sprite {
     }
 }
 
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"d9weU":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Car", ()=>Car
+);
+var _pixiJs = require("pixi.js");
+class Car extends _pixiJs.Sprite {
+    _speed = 1.5;
+    constructor(texture, left, startx, starty, game, speed){
+        super(texture);
+        this.x = startx;
+        this.left = left;
+        this.y = starty;
+        this.startx = startx;
+        this.starty = starty;
+        this.anchor.set(0.5);
+        this.scale.set(0.2);
+        this.speed = speed;
+        this.game = game;
+        this.angle = this.left ? 360 : 90;
+        this.filter = new _pixiJs.filters.ColorMatrixFilter();
+        this.getfilter();
+    }
+    get speed() {
+        return this._speed;
+    }
+    set speed(speed) {
+        if (speed >= 1 && speed < 3) this._speed = speed;
+        else if (speed < 1) this._speed = 1;
+        else if (this.speed > 3) this._speed = 3;
+    }
+    getfilter() {
+        this.filters = [
+            this.filter
+        ];
+        this.filter.hue(Math.random() * 360, false) // HUE filter
+        ;
+    }
+    resetPosition() {
+        this.x = this.startx;
+        this.y = this.starty;
+        this.angle = this.left ? 360 : 90;
+    }
+    update(delta) {
+        // If car turns left, turning points
+        if (this.left) {
+            if (this.y > 620) {
+                this.angle = 90;
+                this.x -= this.speed;
+            } else this.y += this.speed;
+            //If car reaches end of screen, set back to start loc
+            if (this.x < this.game.pixi.screen.left - 50) {
+                this.resetPosition();
+                this.getfilter();
+            }
+        } else {
+            //Turning points other cars
+            if (this.x < 800) {
+                this.angle = 180;
+                this.y -= this.speed;
+            } else this.x -= this.speed;
+            //If car reaches top of screen, set back to start loc
+            if (this.y < this.game.pixi.screen.top - 50) {
+                this.resetPosition();
+                this.getfilter();
+            }
+        }
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"c8KfO":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "dino.174d8237.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
+"use strict";
+var bundleURL = {};
+function getBundleURLCached(id) {
+    var value = bundleURL[id];
+    if (!value) {
+        value = getBundleURL();
+        bundleURL[id] = value;
+    }
+    return value;
+}
+function getBundleURL() {
+    try {
+        throw new Error();
+    } catch (err) {
+        var matches = ('' + err.stack).match(/(https?|file|ftp):\/\/[^)\n]+/g);
+        if (matches) // The first two stack frames will be this function and getBundleURLCached.
+        // Use the 3rd one, which will be a runtime in the original bundle.
+        return getBaseURL(matches[2]);
+    }
+    return '/';
+}
+function getBaseURL(url) {
+    return ('' + url).replace(/^((?:https?|file|ftp):\/\/.+)\/[^/]+$/, '$1') + '/';
+} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
+function getOrigin(url) {
+    var matches = ('' + url).match(/(https?|file|ftp):\/\/[^/]+/);
+    if (!matches) throw new Error('Origin not found');
+    return matches[0];
+}
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+exports.getOrigin = getOrigin;
+
+},{}],"iMP3P":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "bubble.56ab0ad6.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"a2rT6":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "city.b93e9858.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"3tLwD":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "fish.510b053c.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"dnXSN":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "car.80a2d4f3.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}]},["fpRtI","edeGs"], "edeGs", "parcelRequirea0e5")
 
 //# sourceMappingURL=index.901f85c2.js.map
