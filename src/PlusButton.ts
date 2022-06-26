@@ -5,8 +5,8 @@ import { Slider } from './Slider';
 
 export class PlusButton extends Button {
 
-    parent: Slider
-    increments: number
+    public parent: Slider
+    private increments: number
 
     constructor(game: Game, parent: Slider, increments: number, texture: PIXI.Texture) {
         super(game, [texture])

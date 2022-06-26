@@ -7,9 +7,9 @@ import { StartButton } from './StartButton'
 
 export class StartPage extends BookPage {
 
-    name: string
-    startButton: Button
-    resumeButton: Button
+    public name: string
+    private startButton: Button
+    private resumeButton: Button
     
 
 

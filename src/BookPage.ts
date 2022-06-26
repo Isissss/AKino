@@ -2,8 +2,8 @@ import * as PIXI from 'pixi.js'
 
 export class BookPage extends PIXI.Container {
 
-    title: PIXI.Text
-    titleStyle: PIXI.TextStyle
+    protected title: PIXI.Text
+    private titleStyle: PIXI.TextStyle
 
 
     constructor(name: string) {

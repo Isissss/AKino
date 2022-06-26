@@ -4,14 +4,14 @@ import { Menu } from './Menu'
 
 export class StartScreen extends PIXI.Container{
 
-    game: Game
-    background: PIXI.Sprite
-    menuBackground: PIXI.Texture
-    name: string
-    style: PIXI.TextStyle
-    title: PIXI.Text
-    uiElements: PIXI.Texture[]
-    startMenu: Menu
+    private game: Game
+    private background: PIXI.Sprite
+    private menuBackground: PIXI.Texture
+    public name: string
+    private style: PIXI.TextStyle
+    private title: PIXI.Text
+    private uiElements: PIXI.Texture[]
+    private startMenu: Menu
 
 
     constructor(game: Game, screenBackground: PIXI.Texture, menuBackgroundTexture: PIXI.Texture, uiElements: PIXI.Texture[]){

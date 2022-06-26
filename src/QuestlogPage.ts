@@ -5,8 +5,8 @@ import { Slider } from './Slider'
 
 export class QuestlogPage extends BookPage {
 
-    name: string
-    text: PIXI.Text
+    public name: string // name must be public in children from PIXI.Container
+    private text: PIXI.Text
 
     constructor(name: string, game: Game, textstyle: PIXI.TextStyle, uiTextures: PIXI.Texture[]) {
         super(name)

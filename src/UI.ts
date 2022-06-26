@@ -6,10 +6,10 @@ import { HPDisplay } from "./HPDisplay"
 // class to hold all UI elements that appear on screen.
 export class UI extends PIXI.Container {
     // traits
-    game: Game
+    private game: Game
 
-    pauseButton: Button
-    healthDisplay: HPDisplay
+    private pauseButton: Button
+    public healthDisplay: HPDisplay
 
 
 

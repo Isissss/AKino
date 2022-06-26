@@ -4,7 +4,7 @@ import { Slider } from './Slider';
 
 export class FontSizeSlider extends Slider {
 
-    game : Game
+    protected game : Game
 
     constructor(game: Game, name: string, value: number, increments: number, textures: PIXI.Texture[]){
         super(game, name, value, increments, textures)

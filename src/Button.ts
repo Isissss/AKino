@@ -5,8 +5,8 @@ import { Game } from "./game"
 
 export class Button extends PIXI.Container {
     // traits
-    game: Game
-    sprites: PIXI.Sprite[] = []
+    protected game: Game
+    private sprites: PIXI.Sprite[] = []
 
     //behaviours
     constructor(game: Game, textures: PIXI.Texture[], x: number = 0, y: number = 0) {

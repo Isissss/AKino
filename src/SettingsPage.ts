@@ -7,10 +7,10 @@ import { VolumeSlider } from  './VolumeSlider'
 
 export class SettingsPage extends BookPage {
 
-    name: string
-    SoundFXSlider: Slider
-    bgMusicSlider: Slider
-    fontSizeSlider: Slider
+    public name: string //child of PIXI.Container
+    private SoundFXSlider: Slider
+    private bgMusicSlider: Slider
+    private fontSizeSlider: Slider
 
 
     constructor(name: string, game: Game, textstyle: PIXI.TextStyle, uiTextures: PIXI.Texture[]) {

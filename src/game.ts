@@ -16,47 +16,47 @@ import { StartScreen } from './StartScreen'
 import { AssetLoader } from "./AssetLoader"
 
 export class Game {
-    pixi: PIXI.Application
-    loader: AssetLoader
-    player: Player
-    map: Map
-    smog: Smog
-    graphics: Graphics
-    spawner: Spawn
-    objectTextures: PIXI.Texture[] = []
-    buildingTextures: PIXI.Texture[][] = []
-    objects: Object[] = []
-    cars: Car[] = []
-    uiTextures: PIXI.Texture[] = []
-    ui: UI // UI container class
-    startscreen: StartScreen; // container class for the startscreen
-    pauseMenu: Menu; // container class for the in-game menu
-    states: number[] = [0, 1, 2, 3]// startscreen, in-game, endscreen, game over state
+    public pixi: PIXI.Application
+    public loader: AssetLoader
+    public player: Player
+    private map: Map
+    private smog: Smog
+    public graphics: Graphics
+    private spawner: Spawn
+    private objectTextures: PIXI.Texture[] = []
+    private buildingTextures: PIXI.Texture[][] = []
+    private objects: Object[] = []
+    private cars: Car[] = []
+    private uiTextures: PIXI.Texture[] = []
+    public ui: UI // UI container class
+    public startscreen: StartScreen; // container class for the startscreen
+    private pauseMenu: Menu; // container class for the in-game menu
+    private states: number[] = [0, 1, 2, 3]// startscreen, in-game, endscreen, game over state
     private _state: number = 0
-    menuActive: boolean = false; // variable to check if updates need to be run
-    score: number = 0
-    car: Car
-    car2: Car
+    public menuActive: boolean = false; // variable to check if updates need to be run
+    public score: number = 0
+    private car: Car
+    private car2: Car
     private endscore : number = 50
-    car3: Car
-    car4: Car
-    gameover: boolean
-    basicText: PIXI.Text;
-    textStyle: PIXI.TextStyle;
-    buildings: Building[] = []
+    private car3: Car
+    private car4: Car
+    private gameover: boolean
+    private basicText: PIXI.Text;
+    public textStyle: PIXI.TextStyle;
+    private buildings: Building[] = []
     private dinoTextures: PIXI.Texture[] = [];
-    leafs: Leaf[] = []
-    weather: Weather
-    city: PIXI.TilingSprite
+    private leafs: Leaf[] = []
+    private weather: Weather
+    private city: PIXI.TilingSprite
     private _soundFXVolume: number = 0.5 //Volume for sound Effects
     private _bgMusicVolume: number = 0.5 //Volume for Background Music
     private _fontSize: number = 20 //Fontsize for text
-    pickUpSound: HTMLAudioElement
-    engine: Matter.Engine
-    building: Building
-    bgMusicSound: HTMLAudioElement
-    hitByCarSound: HTMLAudioElement
-    ObjectPickupSound: HTMLAudioElement
+    private pickUpSound: HTMLAudioElement
+    public engine: Matter.Engine
+    private building: Building
+    public bgMusicSound: HTMLAudioElement
+    private hitByCarSound: HTMLAudioElement
+    public ObjectPickupSound: HTMLAudioElement
     public filter: PIXI.Filter
   
     constructor() {
@@ -153,42 +153,42 @@ export class Game {
         //buildings
         for (let i = 0; i < 5; i++) {
             let randomizer = Math.round(Math.random() * 5)
-            console.log(randomizer)
+            //console.log(randomizer)
             let building = new Building(Math.random() * 700 + 190, Math.random() * 300 - 390, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this)
             building.scale.set(7)
             this.buildings.push(building)
         }
         for (let i = 0; i < 5; i++) {
             let randomizer = Math.round(Math.random() * 5)
-            console.log(randomizer)
+            //console.log(randomizer)
             let building = new Building(Math.random() * 600 - 920, Math.random() * 300 + 340, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this)
             building.scale.set(7)
             this.buildings.push(building)
         }
         for (let i = 0; i < 5; i++) {
             let randomizer = Math.round(Math.random() * 5)
-            console.log(randomizer)
+            //console.log(randomizer)
             let building = new Building(Math.random() * 700 + 120, Math.random() * 300 + 1090, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this)
             building.scale.set(7)
             this.buildings.push(building)
         }
         for (let i = 0; i < 5; i++) {
             let randomizer = Math.round(Math.random() * 5)
-            console.log(randomizer)
+            //console.log(randomizer)
             let building = new Building(Math.random() * 700 + 1090, Math.random() * 300 + 1090, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this)
             building.scale.set(7)
             this.buildings.push(building)
         }
         for (let i = 0; i < 5; i++) {
             let randomizer = Math.round(Math.random() * 5)
-            console.log(randomizer)
+            //console.log(randomizer)
             let building = new Building(Math.random() * 700 + 1090, Math.random() * 300 - 390, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this)
             building.scale.set(7)
             this.buildings.push(building)
         }
         for (let i = 0; i < 5; i++) {
             let randomizer = Math.round(Math.random() * 5)
-            console.log(randomizer)
+            //console.log(randomizer)
             let building = new Building(Math.random() * 600 + 2290, Math.random() * 300 + 340, this.buildingTextures[randomizer][0], this.buildingTextures[randomizer][1], this.buildingTextures[randomizer][2], this)
             building.scale.set(7)
             this.buildings.push(building)

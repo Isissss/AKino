@@ -8,10 +8,10 @@ import { StartButton } from './StartButton'
 
 export class EndPage extends BookPage {
 
-    name: string
-    endButton: Button
-    credits: PIXI.Text[] =[]
-    names: string[] =['Gemaakt door:', 'Wessel van Beek', 'Pim van Milt', 'Jeffrey van Otterloo', 'Isis Ton']
+    public name: string //name is public in PIXI.Container
+    private endButton: EndButton
+    private credits: PIXI.Text[] =[]
+    private names: string[] =['Gemaakt door:', 'Wessel van Beek', 'Pim van Milt', 'Jeffrey van Otterloo', 'Isis Ton']
     
 
 

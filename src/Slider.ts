@@ -5,19 +5,26 @@ import { PlusButton } from './PlusButton'
 
 export class Slider extends PIXI.Container {
 
-    game: Game
-    minusButton: MinusButton
-    plusButton: PlusButton
-    name: string
-    value: number
-    style: any
-    displayName: PIXI.Text
-    displayValue: PIXI.Text
-    textures: PIXI.Texture[]
-    margin: number = 10
+    protected game: Game
+    private minusButton: MinusButton
+    private plusButton: PlusButton
+    public name: string // name is public in Container class
+    public value: number
+    private style: any
+    private displayName: PIXI.Text
+    private displayValue: PIXI.Text
+    private textures: PIXI.Texture[]
+    private margin: number = 10
 
-    constructor(game: Game, name: string, value: number, increments: number, textures: PIXI.Texture[]) {
+    constructor(
+        game: Game,
+        name: string,
+        value: number,
+        increments: number,
+        textures: PIXI.Texture[]
+        ) {
         super()
+        this.game = game
         this.name = name
         this.value = value
         this.textures = textures

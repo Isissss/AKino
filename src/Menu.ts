@@ -7,10 +7,10 @@ import { SettingsPage } from './SettingsPage'
 import { StartPage } from './StartPage'
 
 export class Menu extends PIXI.Container {
-    background: PIXI.Sprite
-    game: Game
-    rightPage: SettingsPage
-    leftPage: PIXI.Container
+    private background: PIXI.Sprite
+    private game: Game
+    private rightPage: SettingsPage
+    private leftPage: PIXI.Container
 
     constructor(game: Game, backgroundTexture: PIXI.Texture, uiElements: PIXI.Texture[]) {
         super()

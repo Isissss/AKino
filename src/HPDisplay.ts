@@ -5,9 +5,9 @@ import { Game } from "./game"
 
 export class HPDisplay extends PIXI.Container {
     // traits
-    game: Game
-    hearts: PIXI.Sprite[] = []
-    fullTexture: PIXI.Texture
+    private game: Game
+    private hearts: PIXI.Sprite[] = []
+    private fullTexture: PIXI.Texture
 
     //behaviours
     constructor(game: Game, fullTexture: PIXI.Texture, x: number = 0, y: number = 0) {

@@ -4,11 +4,13 @@ import { Slider } from './Slider';
 
 export class VolumeSlider extends Slider {
 
-    game : Game
-
-    constructor(game: Game, name: string, value: number, increments: number, textures: PIXI.Texture[]){
+    constructor(game: Game,
+        name: string,
+        value: number,
+        increments: number,
+        textures: PIXI.Texture[]
+        ) {
         super(game, name, value, increments, textures)
-        this.game = game
         this.value = value * 100
         super.update()
         

@@ -4,9 +4,7 @@ import { Game } from './game';
 
 
 export class StartButton extends Button {
-    
-    game: Game
-    text: PIXI.Text
+    private text: PIXI.Text
 
     constructor(game: Game, textures: PIXI.Texture[], name:string, x:number = 0, y:number = 0) {
         super(game, textures, x, y)

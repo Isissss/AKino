@@ -6,7 +6,6 @@ import bubbleImage from "./images/bubble.png"
 import pauseImage from "./images/pauseButton.png"
 import waterImage from "./images/water.jpg"
 import heartImage from "./images/heart.png"
-//import smokeImage from "./images/smog.png"
 import cityImage from "./images/pixelMap.png"
 import SolarImage from "./images/object1.png"
 import WindmillImage from "./images/object2.png"
@@ -34,21 +33,20 @@ import buildingF1 from "./images/F1.png"
 import buildingF2 from "./images/F2.png"
 import buildingF3 from "./images/F3.png"
 import carImage from "./images/car.png"
-import HPDbackgroundImage from "./images/tile.png" // needs replacement / better way of creating the background
 import menuBackgroundImage from "./images/menuBackground.png" // Menu book
-import uiElement0Image from "./images/YellowUI0.png" // cant get spritesheets to work
-import uiElement1Image from "./images/YellowUI1.png" // cant get spritesheets to work
-import uiElement2Image from "./images/YellowUI2.png" // cant get spritesheets to work
-import uiElement3Image from "./images/YellowUI3.png" // cant get spritesheets to work
-import uiElement4Image from "./images/YellowUI4.png" // cant get spritesheets to work
-import uiElement5Image from "./images/YellowUI5.png" // cant get spritesheets to work
-import uiElement6Image from "./images/YellowUI6.png" // cant get spritesheets to work
-import uiElement7Image from "./images/GreenUI0.png" // cant get spritesheets to work
-import uiElement8Image from "./images/GreenUI1.png" // cant get spritesheets to work
-import uiElement9Image from "./images/GreenUI2.png" // cant get spritesheets to work
-import uiElement10Image from "./images/RedUI0.png" // cant get spritesheets to work
-import uiElement11Image from "./images/RedUI1.png" // cant get spritesheets to work
-import uiElement12Image from "./images/RedUI2.png" // cant get spritesheets to work
+import uiElement0Image from "./images/YellowUI0.png" 
+import uiElement1Image from "./images/YellowUI1.png" 
+import uiElement2Image from "./images/YellowUI2.png" 
+import uiElement3Image from "./images/YellowUI3.png" 
+import uiElement4Image from "./images/YellowUI4.png" 
+import uiElement5Image from "./images/YellowUI5.png" 
+import uiElement6Image from "./images/YellowUI6.png" 
+import uiElement7Image from "./images/GreenUI0.png" 
+import uiElement8Image from "./images/GreenUI1.png" 
+import uiElement9Image from "./images/GreenUI2.png" 
+import uiElement10Image from "./images/RedUI0.png" 
+import uiElement11Image from "./images/RedUI1.png" 
+import uiElement12Image from "./images/RedUI2.png" 
 import audioScreenImage from "./images/audioscreen.png"
 
 import backgroundMusic from "url:./sound/relaxing.mp3"
@@ -97,22 +95,21 @@ export class AssetLoader extends PIXI.Loader {
             .add('buildingF3', buildingF3)
             .add('leafTexture', leafImage)
             .add('dinoTexture', dinoImage)
-            .add('HPDbackgroundTexture', HPDbackgroundImage)
             .add('menuBackgroundTexture', menuBackgroundImage)
             .add('pauseTexture', pauseImage)
-            .add('uiElement0', uiElement0Image) // cant get spritesheets to work
-            .add('uiElement1', uiElement1Image) // cant get spritesheets to work
-            .add('uiElement2', uiElement2Image) // cant get spritesheets to work
-            .add('uiElement3', uiElement3Image) // cant get spritesheets to work
-            .add('uiElement4', uiElement4Image) // cant get spritesheets to work
-            .add('uiElement5', uiElement5Image) // cant get spritesheets to work
-            .add('uiElement6', uiElement6Image) // cant get spritesheets to work
-            .add('uiElement7', uiElement7Image) // cant get spritesheets to work
-            .add('uiElement8', uiElement8Image) // cant get spritesheets to work
-            .add('uiElement9', uiElement9Image) // cant get spritesheets to work
-            .add('uiElement10', uiElement10Image) // cant get spritesheets to work
-            .add('uiElement11', uiElement11Image) // cant get spritesheets to work
-            .add('uiElement12', uiElement12Image) // cant get spritesheets to work
+            .add('uiElement0', uiElement0Image) 
+            .add('uiElement1', uiElement1Image) 
+            .add('uiElement2', uiElement2Image) 
+            .add('uiElement3', uiElement3Image) 
+            .add('uiElement4', uiElement4Image) 
+            .add('uiElement5', uiElement5Image) 
+            .add('uiElement6', uiElement6Image) 
+            .add('uiElement7', uiElement7Image) 
+            .add('uiElement8', uiElement8Image) 
+            .add('uiElement9', uiElement9Image) 
+            .add('uiElement10', uiElement10Image) 
+            .add('uiElement11', uiElement11Image) 
+            .add('uiElement12', uiElement12Image) 
             .add('heartTexture', heartImage)
             .add('audioScreenTexture', audioScreenImage)
             .add("backgroundMusicFile", backgroundMusic)
